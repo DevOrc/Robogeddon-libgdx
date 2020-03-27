@@ -2,6 +2,8 @@ package com.noahcharlton.robogeddon.entity;
 
 import com.noahcharlton.robogeddon.world.World;
 
+import java.util.Objects;
+
 public class Entity {
 
     public static final int DEFAULT_ID = -1;
@@ -10,10 +12,11 @@ public class Entity {
     private final World world;
 
     private int id = DEFAULT_ID;
-    private float x;
-    private float y;
-    private float angle;
-    private float velocity;
+    protected float x;
+    protected float y;
+    protected float angle;
+    protected float velocity;
+    protected float angularVelocity;
 
     private boolean isDead;
     private boolean dirty;
@@ -26,11 +29,49 @@ public class Entity {
     public final void fixedUpdate(){
         update();
         updateKinematics();
+
+        if(dirty && world.isServer())
+            sendUpdatedValues();
+    }
+
+    private void sendUpdatedValues() {
+        var message = new EntityUpdateMessage(id, x, y, angle);
+
+        world.sendMessageToClient(message);
+    }
+
+    public void onUpdateMessage(EntityUpdateMessage message) {
+        x = message.getX();
+        y = message.getY();
+        angle = message.getAngle();
     }
 
     public void update(){}
 
-    public void updateKinematics(){}
+    public void updateKinematics(){
+        if(velocity < .001 && angularVelocity < .001){
+            return;
+        }
+
+        x += velocity * Math.cos(angle);
+        y += velocity * Math.sin(angle);
+        angle += angularVelocity;
+        dirty = true;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if(this == o) return true;
+        if(!(o instanceof Entity)) return false;
+        Entity entity = (Entity) o;
+        return getId() == entity.getId() &&
+                Objects.equals(getType(), entity.getType());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getType(), getId());
+    }
 
     public float getX() {
         return x;

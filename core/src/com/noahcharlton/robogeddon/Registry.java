@@ -1,5 +1,6 @@
 package com.noahcharlton.robogeddon;
 
+import java.util.Collection;
 import java.util.HashMap;
 
 public class Registry<T extends HasID>  {
@@ -27,5 +28,9 @@ public class Registry<T extends HasID>  {
 
     void setFinalized(boolean finalized) {
         this.finalized = finalized;
+    }
+
+    public Collection<T> values(){
+        return items.values();
     }
 }

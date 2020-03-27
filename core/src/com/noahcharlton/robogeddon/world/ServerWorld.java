@@ -4,7 +4,7 @@ import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.Message;
 import com.noahcharlton.robogeddon.ServerProvider;
 import com.noahcharlton.robogeddon.entity.Entity;
-import com.noahcharlton.robogeddon.entity.EntityMessage;
+import com.noahcharlton.robogeddon.entity.NewEntityMessage;
 import com.noahcharlton.robogeddon.entity.EntityType;
 
 public class ServerWorld extends World{
@@ -13,13 +13,14 @@ public class ServerWorld extends World{
     private int entityID = 0;
 
     public ServerWorld(ServerProvider server) {
+        super(true);
         this.server = server;
 
-        addEntity(EntityType.testEntity.create(this));
+        addEntity(EntityType.robotEntity.create(this));
     }
 
-    public void update(){
-
+    public void fixedUpdate(){
+        super.fixedUpdate();
     }
 
     public void addEntity(Entity entity){
@@ -28,12 +29,14 @@ public class ServerWorld extends World{
         }
 
         entity.setId(++entityID);
+        entities.add(entity);
 
         Log.debug("New Entity: ID=" + entity.getId() + " Type=" + entity.getClass().getName());
-        sendMessage(new EntityMessage(entity.getType().getTypeID(), entity.getId()));
+        sendMessageToClient(new NewEntityMessage(entity.getType().getTypeID(), entity.getId()));
     }
 
-    public void sendMessage(Message message){
+    @Override
+    public void sendMessageToClient(Message message){
         Log.trace("Sending message to client: " + message);
         server.sendMessageToClient(message);
     }

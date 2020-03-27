@@ -1,7 +1,9 @@
 package com.noahcharlton.robogeddon.client;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.Log;
+import com.noahcharlton.robogeddon.graphics.GameRenderer;
 import com.noahcharlton.robogeddon.world.ClientWorld;
 
 public class GameClient extends ApplicationAdapter {
@@ -14,15 +16,17 @@ public class GameClient extends ApplicationAdapter {
     private int updateFrames;
     private int renderFrames;
 
+    private GameRenderer renderer;
     private ClientWorld world;
 
     @Override
     public void create() {
         Thread.currentThread().setName("Client");
         Log.info("Game Client created!");
+        Core.init();
 
+        renderer = new GameRenderer(this);
         world = new ClientWorld();
-
         updateNextFrameTime = System.nanoTime() + updateNextFrameTime;
         nextFpsCheck = System.currentTimeMillis() + 10000;
     }
@@ -36,6 +40,7 @@ public class GameClient extends ApplicationAdapter {
         }
 
         renderFrames++;
+        renderer.render();
 
         update();
         updateFPSCount();
@@ -43,8 +48,8 @@ public class GameClient extends ApplicationAdapter {
 
     private void updateFPSCount() {
         if(nextFpsCheck <= System.currentTimeMillis()){
-            Log.trace("Client Update FPS: " + (updateFrames / 10));
-            Log.trace("Client Render FPS: " + (renderFrames / 10));
+            Log.debug("Client Update FPS: " + (updateFrames / 10));
+            Log.debug("Client Render FPS: " + (renderFrames / 10));
 
             nextFpsCheck += 10000;
             renderFrames = 0;
@@ -62,7 +67,8 @@ public class GameClient extends ApplicationAdapter {
 
     @Override
     public void resize(int width, int height) {
-        Log.debug("Resize: (" + width + ", " + height + ")");
+        Log.info("Resize: (" + width + ", " + height + ")");
+        renderer.resize(width, height);
     }
 
     @Override
@@ -72,5 +78,9 @@ public class GameClient extends ApplicationAdapter {
 
     public static GameClient getInstance() {
         return instance;
+    }
+
+    public ClientWorld getWorld() {
+        return world;
     }
 }

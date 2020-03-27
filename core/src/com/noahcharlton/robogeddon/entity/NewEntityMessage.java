@@ -2,12 +2,12 @@ package com.noahcharlton.robogeddon.entity;
 
 import com.noahcharlton.robogeddon.Message;
 
-public class EntityMessage implements Message {
+public class NewEntityMessage implements Message {
 
     private final String entityType;
     private final int ID;
 
-    public EntityMessage(String entityType, int ID) {
+    public NewEntityMessage(String entityType, int ID) {
         this.entityType = entityType;
         this.ID = ID;
     }

@@ -1,16 +1,20 @@
 package com.noahcharlton.robogeddon.world;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.Message;
 import com.noahcharlton.robogeddon.client.ServerThread;
-import com.noahcharlton.robogeddon.entity.EntityMessage;
+import com.noahcharlton.robogeddon.entity.Entity;
+import com.noahcharlton.robogeddon.entity.EntityUpdateMessage;
+import com.noahcharlton.robogeddon.entity.NewEntityMessage;
 
 public class ClientWorld extends World {
 
     private final ServerThread server;
 
     public ClientWorld() {
+        super(false);
         this.server = new ServerThread();
     }
 
@@ -29,20 +33,33 @@ public class ClientWorld extends World {
     private void onMessageReceived(Message message) {
         Log.trace("Received message from server: " + message);
 
-        if(message instanceof EntityMessage){
-            spawnEntity((EntityMessage) message);
+        if(message instanceof NewEntityMessage){
+            spawnEntity((NewEntityMessage) message);
+        }else if(message instanceof EntityUpdateMessage) {
+            updateEntity((EntityUpdateMessage) message);
         }else{
             Log.warn("Unknown message type: " + message.getClass());
         }
     }
 
-    private void spawnEntity(EntityMessage message) {
+    private void updateEntity(EntityUpdateMessage message) {
+        var entity = getEntityByID(message.getId());
+        entity.onUpdateMessage(message);
+    }
+
+    private void spawnEntity(NewEntityMessage message) {
         var type = Core.entities.get(message.getEntityType());
         var entity = type.create(this);
         entity.setId(message.getID());
 
         Log.debug("New Entity: ID=" + entity.getId() + " Type=" + entity.getClass().getName());
         entities.add(entity);
+    }
+
+    public void render(SpriteBatch batch) {
+        for(Entity entity: entities){
+            entity.getType().render(batch, entity);
+        }
     }
 
     public ServerThread getServer() {

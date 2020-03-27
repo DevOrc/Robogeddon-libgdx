@@ -2,6 +2,9 @@ package com.noahcharlton.robogeddon;
 
 public class Log {
 
+    public static boolean debug = true;
+    public static boolean trace = false;
+
     public static void info(String text){
         log("INFO", text);
     }
@@ -15,11 +18,15 @@ public class Log {
     }
 
     public static void debug(String text){
-        log("DEBUG", text);
+        if(debug){
+            log("DEBUG", text);
+        }
     }
 
     public static void trace(String text){
-        log("TRACE", text);
+        if(trace && debug){
+            log("TRACE", text);
+        }
     }
 
     public static void log(String type, String info){
