@@ -1,9 +1,6 @@
 package com.noahcharlton.robogeddon.client;
 
-import com.noahcharlton.robogeddon.Core;
-import com.noahcharlton.robogeddon.Log;
-import com.noahcharlton.robogeddon.Message;
-import com.noahcharlton.robogeddon.ServerProvider;
+import com.noahcharlton.robogeddon.*;
 import com.noahcharlton.robogeddon.world.ServerWorld;
 
 import java.util.Queue;
@@ -27,7 +24,7 @@ public class ServerThread implements Runnable, ServerProvider {
         Log.info("Starting local server!");
         world = new ServerWorld(this);
 
-        Core.runServer(world);
+        Server.runServer(world);
     }
 
     @Override

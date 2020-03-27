@@ -3,7 +3,6 @@ package com.noahcharlton.robogeddon.client;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.world.ClientWorld;
-import com.noahcharlton.robogeddon.world.World;
 
 public class GameClient extends ApplicationAdapter {
 
@@ -15,7 +14,7 @@ public class GameClient extends ApplicationAdapter {
     private int updateFrames;
     private int renderFrames;
 
-    private World world;
+    private ClientWorld world;
 
     @Override
     public void create() {
@@ -54,11 +53,11 @@ public class GameClient extends ApplicationAdapter {
     }
 
     private void update() {
-
+        world.updateMessages();
     }
 
     private void fixedUpdate() {
-
+        world.fixedUpdate();
     }
 
     @Override

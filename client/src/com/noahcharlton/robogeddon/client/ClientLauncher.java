@@ -10,6 +10,7 @@ public class ClientLauncher {
 	public static void main (String[] arg) {
 		Log.info("Client Launcher started!");
 		Log.info("Core Version: " + Core.VERSION);
+		Core.preInit();
 
 		startClient();
 	}
@@ -18,6 +19,7 @@ public class ClientLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.forceExit = false;
 		config.foregroundFPS = 0;
+		config.backgroundFPS = 60;
 		config.vSyncEnabled = false;
 
 		new LwjglApplication(GameClient.getInstance(), config);
