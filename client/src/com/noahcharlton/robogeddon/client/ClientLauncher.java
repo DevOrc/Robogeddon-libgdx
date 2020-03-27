@@ -11,8 +11,15 @@ public class ClientLauncher {
 		Log.info("Client Launcher started!");
 		Log.info("Core Version: " + Core.VERSION);
 
+		startClient();
+	}
+
+	private static void startClient() {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.forceExit = false;
-		new LwjglApplication(new GameClient(), config);
+		config.foregroundFPS = 0;
+		config.vSyncEnabled = false;
+
+		new LwjglApplication(GameClient.getInstance(), config);
 	}
 }
