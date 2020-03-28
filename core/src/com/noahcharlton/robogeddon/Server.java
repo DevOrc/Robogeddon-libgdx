@@ -5,6 +5,10 @@ import com.noahcharlton.robogeddon.world.ServerWorld;
 public class Server {
 
     public static void runServer(ServerWorld world){
+        runServer(world, () -> {});
+    }
+
+    public static void runServer(ServerWorld world, Runnable update){
         Log.info("Running server with " + world.getServer().getName());
         long frameTime = 1_000_000_000 / Core.UPDATE_RATE;
 
@@ -14,7 +18,6 @@ public class Server {
 
         while(!Thread.interrupted()){
             while(lastFrame + frameTime <= System.nanoTime()) {
-                float diff = System.nanoTime() - lastFrame;
                 lastFrame += frameTime;
                 frames++;
 
@@ -27,6 +30,7 @@ public class Server {
                 world.update();
             }
 
+            update.run();
             world.updateMessages();
         }
     }

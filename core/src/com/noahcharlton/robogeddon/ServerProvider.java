@@ -1,6 +1,7 @@
 package com.noahcharlton.robogeddon;
 
 import com.noahcharlton.robogeddon.message.Message;
+import com.noahcharlton.robogeddon.util.Side;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -32,6 +33,11 @@ public abstract class ServerProvider implements Runnable{
 
     public Message getMessageFromServer(){
         return serverToClient.poll();
+    }
+
+    @Side(Side.SERVER)
+    public void sendSingle(int id, Message message){
+        throw new UnsupportedOperationException();
     }
 
 }

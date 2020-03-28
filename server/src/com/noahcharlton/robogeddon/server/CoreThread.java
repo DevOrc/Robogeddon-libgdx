@@ -4,46 +4,48 @@ import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.Server;
 import com.noahcharlton.robogeddon.ServerProvider;
 import com.noahcharlton.robogeddon.message.Message;
-import com.noahcharlton.robogeddon.message.MessageSerializer;
 import com.noahcharlton.robogeddon.world.ServerWorld;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.net.Socket;
+import java.util.AbstractMap.SimpleEntry;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class CoreThread extends ServerProvider {
+
+    private final Queue<Integer> newConnections = new ConcurrentLinkedQueue<>();
+    private final Queue<SimpleEntry<Integer, Message>> singleMessages = new ConcurrentLinkedQueue<>();
+
+    private ServerWorld world;
 
     @Override
     public void run() {
         Log.info("Starting Core Thread");
-        ServerWorld world = new ServerWorld(this);
-        Server.runServer(world);
+        world = new ServerWorld(this);
+        Server.runServer(world, this::update);
     }
 
-    public void runWithConnection(Socket connection) throws IOException {
-        var reader = new DataInputStream(connection.getInputStream());
-        var writer = new DataOutputStream(connection.getOutputStream());
+    private void update() {
+        Integer id;
 
-        Message m;
-        while(!Thread.interrupted()){
-            if(reader.available() > 0){
-                m = MessageSerializer.parse(reader.readUTF());
-                sendMessageToServer(m);
-            }
-
-            if((m = getMessageFromServer()) != null){
-                String message = MessageSerializer.messageToString(m);
-                writer.writeUTF(message);
-                writer.flush();
-            }
+        while((id = newConnections.poll()) != null){
+            world.handleNewConnection(id);
         }
     }
 
+    public void addNewConnection(int conn){
+        newConnections.add(conn);
+    }
 
     protected String getName() {
         return "Networking Server";
     }
 
+    @Override
+    public void sendSingle(int id, Message message){
+        singleMessages.add(new SimpleEntry<>(id, message));
+    }
 
+    SimpleEntry<Integer, Message> getNextSingleMessage() {
+        return singleMessages.poll();
+    }
 }

@@ -1,11 +1,12 @@
 package com.noahcharlton.robogeddon.world;
 
 import com.noahcharlton.robogeddon.Log;
-import com.noahcharlton.robogeddon.message.Message;
 import com.noahcharlton.robogeddon.ServerProvider;
 import com.noahcharlton.robogeddon.entity.Entity;
-import com.noahcharlton.robogeddon.entity.NewEntityMessage;
 import com.noahcharlton.robogeddon.entity.EntityType;
+import com.noahcharlton.robogeddon.entity.NewEntityMessage;
+import com.noahcharlton.robogeddon.message.Message;
+import com.noahcharlton.robogeddon.util.Side;
 
 public class ServerWorld extends World{
 
@@ -50,6 +51,15 @@ public class ServerWorld extends World{
 
         Log.debug("New Entity: ID=" + entity.getId() + " Type=" + entity.getClass().getName());
         sendMessageToClient(new NewEntityMessage(entity.getType().getTypeID(), entity.getId()));
+    }
+
+    @Side(Side.SERVER)
+    public void handleNewConnection(int connID) {
+        Log.debug("New client: " + connID);
+
+        for(Entity entity : entities){
+            server.sendSingle(connID, new NewEntityMessage(entity.getType().getTypeID(), entity.getId()));
+        }
     }
 
     @Override

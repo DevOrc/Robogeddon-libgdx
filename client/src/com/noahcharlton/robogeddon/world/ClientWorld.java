@@ -47,7 +47,9 @@ public class ClientWorld extends World {
 
     private void updateEntity(EntityUpdateMessage message) {
         var entity = getEntityByID(message.getId());
-        entity.onUpdateMessage(message);
+
+        if(entity != null)
+            entity.onUpdateMessage(message);
     }
 
     private void spawnEntity(NewEntityMessage message) {
