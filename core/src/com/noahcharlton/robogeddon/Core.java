@@ -13,17 +13,19 @@ public class Core {
 
     @Side(Side.BOTH)
     public static void preInit(){
-        Log.debug("PreInit");
+        Log.debug("PreInit Start");
 
         EntityType.preInit();
 
         entities.setFinalized(true);
+        Log.debug("PreInit End");
     }
 
     @Side(Side.CLIENT)
     public static void init(){
-        Log.debug("PreInit");
+        Log.debug("Init");
 
         EntityType.init();
+        Log.debug("Init End");
     }
 }

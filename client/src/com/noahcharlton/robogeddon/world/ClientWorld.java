@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.ServerProvider;
+import com.noahcharlton.robogeddon.client.ClientLauncher;
+import com.noahcharlton.robogeddon.client.LocalServer;
 import com.noahcharlton.robogeddon.client.RemoteServer;
 import com.noahcharlton.robogeddon.entity.Entity;
 import com.noahcharlton.robogeddon.entity.EntityRemovedMessage;
@@ -17,7 +19,8 @@ public class ClientWorld extends World {
 
     public ClientWorld() {
         super(false);
-        this.server = new RemoteServer();
+
+        this.server = ClientLauncher.runLocal ? new LocalServer() : new RemoteServer();
     }
 
     public void update(){
