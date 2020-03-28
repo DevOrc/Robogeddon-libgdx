@@ -1,6 +1,7 @@
 package com.noahcharlton.robogeddon.world;
 
 import com.noahcharlton.robogeddon.Message;
+import com.noahcharlton.robogeddon.entity.CustomEntityMessage;
 import com.noahcharlton.robogeddon.entity.Entity;
 
 import java.util.LinkedList;
@@ -25,8 +26,19 @@ public abstract class World {
         return null;
     }
 
-    public void fixedUpdate(){
-        entities.forEach(Entity::fixedUpdate);
+    protected boolean onMessageReceived(Message message){
+        if(message instanceof CustomEntityMessage){
+            var entityMessage = (CustomEntityMessage) message;
+            getEntityByID(entityMessage.getID()).onCustomMessageReceived(entityMessage);
+        }else{
+            return false;
+        }
+
+        return true;
+    }
+
+    public void update(float delta){
+        entities.forEach(e -> e.onUpdate(delta));
         entities.removeIf(Entity::isDead);
     }
 

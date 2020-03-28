@@ -10,8 +10,8 @@ public class GameClient extends ApplicationAdapter {
 
     private static GameClient instance = new GameClient();
 
-    private long updateFrameTime = 1_000_000_000 / 60;
-    private long updateNextFrameTime;
+    private long updateFrameTime = 1_000_000_000 / Core.UPDATE_RATE;
+    private long updateLastFrame;
     private long nextFpsCheck;
     private int updateFrames;
     private int renderFrames;
@@ -27,22 +27,23 @@ public class GameClient extends ApplicationAdapter {
 
         renderer = new GameRenderer(this);
         world = new ClientWorld();
-        updateNextFrameTime = System.nanoTime() + updateNextFrameTime;
+        updateLastFrame = System.nanoTime();
         nextFpsCheck = System.currentTimeMillis() + 10000;
     }
 
     @Override
     public void render() {
-        while(updateNextFrameTime <= System.nanoTime()){
-            updateNextFrameTime += updateFrameTime;
+        if(updateLastFrame + updateFrameTime <= System.nanoTime()){
+            float diff = System.nanoTime() - updateLastFrame;
+            updateLastFrame = System.nanoTime();
             updateFrames++;
-            fixedUpdate();
+            world.update(diff / 1_000_000_000f);
         }
 
         renderFrames++;
         renderer.render();
 
-        update();
+        world.updateMessages();
         updateFPSCount();
     }
 
@@ -55,14 +56,6 @@ public class GameClient extends ApplicationAdapter {
             renderFrames = 0;
             updateFrames = 0;
         }
-    }
-
-    private void update() {
-        world.updateMessages();
-    }
-
-    private void fixedUpdate() {
-        world.fixedUpdate();
     }
 
     @Override

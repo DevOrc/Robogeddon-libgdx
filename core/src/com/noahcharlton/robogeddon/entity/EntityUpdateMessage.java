@@ -8,12 +8,16 @@ public class EntityUpdateMessage implements Message {
     private final float x;
     private final float y;
     private final float angle;
+    private final float velocity;
+    private final float angularVelocity;
 
-    public EntityUpdateMessage(int id, float x, float y, float angle) {
+    public EntityUpdateMessage(int id, float x, float y, float angle, float velocity, float angularVelocity) {
         this.id = id;
         this.x = x;
         this.y = y;
         this.angle = angle;
+        this.velocity = velocity;
+        this.angularVelocity = angularVelocity;
     }
 
     public int getId() {
@@ -30,5 +34,13 @@ public class EntityUpdateMessage implements Message {
 
     public float getAngle() {
         return angle;
+    }
+
+    public float getVelocity() {
+        return velocity;
+    }
+
+    public float getAngularVelocity() {
+        return angularVelocity;
     }
 }

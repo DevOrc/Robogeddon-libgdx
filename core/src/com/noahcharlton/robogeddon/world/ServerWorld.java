@@ -19,8 +19,25 @@ public class ServerWorld extends World{
         addEntity(EntityType.robotEntity.create(this));
     }
 
-    public void fixedUpdate(){
-        super.fixedUpdate();
+    public void update(float delta){
+        super.update(delta);
+    }
+
+    public void updateMessages(){
+        Message message;
+        while((message = server.getMessageFromClient()) != null){
+            onMessageReceived(message);
+        }
+    }
+
+    protected boolean onMessageReceived(Message message) {
+        if(super.onMessageReceived(message)){
+
+        }else{
+            Log.warn("Unknown message type: " + message.getClass());
+        }
+
+        return false;
     }
 
     public void addEntity(Entity entity){

@@ -19,7 +19,7 @@ public class ClientLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.forceExit = false;
 		config.foregroundFPS = 0;
-		config.backgroundFPS = 60;
+		config.backgroundFPS = 120;
 		config.vSyncEnabled = false;
 
 		new LwjglApplication(GameClient.getInstance(), config);

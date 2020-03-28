@@ -1,5 +1,6 @@
 package com.noahcharlton.robogeddon.entity;
 
+import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.world.World;
 
 import java.util.Objects;
@@ -9,7 +10,7 @@ public class Entity {
     public static final int DEFAULT_ID = -1;
 
     private final EntityType type;
-    private final World world;
+    protected final World world;
 
     private int id = DEFAULT_ID;
     protected float x;
@@ -26,36 +27,46 @@ public class Entity {
         this.world = world;
     }
 
-    public final void fixedUpdate(){
-        update();
-        updateKinematics();
+    public void onCustomMessageReceived(CustomEntityMessage message) {
+        Log.warn("Unhandled message: " + message.getClass().getName());
+    }
+
+    public final void onUpdate(float delta){
+        update(delta);
+        updateKinematics(delta);
 
         if(dirty && world.isServer())
             sendUpdatedValues();
     }
 
     private void sendUpdatedValues() {
-        var message = new EntityUpdateMessage(id, x, y, angle);
+        var message = new EntityUpdateMessage(id, x, y, angle, velocity, angularVelocity);
 
         world.sendMessageToClient(message);
     }
 
     public void onUpdateMessage(EntityUpdateMessage message) {
-        x = message.getX();
-        y = message.getY();
+        if(Math.abs(message.getX() - getX()) > 3 && Math.abs(message.getY() - getY()) > 3){
+            x = message.getX();
+            y = message.getY();
+            System.out.println("Jump!");
+        }
+
         angle = message.getAngle();
+//        velocity = message.getVelocity();
+//        angularVelocity = message.getAngularVelocity();
     }
 
-    public void update(){}
+    protected void update(float delta){}
 
-    public void updateKinematics(){
-        if(velocity < .001 && angularVelocity < .001){
+    public void updateKinematics(float delta){
+        if(Math.abs(velocity) < .001 && Math.abs(angularVelocity) < .001){
             return;
         }
 
-        x += velocity * Math.cos(angle);
-        y += velocity * Math.sin(angle);
-        angle += angularVelocity;
+        x += velocity * Math.cos(angle) * delta;
+        y += velocity * Math.sin(angle) * delta;
+        angle += angularVelocity * delta;
         dirty = true;
     }
 

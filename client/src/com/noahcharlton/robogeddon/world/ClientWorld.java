@@ -18,8 +18,8 @@ public class ClientWorld extends World {
         this.server = new ServerThread();
     }
 
-    public void fixedUpdate(){
-
+    public void update(float delta){
+        super.update(delta);
     }
 
     public void updateMessages(){
@@ -30,16 +30,18 @@ public class ClientWorld extends World {
         }
     }
 
-    private void onMessageReceived(Message message) {
-        Log.trace("Received message from server: " + message);
+    protected boolean onMessageReceived(Message message) {
+        if(super.onMessageReceived(message)){
 
-        if(message instanceof NewEntityMessage){
+        }else if(message instanceof NewEntityMessage){
             spawnEntity((NewEntityMessage) message);
         }else if(message instanceof EntityUpdateMessage) {
             updateEntity((EntityUpdateMessage) message);
         }else{
             Log.warn("Unknown message type: " + message.getClass());
         }
+
+        return false;
     }
 
     private void updateEntity(EntityUpdateMessage message) {
@@ -54,6 +56,11 @@ public class ClientWorld extends World {
 
         Log.debug("New Entity: ID=" + entity.getId() + " Type=" + entity.getClass().getName());
         entities.add(entity);
+    }
+
+    @Override
+    public void sendMessageToServer(Message m) {
+        server.sendMessageToServer(m);
     }
 
     public void render(SpriteBatch batch) {
