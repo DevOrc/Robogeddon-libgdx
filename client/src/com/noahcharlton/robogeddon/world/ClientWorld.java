@@ -18,8 +18,8 @@ public class ClientWorld extends World {
         this.server = new ServerThread();
     }
 
-    public void update(float delta){
-        super.update(delta);
+    public void update(){
+        super.update();
     }
 
     public void updateMessages(){

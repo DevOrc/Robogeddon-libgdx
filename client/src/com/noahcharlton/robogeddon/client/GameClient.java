@@ -33,11 +33,10 @@ public class GameClient extends ApplicationAdapter {
 
     @Override
     public void render() {
-        if(updateLastFrame + updateFrameTime <= System.nanoTime()){
-            float diff = System.nanoTime() - updateLastFrame;
-            updateLastFrame = System.nanoTime();
+        while(updateLastFrame + updateFrameTime <= System.nanoTime()){
+            updateLastFrame += updateFrameTime;
             updateFrames++;
-            world.update(diff / 1_000_000_000f);
+            world.update();
         }
 
         renderFrames++;

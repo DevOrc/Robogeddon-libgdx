@@ -13,9 +13,9 @@ public class Server {
         int frames = 0;
 
         while(!Thread.interrupted()){
-            if(lastFrame + frameTime <= System.nanoTime()) {
+            while(lastFrame + frameTime <= System.nanoTime()) {
                 float diff = System.nanoTime() - lastFrame;
-                lastFrame = System.nanoTime();
+                lastFrame += frameTime;
                 frames++;
 
                 if(nextFPSCheck <= System.currentTimeMillis()){
@@ -24,7 +24,7 @@ public class Server {
                     nextFPSCheck = System.currentTimeMillis() + 10_000;
                 }
 
-                world.update(diff / 1_000_000_000f);
+                world.update();
             }
 
             world.updateMessages();

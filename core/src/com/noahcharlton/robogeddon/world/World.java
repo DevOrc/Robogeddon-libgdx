@@ -37,8 +37,8 @@ public abstract class World {
         return true;
     }
 
-    public void update(float delta){
-        entities.forEach(e -> e.onUpdate(delta));
+    public void update(){
+        entities.forEach(e -> e.onUpdate());
         entities.removeIf(Entity::isDead);
     }
 

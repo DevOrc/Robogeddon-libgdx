@@ -31,9 +31,9 @@ public class Entity {
         Log.warn("Unhandled message: " + message.getClass().getName());
     }
 
-    public final void onUpdate(float delta){
-        update(delta);
-        updateKinematics(delta);
+    public final void onUpdate(){
+        update();
+        updateKinematics();
 
         if(dirty && world.isServer())
             sendUpdatedValues();
@@ -53,20 +53,18 @@ public class Entity {
         }
 
         angle = message.getAngle();
-//        velocity = message.getVelocity();
-//        angularVelocity = message.getAngularVelocity();
     }
 
-    protected void update(float delta){}
+    protected void update(){}
 
-    public void updateKinematics(float delta){
+    public void updateKinematics(){
         if(Math.abs(velocity) < .001 && Math.abs(angularVelocity) < .001){
             return;
         }
 
-        x += velocity * Math.cos(angle) * delta;
-        y += velocity * Math.sin(angle) * delta;
-        angle += angularVelocity * delta;
+        x += velocity * Math.cos(angle);
+        y += velocity * Math.sin(angle);
+        angle += angularVelocity;
         dirty = true;
     }
 

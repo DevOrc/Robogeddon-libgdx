@@ -13,8 +13,8 @@ import com.noahcharlton.robogeddon.world.World;
 
 public class RobotEntity extends Entity {
 
-    private static final float MAX_VELOCITY = 360f;
-    private static final float MAX_ANGULAR_VELOCITY = 2f;
+    private static final float MAX_VELOCITY = 7;
+    private static final float MAX_ANGULAR_VELOCITY = .1f;
 
     private boolean wKey;
     private boolean aKey;
@@ -28,11 +28,11 @@ public class RobotEntity extends Entity {
     }
 
     @Override
-    public void update(float delta) {
+    public void update() {
         if(world.isClient())
             sendInputValues();
 
-        updateControls(delta);
+        updateControls();
         trimVelocity();
     }
 
@@ -48,21 +48,21 @@ public class RobotEntity extends Entity {
         }
     }
 
-    private void updateControls(float delta) {
+    private void updateControls() {
         if(wKey){
-            velocity += 50f * delta;
+            velocity += .8f;
         }else if(sKey){
-            velocity -= 80f * delta;
+            velocity -= 1.2f;
         }else{
-            velocity -= 50f * delta;
+            velocity -= .25f;
         }
 
         if(dKey){
-            angularVelocity += -1.75f * delta;
+            angularVelocity += -.01f;
         }else if(aKey){
-            angularVelocity += 1.75f * delta;
+            angularVelocity += .05f;
         }else{
-            angularVelocity -= (3.5 * angularVelocity) * delta;
+            angularVelocity *= .85;
         }
     }
 

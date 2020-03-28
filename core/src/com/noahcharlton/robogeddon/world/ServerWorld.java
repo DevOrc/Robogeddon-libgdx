@@ -19,8 +19,8 @@ public class ServerWorld extends World{
         addEntity(EntityType.robotEntity.create(this));
     }
 
-    public void update(float delta){
-        super.update(delta);
+    public void update(){
+        super.update();
     }
 
     public void updateMessages(){
