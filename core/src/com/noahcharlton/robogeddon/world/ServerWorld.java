@@ -6,7 +6,6 @@ import com.noahcharlton.robogeddon.entity.Entity;
 import com.noahcharlton.robogeddon.entity.EntityType;
 import com.noahcharlton.robogeddon.entity.NewEntityMessage;
 import com.noahcharlton.robogeddon.message.Message;
-import com.noahcharlton.robogeddon.util.Side;
 
 public class ServerWorld extends World{
 
@@ -16,8 +15,6 @@ public class ServerWorld extends World{
     public ServerWorld(ServerProvider server) {
         super(true);
         this.server = server;
-
-        addEntity(EntityType.robotEntity.create(this));
     }
 
     public void update(){
@@ -41,7 +38,7 @@ public class ServerWorld extends World{
         return false;
     }
 
-    public void addEntity(Entity entity){
+    public Entity addEntity(Entity entity){
         if(entity.getId() != Entity.DEFAULT_ID){
            throw new IllegalStateException("Entity already has an ID: " + entity.getId());
         }
@@ -51,15 +48,23 @@ public class ServerWorld extends World{
 
         Log.debug("New Entity: ID=" + entity.getId() + " Type=" + entity.getClass().getName());
         sendMessageToClient(new NewEntityMessage(entity.getType().getTypeID(), entity.getId()));
+
+        return entity;
     }
 
-    @Side(Side.SERVER)
     public void handleNewConnection(int connID) {
         Log.debug("New client: " + connID);
-
         for(Entity entity : entities){
             server.sendSingle(connID, new NewEntityMessage(entity.getType().getTypeID(), entity.getId()));
         }
+
+        addNewPlayer(connID);
+    }
+
+    private void addNewPlayer(int connID) {
+        var player = addEntity(EntityType.robotEntity.create(this));
+
+        server.sendSingle(connID, new AssignRobotMessage(player.getId()));
     }
 
     @Override

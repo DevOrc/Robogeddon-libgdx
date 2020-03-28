@@ -1,5 +1,6 @@
 package com.noahcharlton.robogeddon.world;
 
+import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.message.Message;
 import com.noahcharlton.robogeddon.entity.CustomEntityMessage;
 import com.noahcharlton.robogeddon.entity.Entity;
@@ -28,8 +29,7 @@ public abstract class World {
 
     protected boolean onMessageReceived(Message message){
         if(message instanceof CustomEntityMessage){
-            var entityMessage = (CustomEntityMessage) message;
-            getEntityByID(entityMessage.getID()).onCustomMessageReceived(entityMessage);
+            onCustomEntityMessage((CustomEntityMessage) message);
         }else{
             return false;
         }
@@ -37,8 +37,18 @@ public abstract class World {
         return true;
     }
 
+    private void onCustomEntityMessage(CustomEntityMessage message) {
+        var entity = getEntityByID(message.getID());
+
+        if(entity == null){
+            Log.warn("Message sent for " + message.getID() +" of type " + message.getClass().getName());
+        }else{
+            getEntityByID(message.getID()).onCustomMessageReceived(message);
+        }
+    }
+
     public void update(){
-        entities.forEach(e -> e.onUpdate());
+        entities.forEach(Entity::onUpdate);
         entities.removeIf(Entity::isDead);
     }
 

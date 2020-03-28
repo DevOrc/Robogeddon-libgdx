@@ -3,12 +3,12 @@ package com.noahcharlton.robogeddon.world;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.Log;
-import com.noahcharlton.robogeddon.message.Message;
 import com.noahcharlton.robogeddon.ServerProvider;
 import com.noahcharlton.robogeddon.client.RemoteServer;
 import com.noahcharlton.robogeddon.entity.Entity;
 import com.noahcharlton.robogeddon.entity.EntityUpdateMessage;
 import com.noahcharlton.robogeddon.entity.NewEntityMessage;
+import com.noahcharlton.robogeddon.message.Message;
 
 public class ClientWorld extends World {
 
@@ -54,10 +54,14 @@ public class ClientWorld extends World {
 
     private void spawnEntity(NewEntityMessage message) {
         var type = Core.entities.get(message.getEntityType());
+
+        Log.debug("New Entity: ID=" + message.getID() + " Type=" + type.getClass().getName());
+        if(getEntityByID(message.getID()) != null){
+            Log.warn("Entity already registered with id: " + message.getID());
+        }
+
         var entity = type.create(this);
         entity.setId(message.getID());
-
-        Log.debug("New Entity: ID=" + entity.getId() + " Type=" + entity.getClass().getName());
         entities.add(entity);
     }
 

@@ -9,12 +9,16 @@ import com.noahcharlton.robogeddon.entity.CustomEntityMessage;
 import com.noahcharlton.robogeddon.entity.Entity;
 import com.noahcharlton.robogeddon.entity.EntityType;
 import com.noahcharlton.robogeddon.util.GraphicsUtil;
+import com.noahcharlton.robogeddon.util.Side;
+import com.noahcharlton.robogeddon.world.AssignRobotMessage;
 import com.noahcharlton.robogeddon.world.World;
 
 public class RobotEntity extends Entity {
 
     private static final float MAX_VELOCITY = 7;
     private static final float MAX_ANGULAR_VELOCITY = .1f;
+
+    private boolean controlling = false;
 
     private boolean wKey;
     private boolean aKey;
@@ -66,7 +70,11 @@ public class RobotEntity extends Entity {
         }
     }
 
+    @Side(Side.CLIENT)
     private void sendInputValues() {
+        if(!controlling)
+            return;
+
         boolean w = Gdx.input.isKeyPressed(Input.Keys.W);
         boolean a = Gdx.input.isKeyPressed(Input.Keys.A);
         boolean s = Gdx.input.isKeyPressed(Input.Keys.S);
@@ -93,6 +101,9 @@ public class RobotEntity extends Entity {
             sKey = input.sKey;
             dKey = input.dKey;
             Log.debug("Updated robot controls!");
+        }else if(message instanceof AssignRobotMessage){
+            Log.debug("Player now controlling robot " + getId());
+            controlling = true;
         }else{
             super.onCustomMessageReceived(message);
         }

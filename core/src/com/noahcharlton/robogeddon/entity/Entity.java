@@ -49,10 +49,11 @@ public class Entity {
         if(Math.abs(message.getX() - getX()) > 3 && Math.abs(message.getY() - getY()) > 3){
             x = message.getX();
             y = message.getY();
-            System.out.println("Jump!");
         }
 
         angle = message.getAngle();
+        velocity = message.getVelocity();
+        angularVelocity = message.getAngularVelocity();
     }
 
     protected void update(){}
