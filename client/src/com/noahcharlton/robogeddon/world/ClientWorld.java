@@ -3,19 +3,20 @@ package com.noahcharlton.robogeddon.world;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.Log;
-import com.noahcharlton.robogeddon.Message;
-import com.noahcharlton.robogeddon.client.ServerThread;
+import com.noahcharlton.robogeddon.message.Message;
+import com.noahcharlton.robogeddon.ServerProvider;
+import com.noahcharlton.robogeddon.client.RemoteServer;
 import com.noahcharlton.robogeddon.entity.Entity;
 import com.noahcharlton.robogeddon.entity.EntityUpdateMessage;
 import com.noahcharlton.robogeddon.entity.NewEntityMessage;
 
 public class ClientWorld extends World {
 
-    private final ServerThread server;
+    private final ServerProvider server;
 
     public ClientWorld() {
         super(false);
-        this.server = new ServerThread();
+        this.server = new RemoteServer();
     }
 
     public void update(){
@@ -69,7 +70,7 @@ public class ClientWorld extends World {
         }
     }
 
-    public ServerThread getServer() {
+    public ServerProvider getServer() {
         return server;
     }
 }

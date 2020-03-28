@@ -1,7 +1,7 @@
 package com.noahcharlton.robogeddon.world;
 
 import com.noahcharlton.robogeddon.Log;
-import com.noahcharlton.robogeddon.Message;
+import com.noahcharlton.robogeddon.message.Message;
 import com.noahcharlton.robogeddon.ServerProvider;
 import com.noahcharlton.robogeddon.entity.Entity;
 import com.noahcharlton.robogeddon.entity.NewEntityMessage;

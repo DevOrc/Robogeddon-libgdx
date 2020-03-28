@@ -1,6 +1,6 @@
 package com.noahcharlton.robogeddon.entity;
 
-import com.noahcharlton.robogeddon.Message;
+import com.noahcharlton.robogeddon.message.Message;
 
 public class CustomEntityMessage implements Message {
 

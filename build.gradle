@@ -25,6 +25,7 @@ allprojects {
         box2DLightsVersion = '1.4'
         ashleyVersion = '1.7.0'
         aiVersion = '1.8.0'
+        jacksonVersion = '2.8.11.6'
     }
 
     repositories {
@@ -66,6 +67,7 @@ project(":core") {
 
 
     dependencies {
+        implementation 'com.google.code.gson:gson:2.8.6'
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
     }
 }

@@ -7,6 +7,7 @@ public class Core {
 
     public static final String VERSION = "0.1.0";
     public static final long UPDATE_RATE = 60;
+    public static final int PORT = 14772;
 
     public static final Registry<EntityType> entities = new Registry<>();
 
