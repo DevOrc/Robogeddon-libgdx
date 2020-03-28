@@ -9,12 +9,30 @@ public class Log {
         log("INFO", text);
     }
 
+    public static void info(String text, Throwable e){
+        if(debug){
+            log("INFO", text, e);
+        }
+    }
+
     public static void warn(String text){
         log("WARN", text);
     }
 
+    public static void warn(String text, Throwable e){
+        if(debug){
+            log("WARN", text, e);
+        }
+    }
+
     public static void error(String text){
         log("ERROR", text);
+    }
+
+    public static void error(String text, Throwable e){
+        if(debug){
+            log("ERROR", text, e);
+        }
     }
 
     public static void debug(String text){
@@ -23,10 +41,26 @@ public class Log {
         }
     }
 
+    public static void debug(String text, Throwable e){
+        if(debug){
+            log("DEBUG", text, e);
+        }
+    }
+
     public static void trace(String text){
         if(trace && debug){
             log("TRACE", text);
         }
+    }
+
+    public static void trace(String text, Throwable e){
+        if(trace){
+            log("TRACE", text, e);
+        }
+    }
+
+    public static void log(String type, String info, Throwable e){
+        System.out.printf("%s(%s): %s: %s\n", Thread.currentThread().getName(), type, info, e.getLocalizedMessage());
     }
 
     public static void log(String type, String info){

@@ -1,14 +1,19 @@
 package com.noahcharlton.robogeddon.world;
 
 import com.noahcharlton.robogeddon.Log;
+import com.noahcharlton.robogeddon.Server;
 import com.noahcharlton.robogeddon.ServerProvider;
 import com.noahcharlton.robogeddon.entity.Entity;
+import com.noahcharlton.robogeddon.entity.EntityRemovedMessage;
 import com.noahcharlton.robogeddon.entity.EntityType;
 import com.noahcharlton.robogeddon.entity.NewEntityMessage;
 import com.noahcharlton.robogeddon.message.Message;
 
+import java.util.HashMap;
+
 public class ServerWorld extends World{
 
+    private final HashMap<Integer, Entity> players = new HashMap<>();
     private final ServerProvider server;
     private int entityID = 0;
 
@@ -31,11 +36,23 @@ public class ServerWorld extends World{
     protected boolean onMessageReceived(Message message) {
         if(super.onMessageReceived(message)){
 
+        }else if(message instanceof LostClientMessage){
+            onClientLost((LostClientMessage) message);
         }else{
             Log.warn("Unknown message type: " + message.getClass());
         }
 
         return false;
+    }
+
+    private void onClientLost(LostClientMessage message) {
+        var entity = players.get(message.getConnectionID());
+
+        if(entity == null){
+            throw new RuntimeException("Lost client without a player??? ID=" + message.getConnectionID());
+        }else{
+            entity.setDead(true);
+        }
     }
 
     public Entity addEntity(Entity entity){
@@ -52,6 +69,11 @@ public class ServerWorld extends World{
         return entity;
     }
 
+    @Override
+    protected void onEntityDead(Entity entity) {
+        sendMessageToClient(new EntityRemovedMessage(entity.getId()));
+    }
+
     public void handleNewConnection(int connID) {
         Log.debug("New client: " + connID);
         for(Entity entity : entities){
@@ -63,8 +85,11 @@ public class ServerWorld extends World{
 
     private void addNewPlayer(int connID) {
         var player = addEntity(EntityType.robotEntity.create(this));
+        var message = new AssignRobotMessage(player.getId());
 
-        server.sendSingle(connID, new AssignRobotMessage(player.getId()));
+        players.put(connID, player);
+
+        Server.runLater(() -> server.sendSingle(connID, message));
     }
 
     @Override

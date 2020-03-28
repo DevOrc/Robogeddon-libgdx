@@ -2,7 +2,12 @@ package com.noahcharlton.robogeddon;
 
 import com.noahcharlton.robogeddon.world.ServerWorld;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class Server {
+
+    private static final Queue<Runnable> runLaters = new LinkedList<>();
 
     public static void runServer(ServerWorld world){
         runServer(world, () -> {});
@@ -28,10 +33,23 @@ public class Server {
                 }
 
                 world.update();
+                runRunLaters();
             }
 
             update.run();
             world.updateMessages();
         }
+    }
+
+    private static void runRunLaters() {
+        Runnable run;
+
+        while((run = runLaters.poll()) != null){
+            run.run();
+        }
+    }
+
+    public static void runLater(Runnable runnable){
+        runLaters.add(runnable);
     }
 }

@@ -6,6 +6,7 @@ import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.ServerProvider;
 import com.noahcharlton.robogeddon.client.RemoteServer;
 import com.noahcharlton.robogeddon.entity.Entity;
+import com.noahcharlton.robogeddon.entity.EntityRemovedMessage;
 import com.noahcharlton.robogeddon.entity.EntityUpdateMessage;
 import com.noahcharlton.robogeddon.entity.NewEntityMessage;
 import com.noahcharlton.robogeddon.message.Message;
@@ -38,11 +39,21 @@ public class ClientWorld extends World {
             spawnEntity((NewEntityMessage) message);
         }else if(message instanceof EntityUpdateMessage) {
             updateEntity((EntityUpdateMessage) message);
+        }else if(message instanceof EntityRemovedMessage){
+            removeEntity((EntityRemovedMessage) message);
         }else{
             Log.warn("Unknown message type: " + message.getClass());
         }
 
         return false;
+    }
+
+    private void removeEntity(EntityRemovedMessage message) {
+        boolean removed = entities.removeIf(e -> e.getId() == message.getID());
+
+        if(!removed){
+            Log.warn("Entity removed that wasn't in the world?? ID=" + message.getID());
+        }
     }
 
     private void updateEntity(EntityUpdateMessage message) {

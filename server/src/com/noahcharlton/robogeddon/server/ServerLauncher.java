@@ -4,6 +4,7 @@ import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.message.Message;
 import com.noahcharlton.robogeddon.message.MessageSerializer;
+import com.noahcharlton.robogeddon.world.LostClientMessage;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -36,6 +37,19 @@ public class ServerLauncher {
         handleReceivedMessages();
         sendOutgoingMessages();
         sendSingleMessages();
+        removeClosedConnections();
+    }
+
+    private void removeClosedConnections() {
+        for(ServerConnection connection : connections) {
+            if(connection.socket.isClosed()){
+                Log.info("Lost Client " + connection.id);
+                gameThread.sendMessageToServer(new LostClientMessage(connection.id));
+                connection.readyForRemoval = true;
+            }
+        }
+
+        connections.removeIf(ServerConnection::isReadyForRemoval);
     }
 
     private void sendSingleMessages() {

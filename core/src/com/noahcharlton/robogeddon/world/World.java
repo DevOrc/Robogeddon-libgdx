@@ -1,10 +1,11 @@
 package com.noahcharlton.robogeddon.world;
 
 import com.noahcharlton.robogeddon.Log;
-import com.noahcharlton.robogeddon.message.Message;
 import com.noahcharlton.robogeddon.entity.CustomEntityMessage;
 import com.noahcharlton.robogeddon.entity.Entity;
+import com.noahcharlton.robogeddon.message.Message;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -41,7 +42,8 @@ public abstract class World {
         var entity = getEntityByID(message.getID());
 
         if(entity == null){
-            Log.warn("Message sent for " + message.getID() +" of type " + message.getClass().getName());
+            Log.warn("Non-existent entity " + message.getID() + " sent message of type "
+                    + message.getClass().getName());
         }else{
             getEntityByID(message.getID()).onCustomMessageReceived(message);
         }
@@ -49,7 +51,27 @@ public abstract class World {
 
     public void update(){
         entities.forEach(Entity::onUpdate);
-        entities.removeIf(Entity::isDead);
+
+        for(Iterator<Entity> it = entities.iterator(); it.hasNext(); ) {
+            Entity entity = it.next();
+
+            if(entity.isDead()){
+                it.remove();
+                onEntityDead(entity);
+            }
+        }
+    }
+
+    protected void onEntityDead(Entity entity) {
+        throw new UnsupportedOperationException("Only the server can have dead entities");
+    }
+
+    private void sendMessageToOppositeSide(Message message){
+        if(isServer){
+            sendMessageToClient(message);
+        }else{
+            sendMessageToServer(message);
+        }
     }
 
     public void sendMessageToClient(Message m){

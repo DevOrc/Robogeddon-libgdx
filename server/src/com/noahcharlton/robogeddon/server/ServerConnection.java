@@ -1,5 +1,6 @@
 package com.noahcharlton.robogeddon.server;
 
+import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.message.Message;
 import com.noahcharlton.robogeddon.message.MessageSerializer;
 
@@ -16,6 +17,7 @@ public class ServerConnection {
     final Socket socket;
     final DataOutputStream output;
     final DataInputStream input;
+    boolean readyForRemoval = false;
 
     public ServerConnection(Socket socket) throws IOException {
         this.socket = socket;
@@ -24,15 +26,24 @@ public class ServerConnection {
     }
 
     public void sendMessage(Message message) {
-        if(socket.isClosed())
-            return;
-
         try {
             output.writeUTF(MessageSerializer.messageToString(message));
             output.flush();
         } catch(IOException e) {
-            e.printStackTrace();
+            Log.debug("Failed to send message for client " + id, e);
+            close();
         }
     }
 
+    private void close(){
+        try {
+            socket.close();
+        } catch(IOException e) {
+            throw new RuntimeException("Failed to close client " + id, e);
+        }
+    }
+
+    public boolean isReadyForRemoval() {
+        return readyForRemoval;
+    }
 }
