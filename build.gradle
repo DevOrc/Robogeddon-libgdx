@@ -10,8 +10,7 @@ buildscript {
         google()
     }
     dependencies {
-        
-
+        classpath "com.badlogicgames.gdx:gdx-tools:1.9.10"
     }
 }
 
@@ -26,6 +25,7 @@ allprojects {
         ashleyVersion = '1.7.0'
         aiVersion = '1.8.0'
         jacksonVersion = '2.8.11.6'
+        texturePacker = ["client/raw_sprites", "client/assets", "sprites"]
     }
 
     repositories {
@@ -69,5 +69,18 @@ project(":core") {
     dependencies {
         implementation 'com.google.code.gson:gson:2.8.6'
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
+    }
+}
+
+
+import com.badlogic.gdx.tools.texturepacker.TexturePacker
+
+task packSprites {
+    doLast {
+        def input = (String) texturePacker[0];
+        def output = (String) texturePacker[1];
+        def output_name = (String) texturePacker[2];
+
+        TexturePacker.process(input, output, output_name)
     }
 }

@@ -2,8 +2,9 @@ package com.noahcharlton.robogeddon.entity;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.util.GraphicsUtil;
 import com.noahcharlton.robogeddon.util.Side;
@@ -108,8 +109,8 @@ public class RobotEntity extends Entity {
 
     public static class RobotEntityType extends EntityType {
 
-        private Texture onTexture;
-        private Texture offTexture;
+        private TextureRegion onTexture;
+        private TextureRegion offTexture;
 
         @Override
         public Entity create(World world) {
@@ -118,8 +119,8 @@ public class RobotEntity extends Entity {
 
         @Override
         public void initRenderer() {
-            onTexture = new Texture("robot_on.png");
-            offTexture = new Texture("robot_off.png");
+            Core.assets.registerTexture("entities/robot_on").setOnLoad(texture -> onTexture = texture);
+            Core.assets.registerTexture("entities/robot_off").setOnLoad(texture -> offTexture = texture);
         }
 
         @Override

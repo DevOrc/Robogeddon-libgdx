@@ -1,6 +1,8 @@
 package com.noahcharlton.robogeddon.client;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.graphics.GameRenderer;
@@ -10,6 +12,7 @@ public class GameClient extends ApplicationAdapter {
 
     private static GameClient instance = new GameClient();
 
+    private boolean loadingAssets = true;
     private long updateFrameTime = 1_000_000_000 / Core.UPDATE_RATE;
     private long updateLastFrame;
     private long nextFpsCheck;
@@ -27,12 +30,19 @@ public class GameClient extends ApplicationAdapter {
 
         renderer = new GameRenderer(this);
         world = new ClientWorld();
-        updateLastFrame = System.nanoTime();
-        nextFpsCheck = System.currentTimeMillis() + 10000;
     }
 
     @Override
     public void render() {
+        if(loadingAssets){
+            updateAssetLoading();
+            return;
+        }else if(Gdx.input.isKeyJustPressed(Input.Keys.F1)){
+            loadingAssets = true;
+            Core.assets.reload();
+            return;
+        }
+
         while(updateLastFrame + updateFrameTime <= System.nanoTime()){
             updateLastFrame += updateFrameTime;
             updateFrames++;
@@ -44,6 +54,22 @@ public class GameClient extends ApplicationAdapter {
 
         world.updateMessages();
         updateFPSCount();
+    }
+
+    private void updateAssetLoading() {
+        Core.assets.update();
+
+        if(Core.assets.isDone()){
+            onAssetsLoaded();
+        }
+    }
+
+    private void onAssetsLoaded(){
+        loadingAssets = false;
+        updateLastFrame = System.nanoTime();
+        nextFpsCheck = System.currentTimeMillis() + 10000;
+
+        Log.info("Finished loading assets!");
     }
 
     private void updateFPSCount() {
@@ -65,6 +91,7 @@ public class GameClient extends ApplicationAdapter {
 
     @Override
     public void dispose() {
+        Core.assets.dispose();
         Log.info("Game Client disposed!");
     }
 
