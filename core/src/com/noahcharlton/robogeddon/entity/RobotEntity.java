@@ -13,7 +13,7 @@ import com.noahcharlton.robogeddon.world.World;
 
 public class RobotEntity extends Entity {
 
-    private static final float MAX_VELOCITY = 7;
+    private static final float MAX_VELOCITY = 14;
     private static final float MAX_ANGULAR_VELOCITY = .1f;
 
     private boolean controlling = false;
@@ -52,7 +52,7 @@ public class RobotEntity extends Entity {
 
     private void updateControls() {
         if(wKey){
-            velocity += .8f;
+            velocity += .5f;
         }else if(sKey){
             velocity -= 1.2f;
         }else{

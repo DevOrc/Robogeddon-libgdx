@@ -4,9 +4,16 @@ size: 256,128
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+blocks/oil
+  rotate: false
+  xy: 35, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 blocks/test_block
   rotate: false
-  xy: 167, 67
+  xy: 133, 33
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -39,9 +46,23 @@ floors/grass
   orig: 32, 32
   offset: 0, 0
   index: -1
+floors/oil_rock
+  rotate: false
+  xy: 167, 67
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 floors/rock
   rotate: false
-  xy: 35, 1
+  xy: 69, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+floors/sand
+  rotate: false
+  xy: 201, 67
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
