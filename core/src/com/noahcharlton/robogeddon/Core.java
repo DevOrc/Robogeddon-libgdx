@@ -20,6 +20,10 @@ public class Core {
 
     @Side(Side.CLIENT)
     public static AssetManager assets;
+    /** Responsible for getting graphics details from the client for the core code */
+    @Side(Side.CLIENT)
+    public static Client client;
+
 
     @Side(Side.BOTH)
     public static void preInit(){

@@ -3,12 +3,15 @@ package com.noahcharlton.robogeddon.client;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.math.Vector3;
+import com.noahcharlton.robogeddon.Client;
 import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.graphics.GameRenderer;
 import com.noahcharlton.robogeddon.world.ClientWorld;
+import space.earlygrey.shapedrawer.ShapeDrawer;
 
-public class GameClient extends ApplicationAdapter {
+public class GameClient extends ApplicationAdapter implements Client {
 
     private static GameClient instance = new GameClient();
 
@@ -84,6 +87,12 @@ public class GameClient extends ApplicationAdapter {
     }
 
     @Override
+    public Vector3 mouseToWorld() {
+        var mouse = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+        return renderer.getCamera().unproject(mouse);
+    }
+
+    @Override
     public void resize(int width, int height) {
         Log.info("Resize: (" + width + ", " + height + ")");
         renderer.resize(width, height);
@@ -101,5 +110,10 @@ public class GameClient extends ApplicationAdapter {
 
     public ClientWorld getWorld() {
         return world;
+    }
+
+    @Override
+    public ShapeDrawer getGameShapeDrawer() {
+        return renderer.getGameShapeDrawer();
     }
 }

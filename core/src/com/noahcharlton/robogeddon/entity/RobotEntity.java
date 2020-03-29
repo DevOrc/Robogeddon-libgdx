@@ -2,8 +2,10 @@ package com.noahcharlton.robogeddon.entity;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector3;
 import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.util.GraphicsUtil;
@@ -11,10 +13,13 @@ import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.AssignRobotMessage;
 import com.noahcharlton.robogeddon.world.World;
 
+import java.util.Objects;
+
 public class RobotEntity extends Entity {
 
     private static final float MAX_VELOCITY = 14;
     private static final float MAX_ANGULAR_VELOCITY = .1f;
+    private static final int LASER_TIME = 50;
 
     private boolean controlling = false;
 
@@ -22,6 +27,10 @@ public class RobotEntity extends Entity {
     private boolean aKey;
     private boolean sKey;
     private boolean dKey;
+
+    private Vector3 miningPos;
+    @Side(Side.SERVER)
+    private int laserTime = LASER_TIME;
 
     public RobotEntity(World world) {
         super(EntityType.robotEntity, world);
@@ -31,11 +40,23 @@ public class RobotEntity extends Entity {
 
     @Override
     public void update() {
-        if(world.isClient())
+        if(world.isClient() && controlling){
             sendInputValues();
+        }else if(world.isServer() && miningPos != null){
+            updateMining();
+        }
 
         updateControls();
         trimVelocity();
+    }
+
+    @Side(Side.SERVER)
+    private void updateMining() {
+        laserTime--;
+
+        if(laserTime <= 0){
+            laserTime = LASER_TIME;
+        }
     }
 
     private void trimVelocity() {
@@ -70,35 +91,50 @@ public class RobotEntity extends Entity {
 
     @Side(Side.CLIENT)
     private void sendInputValues() {
-        if(!controlling)
-            return;
-
         boolean w = Gdx.input.isKeyPressed(Input.Keys.W);
         boolean a = Gdx.input.isKeyPressed(Input.Keys.A);
         boolean s = Gdx.input.isKeyPressed(Input.Keys.S);
         boolean d = Gdx.input.isKeyPressed(Input.Keys.D);
+        var currMining = Gdx.input.isButtonPressed(Input.Buttons.RIGHT) ?
+                trimMiningPosition(Core.client.mouseToWorld()) : null;
 
-        if(wKey != w || a != aKey || s != sKey || d != dKey){
-            var message = new RobotInputMessage(getId(), w, a, s, d);
+        if(wKey != w || a != aKey || s != sKey || d != dKey || !Objects.equals(miningPos, currMining)){
+            var message = new RobotInputMessage(getId(), w, a, s, d, currMining);
             wKey = w;
             aKey = a;
             sKey = s;
             dKey = d;
+            miningPos = currMining;
 
             world.sendMessageToServer(message);
             Log.trace("Sending robot controls to server!");
         }
     }
 
+    private Vector3 trimMiningPosition(Vector3 mouse) {
+        if(mouse == null)
+            return null;
+
+        return mouse.sub(getX(), getY(), 0).clamp(0, 250).add(getX(), getY(), 0);
+    }
+
     @Override
     public void onCustomMessageReceived(CustomEntityMessage message) {
         if(message instanceof RobotInputMessage && world.isServer()){
             var input = (RobotInputMessage) message;
+            var clientMiningPos = trimMiningPosition(input.miningPos); //Limit the length in case client is bad
+            var clientMiningTile = world.tileFromPixel(clientMiningPos);
+
+            if(clientMiningTile == null || !clientMiningTile.equals(world.tileFromPixel(miningPos))){
+                laserTime = LASER_TIME;
+            }
+
             wKey = input.wKey;
             aKey = input.aKey;
             sKey = input.sKey;
             dKey = input.dKey;
-            Log.debug("Updated robot controls!");
+            miningPos = clientMiningPos;
+            Log.trace("Updated robot controls!");
         }else if(message instanceof AssignRobotMessage){
             Log.debug("Player now controlling robot " + getId());
             controlling = true;
@@ -108,6 +144,8 @@ public class RobotEntity extends Entity {
     }
 
     public static class RobotEntityType extends EntityType {
+
+        private static final int RADIUS = 32;
 
         private TextureRegion onTexture;
         private TextureRegion offTexture;
@@ -128,10 +166,24 @@ public class RobotEntity extends Entity {
             if(!(entity instanceof RobotEntity)){
                 throw new UnsupportedOperationException();
             }
-
-            var texture = ((RobotEntity) entity).wKey ? onTexture : offTexture;
+            var robotEntity = (RobotEntity) entity;
+            var texture = robotEntity.wKey ? onTexture : offTexture;
             float angle = (float) (entity.getAngle() * 180 / Math.PI) - 90;
-            GraphicsUtil.drawRotated(batch, texture, entity.getX(), entity.getY(), angle);
+            float x = entity.getX() - RADIUS;
+            float y = entity.getY() - RADIUS;
+
+            GraphicsUtil.drawRotated(batch, texture, x, y, angle);
+
+            if(robotEntity.miningPos != null)
+                drawMiningLaser(robotEntity, robotEntity.miningPos);
+        }
+
+        private void drawMiningLaser(RobotEntity entity, Vector3 position) {
+            var drawer = Core.client.getGameShapeDrawer();
+            drawer.setColor(Color.YELLOW);
+            drawer.line(entity.x, entity.y, position.x, position.y, 3);
+            drawer.setColor(Color.RED);
+            drawer.filledCircle(position.x, position.y, 4);
         }
 
         @Override
@@ -142,17 +194,19 @@ public class RobotEntity extends Entity {
 
     public static class RobotInputMessage extends CustomEntityMessage{
 
+        final Vector3 miningPos;
         final boolean wKey;
         final boolean aKey;
         final boolean sKey;
         final boolean dKey;
 
-        public RobotInputMessage(int ID, boolean wKey, boolean aKey, boolean sKey, boolean dKey) {
+        public RobotInputMessage(int ID, boolean wKey, boolean aKey, boolean sKey, boolean dKey, Vector3 miningPos) {
             super(ID);
             this.wKey = wKey;
             this.aKey = aKey;
             this.sKey = sKey;
             this.dKey = dKey;
+            this.miningPos = miningPos;
         }
     }
 }

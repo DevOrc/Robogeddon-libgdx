@@ -17,6 +17,7 @@ public class ClientLauncher {
 		Log.info("Args: " + Arrays.toString(args));
 		checkArgs(args);
 
+		Core.client = GameClient.getInstance();
 		Core.preInit();
 
 		startClient();

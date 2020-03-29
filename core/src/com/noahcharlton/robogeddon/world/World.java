@@ -1,5 +1,7 @@
 package com.noahcharlton.robogeddon.world;
 
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.entity.CustomEntityMessage;
 import com.noahcharlton.robogeddon.entity.Entity;
@@ -100,6 +102,20 @@ public abstract class World {
 
     public void sendMessageToServer(Message m){
         throw new UnsupportedOperationException();
+    }
+
+    public Tile tileFromPixel(Vector3 pos){
+        if(pos == null)
+            return null;
+
+        return tileFromPixel(new Vector2(pos.x, pos.y));
+    }
+
+    public Tile tileFromPixel(Vector2 pos){
+        if(pos == null)
+            return null;
+
+        return getTileAt((int) pos.x / Tile.SIZE, (int)pos.y / Tile.SIZE);
     }
 
     public boolean isServer() {
