@@ -12,7 +12,9 @@ import com.noahcharlton.robogeddon.entity.EntityRemovedMessage;
 import com.noahcharlton.robogeddon.entity.EntityUpdateMessage;
 import com.noahcharlton.robogeddon.entity.NewEntityMessage;
 import com.noahcharlton.robogeddon.message.Message;
+import com.noahcharlton.robogeddon.util.Side;
 
+@Side(Side.CLIENT)
 public class ClientWorld extends World {
 
     private final ServerProvider server;
@@ -23,38 +25,86 @@ public class ClientWorld extends World {
         this.server = ClientLauncher.runLocal ? new LocalServer() : new RemoteServer();
     }
 
-    public void update(){
+    public void update() {
         super.update();
     }
 
-    public void updateMessages(){
+    public void updateMessages() {
         Message message;
 
-        while((message = server.getMessageFromServer()) != null){
+        while((message = server.getMessageFromServer()) != null) {
             onMessageReceived(message);
         }
     }
 
     protected boolean onMessageReceived(Message message) {
-        if(super.onMessageReceived(message)){
+        if(super.onMessageReceived(message)) {
 
-        }else if(message instanceof NewEntityMessage){
+        } else if(message instanceof NewEntityMessage) {
             spawnEntity((NewEntityMessage) message);
-        }else if(message instanceof EntityUpdateMessage) {
+        } else if(message instanceof EntityUpdateMessage) {
             updateEntity((EntityUpdateMessage) message);
-        }else if(message instanceof EntityRemovedMessage){
+        } else if(message instanceof EntityRemovedMessage) {
             removeEntity((EntityRemovedMessage) message);
-        }else{
+        } else if(message instanceof WorldSyncMessage) {
+            onWorldSync((WorldSyncMessage) message);
+        } else if(message instanceof UpdateWorldMessage){
+            updateWorld((UpdateWorldMessage) message);
+        } else {
             Log.warn("Unknown message type: " + message.getClass());
         }
 
         return false;
     }
 
+    private void updateWorld(UpdateWorldMessage message) {
+        for(TileUpdate update : message.getUpdates()){
+            updateTile(update);
+        }
+    }
+
+    private void updateTile(TileUpdate update){
+        var tile = getTileAt(update.x, update.y);
+
+        if(update.block == null){
+            tile.setBlock(null, false);
+        }else{
+            tile.setBlock(Core.blocks.get(update.block), false);
+        }
+
+    }
+
+    private void onWorldSync(WorldSyncMessage message) {
+        if(getWidth() == -1) {//This is the first sync message, so we must create the world
+            onFirstWorldSync(message);
+            return;
+        }
+
+        for(int x = 0; x < getWidth(); x++) {
+            updateTile(message.getTiles()[x]);
+        }
+    }
+
+    private void onFirstWorldSync(WorldSyncMessage message) {
+        //Note: setWidth, setHeight, and setTiles should throw an exception if they are already set
+        this.setWidth(message.getWorldWidth());
+        this.setHeight(message.getWorldHeight());
+
+        Tile[][] tiles = new Tile[getWidth()][getHeight()];
+        for(int x = 0; x < getWidth(); x++) {
+            for(int y = 0; y < getHeight(); y++){
+                tiles[x][y] = new Tile(this, x, y);
+            }
+        }
+        setTiles(tiles);
+        onWorldSync(message); //Now sync the y-level in this message
+        Log.info("Created World! Size = " + getWidth() + "x" + getHeight());
+    }
+
     private void removeEntity(EntityRemovedMessage message) {
         boolean removed = entities.removeIf(e -> e.getId() == message.getID());
 
-        if(!removed){
+        if(!removed) {
             Log.warn("Entity removed that wasn't in the world?? ID=" + message.getID());
         }
     }
@@ -70,7 +120,7 @@ public class ClientWorld extends World {
         var type = Core.entities.get(message.getEntityType());
 
         Log.debug("New Entity: ID=" + message.getID() + " Type=" + type.getClass().getName());
-        if(getEntityByID(message.getID()) != null){
+        if(getEntityByID(message.getID()) != null) {
             Log.warn("Entity already registered with id: " + message.getID());
         }
 
@@ -85,7 +135,13 @@ public class ClientWorld extends World {
     }
 
     public void render(SpriteBatch batch) {
-        for(Entity entity: entities){
+        for(int x = 0; x < getWidth(); x++) {
+            for(int y = 0; y < getHeight(); y++) {
+                getTileAt(x, y).render(batch);
+            }
+        }
+
+        for(Entity entity : entities) {
             entity.getType().render(batch, entity);
         }
     }

@@ -23,7 +23,12 @@ public class Registry<T extends HasID>  {
     }
 
     public T get(String id){
-        return items.get(id);
+        var item = items.get(id);
+
+        if(item == null)
+            throw new RuntimeException("No item found with id " + id);
+
+        return item;
     }
 
     void setFinalized(boolean finalized) {

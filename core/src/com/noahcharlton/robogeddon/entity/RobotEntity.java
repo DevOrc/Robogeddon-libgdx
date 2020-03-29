@@ -1,13 +1,10 @@
-package com.noahcharlton.robogeddon.content;
+package com.noahcharlton.robogeddon.entity;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.noahcharlton.robogeddon.Log;
-import com.noahcharlton.robogeddon.entity.CustomEntityMessage;
-import com.noahcharlton.robogeddon.entity.Entity;
-import com.noahcharlton.robogeddon.entity.EntityType;
 import com.noahcharlton.robogeddon.util.GraphicsUtil;
 import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.AssignRobotMessage;

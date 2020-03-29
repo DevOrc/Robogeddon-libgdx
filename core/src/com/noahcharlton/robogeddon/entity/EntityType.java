@@ -3,7 +3,6 @@ package com.noahcharlton.robogeddon.entity;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.HasID;
-import com.noahcharlton.robogeddon.content.RobotEntity;
 import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.World;
 

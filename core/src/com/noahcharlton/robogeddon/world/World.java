@@ -4,18 +4,34 @@ import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.entity.CustomEntityMessage;
 import com.noahcharlton.robogeddon.entity.Entity;
 import com.noahcharlton.robogeddon.message.Message;
+import com.noahcharlton.robogeddon.util.Side;
 
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+@Side(Side.BOTH)
 public abstract class World {
+
+    /** These variables are set on creation for the server world, but for the client they are sent
+     * when the server sends the first worldSync message*/
+    private int height = -1;
+    private int width = -1;
+    private Tile[][] tiles;
 
     private final boolean isServer;
     protected final List<Entity> entities = new LinkedList<>();
 
     World(boolean isServer) {
         this.isServer = isServer;
+    }
+
+    public Tile getTileAt(int x, int y){
+        if(x < 0 || y < 0 || x >= width || y>=height){
+            return null;
+        }
+
+        return tiles[x][y];
     }
 
     protected Entity getEntityByID(int id){
@@ -66,7 +82,11 @@ public abstract class World {
         throw new UnsupportedOperationException("Only the server can have dead entities");
     }
 
-    private void sendMessageToOppositeSide(Message message){
+    /**
+     * If on the server, it sends the message to the client. If its on the
+     * client, it sends the message to the server.
+     */
+    private void sendMessage(Message message){
         if(isServer){
             sendMessageToClient(message);
         }else{
@@ -88,5 +108,43 @@ public abstract class World {
 
     public boolean isClient(){
         return !isServer;
+    }
+
+    void setHeight(int height) {
+        if(this.height != -1)
+            throw new UnsupportedOperationException("Height has already been set.");
+        this.height = height;
+    }
+
+    void setWidth(int width) {
+        if(this.width != -1)
+            throw new UnsupportedOperationException("Width has already been set.");
+        this.width = width;
+    }
+
+    void setTiles(Tile[][] tiles) {
+        if(this.tiles != null)
+            throw new UnsupportedOperationException("Tiles have already been created.");
+        this.tiles = tiles;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getPixelWidth() {
+        return width * Tile.SIZE;
+    }
+
+    public int getPixelHeight() {
+        return height * Tile.SIZE;
+    }
+
+    public Tile[][] getTiles() {
+        return tiles;
     }
 }

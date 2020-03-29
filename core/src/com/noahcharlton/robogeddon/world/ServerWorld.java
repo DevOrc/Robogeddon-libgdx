@@ -3,14 +3,19 @@ package com.noahcharlton.robogeddon.world;
 import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.Server;
 import com.noahcharlton.robogeddon.ServerProvider;
+import com.noahcharlton.robogeddon.block.Blocks;
 import com.noahcharlton.robogeddon.entity.Entity;
 import com.noahcharlton.robogeddon.entity.EntityRemovedMessage;
 import com.noahcharlton.robogeddon.entity.EntityType;
 import com.noahcharlton.robogeddon.entity.NewEntityMessage;
 import com.noahcharlton.robogeddon.message.Message;
+import com.noahcharlton.robogeddon.util.Side;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
+@Side(Side.SERVER)
 public class ServerWorld extends World{
 
     private final HashMap<Integer, Entity> players = new HashMap<>();
@@ -20,10 +25,49 @@ public class ServerWorld extends World{
     public ServerWorld(ServerProvider server) {
         super(true);
         this.server = server;
+
+        setWidth(250);
+        setHeight(250);
+
+        Tile[][] tiles = new Tile[getWidth()][getHeight()];
+        for(int x = 0; x < 250; x++){
+            for(int y = 0; y < 250; y++){
+                tiles[x][y] = new Tile(this, x, y);
+            }
+        }
+        setTiles(tiles);
+        Log.info("World created with size " + getWidth() + "x" + getHeight());
     }
 
     public void update(){
         super.update();
+
+        var tile = getTileAt(0, 0);
+        if(System.currentTimeMillis() % 2000 < 1000 && tile.hasBlock()){
+            tile.setBlock(null, true);
+        }else if(System.currentTimeMillis() % 2000 > 1000 && !tile.hasBlock()){
+            tile.setBlock(Blocks.testBlock, true);
+        }
+
+        sendDirtyTiles();
+    }
+
+    private void sendDirtyTiles() {
+        List<Tile> dirtyTiles = new ArrayList<>();
+
+        for(int x = 0; x < getWidth(); x++){
+            for(int y = 0; y < getHeight(); y++){
+                var tile = getTileAt(x, y);
+
+                if(tile.isDirty()){
+                    dirtyTiles.add(tile);
+                    tile.clean();
+                }
+            }
+        }
+
+        if(!dirtyTiles.isEmpty())
+            sendMessageToClient(new UpdateWorldMessage(dirtyTiles));
     }
 
     public void updateMessages(){
@@ -76,11 +120,23 @@ public class ServerWorld extends World{
 
     public void handleNewConnection(int connID) {
         Log.debug("New client: " + connID);
+
         for(Entity entity : entities){
             server.sendSingle(connID, new NewEntityMessage(entity.getType().getTypeID(), entity.getId()));
         }
 
         addNewPlayer(connID);
+        //Send world last, because it takes so many messages, that the
+        //new player and assign player messages are sent out of order
+        sendWorldToClient(connID);
+    }
+
+    private void sendWorldToClient(int connID) {
+        //Send the client one ylevel per message
+        //because of the message byte limit
+        for(int y = 0; y < getHeight(); y++){
+            server.sendSingle(connID, new WorldSyncMessage(this, y));
+        }
     }
 
     private void addNewPlayer(int connID) {
