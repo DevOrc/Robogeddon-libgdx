@@ -6,11 +6,17 @@ import java.util.function.Consumer;
 
 public abstract class Asset<T> {
 
-    private Consumer<T> onLoad = x -> {};
+    private Consumer<T> onLoad = x -> {
+    };
 
-    final void onLoad(){
+    final void onLoad() {
         Log.debug("Loading asset: " + getName());
-        onLoad.accept(load());
+        var asset = load();
+
+        if(asset == null)
+            throw new RuntimeException("Failed to find asset: " + getName());
+
+        onLoad.accept(asset);
     }
 
     protected abstract String getName();

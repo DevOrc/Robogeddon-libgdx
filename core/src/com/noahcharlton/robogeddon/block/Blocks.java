@@ -14,6 +14,5 @@ public class Blocks{
 
     @Side(Side.CLIENT)
     public static void init() {
-        Core.blocks.values().forEach(Block::initRenderer);
     }
 }

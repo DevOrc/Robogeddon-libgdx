@@ -7,10 +7,7 @@ import com.noahcharlton.robogeddon.ServerProvider;
 import com.noahcharlton.robogeddon.client.ClientLauncher;
 import com.noahcharlton.robogeddon.client.LocalServer;
 import com.noahcharlton.robogeddon.client.RemoteServer;
-import com.noahcharlton.robogeddon.entity.Entity;
-import com.noahcharlton.robogeddon.entity.EntityRemovedMessage;
-import com.noahcharlton.robogeddon.entity.EntityUpdateMessage;
-import com.noahcharlton.robogeddon.entity.NewEntityMessage;
+import com.noahcharlton.robogeddon.entity.*;
 import com.noahcharlton.robogeddon.message.Message;
 import com.noahcharlton.robogeddon.util.Side;
 
@@ -18,6 +15,7 @@ import com.noahcharlton.robogeddon.util.Side;
 public class ClientWorld extends World {
 
     private final ServerProvider server;
+    private Entity playersRobot;
 
     public ClientWorld() {
         super(false);
@@ -38,6 +36,10 @@ public class ClientWorld extends World {
     }
 
     protected boolean onMessageReceived(Message message) {
+        if(message instanceof AssignRobotMessage){
+            playersRobot = getEntityByID(((AssignRobotMessage) message).getID());
+        }
+
         if(super.onMessageReceived(message)) {
 
         } else if(message instanceof NewEntityMessage) {
@@ -58,6 +60,11 @@ public class ClientWorld extends World {
     }
 
     private void updateWorld(UpdateWorldMessage message) {
+        if(getTiles() == null){
+            Log.warn("World updated before synced with server??");
+            return;
+        }
+
         for(TileUpdate update : message.getUpdates()){
             updateTile(update);
         }
@@ -65,6 +72,12 @@ public class ClientWorld extends World {
 
     private void updateTile(TileUpdate update){
         var tile = getTileAt(update.x, update.y);
+
+        if(update.floor == null){
+            throw new RuntimeException("Cannot have null floor.");
+        }else{
+            tile.setFloor(Core.floors.get(update.floor), false);
+        }
 
         if(update.block == null){
             tile.setBlock(null, false);
@@ -148,5 +161,9 @@ public class ClientWorld extends World {
 
     public ServerProvider getServer() {
         return server;
+    }
+
+    public Entity getPlayersRobot() {
+        return playersRobot;
     }
 }

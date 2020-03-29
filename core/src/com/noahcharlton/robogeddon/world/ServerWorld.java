@@ -10,6 +10,7 @@ import com.noahcharlton.robogeddon.entity.EntityType;
 import com.noahcharlton.robogeddon.entity.NewEntityMessage;
 import com.noahcharlton.robogeddon.message.Message;
 import com.noahcharlton.robogeddon.util.Side;
+import com.noahcharlton.robogeddon.world.floor.Floors;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,6 +34,7 @@ public class ServerWorld extends World{
         for(int x = 0; x < 250; x++){
             for(int y = 0; y < 250; y++){
                 tiles[x][y] = new Tile(this, x, y);
+                tiles[x][y].setFloor(Floors.rock, false);
             }
         }
         setTiles(tiles);

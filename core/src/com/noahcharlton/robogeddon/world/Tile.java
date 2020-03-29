@@ -4,6 +4,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.block.Block;
 import com.noahcharlton.robogeddon.util.Side;
+import com.noahcharlton.robogeddon.world.floor.Floor;
+
+import java.util.Objects;
 
 public class Tile {
 
@@ -13,12 +16,13 @@ public class Tile {
     private final int x;
     private final int y;
 
+    private Block block;
+    private Floor floor;
 
     /** Used by the server to tell which tiles should be sent to the client, after the next update*/
     @Side(Side.SERVER)
     private boolean dirty;
 
-    private Block block;
 
     public Tile(World world, int x, int y) {
         this.x = x;
@@ -36,6 +40,9 @@ public class Tile {
 
     @Side(Side.CLIENT)
     public void render(SpriteBatch batch) {
+        if(floor != null)
+            floor.render(batch, this);
+
         if(hasBlock())
             block.getRenderer().render(batch, this);
     }
@@ -45,6 +52,13 @@ public class Tile {
             markDirty();
 
         this.block = block;
+    }
+
+    public void setFloor(Floor floor, boolean markDirty) {
+        if(markDirty)
+            markDirty();
+
+        this.floor = Objects.requireNonNull(floor);
     }
 
     public void clean() {
@@ -77,6 +91,10 @@ public class Tile {
 
     public int getPixelY(){
         return y * Tile.SIZE;
+    }
+
+    public Floor getFloor() {
+        return floor;
     }
 
     @Override

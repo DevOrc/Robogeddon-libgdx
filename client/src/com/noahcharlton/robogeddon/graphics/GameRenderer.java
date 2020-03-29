@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.noahcharlton.robogeddon.client.GameClient;
+import com.noahcharlton.robogeddon.entity.Entity;
 
 public class GameRenderer {
 
@@ -23,12 +24,21 @@ public class GameRenderer {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        syncCameraToPlayer();
         camera.update();
         batch.setProjectionMatrix(camera.combined);
 
         batch.begin();
         client.getWorld().render(batch);
         batch.end();
+    }
+
+    private void syncCameraToPlayer() {
+        Entity player = client.getWorld().getPlayersRobot();
+
+        if(player != null){
+            camera.position.set(player.getX(), player.getY(), 0);
+        }
     }
 
     public void resize(int width, int height){

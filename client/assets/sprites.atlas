@@ -6,22 +6,43 @@ filter: Nearest,Nearest
 repeat: none
 blocks/test_block
   rotate: false
-  xy: 2, 2
+  xy: 167, 67
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 entities/robot_off
   rotate: false
-  xy: 2, 36
+  xy: 1, 35
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 entities/robot_on
   rotate: false
-  xy: 68, 36
+  xy: 67, 35
   size: 64, 64
   orig: 64, 64
+  offset: 0, 0
+  index: -1
+floors/dirt
+  rotate: false
+  xy: 1, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+floors/grass
+  rotate: false
+  xy: 133, 67
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+floors/rock
+  rotate: false
+  xy: 35, 1
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1
