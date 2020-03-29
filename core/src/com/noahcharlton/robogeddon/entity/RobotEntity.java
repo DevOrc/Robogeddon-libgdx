@@ -8,10 +8,14 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.Log;
+import com.noahcharlton.robogeddon.block.Mineable;
 import com.noahcharlton.robogeddon.util.GraphicsUtil;
 import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.AssignRobotMessage;
+import com.noahcharlton.robogeddon.world.ServerWorld;
+import com.noahcharlton.robogeddon.world.Tile;
 import com.noahcharlton.robogeddon.world.World;
+import com.noahcharlton.robogeddon.world.item.ItemStack;
 
 import java.util.Objects;
 
@@ -19,7 +23,7 @@ public class RobotEntity extends Entity {
 
     private static final float MAX_VELOCITY = 14;
     private static final float MAX_ANGULAR_VELOCITY = .1f;
-    private static final int LASER_TIME = 50;
+    private static final int LASER_TIME = 120;
 
     private boolean controlling = false;
 
@@ -55,7 +59,25 @@ public class RobotEntity extends Entity {
         laserTime--;
 
         if(laserTime <= 0){
+            onMine();
             laserTime = LASER_TIME;
+        }
+    }
+
+    @Side(Side.SERVER)
+    private void onMine() {
+        Tile tile = world.tileFromPixel(miningPos);
+
+        if(tile == null){
+            Log.warn("Mined null tile???");
+            return;
+        }
+
+        if(tile.getBlock() instanceof Mineable){
+            ItemStack items = ((Mineable) tile.getBlock()).onMine();
+            var serverWorld = (ServerWorld) world;
+
+            serverWorld.getInventory().changeItem(items);
         }
     }
 

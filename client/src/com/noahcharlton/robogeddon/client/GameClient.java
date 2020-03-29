@@ -8,6 +8,7 @@ import com.noahcharlton.robogeddon.Client;
 import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.graphics.GameRenderer;
+import com.noahcharlton.robogeddon.ui.UI;
 import com.noahcharlton.robogeddon.world.ClientWorld;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
@@ -24,6 +25,7 @@ public class GameClient extends ApplicationAdapter implements Client {
 
     private GameRenderer renderer;
     private ClientWorld world;
+    private UI ui;
 
     @Override
     public void create() {
@@ -32,6 +34,7 @@ public class GameClient extends ApplicationAdapter implements Client {
         Core.init();
 
         renderer = new GameRenderer(this);
+        ui = new UI(this);
         world = new ClientWorld();
     }
 
@@ -54,6 +57,7 @@ public class GameClient extends ApplicationAdapter implements Client {
 
         renderFrames++;
         renderer.render();
+        ui.render(world);
 
         world.updateMessages();
         updateFPSCount();
@@ -96,6 +100,7 @@ public class GameClient extends ApplicationAdapter implements Client {
     public void resize(int width, int height) {
         Log.info("Resize: (" + width + ", " + height + ")");
         renderer.resize(width, height);
+        ui.resize(width, height);
     }
 
     @Override

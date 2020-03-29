@@ -7,6 +7,8 @@ import com.noahcharlton.robogeddon.entity.CustomEntityMessage;
 import com.noahcharlton.robogeddon.entity.Entity;
 import com.noahcharlton.robogeddon.message.Message;
 import com.noahcharlton.robogeddon.util.Side;
+import com.noahcharlton.robogeddon.world.item.Inventory;
+import com.noahcharlton.robogeddon.world.item.Item;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -22,6 +24,8 @@ public abstract class World {
     private Tile[][] tiles;
 
     private final boolean isServer;
+
+    protected final Inventory inventory = new Inventory();
     protected final List<Entity> entities = new LinkedList<>();
 
     World(boolean isServer) {
@@ -116,6 +120,10 @@ public abstract class World {
             return null;
 
         return getTileAt((int) pos.x / Tile.SIZE, (int)pos.y / Tile.SIZE);
+    }
+
+    public int getInventoryForItem(Item item){
+        return inventory.getItem(item);
     }
 
     public boolean isServer() {

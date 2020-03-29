@@ -10,6 +10,7 @@ import com.noahcharlton.robogeddon.client.RemoteServer;
 import com.noahcharlton.robogeddon.entity.*;
 import com.noahcharlton.robogeddon.message.Message;
 import com.noahcharlton.robogeddon.util.Side;
+import com.noahcharlton.robogeddon.world.item.InventorySyncMessage;
 
 @Side(Side.CLIENT)
 public class ClientWorld extends World {
@@ -52,11 +53,22 @@ public class ClientWorld extends World {
             onWorldSync((WorldSyncMessage) message);
         } else if(message instanceof UpdateWorldMessage){
             updateWorld((UpdateWorldMessage) message);
-        } else {
+        } else if(message instanceof InventorySyncMessage){
+            syncInventory((InventorySyncMessage) message);
+        }else {
             Log.warn("Unknown message type: " + message.getClass());
         }
 
         return false;
+    }
+
+    private void syncInventory(InventorySyncMessage message) {
+        for(int i = 0; i < message.getIds().length; i++){
+            var item = Core.items.get(message.getIds()[i]);
+            var amount = message.getAmounts()[i];
+
+            inventory.setItem(item, amount);
+        }
     }
 
     private void updateWorld(UpdateWorldMessage message) {

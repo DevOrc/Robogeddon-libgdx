@@ -24,7 +24,7 @@ public class WorldGenerator {
     }
 
     public void gen(){
-        for(int i = 0; i < 100; i++){
+        for(int i = 0; i < 20; i++){
             int x = random.nextInt(world.getWidth());
             int y = random.nextInt(world.getHeight());
             generateFeature(x, y, 5 + (int) (45 * random.nextDouble()), this::setOil);

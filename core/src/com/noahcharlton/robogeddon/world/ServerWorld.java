@@ -12,6 +12,7 @@ import com.noahcharlton.robogeddon.message.Message;
 import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.floor.Floors;
 import com.noahcharlton.robogeddon.world.gen.WorldGenerator;
+import com.noahcharlton.robogeddon.world.item.Inventory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,12 +29,12 @@ public class ServerWorld extends World{
         super(true);
         this.server = server;
 
-        setWidth(250);
-        setHeight(250);
+        setWidth(100);
+        setHeight(100);
 
         Tile[][] tiles = new Tile[getWidth()][getHeight()];
-        for(int x = 0; x < 250; x++){
-            for(int y = 0; y < 250; y++){
+        for(int x = 0; x < getWidth(); x++){
+            for(int y = 0; y < getHeight(); y++){
                 tiles[x][y] = new Tile(this, x, y);
                 tiles[x][y].setFloor(Floors.dirt, false);
             }
@@ -52,6 +53,11 @@ public class ServerWorld extends World{
             tile.setBlock(null, true);
         }else if(System.currentTimeMillis() % 2000 > 1000 && !tile.hasBlock()){
             tile.setBlock(Blocks.testBlock, true);
+        }
+
+        if(inventory.isDirty()){
+            inventory.clean();
+            sendMessageToClient(inventory.createSyncMessage());
         }
 
         sendDirtyTiles();
@@ -130,6 +136,7 @@ public class ServerWorld extends World{
             server.sendSingle(connID, new NewEntityMessage(entity.getType().getTypeID(), entity.getId()));
         }
 
+        server.sendSingle(connID, inventory.createSyncMessage());
         addNewPlayer(connID);
         //Send world last, because it takes so many messages, that the
         //new player and assign player messages are sent out of order
@@ -161,5 +168,9 @@ public class ServerWorld extends World{
 
     public ServerProvider getServer() {
         return server;
+    }
+
+    public Inventory getInventory(){
+        return inventory;
     }
 }

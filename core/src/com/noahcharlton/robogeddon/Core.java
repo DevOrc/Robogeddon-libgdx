@@ -7,6 +7,8 @@ import com.noahcharlton.robogeddon.entity.EntityType;
 import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.floor.Floor;
 import com.noahcharlton.robogeddon.world.floor.Floors;
+import com.noahcharlton.robogeddon.world.item.Item;
+import com.noahcharlton.robogeddon.world.item.Items;
 
 public class Core {
 
@@ -17,6 +19,7 @@ public class Core {
     public static final Registry<EntityType> entities = new Registry<>();
     public static final Registry<Block> blocks = new Registry<>();
     public static final Registry<Floor> floors = new Registry<>();
+    public static final Registry<Item> items = new Registry<>();
 
     @Side(Side.CLIENT)
     public static AssetManager assets;
@@ -32,10 +35,12 @@ public class Core {
         EntityType.preInit();
         Blocks.preInit();
         Floors.preInit();
+        Items.preInit();
 
         entities.setFinalized(true);
         blocks.setFinalized(true);
         floors.setFinalized(true);
+        items.setFinalized(true);
         Log.debug("PreInit End");
     }
 
@@ -47,6 +52,7 @@ public class Core {
         entities.values().forEach(EntityType::initRenderer);
         blocks.values().forEach(Block::initRenderer);
         floors.values().forEach(Floor::init);
+        items.values().forEach(Item::init);
         Log.debug("Init End");
     }
 }
