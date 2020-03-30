@@ -1,12 +1,14 @@
 package com.noahcharlton.robogeddon.ui;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.client.GameClient;
 import com.noahcharlton.robogeddon.ui.widget.Widget;
 import space.earlygrey.shapedrawer.ShapeDrawer;
@@ -45,6 +47,24 @@ public class UI {
             currentScene.render(batch);
 
         batch.end();
+
+        updateScale();
+    }
+
+    private void updateScale() {
+        if(Gdx.input.isKeyJustPressed(Input.Keys.UP)){
+            setScale(Scale.scale + .125f);
+        }else if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN)){
+            setScale(Scale.scale - .125f);
+        }
+    }
+
+    public void setScale(float scale){
+        Log.info("Set UI scale to: " + scale);
+        Scale.scale = scale;
+
+        if(currentScene != null)
+            currentScene.invalidate();
     }
 
     public void resize(int width, int height){

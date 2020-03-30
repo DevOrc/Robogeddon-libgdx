@@ -59,7 +59,8 @@ public class Scene extends Widget {
     }
 
     public void onResize(int width, int height) {
-        setSize(width, height);
+        //Do not scale this because it is the screen size
+        setSize(width / Scale.scale, height / Scale.scale);
         this.invalidate();
     }
 }

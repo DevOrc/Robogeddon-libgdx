@@ -2,6 +2,7 @@ package com.noahcharlton.robogeddon.ui.widget;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Align;
+import com.noahcharlton.robogeddon.ui.Scale;
 import com.noahcharlton.robogeddon.ui.background.Background;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
@@ -24,6 +25,10 @@ public class Widget {
 
     private Widget parent;
     private boolean invalidated;
+
+    public Widget() {
+        invalidated = true;
+    }
 
     public final void render(SpriteBatch batch) {
         if(invalidated)
@@ -85,8 +90,8 @@ public class Widget {
     }
 
     public Widget setSize(float width, float height){
-        this.width = width;
-        this.height = height;
+        this.width = width * Scale.scale;
+        this.height = height * Scale.scale;
 
         return this;
     }
@@ -102,12 +107,12 @@ public class Widget {
     }
 
     public Widget setWidth(float width) {
-        this.width = width;
+        this.width = width * Scale.scale;
         return this;
     }
 
     public Widget setHeight(float height) {
-        this.height = height;
+        this.height = height * Scale.scale;
         return this;
     }
 
