@@ -27,8 +27,6 @@ public class Scene extends Widget {
     }
 
     private void layoutChild(Widget widget) {
-        widget.invalidate();
-
         switch(widget.getAlign()) {
             case Align.center:
                 var x = (getWidth() / 2) - (widget.getWidth() / 2);

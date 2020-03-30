@@ -5,35 +5,27 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.noahcharlton.robogeddon.ui.Scale;
-import com.noahcharlton.robogeddon.ui.UIAssets;
-import com.noahcharlton.robogeddon.ui.background.NinePatchBackground;
 
-public class TextButton extends Button {
+import java.util.function.Supplier;
 
+public class Label extends Widget {
 
-    /**
-     * The distance from the side of the texture to the text
-     */
-    private static final int sidePadding = 11;
-    private static final int topPadding = 9;
-    private static final int defaultHeight = 30;
-
+    private Supplier<String> supplier = null;
     private BitmapFont font;
+    private String text = "";
     private Color textColor = Color.WHITE;
-    private String text;
 
-    public TextButton(String text) {
-        this.text = text;
-        this.font = UIAssets.small;
-
-        setDefaultBackground(new NinePatchBackground(UIAssets.button));
-        setOnHover(new NinePatchBackground(UIAssets.buttonHover));
+    @Override
+    public void update() {
+        if(supplier != null){
+            text = supplier.get();
+        }
     }
 
     @Override
     public void draw(SpriteBatch batch) {
-        var x = getX() + sidePadding;
-        var y = getY() + getHeight() - topPadding;
+        var x = getX();
+        var y = getY() + getHeight();
 
         font.getData().setScale(Scale.scale);
         font.setColor(Color.WHITE);
@@ -45,11 +37,16 @@ public class TextButton extends Button {
         font.getData().setScale(Scale.scale);
         var textLayout = new GlyphLayout(font, text);
 
-        setMinWidth(textLayout.width + (2 * sidePadding));
-        setMinHeight(textLayout.height + (2 * topPadding));
+        setMinWidth(textLayout.width);
+        setMinHeight(textLayout.height);
     }
 
-    public TextButton setTextColor(Color textColor) {
+    public Label setSupplier(Supplier<String> supplier) {
+        this.supplier = supplier;
+        return this;
+    }
+
+    public Label setTextColor(Color textColor) {
         this.textColor = textColor;
         return this;
     }
@@ -58,7 +55,7 @@ public class TextButton extends Button {
         return textColor;
     }
 
-    public TextButton setFont(BitmapFont font) {
+    public Label setFont(BitmapFont font) {
         invalidate();
         this.font = font;
         return this;
@@ -68,7 +65,7 @@ public class TextButton extends Button {
         return font;
     }
 
-    public TextButton setText(String text) {
+    public Label setText(String text) {
         invalidate();
         this.text = text;
 
@@ -78,4 +75,5 @@ public class TextButton extends Button {
     public String getText() {
         return text;
     }
+
 }

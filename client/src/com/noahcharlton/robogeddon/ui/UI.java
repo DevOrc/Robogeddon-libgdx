@@ -69,6 +69,7 @@ public class UI {
     }
 
     public void resize(int width, int height){
+        Log.debug("Resize UI!");
         screenViewport.update(width, height);
 
         if(currentScene != null)

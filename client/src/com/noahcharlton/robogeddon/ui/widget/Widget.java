@@ -3,6 +3,8 @@ package com.noahcharlton.robogeddon.ui.widget;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Align;
+import com.noahcharlton.robogeddon.Log;
+import com.noahcharlton.robogeddon.client.GameClient;
 import com.noahcharlton.robogeddon.ui.Scale;
 import com.noahcharlton.robogeddon.ui.background.Background;
 import com.noahcharlton.robogeddon.ui.event.ClickEvent;
@@ -14,6 +16,7 @@ import java.util.List;
 
 public class Widget {
 
+    protected static final GameClient client = GameClient.getInstance();
     protected static ShapeDrawer shapeDrawer;
 
     private final List<Widget> children = new ArrayList<>();
@@ -52,6 +55,7 @@ public class Widget {
     private void validate() {
         invalidated = false;
         layout();
+        children.forEach(Widget::validate);
     }
 
     public void layout(){}
@@ -70,14 +74,21 @@ public class Widget {
 
     protected void onClick(ClickEvent event){}
 
+    public Widget add(Widget widget){
+        widget.parent = this;
+        children.add(widget);
+
+        return widget;
+    }
+
     public void add(Widget... widgets){
         var newChildren = Arrays.asList(widgets);
 
-        newChildren.forEach(w -> w.parent = this);
-        this.children.addAll(newChildren);
+        newChildren.forEach(this::add);
     }
 
     public void invalidate(){
+        Log.trace("Invalidated: " + getClass().getName());
         this.invalidated = true;
     }
 
@@ -87,7 +98,7 @@ public class Widget {
     }
 
     public void invalidateHierarchy(){
-        invalidated = true;
+        invalidate();
 
         if(parent != null)
             parent.invalidateHierarchy();
@@ -150,6 +161,10 @@ public class Widget {
         this.width = Math.max(width, minWidth);
 
         return this;
+    }
+
+    public Padding pad(){
+        return new Padding(this);
     }
 
     public float getMinHeight() {

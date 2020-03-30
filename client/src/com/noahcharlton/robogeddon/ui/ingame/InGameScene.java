@@ -1,8 +1,9 @@
-package com.noahcharlton.robogeddon.ui;
+package com.noahcharlton.robogeddon.ui.ingame;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.utils.Align;
+import com.noahcharlton.robogeddon.ui.Scene;
 import com.noahcharlton.robogeddon.ui.widget.TextButton;
 import com.noahcharlton.robogeddon.ui.widget.Widget;
 
@@ -13,24 +14,29 @@ public class InGameScene extends Scene {
 
     public InGameScene() {
         add(widget);
+        add(new InventoryList()).align(Align.topLeft);
     }
 
     @Override
     public void update() {
         if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)){
             alignIndex++;
+            invalidate();
         }else if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT)){
             alignIndex--;
+            invalidate();
         }
 
         if(alignIndex < 0){
             alignIndex = 0;
+            invalidate();
         }else if(alignIndex > 8){
             alignIndex = 8;
+            invalidate();
         }
 
         updateAlign();
-        invalidate();
+
     }
 
     private void updateAlign() {

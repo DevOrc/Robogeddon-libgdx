@@ -8,7 +8,7 @@ import com.noahcharlton.robogeddon.Client;
 import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.graphics.GameRenderer;
-import com.noahcharlton.robogeddon.ui.InGameScene;
+import com.noahcharlton.robogeddon.ui.ingame.InGameScene;
 import com.noahcharlton.robogeddon.ui.UI;
 import com.noahcharlton.robogeddon.ui.UIAssets;
 import com.noahcharlton.robogeddon.world.ClientWorld;
