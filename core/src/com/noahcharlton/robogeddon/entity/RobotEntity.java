@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.Log;
+import com.noahcharlton.robogeddon.Server;
 import com.noahcharlton.robogeddon.block.Mineable;
 import com.noahcharlton.robogeddon.util.GraphicsUtil;
 import com.noahcharlton.robogeddon.util.Side;
@@ -24,6 +25,8 @@ public class RobotEntity extends Entity {
     private static final float MAX_VELOCITY = 14;
     private static final float MAX_ANGULAR_VELOCITY = .1f;
     private static final int LASER_TIME = 120;
+    private static final int SHOOT_TIME = 20;
+    private static final int SHOOT_OFFSET = 32;
 
     private boolean controlling = false;
 
@@ -31,10 +34,13 @@ public class RobotEntity extends Entity {
     private boolean aKey;
     private boolean sKey;
     private boolean dKey;
+    private boolean spaceKey;
 
     private Vector3 miningPos;
     @Side(Side.SERVER)
     private int laserTime = LASER_TIME;
+    @Side(Side.SERVER)
+    private int shootTime = SHOOT_TIME;
 
     public RobotEntity(World world) {
         super(EntityType.robotEntity, world);
@@ -46,13 +52,42 @@ public class RobotEntity extends Entity {
     public void update() {
         if(world.isClient() && controlling){
             sendInputValues();
-        }else if(world.isServer() && miningPos != null){
-            updateMining();
+        }else if(world.isServer()){
+            updateShooter();
+
+            if(miningPos != null){
+                updateMining();
+            }
         }
 
         updateControls();
         trimVelocity();
     }
+
+    @Side(Side.SERVER)
+    private void updateShooter(){
+        if(shootTime > 0){
+            shootTime--;
+        }
+
+        if(spaceKey && shootTime <= 0){
+            shoot();
+            shootTime = SHOOT_TIME;
+        }
+    }
+
+    @Side(Side.SERVER)
+    private void shoot() {
+        ServerWorld world = (ServerWorld) this.world;
+        Entity bullet = EntityType.bulletEntity.create(world);
+
+        bullet.setX((float) (getX() + (SHOOT_OFFSET * Math.cos(angle))));
+        bullet.setY((float) (getY() + (SHOOT_OFFSET * Math.sin(angle))));
+        bullet.setAngle(angle);
+
+        Server.runLater(() -> world.addEntity(bullet));
+    }
+
 
     @Side(Side.SERVER)
     private void updateMining() {
@@ -117,15 +152,18 @@ public class RobotEntity extends Entity {
         boolean a = Gdx.input.isKeyPressed(Input.Keys.A);
         boolean s = Gdx.input.isKeyPressed(Input.Keys.S);
         boolean d = Gdx.input.isKeyPressed(Input.Keys.D);
+        boolean space = Gdx.input.isKeyPressed(Input.Keys.SPACE);
         boolean rightClicking = Gdx.input.isButtonPressed(Input.Buttons.RIGHT) && !Core.client.isMouseOnUI();
         Vector3 currMining = rightClicking ? trimMiningPosition(Core.client.mouseToWorld()) : null;
 
-        if(wKey != w || a != aKey || s != sKey || d != dKey || !Objects.equals(miningPos, currMining)){
-            var message = new RobotInputMessage(getId(), w, a, s, d, currMining);
+        if(wKey != w || a != aKey || s != sKey || d != dKey || space != spaceKey ||
+                !Objects.equals(miningPos, currMining)){
+            var message = new RobotInputMessage(getId(), w, a, s, d, space, currMining);
             wKey = w;
             aKey = a;
             sKey = s;
             dKey = d;
+            spaceKey = space;
             miningPos = currMining;
 
             world.sendMessageToServer(message);
@@ -155,6 +193,7 @@ public class RobotEntity extends Entity {
             aKey = input.aKey;
             sKey = input.sKey;
             dKey = input.dKey;
+            spaceKey = input.spaceKey;
             miningPos = clientMiningPos;
             Log.trace("Updated robot controls!");
         }else if(message instanceof AssignRobotMessage){
@@ -221,13 +260,16 @@ public class RobotEntity extends Entity {
         final boolean aKey;
         final boolean sKey;
         final boolean dKey;
+        final boolean spaceKey;
 
-        public RobotInputMessage(int ID, boolean wKey, boolean aKey, boolean sKey, boolean dKey, Vector3 miningPos) {
+        public RobotInputMessage(int ID, boolean wKey, boolean aKey, boolean sKey, boolean dKey, boolean spaceKey,
+                                 Vector3 miningPos) {
             super(ID);
             this.wKey = wKey;
             this.aKey = aKey;
             this.sKey = sKey;
             this.dKey = dKey;
+            this.spaceKey = spaceKey;
             this.miningPos = miningPos;
         }
     }

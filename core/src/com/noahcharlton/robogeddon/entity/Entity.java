@@ -69,6 +69,10 @@ public class Entity {
         dirty = true;
     }
 
+    public boolean isInWorld(){
+        return x > 0 && y > 0 && x < world.getPixelWidth() && y < world.getPixelHeight();
+    }
+
     @Override
     public boolean equals(Object o) {
         if(this == o) return true;

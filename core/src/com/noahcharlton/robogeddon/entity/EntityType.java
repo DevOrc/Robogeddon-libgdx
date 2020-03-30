@@ -10,6 +10,7 @@ public abstract class EntityType implements HasID {
 
     public static final EntityType testEntity = new TestEntity.TestEntityType();
     public static final EntityType robotEntity = new RobotEntity.RobotEntityType();
+    public static final EntityType bulletEntity = new BulletEntity.BulletEntityType();
 
     public abstract Entity create(World world);
 
@@ -17,12 +18,11 @@ public abstract class EntityType implements HasID {
     public static void preInit(){
         Core.entities.register(testEntity);
         Core.entities.register(robotEntity);
+        Core.entities.register(bulletEntity);
     }
 
     @Side(Side.CLIENT)
-    public static void init() {
-        Core.entities.values().forEach(EntityType::initRenderer);
-    }
+    public static void init() { }
 
     public void initRenderer(){}
 
