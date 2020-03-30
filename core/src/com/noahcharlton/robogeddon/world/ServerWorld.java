@@ -155,6 +155,10 @@ public class ServerWorld extends World{
         var player = addEntity(EntityType.robotEntity.create(this));
         var message = new AssignRobotMessage(player.getId());
 
+        //Send a single message to the client
+        //because sometimes the non-single messages get sent after
+        //and then the player is assigned an entity that does not exist yet
+        server.sendSingle(connID, new NewEntityMessage(player.getType().getTypeID(), player.getId()));
         players.put(connID, player);
 
         Server.runLater(() -> server.sendSingle(connID, message));

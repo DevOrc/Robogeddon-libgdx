@@ -147,6 +147,7 @@ public class ClientWorld extends World {
         Log.debug("New Entity: ID=" + message.getID() + " Type=" + type.getClass().getName());
         if(getEntityByID(message.getID()) != null) {
             Log.warn("Entity already registered with id: " + message.getID());
+            return;
         }
 
         var entity = type.create(this);
