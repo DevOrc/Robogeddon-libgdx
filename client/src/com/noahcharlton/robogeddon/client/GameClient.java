@@ -25,6 +25,7 @@ public class GameClient extends ApplicationAdapter implements Client {
     private int updateFrames;
     private int renderFrames;
 
+    private InputProcessor processor;
     private GameRenderer renderer;
     private ClientWorld world;
     private UI ui;
@@ -39,6 +40,7 @@ public class GameClient extends ApplicationAdapter implements Client {
         renderer = new GameRenderer(this);
         ui = new UI(this);
         world = new ClientWorld();
+        processor = new InputProcessor(ui);
     }
 
     @Override
@@ -111,6 +113,11 @@ public class GameClient extends ApplicationAdapter implements Client {
     public void dispose() {
         Core.assets.dispose();
         Log.info("Game Client disposed!");
+    }
+
+    @Override
+    public boolean isMouseOnUI() {
+        return ui.isMouseOver();
     }
 
     public static GameClient getInstance() {

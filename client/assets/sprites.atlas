@@ -6,14 +6,14 @@ filter: Nearest,Nearest
 repeat: none
 blocks/oil
   rotate: false
-  xy: 201, 69
+  xy: 73, 3
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/test_block
   rotate: false
-  xy: 141, 1
+  xy: 175, 1
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -34,56 +34,56 @@ entities/robot_on
   index: -1
 floors/dirt
   rotate: false
-  xy: 133, 69
+  xy: 133, 40
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 floors/grass
   rotate: false
-  xy: 167, 69
+  xy: 39, 3
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 floors/oil_rock
   rotate: false
-  xy: 133, 35
+  xy: 171, 69
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 floors/rock
   rotate: false
-  xy: 167, 35
+  xy: 205, 69
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 floors/sand
   rotate: false
-  xy: 73, 3
+  xy: 201, 35
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 items/rock
   rotate: false
-  xy: 201, 35
+  xy: 107, 3
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 items/ruby
   rotate: false
-  xy: 39, 3
+  xy: 167, 35
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 items/sapphire
   rotate: false
-  xy: 107, 1
+  xy: 141, 1
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -91,6 +91,14 @@ items/sapphire
 ui/button
   rotate: false
   xy: 1, 8
+  size: 36, 27
+  split: 11, 11, 11, 11
+  orig: 36, 27
+  offset: 0, 0
+  index: -1
+ui/buttonHover
+  rotate: false
+  xy: 133, 74
   size: 36, 27
   split: 11, 11, 11, 11
   orig: 36, 27

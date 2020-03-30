@@ -1,9 +1,11 @@
 package com.noahcharlton.robogeddon.ui.widget;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Align;
 import com.noahcharlton.robogeddon.ui.Scale;
 import com.noahcharlton.robogeddon.ui.background.Background;
+import com.noahcharlton.robogeddon.ui.event.ClickEvent;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
 import java.util.ArrayList;
@@ -55,6 +57,16 @@ public class Widget {
 
     }
 
+    public final void handleClick(ClickEvent event){
+        if(event.isOnWidget(this)){
+            onClick(event);
+        }
+
+        children.forEach(child -> child.handleClick(event));
+    }
+
+    protected void onClick(ClickEvent event){}
+
     public void add(Widget... widgets){
         var newChildren = Arrays.asList(widgets);
 
@@ -78,8 +90,10 @@ public class Widget {
             parent.invalidateHierarchy();
     }
 
-    public List<Widget> getChildren() {
-        return children;
+    public boolean isMouseOver() {
+        var x = Gdx.input.getX();
+        var y = Gdx.graphics.getHeight() - Gdx.input.getY();
+        return x > getX() && y > getY() && x < getX() + getWidth() && y < getY() + getHeight();
     }
 
     public Widget setPosition(float x, float y){
@@ -144,6 +158,10 @@ public class Widget {
     public Widget align(int align) {
         this.align = align;
         return this;
+    }
+
+    public List<Widget> getChildren() {
+        return children;
     }
 
     public int getAlign() {

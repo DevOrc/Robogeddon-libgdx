@@ -13,4 +13,6 @@ public interface Client {
     Vector3 mouseToWorld();
 
     ShapeDrawer getGameShapeDrawer();
+
+    boolean isMouseOnUI();
 }

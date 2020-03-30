@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.client.GameClient;
+import com.noahcharlton.robogeddon.ui.event.ClickEvent;
 import com.noahcharlton.robogeddon.ui.widget.Widget;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
@@ -77,5 +78,16 @@ public class UI {
     public void setScene(Scene scene){
         this.currentScene = scene;
         this.currentScene.onResize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+    }
+
+    public boolean isMouseOver() {
+        if(currentScene == null)
+            return false;
+
+        return currentScene.isMouseOver();
+    }
+
+    public void onClick(ClickEvent clickEvent) {
+        currentScene.handleClick(clickEvent);
     }
 }

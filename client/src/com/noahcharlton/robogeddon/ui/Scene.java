@@ -16,6 +16,16 @@ public class Scene extends Widget {
         }
     }
 
+    @Override
+    public boolean isMouseOver(){
+        for(Widget widget : getChildren()) {
+            if(widget.isMouseOver())
+                return true;
+        }
+
+        return false;
+    }
+
     private void layoutChild(Widget widget) {
         widget.invalidate();
 

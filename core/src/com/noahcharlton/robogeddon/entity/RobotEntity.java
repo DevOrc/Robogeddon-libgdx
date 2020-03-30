@@ -117,8 +117,8 @@ public class RobotEntity extends Entity {
         boolean a = Gdx.input.isKeyPressed(Input.Keys.A);
         boolean s = Gdx.input.isKeyPressed(Input.Keys.S);
         boolean d = Gdx.input.isKeyPressed(Input.Keys.D);
-        var currMining = Gdx.input.isButtonPressed(Input.Buttons.RIGHT) ?
-                trimMiningPosition(Core.client.mouseToWorld()) : null;
+        boolean rightClicking = Gdx.input.isButtonPressed(Input.Buttons.RIGHT) && !Core.client.isMouseOnUI();
+        Vector3 currMining = rightClicking ? trimMiningPosition(Core.client.mouseToWorld()) : null;
 
         if(wKey != w || a != aKey || s != sKey || d != dKey || !Objects.equals(miningPos, currMining)){
             var message = new RobotInputMessage(getId(), w, a, s, d, currMining);
