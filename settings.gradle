@@ -1,3 +1,2 @@
-include 'client', 'core'
-include 'server'
+include 'client', 'core', 'server'
 

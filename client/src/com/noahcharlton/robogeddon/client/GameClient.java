@@ -57,7 +57,7 @@ public class GameClient extends ApplicationAdapter implements Client {
 
         renderFrames++;
         renderer.render();
-        ui.render(world);
+        ui.render();
 
         world.updateMessages();
         updateFPSCount();
