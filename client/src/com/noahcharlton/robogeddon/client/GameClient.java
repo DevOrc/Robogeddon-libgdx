@@ -8,7 +8,9 @@ import com.noahcharlton.robogeddon.Client;
 import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.graphics.GameRenderer;
+import com.noahcharlton.robogeddon.ui.InGameScene;
 import com.noahcharlton.robogeddon.ui.UI;
+import com.noahcharlton.robogeddon.ui.UIAssets;
 import com.noahcharlton.robogeddon.world.ClientWorld;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
@@ -32,6 +34,7 @@ public class GameClient extends ApplicationAdapter implements Client {
         Thread.currentThread().setName("Client");
         Log.info("Game Client created!");
         Core.init();
+        UIAssets.init();
 
         renderer = new GameRenderer(this);
         ui = new UI(this);
@@ -75,6 +78,7 @@ public class GameClient extends ApplicationAdapter implements Client {
         loadingAssets = false;
         updateLastFrame = System.nanoTime();
         nextFpsCheck = System.currentTimeMillis() + 10000;
+        ui.setScene(new InGameScene());
 
         Log.info("Finished loading assets!");
     }

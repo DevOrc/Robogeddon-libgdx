@@ -21,7 +21,6 @@ public class UI {
 
     public UI(GameClient client) {
         this.client = client;
-        setScene(new InGameScene());
 
         drawer = new ShapeDrawer(batch, createDot());
         Widget.setShapeDrawer(drawer);
