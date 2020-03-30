@@ -1,17 +1,16 @@
 package com.noahcharlton.robogeddon.ui.widget;
 
-import com.noahcharlton.robogeddon.ui.UIAssets;
+import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.ui.background.Background;
-import com.noahcharlton.robogeddon.ui.background.NinePatchBackground;
+import com.noahcharlton.robogeddon.ui.background.ColorBackground;
 import com.noahcharlton.robogeddon.ui.event.ClickEvent;
 
-public class Button extends Widget {
+public abstract class Button extends Widget {
 
-    private final Background background = new NinePatchBackground(UIAssets.button);
-    private final Background onHover = new NinePatchBackground(UIAssets.buttonHover);
+    private Background defaultBackground = new ColorBackground();
+    private Background onHover = new ColorBackground();
 
     public Button() {
-        setBackground(new NinePatchBackground(UIAssets.button));
     }
 
     @Override
@@ -19,17 +18,22 @@ public class Button extends Widget {
         if(isMouseOver()){
             setBackground(onHover);
         }else{
-            setBackground(background);
+            setBackground(defaultBackground);
         }
     }
 
     @Override
     protected void onClick(ClickEvent event) {
-        System.out.println("On Click");
+        Log.debug("Clicked button");
     }
 
-    @Override
-    public void layout() {
-        setSize(120, 35);
+    public Button setDefaultBackground(Background defaultBackground) {
+        this.defaultBackground = defaultBackground;
+        return this;
+    }
+
+    public Button setOnHover(Background onHover) {
+        this.onHover = onHover;
+        return this;
     }
 }

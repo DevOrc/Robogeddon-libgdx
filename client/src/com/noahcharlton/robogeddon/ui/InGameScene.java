@@ -3,12 +3,12 @@ package com.noahcharlton.robogeddon.ui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.utils.Align;
-import com.noahcharlton.robogeddon.ui.widget.Button;
+import com.noahcharlton.robogeddon.ui.widget.TextButton;
 import com.noahcharlton.robogeddon.ui.widget.Widget;
 
 public class InGameScene extends Scene {
 
-    private final Widget widget = new Button();
+    private final Widget widget = new TextButton("Hello, please click me!");
     private int alignIndex = 0;
 
     public InGameScene() {

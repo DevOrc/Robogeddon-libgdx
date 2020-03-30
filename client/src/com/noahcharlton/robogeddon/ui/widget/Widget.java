@@ -22,6 +22,9 @@ public class Widget {
     private float y;
     private float width;
     private float height;
+    private float minWidth;
+    private float minHeight;
+
     private int align = Align.center;
     private Background background;
 
@@ -104,8 +107,8 @@ public class Widget {
     }
 
     public Widget setSize(float width, float height){
-        this.width = width * Scale.scale;
-        this.height = height * Scale.scale;
+        setWidth(width);
+        setHeight(height);
 
         return this;
     }
@@ -121,18 +124,40 @@ public class Widget {
     }
 
     public Widget setWidth(float width) {
-        this.width = width * Scale.scale;
+        this.width = Math.max(width * Scale.scale, minWidth);
         return this;
     }
 
     public Widget setHeight(float height) {
-        this.height = height * Scale.scale;
+        this.height = Math.max(height * Scale.scale, minHeight);
         return this;
     }
 
     public Widget setBackground(Background background) {
         this.background = background;
         return this;
+    }
+
+    public Widget setMinHeight(float minHeight) {
+        this.minHeight = minHeight;
+        this.height = Math.max(height, minHeight);
+
+        return this;
+    }
+
+    public Widget setMinWidth(float minWidth) {
+        this.minWidth = minWidth;
+        this.width = Math.max(width, minWidth);
+
+        return this;
+    }
+
+    public float getMinHeight() {
+        return minHeight;
+    }
+
+    public float getMinWidth() {
+        return minWidth;
     }
 
     public float getX() {

@@ -41,6 +41,13 @@ public class AssetManager {
         return asset;
     }
 
+    public BitmapFontAsset registerBitmapFont(String name) {
+        var asset = new BitmapFontAsset(name);
+        registerAsset(asset);
+
+        return asset;
+    }
+
     public void update() {
         Asset nextAsset = unloadedAssets.poll();
 
