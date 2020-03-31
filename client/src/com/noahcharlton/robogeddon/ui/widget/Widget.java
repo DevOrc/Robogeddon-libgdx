@@ -74,8 +74,8 @@ public class Widget {
 
     protected void onClick(ClickEvent event){}
 
-    public Widget add(Widget widget){
-        widget.parent = this;
+    public <T extends Widget> T add(T widget){
+        ((Widget) widget).parent = this; //Must cast here to get private field
         children.add(widget);
 
         return widget;

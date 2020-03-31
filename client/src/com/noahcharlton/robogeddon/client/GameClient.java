@@ -8,6 +8,7 @@ import com.noahcharlton.robogeddon.Client;
 import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.graphics.GameRenderer;
+import com.noahcharlton.robogeddon.input.InputProcessor;
 import com.noahcharlton.robogeddon.ui.ingame.InGameScene;
 import com.noahcharlton.robogeddon.ui.UI;
 import com.noahcharlton.robogeddon.ui.UIAssets;
@@ -40,7 +41,7 @@ public class GameClient extends ApplicationAdapter implements Client {
         renderer = new GameRenderer(this);
         ui = new UI(this);
         world = new ClientWorld();
-        processor = new InputProcessor(ui);
+        processor = new InputProcessor(this);
     }
 
     @Override
@@ -131,5 +132,13 @@ public class GameClient extends ApplicationAdapter implements Client {
     @Override
     public ShapeDrawer getGameShapeDrawer() {
         return renderer.getGameShapeDrawer();
+    }
+
+    public InputProcessor getProcessor() {
+        return processor;
+    }
+
+    public UI getUi() {
+        return ui;
     }
 }

@@ -8,4 +8,6 @@ import com.noahcharlton.robogeddon.world.Tile;
 public interface BlockRenderer {
 
     void render(SpriteBatch batch, Tile tile);
+
+    void buildRender(SpriteBatch batch, Tile tile);
 }

@@ -1,8 +1,10 @@
 package com.noahcharlton.robogeddon.world;
 
+import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.Server;
 import com.noahcharlton.robogeddon.ServerProvider;
+import com.noahcharlton.robogeddon.block.Block;
 import com.noahcharlton.robogeddon.block.Blocks;
 import com.noahcharlton.robogeddon.entity.Entity;
 import com.noahcharlton.robogeddon.entity.EntityRemovedMessage;
@@ -93,11 +95,23 @@ public class ServerWorld extends World{
 
         }else if(message instanceof LostClientMessage){
             onClientLost((LostClientMessage) message);
+        }else if(message instanceof BuildBlockMessage){
+            attemptToBuildBlock((BuildBlockMessage) message);
         }else{
             Log.warn("Unknown message type: " + message.getClass());
         }
 
         return false;
+    }
+
+    private void attemptToBuildBlock(BuildBlockMessage message) {
+        Tile tile = getTileAt(message.getTileX(), message.getTileY());
+        Block block = Core.blocks.getOrNull(message.getBlockID());
+
+        if(tile.hasBlock() && message.getBlockID() != null)
+            return;
+
+        tile.setBlock(block, true);
     }
 
     private void onClientLost(LostClientMessage message) {

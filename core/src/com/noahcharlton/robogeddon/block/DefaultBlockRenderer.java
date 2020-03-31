@@ -24,4 +24,11 @@ public class DefaultBlockRenderer implements BlockRenderer {
 
         batch.draw(texture, x, y);
     }
+
+    @Override
+    public void buildRender(SpriteBatch batch, Tile tile) {
+        batch.setColor(1f, 1f, 1f, .5f);
+        render(batch, tile);
+        batch.setColor(1f, 1f, 1f, 1f);
+    }
 }

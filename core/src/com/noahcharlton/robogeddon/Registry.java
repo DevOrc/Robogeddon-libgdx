@@ -31,6 +31,10 @@ public class Registry<T extends HasID>  {
         return item;
     }
 
+    public T getOrNull(String id){
+        return items.get(id);
+    }
+
     void setFinalized(boolean finalized) {
         this.finalized = finalized;
     }

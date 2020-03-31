@@ -40,6 +40,9 @@ public class GameRenderer {
 
         batch.begin();
         client.getWorld().render(batch);
+
+        if(client.getProcessor().getBuildAction() != null)
+            client.getProcessor().getBuildAction().render(batch);
         batch.end();
     }
 
