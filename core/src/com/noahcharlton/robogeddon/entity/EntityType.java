@@ -1,5 +1,6 @@
 package com.noahcharlton.robogeddon.entity;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.HasID;
@@ -29,4 +30,25 @@ public abstract class EntityType implements HasID {
     public void initRenderer(){}
 
     public void render(SpriteBatch batch, Entity entity){}
+
+    public void renderHealthBar(SpriteBatch batch, Entity entity, float radius){
+        var startHealth = entity.getType().getHealth();
+
+        if(startHealth == entity.getHealth()){
+            return;
+        }
+
+        var shapeDrawer = Core.client.getGameShapeDrawer();
+        var width = radius * 2;
+        var x = entity.getX() - radius;
+        var y = entity.getY() + radius + 10;
+        var innerWidth = (width - 2f) * entity.getHealth() / startHealth;
+
+        shapeDrawer.filledRectangle(x, y, width, 6, Color.WHITE);
+        shapeDrawer.filledRectangle(x + 1f, y + 1f, innerWidth, 4, Color.RED);
+    }
+
+    public int getHealth(){
+        return 1;
+    }
 }

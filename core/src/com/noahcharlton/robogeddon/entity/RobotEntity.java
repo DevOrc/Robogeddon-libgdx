@@ -10,6 +10,7 @@ import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.Server;
 import com.noahcharlton.robogeddon.block.Mineable;
+import com.noahcharlton.robogeddon.entity.collision.HasCollision;
 import com.noahcharlton.robogeddon.util.GraphicsUtil;
 import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.AssignRobotMessage;
@@ -20,13 +21,14 @@ import com.noahcharlton.robogeddon.world.item.ItemStack;
 
 import java.util.Objects;
 
-public class RobotEntity extends Entity {
+public class RobotEntity extends Entity implements HasCollision {
 
+    private static final int RADIUS = RobotEntityType.RADIUS;
     private static final float MAX_VELOCITY = 14;
     private static final float MAX_ANGULAR_VELOCITY = .1f;
     private static final int LASER_TIME = 120;
     private static final int SHOOT_TIME = 20;
-    private static final int SHOOT_OFFSET = 32;
+    private static final int SHOOT_OFFSET = RADIUS;
 
     private boolean controlling = false;
 
@@ -81,7 +83,8 @@ public class RobotEntity extends Entity {
     @Side(Side.SERVER)
     private void shoot() {
         ServerWorld world = (ServerWorld) this.world;
-        Entity bullet = EntityType.bulletEntity.create(world);
+        BulletEntity bullet = (BulletEntity) EntityType.bulletEntity.create(world);
+        bullet.setShooter(this);
 
         bullet.setX((float) (getX() + (SHOOT_OFFSET * Math.cos(angle))));
         bullet.setY((float) (getY() + (SHOOT_OFFSET * Math.sin(angle))));
@@ -116,6 +119,11 @@ public class RobotEntity extends Entity {
 
             serverWorld.getInventory().changeItem(items);
         }
+    }
+
+    @Override
+    public float getRadius() {
+        return RADIUS;
     }
 
     private void trimVelocity() {
@@ -236,6 +244,7 @@ public class RobotEntity extends Entity {
             float y = entity.getY() - RADIUS;
 
             GraphicsUtil.drawRotated(batch, texture, x, y, angle);
+            renderHealthBar(batch, entity, RADIUS);
 
             if(robotEntity.miningPos != null)
                 drawMiningLaser(robotEntity, robotEntity.miningPos);
@@ -252,6 +261,11 @@ public class RobotEntity extends Entity {
         @Override
         public String getTypeID() {
             return "EntityRobot";
+        }
+
+        @Override
+        public int getHealth() {
+            return 50;
         }
     }
 

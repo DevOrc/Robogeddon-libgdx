@@ -6,14 +6,15 @@ import com.badlogic.gdx.math.Vector2;
 import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.Server;
+import com.noahcharlton.robogeddon.entity.collision.HasCollision;
 import com.noahcharlton.robogeddon.util.GraphicsUtil;
 import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.ServerWorld;
 import com.noahcharlton.robogeddon.world.World;
 
-public class DroneEntity extends Entity {
+public class DroneEntity extends Entity implements HasCollision {
 
-    private static final int SHOOT_OFFSET = 32;
+    private static final int RADIUS = DroneEntityType.RADIUS;
     private static final int SHOOT_TIME = 30;
     private static final int MAX_VEL = 4;
 
@@ -33,6 +34,9 @@ public class DroneEntity extends Entity {
     @Override
     protected void update() {
         if(target == null || target.isDead()){
+            velocity = 0;
+            angularVelocity = 0;
+
             findTarget();
             return;
         }
@@ -58,10 +62,11 @@ public class DroneEntity extends Entity {
     @Side(Side.SERVER)
     private void shoot() {
         ServerWorld world = (ServerWorld) this.world;
-        Entity bullet = EntityType.bulletEntity.create(world);
+        BulletEntity bullet = (BulletEntity) EntityType.bulletEntity.create(world);
+        bullet.setShooter(this);
 
-        bullet.setX((float) (getX() + (SHOOT_OFFSET * Math.cos(angle))));
-        bullet.setY((float) (getY() + (SHOOT_OFFSET * Math.sin(angle))));
+        bullet.setX((float) (getX() + (RADIUS * Math.cos(angle))));
+        bullet.setY((float) (getY() + (RADIUS * Math.sin(angle))));
         bullet.setAngle(angle);
 
         Server.runLater(() -> world.addEntity(bullet));
@@ -126,6 +131,11 @@ public class DroneEntity extends Entity {
         }
     }
 
+    @Override
+    public float getRadius() {
+        return RADIUS;
+    }
+
     public static class DroneEntityType extends EntityType {
 
         static final int RADIUS = 32;
@@ -147,6 +157,7 @@ public class DroneEntity extends Entity {
             TextureRegion texture = entity.velocity < .25 ? offTexture : onTexture;
 
             GraphicsUtil.drawRotated(batch, texture, x, y, angle);
+            renderHealthBar(batch, entity, RADIUS);
         }
 
         @Override
@@ -157,6 +168,11 @@ public class DroneEntity extends Entity {
         @Override
         public String getTypeID() {
             return "drone";
+        }
+
+        @Override
+        public int getHealth() {
+            return 15;
         }
     }
 

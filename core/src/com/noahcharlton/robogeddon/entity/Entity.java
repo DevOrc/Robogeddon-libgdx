@@ -2,6 +2,7 @@ package com.noahcharlton.robogeddon.entity;
 
 import com.badlogic.gdx.math.Vector2;
 import com.noahcharlton.robogeddon.Log;
+import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.World;
 
 import java.util.Objects;
@@ -20,6 +21,8 @@ public class Entity {
     protected float velocity;
     protected float angularVelocity;
 
+    private int health;
+
     private boolean isDead;
     private boolean dirty;
 
@@ -27,27 +30,43 @@ public class Entity {
         this.type = type;
         this.world = world;
         this.dirty = world.isServer();
+        this.health = type.getHealth();
     }
 
     public void onCustomMessageReceived(CustomEntityMessage message) {
         Log.warn("Unhandled message: " + message.getClass().getName());
     }
 
+    @Side(Side.SERVER)
+    public void damage(int amount){
+        if(world.isClient()){
+            throw new UnsupportedOperationException("Entity cannot be damaged on the client.");
+        }
+
+        health -= amount;
+        dirty = true;
+    }
+
     public final void onUpdate(){
         update();
         updateKinematics();
+
+        if(health <= 0)
+            isDead = true;
 
         if(dirty && world.isServer())
             sendUpdatedValues();
     }
 
     private void sendUpdatedValues() {
-        var message = new EntityUpdateMessage(id, x, y, angle, velocity, angularVelocity);
+        var message = new EntityUpdateMessage(id, x, y, angle, velocity, angularVelocity, health);
 
         world.sendMessageToClient(message);
     }
 
     public void onUpdateMessage(EntityUpdateMessage message) {
+        health = message.getHealth();
+
         if(Math.abs(message.getX() - getX()) > 3 && Math.abs(message.getY() - getY()) > 3){
             x = message.getX();
             y = message.getY();
@@ -154,5 +173,9 @@ public class Entity {
 
     public EntityType getType() {
         return type;
+    }
+
+    public int getHealth() {
+        return health;
     }
 }
