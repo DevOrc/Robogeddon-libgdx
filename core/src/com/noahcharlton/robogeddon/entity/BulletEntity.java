@@ -3,16 +3,28 @@ package com.noahcharlton.robogeddon.entity;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.noahcharlton.robogeddon.Core;
+import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.World;
 
 public class BulletEntity extends Entity {
 
     private static final float VELOCITY = 28;
 
+    @Side(Side.SERVER)
+    private int dirtyCount = 0;
+
     public BulletEntity(World world) {
         super(EntityType.bulletEntity, world);
 
         this.setVelocity(VELOCITY);
+    }
+
+    @Override
+    public void setDirty(boolean dirty) {
+        if(dirtyCount ++ > 30){
+            setDirty(true);
+            dirtyCount = 0;
+        }
     }
 
     @Override

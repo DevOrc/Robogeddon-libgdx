@@ -11,6 +11,7 @@ public abstract class EntityType implements HasID {
     public static final EntityType testEntity = new TestEntity.TestEntityType();
     public static final EntityType robotEntity = new RobotEntity.RobotEntityType();
     public static final EntityType bulletEntity = new BulletEntity.BulletEntityType();
+    public static final EntityType droneEntity = new DroneEntity.DroneEntityType();
 
     public abstract Entity create(World world);
 
@@ -19,6 +20,7 @@ public abstract class EntityType implements HasID {
         Core.entities.register(testEntity);
         Core.entities.register(robotEntity);
         Core.entities.register(bulletEntity);
+        Core.entities.register(droneEntity);
     }
 
     @Side(Side.CLIENT)

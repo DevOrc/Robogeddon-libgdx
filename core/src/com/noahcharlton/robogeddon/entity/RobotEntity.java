@@ -46,6 +46,8 @@ public class RobotEntity extends Entity {
         super(EntityType.robotEntity, world);
 
         angle = (float) (Math.PI / 2);
+        x = world.getPixelWidth() / 2f;
+        y = world.getPixelHeight() / 2f;
     }
 
     @Override

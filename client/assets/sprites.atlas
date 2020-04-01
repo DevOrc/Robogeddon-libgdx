@@ -1,6 +1,6 @@
 
 sprites.png
-size: 256,128
+size: 512,128
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -13,7 +13,7 @@ blocks/oil
   index: -1
 blocks/test_block
   rotate: false
-  xy: 175, 2
+  xy: 371, 70
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -25,23 +25,37 @@ entities/bullet
   orig: 6, 6
   offset: 0, 0
   index: -1
-entities/robot_off
+entities/drone_off
   rotate: false
   xy: 1, 38
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-entities/robot_on
+entities/drone_on
   rotate: false
   xy: 67, 38
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
+entities/robot_off
+  rotate: false
+  xy: 133, 38
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+entities/robot_on
+  rotate: false
+  xy: 199, 38
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 floors/dirt
   rotate: false
-  xy: 133, 41
+  xy: 265, 41
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -55,42 +69,42 @@ floors/grass
   index: -1
 floors/oil_rock
   rotate: false
-  xy: 171, 70
+  xy: 107, 4
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 floors/rock
   rotate: false
-  xy: 205, 70
+  xy: 141, 4
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 floors/sand
   rotate: false
-  xy: 201, 36
+  xy: 303, 70
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 items/rock
   rotate: false
-  xy: 107, 4
+  xy: 175, 4
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 items/ruby
   rotate: false
-  xy: 167, 36
+  xy: 209, 4
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 items/sapphire
   rotate: false
-  xy: 141, 2
+  xy: 337, 70
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -105,7 +119,7 @@ ui/button
   index: -1
 ui/buttonHover
   rotate: false
-  xy: 133, 75
+  xy: 265, 75
   size: 36, 27
   split: 11, 11, 11, 11
   orig: 36, 27

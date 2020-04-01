@@ -1,8 +1,9 @@
 package com.noahcharlton.robogeddon.world.gen;
 
 import com.noahcharlton.robogeddon.block.Blocks;
+import com.noahcharlton.robogeddon.entity.EntityType;
+import com.noahcharlton.robogeddon.world.ServerWorld;
 import com.noahcharlton.robogeddon.world.Tile;
-import com.noahcharlton.robogeddon.world.World;
 import com.noahcharlton.robogeddon.world.floor.Floor;
 import com.noahcharlton.robogeddon.world.floor.Floors;
 
@@ -16,9 +17,9 @@ public class WorldGenerator {
     private static long seed = -432985239;
 
     private final Random random;
-    private final World world;
+    private final ServerWorld world;
 
-    public WorldGenerator(World world, long seed) {
+    public WorldGenerator(ServerWorld world, long seed) {
         this.world = world;
         this.random = new Random(seed);
     }
@@ -31,6 +32,8 @@ public class WorldGenerator {
         }
         fixPatches(Floors.oil_rock, this::setOil);
         surroundFloor(Floors.oil_rock, Floors.sand);
+
+        world.addEntity(EntityType.droneEntity.create(world));
     }
 
     private void setOil(Tile tile) {
@@ -101,7 +104,7 @@ public class WorldGenerator {
     }
 
 
-    public static void gen(World world){
+    public static void gen(ServerWorld world){
         new WorldGenerator(world, seed).gen();
     }
 

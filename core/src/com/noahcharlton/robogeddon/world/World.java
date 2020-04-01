@@ -10,9 +10,7 @@ import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.item.Inventory;
 import com.noahcharlton.robogeddon.world.item.Item;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 @Side(Side.BOTH)
 public abstract class World {
@@ -40,7 +38,7 @@ public abstract class World {
         return tiles[x][y];
     }
 
-    protected Entity getEntityByID(int id){
+    public Entity getEntityByID(int id){
         for(Entity entity: entities){
             if(entity.getId() == id){
                 return entity;
@@ -170,5 +168,9 @@ public abstract class World {
 
     public Tile[][] getTiles() {
         return tiles;
+    }
+
+    public List<Entity> getEntities() {
+        return Collections.unmodifiableList(entities);
     }
 }

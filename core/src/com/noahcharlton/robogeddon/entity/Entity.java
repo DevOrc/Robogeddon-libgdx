@@ -1,5 +1,6 @@
 package com.noahcharlton.robogeddon.entity;
 
+import com.badlogic.gdx.math.Vector2;
 import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.world.World;
 
@@ -25,6 +26,7 @@ public class Entity {
     public Entity(EntityType type, World world) {
         this.type = type;
         this.world = world;
+        this.dirty = world.isServer();
     }
 
     public void onCustomMessageReceived(CustomEntityMessage message) {
@@ -71,6 +73,10 @@ public class Entity {
 
     public boolean isInWorld(){
         return x > 0 && y > 0 && x < world.getPixelWidth() && y < world.getPixelHeight();
+    }
+
+    protected Vector2 createVectorBetween(Entity other){
+        return new Vector2(other.x, other.y).sub(x, y);
     }
 
     @Override
