@@ -72,11 +72,6 @@ public class ClientWorld extends World {
     }
 
     private void updateWorld(UpdateWorldMessage message) {
-        if(getTiles() == null){
-            Log.warn("World updated before synced with server??");
-            return;
-        }
-
         for(TileUpdate update : message.getUpdates()){
             updateTile(update);
         }
@@ -96,34 +91,11 @@ public class ClientWorld extends World {
         }else{
             tile.setBlock(Core.blocks.get(update.block), false);
         }
-
     }
 
     private void onWorldSync(WorldSyncMessage message) {
-        if(getWidth() == -1) {//This is the first sync message, so we must create the world
-            onFirstWorldSync(message);
-            return;
-        }
-
-        for(int x = 0; x < getWidth(); x++) {
-            updateTile(message.getTiles()[x]);
-        }
-    }
-
-    private void onFirstWorldSync(WorldSyncMessage message) {
-        //Note: setWidth, setHeight, and setTiles should throw an exception if they are already set
-        this.setWidth(message.getWorldWidth());
-        this.setHeight(message.getWorldHeight());
-
-        Tile[][] tiles = new Tile[getWidth()][getHeight()];
-        for(int x = 0; x < getWidth(); x++) {
-            for(int y = 0; y < getHeight(); y++){
-                tiles[x][y] = new Tile(this, x, y);
-            }
-        }
-        setTiles(tiles);
-        onWorldSync(message); //Now sync the y-level in this message
-        Log.info("Created World! Size = " + getWidth() + "x" + getHeight());
+        Chunk chunk = new Chunk(this, message);
+        chunks.put(message.getChunk(), chunk);
     }
 
     private void removeEntity(EntityRemovedMessage message) {
@@ -161,11 +133,7 @@ public class ClientWorld extends World {
     }
 
     public void render(SpriteBatch batch) {
-        for(int x = 0; x < getWidth(); x++) {
-            for(int y = 0; y < getHeight(); y++) {
-                getTileAt(x, y).render(batch);
-            }
-        }
+        chunks.values().forEach(chunk -> chunk.render(batch));
 
         for(Entity entity : entities) {
             entity.getType().render(batch, entity);

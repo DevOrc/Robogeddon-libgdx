@@ -1,7 +1,9 @@
 package com.noahcharlton.robogeddon.world;
 
+import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.entity.CustomEntityMessage;
 import com.noahcharlton.robogeddon.entity.Entity;
@@ -15,12 +17,7 @@ import java.util.*;
 @Side(Side.BOTH)
 public abstract class World {
 
-    /** These variables are set on creation for the server world, but for the client they are sent
-     * when the server sends the first worldSync message*/
-    private int height = -1;
-    private int width = -1;
-    private Tile[][] tiles;
-
+    protected final ObjectMap<GridPoint2, Chunk> chunks = new ObjectMap<>();
     private final boolean isServer;
 
     protected final Inventory inventory = new Inventory();
@@ -31,11 +28,35 @@ public abstract class World {
     }
 
     public Tile getTileAt(int x, int y){
-        if(x < 0 || y < 0 || x >= width || y>=height){
-            return null;
-        }
+        var chunk = getChunkFromTile(x, y);
 
-        return tiles[x][y];
+        if(chunk == null)
+            return null;
+
+        //Add one on negative side because it starts at -1
+        //And the array starts at 0
+        if(x < 0)
+            x++;
+
+        if(y < 0)
+            y++;
+
+        var chunkX = Math.abs(x % 32);
+        var chunkY = Math.abs(y % 32);
+
+        return chunk.getTile(chunkX, chunkY);
+    }
+
+    public Chunk getChunkAt(int chunkX, int chunkY){
+        return chunks.get(new GridPoint2(chunkX, chunkY));
+    }
+
+    public Chunk getChunkFromTile(int tileX, int tileY){
+        var chunkX = Math.floorDiv(tileX, Chunk.SIZE);
+        var chunkY = Math.floorDiv(tileY, Chunk.SIZE);
+        var chunkLocation = new GridPoint2(chunkX, chunkY);
+
+        return chunks.get(chunkLocation);
     }
 
     public Entity getEntityByID(int id){
@@ -71,6 +92,9 @@ public abstract class World {
 
     public void update(){
         entities.forEach(Entity::onUpdate);
+
+        if(isClient())
+            return;
 
         for(Iterator<Entity> it = entities.iterator(); it.hasNext(); ) {
             Entity entity = it.next();
@@ -117,7 +141,11 @@ public abstract class World {
         if(pos == null)
             return null;
 
-        return getTileAt((int) pos.x / Tile.SIZE, (int)pos.y / Tile.SIZE);
+        return tileFromPixel(pos.x, pos.y);
+    }
+
+    public Tile tileFromPixel(float x, float y){
+        return getTileAt(Math.floorDiv((int) x, Tile.SIZE),  Math.floorDiv((int) y, Tile.SIZE));
     }
 
     public int getInventoryForItem(Item item){
@@ -130,44 +158,6 @@ public abstract class World {
 
     public boolean isClient(){
         return !isServer;
-    }
-
-    void setHeight(int height) {
-        if(this.height != -1)
-            throw new UnsupportedOperationException("Height has already been set.");
-        this.height = height;
-    }
-
-    void setWidth(int width) {
-        if(this.width != -1)
-            throw new UnsupportedOperationException("Width has already been set.");
-        this.width = width;
-    }
-
-    void setTiles(Tile[][] tiles) {
-        if(this.tiles != null)
-            throw new UnsupportedOperationException("Tiles have already been created.");
-        this.tiles = tiles;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public int getPixelWidth() {
-        return width * Tile.SIZE;
-    }
-
-    public int getPixelHeight() {
-        return height * Tile.SIZE;
-    }
-
-    public Tile[][] getTiles() {
-        return tiles;
     }
 
     public List<Entity> getEntities() {

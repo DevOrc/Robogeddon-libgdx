@@ -1,39 +1,38 @@
 package com.noahcharlton.robogeddon.world.gen;
 
 import com.noahcharlton.robogeddon.block.Blocks;
-import com.noahcharlton.robogeddon.entity.EntityType;
-import com.noahcharlton.robogeddon.world.ServerWorld;
+import com.noahcharlton.robogeddon.world.Chunk;
 import com.noahcharlton.robogeddon.world.Tile;
 import com.noahcharlton.robogeddon.world.floor.Floor;
 import com.noahcharlton.robogeddon.world.floor.Floors;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 import java.util.function.Consumer;
 
 public class WorldGenerator {
 
-    private static long seed = -432985239;
+    public static long seed = -432985239;
 
     private final Random random;
-    private final ServerWorld world;
+    private Chunk currentChunk;
 
-    public WorldGenerator(ServerWorld world, long seed) {
-        this.world = world;
+    public WorldGenerator(long seed) {
         this.random = new Random(seed);
     }
 
-    public void gen(){
-        for(int i = 0; i < 20; i++){
-            int x = random.nextInt(world.getWidth());
-            int y = random.nextInt(world.getHeight());
+    public void genChunk(Chunk chunk) {
+        currentChunk = chunk;
+
+        for(int i = 0; i < 3; i++){
+            int x = random.nextInt(Chunk.SIZE);
+            int y = random.nextInt(Chunk.SIZE);
             generateFeature(x, y, 5 + (int) (45 * random.nextDouble()), this::setOil);
         }
         fixPatches(Floors.oil_rock, this::setOil);
         surroundFloor(Floors.oil_rock, Floors.sand);
-
-        world.addEntity(EntityType.droneEntity.create(world));
     }
 
     private void setOil(Tile tile) {
@@ -44,7 +43,7 @@ public class WorldGenerator {
     private void generateFeature(int startX, int startY, int i, Consumer<Tile> feature) {
         for(int x = startX - 1; x <= startX + 1; x++){
             for(int y = startY - 1; y <= startY + 1; y++) {
-                var tile = world.getTileAt(x, y);
+                var tile = currentChunk.getTile(x, y);
 
                 if(tile != null)
                     feature.accept(tile);
@@ -59,9 +58,9 @@ public class WorldGenerator {
     }
 
     private void fixPatches(Floor type, Consumer<Tile> consumer){
-        for(int x = 1; x < world.getWidth() - 1; x++) {
-            for(int y = 1; y < world.getHeight() - 1; y++) {
-                Tile tile = world.getTileAt(x, y);
+        for(int x = 1; x < Chunk.SIZE; x++) {
+            for(int y = 1; y < Chunk.SIZE; y++) {
+                Tile tile = currentChunk.getTile(x, y);
 
                 if(tile.getFloor() != type){
                     List<Tile> neighbors = getNeighborTiles(x, y);
@@ -77,9 +76,9 @@ public class WorldGenerator {
     }
 
     private void surroundFloor(Floor main, Floor border) {
-        for(int x = 1; x < world.getWidth() - 1; x++) {
-            for(int y = 1; y < world.getHeight() - 1; y++) {
-                Tile tile = world.getTileAt(x, y);
+        for(int x = 1; x < Chunk.SIZE; x++) {
+            for(int y = 1; y < Chunk.SIZE; y++) {
+                Tile tile = currentChunk.getTile(x, y);
 
                 if(tile.getFloor() == Floors.dirt){
                     List<Tile> neighbors = getNeighborTiles(x, y);
@@ -96,16 +95,12 @@ public class WorldGenerator {
 
     private List<Tile> getNeighborTiles(int x, int y) {
         List<Tile> neighbors = new ArrayList<>();
-        neighbors.add(world.getTileAt(x - 1, y));
-        neighbors.add(world.getTileAt(x + 1, y));
-        neighbors.add(world.getTileAt(x, y - 1));
-        neighbors.add(world.getTileAt(x, y + 1));
+        neighbors.add(currentChunk.getTile(x - 1, y));
+        neighbors.add(currentChunk.getTile(x + 1, y));
+        neighbors.add(currentChunk.getTile(x, y - 1));
+        neighbors.add(currentChunk.getTile(x, y + 1));
+        neighbors.removeIf(Objects::isNull);
         return neighbors;
-    }
-
-
-    public static void gen(ServerWorld world){
-        new WorldGenerator(world, seed).gen();
     }
 
 }

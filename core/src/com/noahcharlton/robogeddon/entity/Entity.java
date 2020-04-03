@@ -91,7 +91,7 @@ public class Entity {
     }
 
     public boolean isInWorld(){
-        return x > 0 && y > 0 && x < world.getPixelWidth() && y < world.getPixelHeight();
+        return world.tileFromPixel(x, y) != null;
     }
 
     protected Vector2 createVectorBetween(Entity other){

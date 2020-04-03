@@ -46,7 +46,7 @@ public class BuildBlock implements BuildAction {
         Vector3 pos = Core.client.mouseToWorld();
         Tile tile = client.getWorld().tileFromPixel(pos);
 
-        if(tile != null){
+        if(tile != null) {
             block.getRenderer().buildRender(batch, tile);
         }
     }

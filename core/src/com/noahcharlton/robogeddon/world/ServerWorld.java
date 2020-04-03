@@ -1,18 +1,15 @@
 package com.noahcharlton.robogeddon.world;
 
+import com.badlogic.gdx.math.GridPoint2;
 import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.Server;
 import com.noahcharlton.robogeddon.ServerProvider;
 import com.noahcharlton.robogeddon.block.Block;
 import com.noahcharlton.robogeddon.block.Blocks;
-import com.noahcharlton.robogeddon.entity.Entity;
-import com.noahcharlton.robogeddon.entity.EntityRemovedMessage;
-import com.noahcharlton.robogeddon.entity.EntityType;
-import com.noahcharlton.robogeddon.entity.NewEntityMessage;
+import com.noahcharlton.robogeddon.entity.*;
 import com.noahcharlton.robogeddon.message.Message;
 import com.noahcharlton.robogeddon.util.Side;
-import com.noahcharlton.robogeddon.world.floor.Floors;
 import com.noahcharlton.robogeddon.world.gen.WorldGenerator;
 import com.noahcharlton.robogeddon.world.item.Inventory;
 
@@ -23,6 +20,7 @@ import java.util.List;
 @Side(Side.SERVER)
 public class ServerWorld extends World{
 
+    private final WorldGenerator generator = new WorldGenerator(WorldGenerator.seed);
     private final HashMap<Integer, Entity> players = new HashMap<>();
     private final ServerProvider server;
     private int entityID = 0;
@@ -31,20 +29,26 @@ public class ServerWorld extends World{
         super(true);
         this.server = server;
 
-        setWidth(100);
-        setHeight(100);
-
-        Tile[][] tiles = new Tile[getWidth()][getHeight()];
-        for(int x = 0; x < getWidth(); x++){
-            for(int y = 0; y < getHeight(); y++){
-                tiles[x][y] = new Tile(this, x, y);
-                tiles[x][y].setFloor(Floors.dirt, false);
+        for(int x = -2; x <= 2; x++){
+            for(int y = -2; y <= 2; y++){
+                createChunk(x, y);
             }
         }
-        setTiles(tiles);
-        Log.info("World created with size " + getWidth() + "x" + getHeight());
-        WorldGenerator.gen(this);
+        addEntity(EntityType.droneEntity.create(this));
         Log.info("Successfully generated the world!");
+    }
+
+    private void createChunk(int x, int y) {
+        if(getChunkAt(x, y) != null)
+            throw new RuntimeException("Cannot override a chunk!");
+
+        var location = new GridPoint2(x, y);
+        Chunk chunk = new Chunk(this, location);
+        generator.genChunk(chunk);
+        sendMessageToClient(new WorldSyncMessage(chunk));
+
+        chunks.put(location, chunk);
+        Log.debug("Created Chunk for " + location);
     }
 
     public void update(){
@@ -68,19 +72,25 @@ public class ServerWorld extends World{
     private void sendDirtyTiles() {
         List<Tile> dirtyTiles = new ArrayList<>();
 
-        for(int x = 0; x < getWidth(); x++){
-            for(int y = 0; y < getHeight(); y++){
-                var tile = getTileAt(x, y);
-
-                if(tile.isDirty()){
-                    dirtyTiles.add(tile);
-                    tile.clean();
-                }
-            }
-        }
+        chunks.values().forEach(chunk -> getDirtyTilesInChunk(dirtyTiles, chunk));
 
         if(!dirtyTiles.isEmpty())
             sendMessageToClient(new UpdateWorldMessage(dirtyTiles));
+    }
+
+    private void getDirtyTilesInChunk(List<Tile> dirtyTiles, Chunk chunk) {
+        if(chunk.isDirty()){
+            for(int x = 0; x < Chunk.SIZE; x++){
+                for(int y = 0; y < Chunk.SIZE; y++){
+                    var tile = chunk.getTile(x, y);
+                    if(tile.isDirty()){
+                        dirtyTiles.add(tile);
+                        tile.clean();
+                    }
+                }
+            }
+        }
+        chunk.clean();
     }
 
     public void updateMessages(){
@@ -140,6 +150,11 @@ public class ServerWorld extends World{
 
     @Override
     protected void onEntityDead(Entity entity) {
+        if(entity instanceof DroneEntity){
+            createChunk(-3, 0);
+            createChunk(-3, -1);
+            createChunk(-3, 1);
+        }
         sendMessageToClient(new EntityRemovedMessage(entity.getId()));
     }
 
@@ -158,11 +173,8 @@ public class ServerWorld extends World{
     }
 
     private void sendWorldToClient(int connID) {
-        //Send the client one ylevel per message
-        //because of the message byte limit
-        for(int y = 0; y < getHeight(); y++){
-            server.sendSingle(connID, new WorldSyncMessage(this, y));
-        }
+        Log.debug("Sending world to new client!");
+        chunks.values().forEach(chunk -> server.sendSingle(connID, new WorldSyncMessage(chunk)));
     }
 
     private void addNewPlayer(int connID) {

@@ -1,47 +1,31 @@
 package com.noahcharlton.robogeddon.world;
 
+import com.badlogic.gdx.math.GridPoint2;
 import com.noahcharlton.robogeddon.message.Message;
 
-/**
- * Sends the width, height, and one y-level of tiles to the client.
- * It only sends one y-level because of the message byte limit (2^16)
- */
 public class WorldSyncMessage implements Message {
 
-    private final TileUpdate[] tiles;
-    private final int worldWidth;
-    private final int worldHeight;
-    private final int yLevel;
+    private final GridPoint2 chunk;
+    private final TileUpdate[][] tiles;
 
-    public WorldSyncMessage(World world, int yLevel) {
-        if(yLevel >= world.getHeight())
-            throw new IllegalArgumentException("Y-level must be less than world height!");
+    public WorldSyncMessage(Chunk chunk) {
+        this.chunk = chunk.getLocation();
+        this.tiles = new TileUpdate[Chunk.SIZE][Chunk.SIZE];
 
-        this.tiles = new TileUpdate[world.getWidth()];
-        this.worldWidth = world.getWidth();
-        this.worldHeight = world.getHeight();
-        this.yLevel = yLevel;
+        for(int x = 0; x < Chunk.SIZE; x++){
+            for(int y = 0; y < Chunk.SIZE; y++){
+                var tile = chunk.getTile(x, y);
 
-        for(int x = 0; x < world.getWidth(); x++){
-            var tile = world.getTileAt(x, yLevel);
-
-            tiles[x] = new TileUpdate(tile);
+                tiles[x][y] = new TileUpdate(tile);
+            }
         }
     }
 
-    public int getWorldHeight() {
-        return worldHeight;
-    }
-
-    public int getWorldWidth() {
-        return worldWidth;
-    }
-
-    public TileUpdate[] getTiles() {
+    public TileUpdate[][] getTiles() {
         return tiles;
     }
 
-    public int getYLevel() {
-        return yLevel;
+    public GridPoint2 getChunk() {
+        return chunk;
     }
 }

@@ -1,6 +1,7 @@
 package com.noahcharlton.robogeddon.world;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.block.Block;
 import com.noahcharlton.robogeddon.util.Side;
@@ -13,6 +14,7 @@ public class Tile {
     public static final int SIZE = 32;
 
     private final World world;
+    private final Chunk chunk;
     private final int x;
     private final int y;
 
@@ -23,10 +25,10 @@ public class Tile {
     @Side(Side.SERVER)
     private boolean dirty;
 
-
-    public Tile(World world, int x, int y) {
+    public Tile(World world, Chunk chunk, int x, int y) {
         this.x = x;
         this.y = y;
+        this.chunk = chunk;
         this.world = world;
     }
 
@@ -35,7 +37,23 @@ public class Tile {
             throw new UnsupportedOperationException();
 
         dirty = true;
+        chunk.markDirty();
         Log.debug("Marking " + toString() + " dirty");
+    }
+
+    @Side(Side.CLIENT)
+    public void update(TileUpdate update) {
+        if(update.floor == null){
+            throw new RuntimeException("Cannot have null floor.");
+        }else{
+            floor = Core.floors.get(update.floor);
+        }
+
+        if(update.block == null){
+            block = null;
+        }else{
+            block = Core.blocks.get(update.block);
+        }
     }
 
     @Side(Side.CLIENT)

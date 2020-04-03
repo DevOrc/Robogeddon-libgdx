@@ -26,8 +26,7 @@ public class DroneEntity extends Entity implements HasCollision {
     public DroneEntity(World world) {
         super(EntityType.droneEntity, world);
 
-        x = world.getPixelWidth() / 2f;
-        y = world.getPixelHeight() / 2f - 400;
+        y = -400;
         angle = (float) (Math.PI / 2);
     }
 

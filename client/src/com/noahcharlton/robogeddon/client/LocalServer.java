@@ -38,6 +38,7 @@ public class LocalServer extends ServerProvider {
     public void sendSingle(int id, Message message) {
         //Since we are local, send the the message to the client
         //because they are the only player
+        Log.trace("Sending message to client of type" + message.getClass());
         sendMessageToClient(message);
     }
 

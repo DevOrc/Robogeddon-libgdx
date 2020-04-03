@@ -27,7 +27,9 @@ public class ServerConnection {
 
     public void sendMessage(Message message) {
         try {
-            output.writeUTF(MessageSerializer.messageToString(message));
+            var messageData = MessageSerializer.messageToString(message);
+
+            output.writeUTF(messageData);
             output.flush();
         } catch(IOException e) {
             Log.debug("Failed to send message for client " + id, e);
