@@ -12,7 +12,10 @@ import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.item.Inventory;
 import com.noahcharlton.robogeddon.world.item.Item;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 @Side(Side.BOTH)
 public abstract class World {

@@ -1,21 +1,31 @@
 package com.noahcharlton.robogeddon.world;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.GridPoint2;
+import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.floor.Floors;
+import com.noahcharlton.robogeddon.world.team.Team;
+
+import java.util.Objects;
 
 public class Chunk {
 
     public static final int SIZE = 32;
 
+    private final World world;
     private final GridPoint2 location;
     private final Tile[][] tiles = new Tile[SIZE][SIZE];
     private boolean dirty;
 
+    private Team team = Team.NEUTRAL;
+
     @Side(Side.SERVER)
     Chunk(World world, GridPoint2 location) {
         this.location = location;
+        this.world = world;
 
         for(int x = 0; x < SIZE; x++){
             for(int y = 0; y < SIZE; y++) {
@@ -32,6 +42,8 @@ public class Chunk {
     @Side(Side.CLIENT)
     public Chunk(World world, WorldSyncMessage message) {
         this.location = message.getChunk();
+        this.world = world;
+        this.team = message.getTeam();
 
         for(int x = 0; x < SIZE; x++){
             for(int y = 0; y < SIZE; y++) {
@@ -69,12 +81,54 @@ public class Chunk {
          return output;
     }
 
-    public void render(SpriteBatch batch){
+    public void render(SpriteBatch batch) {
         for(int x = 0; x < SIZE; x++) {
             for(int y = 0; y < SIZE; y++) {
                 getTile(x, y).render(batch);
             }
         }
+    }
+
+    void renderTeam() {
+        var drawer = Core.client.getGameShapeDrawer();
+        var x = getLocation().x * Chunk.SIZE * Tile.SIZE + 2;
+        var y = getLocation().y * Chunk.SIZE * Tile.SIZE + 2;
+        var size = Chunk.SIZE * Tile.SIZE - 4;
+
+        int chunkX = getLocation().x;
+        int chunkY = getLocation().y;
+        drawer.setColor(team.getColor());
+        drawer.setDefaultLineWidth(4);
+
+        if(shouldDrawBorder(chunkX, chunkY + 1)){
+            drawer.line(x, y + size, x + size, y + size);
+        }
+        if(shouldDrawBorder(chunkX, chunkY - 1)){
+            drawer.line(x, y, x + size, y);
+        }
+        if(shouldDrawBorder(chunkX + 1, chunkY)){
+            drawer.line(x + size, y, x + size, y + size);
+        }
+        if(shouldDrawBorder(chunkX - 1, chunkY)){
+            drawer.line(x, y, x, y + size);
+        }
+
+        if(Gdx.input.isKeyPressed(Input.Keys.F3)){
+            var color = team.getColor().cpy();
+            color.a = .4f;
+
+            drawer.setColor(color);
+            drawer.filledRectangle(x, y, size, size);
+        }
+    }
+
+    private boolean shouldDrawBorder(int chunkX, int chunkY){
+        var chunk = world.getChunkAt(chunkX, chunkY);
+
+        if(chunk == null)
+            return false;
+
+        return chunk.getTeam() != team;
     }
 
     public Tile getTile(int x, int y) {
@@ -99,5 +153,13 @@ public class Chunk {
 
     public GridPoint2 getLocation() {
         return location;
+    }
+
+    public void setTeam(Team team) {
+        this.team = Objects.requireNonNull(team);
+    }
+
+    public Team getTeam() {
+        return team;
     }
 }

@@ -140,6 +140,7 @@ public class ClientWorld extends World {
 
     public void render(SpriteBatch batch) {
         chunks.values().forEach(chunk -> chunk.render(batch));
+        chunks.values().forEach(Chunk::renderTeam);
 
         for(Entity entity : entities) {
             entity.getType().render(batch, entity);
