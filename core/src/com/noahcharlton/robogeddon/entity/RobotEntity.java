@@ -18,6 +18,7 @@ import com.noahcharlton.robogeddon.world.ServerWorld;
 import com.noahcharlton.robogeddon.world.Tile;
 import com.noahcharlton.robogeddon.world.World;
 import com.noahcharlton.robogeddon.world.item.ItemStack;
+import com.noahcharlton.robogeddon.world.team.Team;
 
 import java.util.Objects;
 
@@ -44,8 +45,8 @@ public class RobotEntity extends Entity implements HasCollision {
     @Side(Side.SERVER)
     private int shootTime = SHOOT_TIME;
 
-    public RobotEntity(World world) {
-        super(EntityType.robotEntity, world);
+    public RobotEntity(World world, Team team) {
+        super(EntityType.robotEntity, world, team);
 
         angle = (float) (Math.PI / 2);
     }
@@ -81,8 +82,7 @@ public class RobotEntity extends Entity implements HasCollision {
     @Side(Side.SERVER)
     private void shoot() {
         ServerWorld world = (ServerWorld) this.world;
-        BulletEntity bullet = (BulletEntity) EntityType.bulletEntity.create(world);
-        bullet.setShooter(this);
+        BulletEntity bullet = (BulletEntity) EntityType.bulletEntity.create(world, team);
 
         bullet.setX((float) (getX() + (SHOOT_OFFSET * Math.cos(angle))));
         bullet.setY((float) (getY() + (SHOOT_OFFSET * Math.sin(angle))));
@@ -224,8 +224,8 @@ public class RobotEntity extends Entity implements HasCollision {
         private TextureRegion offTexture;
 
         @Override
-        public Entity create(World world) {
-            return new RobotEntity(world);
+        public Entity create(World world, Team team) {
+            return new RobotEntity(world, team);
         }
 
         @Override

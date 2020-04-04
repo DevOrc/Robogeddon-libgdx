@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.World;
+import com.noahcharlton.robogeddon.world.team.Team;
 
 import java.util.Objects;
 
@@ -13,6 +14,7 @@ public class Entity {
 
     private final EntityType type;
     protected final World world;
+    protected final Team team;
 
     private int id = DEFAULT_ID;
     protected float x;
@@ -26,7 +28,8 @@ public class Entity {
     private boolean isDead;
     private boolean dirty;
 
-    public Entity(EntityType type, World world) {
+    public Entity(EntityType type, World world, Team team) {
+        this.team = team;
         this.type = type;
         this.world = world;
         this.dirty = world.isServer();
@@ -177,5 +180,9 @@ public class Entity {
 
     public int getHealth() {
         return health;
+    }
+
+    public Team getTeam() {
+        return team;
     }
 }

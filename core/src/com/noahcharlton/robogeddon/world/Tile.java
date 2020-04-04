@@ -123,4 +123,8 @@ public class Tile {
     public boolean isDirty() {
         return dirty;
     }
+
+    public Chunk getChunk() {
+        return chunk;
+    }
 }

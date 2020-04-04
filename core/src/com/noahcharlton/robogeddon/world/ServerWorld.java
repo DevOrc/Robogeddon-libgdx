@@ -41,7 +41,7 @@ public class ServerWorld extends World{
         }
         getChunkAt(0, 0).setTeam(Team.NEUTRAL);
 
-        addEntity(EntityType.droneEntity.create(this));
+        addEntity(EntityType.droneEntity.create(this, Team.RED));
         Log.info("Successfully generated the world!");
     }
 
@@ -125,6 +125,14 @@ public class ServerWorld extends World{
     private void attemptToBuildBlock(BuildBlockMessage message) {
         Tile tile = getTileAt(message.getTileX(), message.getTileY());
         Block block = Core.blocks.getOrNull(message.getBlockID());
+        var entity = getEntityByID(message.getPlayerID());
+
+        boolean hasPermission = entity.getTeam() == tile.getChunk().getTeam()
+                || tile.getChunk().getTeam() == Team.NEUTRAL;
+        if(entity.isDead() || !hasPermission){
+            Log.debug("Cannot build block 1");
+            return;
+        }
 
         if(tile.hasBlock() && message.getBlockID() != null)
             return;
@@ -151,7 +159,7 @@ public class ServerWorld extends World{
         entities.add(entity);
 
         Log.debug("New Entity: ID=" + entity.getId() + " Type=" + entity.getClass().getName());
-        sendMessageToClient(new NewEntityMessage(entity.getType().getTypeID(), entity.getId()));
+        sendMessageToClient(new NewEntityMessage(entity));
 
         return entity;
     }
@@ -170,7 +178,7 @@ public class ServerWorld extends World{
         Log.debug("New client: " + connID);
 
         for(Entity entity : entities){
-            server.sendSingle(connID, new NewEntityMessage(entity.getType().getTypeID(), entity.getId()));
+            server.sendSingle(connID, new NewEntityMessage(entity));
         }
 
         server.sendSingle(connID, inventory.createSyncMessage());
@@ -186,13 +194,13 @@ public class ServerWorld extends World{
     }
 
     private void addNewPlayer(int connID) {
-        var player = addEntity(EntityType.robotEntity.create(this));
+        var player = addEntity(EntityType.robotEntity.create(this, Team.BLUE));
         var message = new AssignRobotMessage(player.getId());
 
         //Send a single message to the client
         //because sometimes the non-single messages get sent after
         //and then the player is assigned an entity that does not exist yet
-        server.sendSingle(connID, new NewEntityMessage(player.getType().getTypeID(), player.getId()));
+        server.sendSingle(connID, new NewEntityMessage(player));
         players.put(connID, player);
 
         Server.runLater(() -> server.sendSingle(connID, message));

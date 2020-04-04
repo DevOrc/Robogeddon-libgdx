@@ -27,16 +27,17 @@ public class BuildBlock implements BuildAction {
     @Override
     public void onClick(Tile tile, int button) {
         Log.debug("Building block " + block.getTypeID() + " on " + tile);
+        var player = client.getWorld().getPlayersRobot().getId();
 
         if(button == Input.Buttons.RIGHT){
             if(tile.hasBlock()){
-                BuildBlockMessage message = new BuildBlockMessage(tile, null);
+                BuildBlockMessage message = new BuildBlockMessage(tile, null, player);
                 client.getWorld().sendMessageToServer(message);
             }else{
                 client.getProcessor().setBuildAction(null);
             }
         }else{
-            BuildBlockMessage message = new BuildBlockMessage(tile, block);
+            BuildBlockMessage message = new BuildBlockMessage(tile, block, player);
             client.getWorld().sendMessageToServer(message);
         }
     }

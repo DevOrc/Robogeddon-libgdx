@@ -11,6 +11,7 @@ import com.noahcharlton.robogeddon.util.GraphicsUtil;
 import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.ServerWorld;
 import com.noahcharlton.robogeddon.world.World;
+import com.noahcharlton.robogeddon.world.team.Team;
 
 public class DroneEntity extends Entity implements HasCollision {
 
@@ -23,8 +24,8 @@ public class DroneEntity extends Entity implements HasCollision {
     private int shooterTime;
     private boolean onTarget;
 
-    public DroneEntity(World world) {
-        super(EntityType.droneEntity, world);
+    public DroneEntity(World world, Team team) {
+        super(EntityType.droneEntity, world, team);
 
         y = -400;
         angle = (float) (Math.PI / 2);
@@ -61,8 +62,7 @@ public class DroneEntity extends Entity implements HasCollision {
     @Side(Side.SERVER)
     private void shoot() {
         ServerWorld world = (ServerWorld) this.world;
-        BulletEntity bullet = (BulletEntity) EntityType.bulletEntity.create(world);
-        bullet.setShooter(this);
+        BulletEntity bullet = (BulletEntity) EntityType.bulletEntity.create(world, team);
 
         bullet.setX((float) (getX() + (RADIUS * Math.cos(angle))));
         bullet.setY((float) (getY() + (RADIUS * Math.sin(angle))));
@@ -160,8 +160,8 @@ public class DroneEntity extends Entity implements HasCollision {
         }
 
         @Override
-        public Entity create(World world) {
-            return new DroneEntity(world);
+        public Entity create(World world, Team team) {
+            return new DroneEntity(world, team);
         }
 
         @Override

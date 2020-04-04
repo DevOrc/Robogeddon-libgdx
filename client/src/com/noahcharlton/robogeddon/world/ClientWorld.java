@@ -14,6 +14,8 @@ import com.noahcharlton.robogeddon.message.Message;
 import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.item.InventorySyncMessage;
 
+import java.util.Iterator;
+
 @Side(Side.CLIENT)
 public class ClientWorld extends World {
 
@@ -105,11 +107,17 @@ public class ClientWorld extends World {
     }
 
     private void removeEntity(EntityRemovedMessage message) {
-        boolean removed = entities.removeIf(e -> e.getId() == message.getID());
+        for(Iterator<Entity> it = entities.iterator(); it.hasNext(); ) {
+            Entity entity = it.next();
 
-        if(!removed) {
-            Log.warn("Entity removed that wasn't in the world?? ID=" + message.getID());
+            if(entity.getId() == message.getID()){
+                it.remove();
+                entity.setDead(true);
+                return;
+            }
         }
+
+        Log.warn("Entity removed that wasn't in the world?? ID=" + message.getID());
     }
 
     private void updateEntity(EntityUpdateMessage message) {
@@ -128,7 +136,7 @@ public class ClientWorld extends World {
             return;
         }
 
-        var entity = type.create(this);
+        var entity = type.create(this, message.getTeam());
         entity.setId(message.getID());
         entities.add(entity);
     }

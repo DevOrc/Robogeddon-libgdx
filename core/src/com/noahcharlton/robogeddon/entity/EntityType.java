@@ -6,6 +6,7 @@ import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.HasID;
 import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.World;
+import com.noahcharlton.robogeddon.world.team.Team;
 
 public abstract class EntityType implements HasID {
 
@@ -14,7 +15,7 @@ public abstract class EntityType implements HasID {
     public static final EntityType bulletEntity = new BulletEntity.BulletEntityType();
     public static final EntityType droneEntity = new DroneEntity.DroneEntityType();
 
-    public abstract Entity create(World world);
+    public abstract Entity create(World world, Team team);
 
     @Side(Side.BOTH)
     public static void preInit(){
@@ -45,7 +46,7 @@ public abstract class EntityType implements HasID {
         var innerWidth = (width - 2f) * entity.getHealth() / startHealth;
 
         shapeDrawer.filledRectangle(x, y, width, 6, Color.WHITE);
-        shapeDrawer.filledRectangle(x + 1f, y + 1f, innerWidth, 4, Color.RED);
+        shapeDrawer.filledRectangle(x + 1f, y + 1f, innerWidth, 4, entity.getTeam().getColor());
     }
 
     public int getHealth(){

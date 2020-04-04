@@ -6,6 +6,7 @@ import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.entity.collision.HasCollision;
 import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.World;
+import com.noahcharlton.robogeddon.world.team.Team;
 
 public class BulletEntity extends Entity {
 
@@ -14,11 +15,9 @@ public class BulletEntity extends Entity {
 
     @Side(Side.SERVER)
     private int dirtyCount = 0;
-    @Side(Side.SERVER)
-    private Entity shooter;
 
-    public BulletEntity(World world) {
-        super(EntityType.bulletEntity, world);
+    public BulletEntity(World world, Team team) {
+        super(EntityType.bulletEntity, world, team);
 
         this.setVelocity(VELOCITY);
     }
@@ -29,7 +28,7 @@ public class BulletEntity extends Entity {
             return;
 
         for(Entity entity: world.getEntities()){
-            if(entity instanceof HasCollision && entity != shooter){
+            if(entity instanceof HasCollision && entity.getTeam() != team){
                 if(collided(entity)){
                     this.setDead(true);
                     entity.damage(3);
@@ -58,10 +57,6 @@ public class BulletEntity extends Entity {
         return (world.isServer() && !isInWorld()) || super.isDead();
     }
 
-    public void setShooter(Entity shooter) {
-        this.shooter = shooter;
-    }
-
     static class BulletEntityType extends EntityType{
 
         private static final float RADIUS = 3;
@@ -69,8 +64,8 @@ public class BulletEntity extends Entity {
         private TextureRegion texture;
 
         @Override
-        public Entity create(World world) {
-            return new BulletEntity(world);
+        public Entity create(World world, Team team) {
+            return new BulletEntity(world, team);
         }
 
         @Override

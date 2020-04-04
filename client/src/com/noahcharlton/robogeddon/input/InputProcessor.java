@@ -26,17 +26,25 @@ public class InputProcessor implements com.badlogic.gdx.InputProcessor {
         Gdx.input.setInputProcessor(this);
     }
 
+    public void update() {
+        if(client.getWorld() == null
+                || client.getWorld().getPlayersRobot() == null
+                || client.getWorld().getPlayersRobot().isDead()) {
+            buildAction = null;
+        }
+    }
+
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         screenY = Gdx.graphics.getHeight() - screenY;
 
-        if(ui.isMouseOver()){
+        if(ui.isMouseOver()) {
             ui.onClick(new ClickEvent(ui, screenX, screenY, button));
-        }else if(buildAction != null){
+        } else if(buildAction != null) {
             Vector3 pos = Core.client.mouseToWorld();
             Tile tile = client.getWorld().tileFromPixel(pos);
 
-            if(tile != null){
+            if(tile != null) {
                 buildAction.onClick(tile, button);
             }
         }
@@ -46,17 +54,17 @@ public class InputProcessor implements com.badlogic.gdx.InputProcessor {
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        if(ui.isMouseOver() || buildAction == null){
+        if(ui.isMouseOver() || buildAction == null) {
             return false;
         }
 
         Vector3 pos = Core.client.mouseToWorld();
         Tile tile = client.getWorld().tileFromPixel(pos);
 
-        if(tile != null && !tile.equals(lastTile)){
-            if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
+        if(tile != null && !tile.equals(lastTile)) {
+            if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
                 buildAction.onClick(tile, Input.Buttons.LEFT);
-            }else if(Gdx.input.isButtonPressed(Input.Buttons.RIGHT)){
+            } else if(Gdx.input.isButtonPressed(Input.Buttons.RIGHT)) {
                 buildAction.onClick(tile, Input.Buttons.RIGHT);
             }
         }
@@ -67,9 +75,9 @@ public class InputProcessor implements com.badlogic.gdx.InputProcessor {
     }
 
     public void setBuildAction(BuildAction buildAction) {
-        if(buildAction != null){
+        if(buildAction != null) {
             Log.info("Set Build Action: " + buildAction.getName());
-        }else{
+        } else {
             Log.info("Set Build Action: None");
         }
 

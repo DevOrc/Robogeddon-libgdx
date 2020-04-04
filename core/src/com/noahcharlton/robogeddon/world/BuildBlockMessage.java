@@ -6,12 +6,14 @@ import com.noahcharlton.robogeddon.message.Message;
 public class BuildBlockMessage implements Message {
 
     private String blockID;
+    private int playerID;
     private int tileX;
     private int tileY;
 
-    public BuildBlockMessage(Tile tile, Block block) {
+    public BuildBlockMessage(Tile tile, Block block, int playerID) {
         if(block != null)
             this.blockID = block.getTypeID();
+        this.playerID = playerID;
         this.tileX = tile.getX();
         this.tileY = tile.getY();
     }
@@ -26,5 +28,9 @@ public class BuildBlockMessage implements Message {
 
     public String getBlockID() {
         return blockID;
+    }
+
+    public int getPlayerID() {
+        return playerID;
     }
 }

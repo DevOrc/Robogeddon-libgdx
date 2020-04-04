@@ -62,6 +62,7 @@ public class GameClient extends ApplicationAdapter implements Client {
             updateLastFrame += updateFrameTime;
             updateFrames++;
             world.update();
+            processor.update();
         }
 
         renderFrames++;
