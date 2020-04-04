@@ -11,7 +11,7 @@ public class ClientLauncher {
 
 	public static void main (String[] args) {
 		Log.info("Client Launcher started!");
-		Log.info("Core Version: " + Core.VERSION);
+		Log.info("Core Version: " + Core.VERSION + "-" + Core.VERSION_TYPE);
 		Log.info("Args: " + Arrays.toString(args));
 
 		Core.client = GameClient.getInstance();
@@ -26,6 +26,7 @@ public class ClientLauncher {
 		config.foregroundFPS = 0;
 		config.backgroundFPS = 120;
 		config.vSyncEnabled = false;
+		config.title = "Robogeddon " + Core.VERSION + "-" + Core.VERSION_TYPE;
 
 		new LwjglApplication(GameClient.getInstance(), config);
 	}

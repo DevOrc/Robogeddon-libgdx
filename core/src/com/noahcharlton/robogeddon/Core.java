@@ -12,7 +12,9 @@ import com.noahcharlton.robogeddon.world.item.Items;
 
 public class Core {
 
-    public static final String VERSION = "0.1.0";
+    public static final String VERSION = "0.2.0";
+    public static final String VERSION_TYPE = "alpha";
+
     public static final long UPDATE_RATE = 60;
     public static final int PORT = 14772;
 

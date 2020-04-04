@@ -12,8 +12,9 @@ import com.noahcharlton.robogeddon.ui.widget.TextButton;
 public class MainMenu extends Scene{
 
     public MainMenu() {
+        var versionText =  "v" + Core.VERSION + "-" + Core.VERSION_TYPE;
         var title = new Label().setText("Robogeddon").setFont(UIAssets.titleFont).pad().top(100);
-        var version = new Label().setText("Version: " + Core.VERSION).setFont(UIAssets.smallFont)
+        var version = new Label().setText(versionText).setFont(UIAssets.smallFont)
                 .pad().right(20).bottom(5);
 
         var buttonStack = new Stack()

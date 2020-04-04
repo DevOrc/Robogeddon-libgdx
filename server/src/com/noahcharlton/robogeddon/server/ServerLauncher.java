@@ -111,7 +111,7 @@ public class ServerLauncher {
 
     public static void main(String[] args) {
         Log.info("Server Launcher started!");
-        Log.info("Core Version: " + Core.VERSION);
+        Log.info("Core Version: " + Core.VERSION + "-" + Core.VERSION_TYPE);
 
         Core.preInit();
 
