@@ -50,6 +50,7 @@ public class GameClient extends ApplicationAdapter implements Client {
     public void render() {
         if(loadingAssets){
             updateAssetLoading();
+            ui.renderLoadingScreen();
             return;
         }else if(Gdx.input.isKeyJustPressed(Input.Keys.F1)){
             loadingAssets = true;
@@ -96,6 +97,7 @@ public class GameClient extends ApplicationAdapter implements Client {
 
     private void onAssetsLoaded(){
         loadingAssets = false;
+        updateLastFrame = System.nanoTime();
         nextFpsCheck = System.currentTimeMillis() + 10000;
         ui.setScene(new MainMenu());
 

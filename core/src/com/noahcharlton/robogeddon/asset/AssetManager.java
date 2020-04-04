@@ -63,8 +63,8 @@ public class AssetManager {
         assets.add(asset);
     }
 
-    public double getPercentDone() {
-        return 1.0 - ((double) unloadedAssets.size() / (double) assets.size());
+    public float getPercentDone() {
+        return 1f - ((float) unloadedAssets.size() / (float) assets.size());
     }
 
     public boolean isDone() {

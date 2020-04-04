@@ -25,8 +25,6 @@ public class ClientLauncher {
 		config.forceExit = false;
 		config.foregroundFPS = 0;
 		config.backgroundFPS = 120;
-		config.width = 840;
-		config.height = 600;
 		config.vSyncEnabled = false;
 
 		new LwjglApplication(GameClient.getInstance(), config);

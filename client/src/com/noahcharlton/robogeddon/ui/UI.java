@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.client.GameClient;
+import com.noahcharlton.robogeddon.graphics.LoadingScreen;
 import com.noahcharlton.robogeddon.ui.event.ClickEvent;
 import com.noahcharlton.robogeddon.ui.widget.Widget;
 import space.earlygrey.shapedrawer.ShapeDrawer;
@@ -74,6 +75,16 @@ public class UI {
 
         if(currentScene != null)
             currentScene.onResize(width, height);
+    }
+
+    public void renderLoadingScreen() {
+        var matrix = screenViewport.getCamera().projection;
+        matrix.setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.setProjectionMatrix(matrix);
+
+        batch.begin();
+        LoadingScreen.render(batch, drawer);
+        batch.end();
     }
 
     public void setScene(Scene scene){
