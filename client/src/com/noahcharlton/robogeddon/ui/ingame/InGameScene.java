@@ -10,15 +10,20 @@ import com.noahcharlton.robogeddon.ui.widget.TextButton;
 
 public class InGameScene extends Scene {
 
-    private final TextButton button = new TextButton("Hello, please click me!");
-    private int alignIndex = 0;
+    private final TextButton buildButton = new TextButton("Build!");
+    private final TextButton quitButton = new TextButton("Quit!");
 
     public InGameScene() {
-        add(button).setOnClick(this::onClick).align(Align.bottomLeft);
+        add(buildButton).setOnClick(this::onStartBuild).align(Align.bottomLeft);
+        add(quitButton).setOnClick(this::onQuit).align(Align.bottomRight);
         add(new InventoryList()).align(Align.topLeft);
     }
 
-    private void onClick(ClickEvent clickEvent, Button button) {
+    private void onQuit(ClickEvent clickEvent, Button button) {
+        client.gotoMainMenu();
+    }
+
+    private void onStartBuild(ClickEvent clickEvent, Button button) {
         client.getProcessor().setBuildAction(new BuildBlock(Blocks.testBlock));
     }
 }

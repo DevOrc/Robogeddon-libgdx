@@ -20,6 +20,8 @@ public class LocalServer extends ServerProvider {
         world.handleNewConnection(0);
 
         Server.runServer(world);
+
+        Log.info("Shutting down local server!");
     }
 
     @Override

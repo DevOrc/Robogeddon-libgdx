@@ -14,7 +14,7 @@ public class InventoryList extends Widget {
     public InventoryList() {
         for(Item item: Core.items.values()){
             var texture = new TextureWidget().setTexture(item.getTexture());
-            var label = new Label().setSupplier(() -> getText(item)).setFont(UIAssets.small).pad().bottom(10);
+            var label = new Label().setSupplier(() -> getText(item)).setFont(UIAssets.smallFont).pad().bottom(10);
             var pair = new PairLayout().setLeft(texture).setRight(label);
 
             add(pair);

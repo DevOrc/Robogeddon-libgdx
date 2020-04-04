@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Align;
 import com.noahcharlton.robogeddon.ui.Scale;
 import com.noahcharlton.robogeddon.ui.UIAssets;
 import com.noahcharlton.robogeddon.ui.background.NinePatchBackground;
@@ -21,10 +22,11 @@ public class TextButton extends Button {
     private BitmapFont font;
     private Color textColor = Color.WHITE;
     private String text;
+    private float textHeight;
 
     public TextButton(String text) {
         this.text = text;
-        this.font = UIAssets.small;
+        this.font = UIAssets.smallFont;
 
         setDefaultBackground(new NinePatchBackground(UIAssets.button));
         setOnHover(new NinePatchBackground(UIAssets.buttonHover));
@@ -33,11 +35,12 @@ public class TextButton extends Button {
     @Override
     public void draw(SpriteBatch batch) {
         var x = getX() + sidePadding;
-        var y = getY() + getHeight() - topPadding;
+        var y = getY() + (getHeight() / 2f) + (textHeight / 2f);
+        var textWidth = getWidth() - (sidePadding * 2);
 
         font.getData().setScale(Scale.scale);
         font.setColor(Color.WHITE);
-        font.draw(batch, text, x, y);
+        font.draw(batch, text, x, y, textWidth, Align.center, false);
     }
 
     @Override
@@ -45,6 +48,7 @@ public class TextButton extends Button {
         font.getData().setScale(Scale.scale);
         var textLayout = new GlyphLayout(font, text);
 
+        textHeight = textLayout.height;
         setMinWidth(textLayout.width + (2 * sidePadding));
         setMinHeight(textLayout.height + (2 * topPadding));
     }

@@ -65,4 +65,9 @@ public class Padding extends Widget{
 
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "Padding(" + widget + ")";
+    }
 }

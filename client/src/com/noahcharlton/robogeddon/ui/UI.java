@@ -91,4 +91,8 @@ public class UI {
     public void onClick(ClickEvent clickEvent) {
         currentScene.handleClick(clickEvent);
     }
+
+    public Scene getCurrentScene() {
+        return currentScene;
+    }
 }

@@ -4,10 +4,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.ServerProvider;
-import com.noahcharlton.robogeddon.client.ClientLauncher;
 import com.noahcharlton.robogeddon.client.LocalServer;
 import com.noahcharlton.robogeddon.client.RemoteServer;
-import com.noahcharlton.robogeddon.entity.*;
+import com.noahcharlton.robogeddon.entity.Entity;
+import com.noahcharlton.robogeddon.entity.EntityRemovedMessage;
+import com.noahcharlton.robogeddon.entity.EntityUpdateMessage;
+import com.noahcharlton.robogeddon.entity.NewEntityMessage;
 import com.noahcharlton.robogeddon.message.Message;
 import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.item.InventorySyncMessage;
@@ -18,10 +20,20 @@ public class ClientWorld extends World {
     private final ServerProvider server;
     private Entity playersRobot;
 
-    public ClientWorld() {
+    public ClientWorld(boolean local) {
         super(false);
 
-        this.server = ClientLauncher.runLocal ? new LocalServer() : new RemoteServer();
+        this.server = local ? new LocalServer() : new RemoteServer();
+    }
+
+    public ClientWorld(ServerProvider server) {
+        super(false);
+
+        this.server = server;
+    }
+
+    public void shutdown(){
+        server.getThread().interrupt();
     }
 
     public void update() {
@@ -80,16 +92,10 @@ public class ClientWorld extends World {
     private void updateTile(TileUpdate update){
         var tile = getTileAt(update.x, update.y);
 
-        if(update.floor == null){
-            throw new RuntimeException("Cannot have null floor.");
+        if(tile == null){
+            Log.warn("Updated tile that does not exist: (" + update.x +", " + update.y +")");
         }else{
-            tile.setFloor(Core.floors.get(update.floor), false);
-        }
-
-        if(update.block == null){
-            tile.setBlock(null, false);
-        }else{
-            tile.setBlock(Core.blocks.get(update.block), false);
+            tile.update(update);
         }
     }
 
@@ -146,5 +152,10 @@ public class ClientWorld extends World {
 
     public Entity getPlayersRobot() {
         return playersRobot;
+    }
+
+    @Override
+    public String toString() {
+        return "ClientWorld";
     }
 }

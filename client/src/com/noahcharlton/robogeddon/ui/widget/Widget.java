@@ -52,8 +52,10 @@ public class Widget {
 
     public void draw(SpriteBatch batch){}
 
-    private void validate() {
+    protected void validate() {
         invalidated = false;
+        Log.trace("validating  " + toString());
+        children.forEach(Widget::validate);
         layout();
         children.forEach(Widget::validate);
     }
@@ -79,6 +81,12 @@ public class Widget {
         children.add(widget);
 
         return widget;
+    }
+
+    public Widget chainAdd(Widget widget){
+        add(widget);
+
+        return this;
     }
 
     public void add(Widget... widgets){
@@ -146,6 +154,13 @@ public class Widget {
 
     public Widget setBackground(Background background) {
         this.background = background;
+        return this;
+    }
+
+    public Widget setMinSize(float minWidth, float minHeight){
+        setMinWidth(minWidth);
+        setMinHeight(minHeight);
+
         return this;
     }
 

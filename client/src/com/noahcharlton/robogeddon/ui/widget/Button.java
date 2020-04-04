@@ -6,7 +6,7 @@ import com.noahcharlton.robogeddon.ui.event.ClickEvent;
 
 import java.util.function.BiConsumer;
 
-public abstract class Button extends Widget {
+public abstract class Button extends NoChildrenWidget {
 
     private BiConsumer<ClickEvent, Button> onClick;
     private Background defaultBackground = new ColorBackground();

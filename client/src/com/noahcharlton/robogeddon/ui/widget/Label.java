@@ -8,7 +8,7 @@ import com.noahcharlton.robogeddon.ui.Scale;
 
 import java.util.function.Supplier;
 
-public class Label extends Widget {
+public class Label extends NoChildrenWidget {
 
     private Supplier<String> supplier = null;
     private BitmapFont font;
@@ -37,8 +37,19 @@ public class Label extends Widget {
         font.getData().setScale(Scale.scale);
         var textLayout = new GlyphLayout(font, text);
 
-        setMinWidth(textLayout.width);
-        setMinHeight(textLayout.height);
+        if(getWidth() == getMinWidth()){
+            setMinWidth(textLayout.width);
+            setWidth(textLayout.width);
+        }else{
+            setWidth(textLayout.width);
+        }
+
+        if(getHeight() == getMinHeight()){
+            setMinHeight(textLayout.height);
+            setHeight(textLayout.height);
+        }else{
+            setMinHeight(textLayout.height);
+        }
     }
 
     public Label setSupplier(Supplier<String> supplier) {
@@ -63,6 +74,11 @@ public class Label extends Widget {
 
     public BitmapFont getFont() {
         return font;
+    }
+
+    @Override
+    public String toString() {
+        return "Label(" + text + ")";
     }
 
     public Label setText(String text) {

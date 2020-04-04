@@ -28,6 +28,7 @@ public class RemoteServer extends ServerProvider {
             throw new RuntimeException("Failed to connect to remote server: " + ip, e);
         }
 
+        Log.info("Shutting down remote server connection!");
     }
 
     public void runWithConnection(Socket connection) throws IOException {

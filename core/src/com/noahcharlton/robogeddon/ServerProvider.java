@@ -40,4 +40,7 @@ public abstract class ServerProvider implements Runnable{
         throw new UnsupportedOperationException();
     }
 
+    public Thread getThread() {
+        return thread;
+    }
 }

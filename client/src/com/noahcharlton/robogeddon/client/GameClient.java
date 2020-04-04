@@ -9,10 +9,12 @@ import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.graphics.GameRenderer;
 import com.noahcharlton.robogeddon.input.InputProcessor;
-import com.noahcharlton.robogeddon.ui.ingame.InGameScene;
+import com.noahcharlton.robogeddon.ui.MainMenu;
 import com.noahcharlton.robogeddon.ui.UI;
 import com.noahcharlton.robogeddon.ui.UIAssets;
+import com.noahcharlton.robogeddon.ui.ingame.InGameScene;
 import com.noahcharlton.robogeddon.world.ClientWorld;
+import com.noahcharlton.robogeddon.world.MainMenuWorld;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
 public class GameClient extends ApplicationAdapter implements Client {
@@ -40,8 +42,8 @@ public class GameClient extends ApplicationAdapter implements Client {
 
         renderer = new GameRenderer(this);
         ui = new UI(this);
-        world = new ClientWorld();
         processor = new InputProcessor(this);
+        setWorld(new MainMenuWorld());
     }
 
     @Override
@@ -69,6 +71,21 @@ public class GameClient extends ApplicationAdapter implements Client {
         updateFPSCount();
     }
 
+    public void startGame(boolean local){
+        Log.info("Starting " + (local ? "local":"remote") + " game");
+
+        updateLastFrame = System.nanoTime();
+        nextFpsCheck = System.currentTimeMillis() + 10000;
+        setWorld(new ClientWorld(local));
+        ui.setScene(new InGameScene());
+    }
+
+    public void gotoMainMenu(){
+        Log.info("Going to main menu");
+        ui.setScene(new MainMenu());
+        setWorld(new MainMenuWorld());
+    }
+
     private void updateAssetLoading() {
         Core.assets.update();
 
@@ -79,9 +96,8 @@ public class GameClient extends ApplicationAdapter implements Client {
 
     private void onAssetsLoaded(){
         loadingAssets = false;
-        updateLastFrame = System.nanoTime();
         nextFpsCheck = System.currentTimeMillis() + 10000;
-        ui.setScene(new InGameScene());
+        ui.setScene(new MainMenu());
 
         Log.info("Finished loading assets!");
     }
@@ -95,6 +111,13 @@ public class GameClient extends ApplicationAdapter implements Client {
             renderFrames = 0;
             updateFrames = 0;
         }
+    }
+
+    private void setWorld(ClientWorld world){
+        if(this.world != null)
+            this.world .shutdown();
+
+        this.world = world;
     }
 
     @Override

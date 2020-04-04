@@ -3,7 +3,7 @@ package com.noahcharlton.robogeddon.ui.widget;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-public class TextureWidget extends Widget{
+public class TextureWidget extends NoChildrenWidget{
 
     private TextureRegion texture;
 

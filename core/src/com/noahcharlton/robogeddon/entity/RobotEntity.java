@@ -186,6 +186,10 @@ public class RobotEntity extends Entity implements HasCollision {
         return mouse.sub(getX(), getY(), 0).clamp(0, 250).add(getX(), getY(), 0);
     }
 
+    public void setControlling(boolean controlling) {
+        this.controlling = controlling;
+    }
+
     @Override
     public void onCustomMessageReceived(CustomEntityMessage message) {
         if(message instanceof RobotInputMessage && world.isServer()){
