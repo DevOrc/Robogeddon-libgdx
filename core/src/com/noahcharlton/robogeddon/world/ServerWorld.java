@@ -6,7 +6,7 @@ import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.Server;
 import com.noahcharlton.robogeddon.ServerProvider;
 import com.noahcharlton.robogeddon.block.Block;
-import com.noahcharlton.robogeddon.block.Blocks;
+import com.noahcharlton.robogeddon.block.Multiblock;
 import com.noahcharlton.robogeddon.entity.*;
 import com.noahcharlton.robogeddon.message.Message;
 import com.noahcharlton.robogeddon.util.Side;
@@ -41,7 +41,7 @@ public class ServerWorld extends World{
         }
         getChunkAt(0, 0).setTeam(Team.NEUTRAL);
 
-        addEntity(EntityType.droneEntity.create(this, Team.RED));
+//        addEntity(EntityType.droneEntity.create(this, Team.RED));
         Log.info("Successfully generated the world!");
     }
 
@@ -61,13 +61,6 @@ public class ServerWorld extends World{
 
     public void update(){
         super.update();
-
-        var tile = getTileAt(0, 0);
-        if(System.currentTimeMillis() % 2000 < 1000 && tile.hasBlock()){
-            tile.setBlock(null, true);
-        }else if(System.currentTimeMillis() % 2000 > 1000 && !tile.hasBlock()){
-            tile.setBlock(Blocks.testBlock, true);
-        }
 
         if(inventory.isDirty()){
             inventory.clean();
@@ -114,7 +107,7 @@ public class ServerWorld extends World{
         }else if(message instanceof LostClientMessage){
             onClientLost((LostClientMessage) message);
         }else if(message instanceof BuildBlockMessage){
-            attemptToBuildBlock((BuildBlockMessage) message);
+            onBuildBlockRequest((BuildBlockMessage) message);
         }else{
             Log.warn("Unknown message type: " + message.getClass());
         }
@@ -122,22 +115,64 @@ public class ServerWorld extends World{
         return false;
     }
 
-    private void attemptToBuildBlock(BuildBlockMessage message) {
+    private void onBuildBlockRequest(BuildBlockMessage message) {
         Tile tile = getTileAt(message.getTileX(), message.getTileY());
         Block block = Core.blocks.getOrNull(message.getBlockID());
         var entity = getEntityByID(message.getPlayerID());
 
-        boolean hasPermission = entity.getTeam() == tile.getChunk().getTeam()
-                || tile.getChunk().getTeam() == Team.NEUTRAL;
-        if(entity.isDead() || !hasPermission){
-            Log.debug("Cannot build block 1");
+        if(entity == null || entity.isDead())
+            return;
+
+        if(block == null && tile.hasBlock() && teamCanEditTile(entity.getTeam(), tile)){
+            destroyBlock(tile);
+        }else if(block != null && canBuildBlock(entity, block, tile)){
+            buildBlock(tile, block);
+        }
+    }
+
+    private void destroyBlock(Tile tile) {
+        Block block = tile.getBlock();
+
+        if(block instanceof Multiblock){
+            var multiBlock = (Multiblock) block;
+            destroyBlock(getTileAt(multiBlock.getRootX(), multiBlock.getRootY()));
             return;
         }
 
-        if(tile.hasBlock() && message.getBlockID() != null)
-            return;
+        for(int x = tile.getX(); x < tile.getX() + block.getWidth(); x++){
+            for(int y = tile.getY(); y < tile.getY() + block.getHeight(); y++){
+                getTileAt(x, y).setBlock(null, true);
+            }
+        }
+    }
 
-        tile.setBlock(block, true);
+    private boolean canBuildBlock(Entity builder, Block block, Tile root){
+        for(int x = root.getX(); x < root.getX() + block.getWidth(); x++){
+            for(int y = root.getY(); y < root.getY() + block.getHeight(); y++){
+                var tile = getTileAt(x, y);
+
+                if(!teamCanEditTile(builder.getTeam(), tile) || tile.hasBlock())
+                    return false;
+            }
+        }
+
+        return true;
+    }
+
+    private void buildBlock(Tile tile, Block block) {
+        for(int x = tile.getX(); x < tile.getX() + block.getWidth(); x++){
+            for(int y = tile.getY(); y < tile.getY() + block.getHeight(); y++){
+                if(x == tile.getX() && y == tile.getY()){
+                    getTileAt(x, y).setBlock(block, true);
+                }else{
+                    getTileAt(x, y).setBlock(new Multiblock(block, tile.getX(), tile.getY()), true);
+                }
+            }
+        }
+    }
+
+    private boolean teamCanEditTile(Team team, Tile tile){
+        return team == tile.getChunk().getTeam() || tile.getChunk().getTeam() == Team.NEUTRAL;
     }
 
     private void onClientLost(LostClientMessage message) {

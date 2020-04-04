@@ -43,6 +43,11 @@ public class Core {
         blocks.setFinalized(true);
         floors.setFinalized(true);
         items.setFinalized(true);
+
+        //Throw an exception if any block ID starts with multi, because those are reserved for multiblocks
+        blocks.keys().stream().filter(id -> id.startsWith("multi")).findAny().ifPresent(x -> {
+            throw new RuntimeException("Cannot have any block IDs that start with multi!");
+        });
         Log.debug("PreInit End");
     }
 

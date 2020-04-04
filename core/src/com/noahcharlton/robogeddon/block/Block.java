@@ -19,6 +19,14 @@ public abstract class Block implements HasID {
         renderer = new DefaultBlockRenderer(this);
     }
 
+    public int getWidth(){
+        return 1;
+    }
+
+    public int getHeight(){
+        return 1;
+    }
+
     public BlockRenderer getRenderer() {
         return renderer;
     }

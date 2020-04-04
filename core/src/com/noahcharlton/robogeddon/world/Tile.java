@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.block.Block;
+import com.noahcharlton.robogeddon.block.Multiblock;
 import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.floor.Floor;
 
@@ -51,17 +52,27 @@ public class Tile {
 
         if(update.block == null){
             block = null;
+        }else if(update.block.startsWith("multi-")){
+            var parts = update.block.substring(6).split(",", 3);
+            var rootX = Integer.parseInt(parts[0]);
+            var rootY = Integer.parseInt(parts[1]);
+            var id = parts[2];
+
+            block = new Multiblock(Core.blocks.get(id), rootX, rootY);
         }else{
             block = Core.blocks.get(update.block);
         }
     }
 
     @Side(Side.CLIENT)
-    public void render(SpriteBatch batch) {
+    public void renderFloor(SpriteBatch batch) {
         if(floor != null)
             floor.render(batch, this);
+    }
 
-        if(hasBlock())
+    @Side(Side.CLIENT)
+    public void renderBlock(SpriteBatch batch){
+        if(hasBlock() && block.getRenderer() != null)
             block.getRenderer().render(batch, this);
     }
 

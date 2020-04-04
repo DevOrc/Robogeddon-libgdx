@@ -42,4 +42,8 @@ public class Registry<T extends HasID>  {
     public Collection<T> values(){
         return items.values();
     }
+
+    public Collection<String> keys(){
+        return items.keySet();
+    }
 }

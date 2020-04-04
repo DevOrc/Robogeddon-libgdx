@@ -6,112 +6,112 @@ filter: Nearest,Nearest
 repeat: none
 blocks/oil
   rotate: false
-  xy: 73, 4
+  xy: 73, 1
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/test_block
   rotate: false
-  xy: 371, 70
-  size: 32, 32
-  orig: 32, 32
+  xy: 265, 35
+  size: 64, 64
+  orig: 64, 64
   offset: 0, 0
   index: -1
 entities/bullet
   rotate: false
-  xy: 1, 1
+  xy: 369, 93
   size: 6, 6
   orig: 6, 6
   offset: 0, 0
   index: -1
 entities/drone_off
   rotate: false
-  xy: 1, 38
+  xy: 1, 35
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 entities/drone_on
   rotate: false
-  xy: 67, 38
+  xy: 67, 35
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 entities/robot_off
   rotate: false
-  xy: 133, 38
+  xy: 133, 35
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 entities/robot_on
   rotate: false
-  xy: 199, 38
+  xy: 199, 35
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 floors/dirt
   rotate: false
-  xy: 265, 41
+  xy: 331, 38
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 floors/grass
   rotate: false
-  xy: 39, 4
+  xy: 39, 1
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 floors/oil_rock
   rotate: false
-  xy: 107, 4
+  xy: 107, 1
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 floors/rock
   rotate: false
-  xy: 141, 4
+  xy: 141, 1
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 floors/sand
   rotate: false
-  xy: 303, 70
+  xy: 243, 1
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 items/rock
   rotate: false
-  xy: 175, 4
+  xy: 175, 1
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 items/ruby
   rotate: false
-  xy: 209, 4
+  xy: 209, 1
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 items/sapphire
   rotate: false
-  xy: 337, 70
+  xy: 277, 1
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 ui/button
   rotate: false
-  xy: 1, 9
+  xy: 1, 6
   size: 36, 27
   split: 11, 11, 11, 11
   orig: 36, 27
@@ -119,7 +119,7 @@ ui/button
   index: -1
 ui/buttonHover
   rotate: false
-  xy: 265, 75
+  xy: 331, 72
   size: 36, 27
   split: 11, 11, 11, 11
   orig: 36, 27
