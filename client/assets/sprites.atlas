@@ -27,6 +27,13 @@ blocks/groups/defense
   index: -1
 blocks/groups/misc
   rotate: false
+  xy: 103, 9
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+blocks/miner
+  rotate: false
   xy: 399, 75
   size: 32, 32
   orig: 32, 32
@@ -34,7 +41,7 @@ blocks/groups/misc
   index: -1
 blocks/oil
   rotate: false
-  xy: 103, 9
+  xy: 433, 75
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -48,14 +55,14 @@ blocks/test_block
   index: -1
 blocks/turret_base
   rotate: false
-  xy: 273, 9
+  xy: 331, 41
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/turret_top
   rotate: false
-  xy: 331, 41
+  xy: 365, 41
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -111,42 +118,42 @@ floors/grass
   index: -1
 floors/oil_rock
   rotate: false
-  xy: 433, 75
+  xy: 137, 9
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 floors/rock
   rotate: false
-  xy: 137, 9
+  xy: 467, 75
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 floors/sand
   rotate: false
-  xy: 205, 9
+  xy: 239, 9
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 items/rock
   rotate: false
-  xy: 467, 75
+  xy: 171, 9
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 items/ruby
   rotate: false
-  xy: 171, 9
+  xy: 205, 9
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 items/sapphire
   rotate: false
-  xy: 239, 9
+  xy: 273, 9
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.ServerProvider;
+import com.noahcharlton.robogeddon.block.tileentity.HasInventory;
 import com.noahcharlton.robogeddon.block.tileentity.UpdateTileEntitiesMessage;
 import com.noahcharlton.robogeddon.client.LocalServer;
 import com.noahcharlton.robogeddon.client.RemoteServer;
@@ -88,7 +89,12 @@ public class ClientWorld extends World {
     private void updateTileEntities(UpdateTileEntitiesMessage message) {
         for(var update : message.getUpdates()){
             var tile = getTileAt(update.tileX, update.tileY);
-            tile.getTileEntity().receiveData(update.data);
+            var tileEntity = tile.getTileEntity();
+
+            if(tileEntity instanceof HasInventory)
+                ((HasInventory) tileEntity).setBuffers(update.items);
+
+            tileEntity.receiveData(update.data);
         }
     }
 

@@ -10,11 +10,19 @@ public class UpdateTileEntitiesMessage implements Message {
         public final int tileX;
         public final int tileY;
         public final float[] data;
+        public final ItemBuffer[] items;
 
         public TileEntityUpdate(TileEntity entity) {
             this.tileX = entity.getRootTile().getX();
             this.tileY = entity.getRootTile().getY();
             this.data = entity.getData();
+
+            if(entity instanceof HasInventory){
+                var inventory = (HasInventory) entity;
+                items = inventory.getBuffers();
+            }else{
+                items = null;
+            }
         }
     }
 

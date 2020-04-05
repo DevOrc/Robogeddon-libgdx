@@ -20,12 +20,12 @@ public class TileEntity {
 
     @Side(Side.SERVER)
     public float[] getData(){
-        throw new IllegalStateException("getData() must be extended if a tile entity is marked dirty.");
+        return new float[]{};
     }
 
     @Side(Side.CLIENT)
     public void receiveData(float[] data){
-        throw new IllegalStateException("receiveData() must be extended if a tile entity is marked dirty.");
+
     }
 
     public void clean(){
