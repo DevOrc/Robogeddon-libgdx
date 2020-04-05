@@ -6,8 +6,7 @@ import java.util.function.Consumer;
 
 public abstract class Asset<T> {
 
-    private Consumer<T> onLoad = x -> {
-    };
+    private Consumer<T> onLoad;
 
     final void onLoad() {
         Log.debug("Loading asset: " + getName());
@@ -15,6 +14,9 @@ public abstract class Asset<T> {
 
         if(asset == null)
             throw new RuntimeException("Failed to find asset: " + getName());
+
+        if(onLoad == null)
+            throw new RuntimeException("onLoad has not been set for asset " + getName());
 
         onLoad.accept(asset);
     }

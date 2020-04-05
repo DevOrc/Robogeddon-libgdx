@@ -2,6 +2,7 @@ package com.noahcharlton.robogeddon;
 
 import com.noahcharlton.robogeddon.asset.AssetManager;
 import com.noahcharlton.robogeddon.block.Block;
+import com.noahcharlton.robogeddon.block.BlockGroup;
 import com.noahcharlton.robogeddon.block.Blocks;
 import com.noahcharlton.robogeddon.entity.EntityType;
 import com.noahcharlton.robogeddon.util.Side;
@@ -22,6 +23,8 @@ public class Core {
     public static final Registry<Block> blocks = new Registry<>();
     public static final Registry<Floor> floors = new Registry<>();
     public static final Registry<Item> items = new Registry<>();
+    @Side(Side.CLIENT)
+    public static final Registry<BlockGroup> blockGroups = new Registry<>();
 
     @Side(Side.CLIENT)
     public static AssetManager assets;
@@ -55,6 +58,9 @@ public class Core {
     public static void init(){
         Log.debug("Init");
         assets = new AssetManager();
+
+        Blocks.init();
+        blockGroups.setFinalized(true);
 
         entities.values().forEach(EntityType::initRenderer);
         blocks.values().forEach(Block::initRenderer);

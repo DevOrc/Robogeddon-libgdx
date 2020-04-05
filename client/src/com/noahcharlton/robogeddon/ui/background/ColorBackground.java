@@ -6,8 +6,8 @@ import com.noahcharlton.robogeddon.ui.widget.Widget;
 
 public class ColorBackground implements Background {
 
-    private final Color color = new Color(0x1a1a1aFF);;
-    private final Color border = new Color(0x1a1a1aFF);
+    private final Color color = new Color(0x2f2f2fFF);
+    private final Color border = new Color(0x2a2a2aFF);
     private final int borderWidth = 3;
 
     @Override

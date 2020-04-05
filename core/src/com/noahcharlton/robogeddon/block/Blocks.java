@@ -19,5 +19,10 @@ public class Blocks{
 
     @Side(Side.CLIENT)
     public static void init() {
+        BlockGroup defense = new BlockGroup("defense", Blocks.turret);
+        BlockGroup misc = new BlockGroup("misc", Blocks.oilBlock, Blocks.testBlock);
+
+        Core.blockGroups.register(misc);
+        Core.blockGroups.register(defense);
     }
 }

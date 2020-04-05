@@ -27,6 +27,7 @@ public class Widget {
     private float height;
     private float minWidth;
     private float minHeight;
+    private boolean visible = true;
 
     private int align = Align.center;
     private Background background;
@@ -41,6 +42,9 @@ public class Widget {
     public final void render(SpriteBatch batch) {
         if(invalidated)
             validate();
+
+        if(!visible)
+            return;
 
         if(background != null)
             background.draw(batch, this);
@@ -66,7 +70,10 @@ public class Widget {
 
     }
 
-    public final void handleClick(ClickEvent event){
+    public void handleClick(ClickEvent event){
+        if(!visible)
+            return;
+
         if(event.isOnWidget(this)){
             onClick(event);
         }
@@ -123,6 +130,17 @@ public class Widget {
         this.y = y;
 
         return this;
+    }
+
+    public Widget setVisible(boolean visible) {
+        this.visible = visible;
+        invalidateParent();
+
+        return this;
+    }
+
+    public boolean isVisible() {
+        return visible;
     }
 
     public Widget setSize(float width, float height){

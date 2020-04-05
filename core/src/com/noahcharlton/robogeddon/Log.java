@@ -2,7 +2,7 @@ package com.noahcharlton.robogeddon;
 
 public class Log {
 
-    public static boolean debug = false;
+    public static boolean debug = true;
     public static boolean trace = false;
 
     public static void info(String text){
