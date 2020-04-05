@@ -72,11 +72,17 @@ public class ClientWorld extends World {
             syncInventory((InventorySyncMessage) message);
         }else if(message instanceof UpdateTileEntitiesMessage){
             updateTileEntities((UpdateTileEntitiesMessage) message);
+        }else if(message instanceof ChunkTeamUpdateMessage){
+            updateChunkTeam((ChunkTeamUpdateMessage) message);
         }else {
             Log.warn("Unknown message type: " + message.getClass());
         }
 
         return false;
+    }
+
+    private void updateChunkTeam(ChunkTeamUpdateMessage message) {
+        getChunkAt(message.getChunkX(), message.getChunkY()).setTeam(message.getNewTeam());
     }
 
     private void updateTileEntities(UpdateTileEntitiesMessage message) {

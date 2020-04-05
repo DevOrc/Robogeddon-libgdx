@@ -159,6 +159,9 @@ public class Chunk {
 
     public void setTeam(Team team) {
         this.team = Objects.requireNonNull(team);
+
+        if(world.isServer())
+            world.sendMessageToClient(new ChunkTeamUpdateMessage(this));
     }
 
     public Team getTeam() {

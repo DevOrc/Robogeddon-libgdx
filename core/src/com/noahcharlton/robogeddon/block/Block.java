@@ -1,7 +1,10 @@
 package com.noahcharlton.robogeddon.block;
 
 import com.noahcharlton.robogeddon.HasID;
+import com.noahcharlton.robogeddon.entity.Entity;
 import com.noahcharlton.robogeddon.util.Side;
+import com.noahcharlton.robogeddon.world.Tile;
+import com.noahcharlton.robogeddon.world.team.Team;
 
 public abstract class Block implements HasID {
 
@@ -17,6 +20,13 @@ public abstract class Block implements HasID {
     @Side(Side.CLIENT)
     public void initRenderer(){
         renderer = new DefaultBlockRenderer(this);
+    }
+
+    @Side(Side.SERVER)
+    public boolean canBuildAt(Tile tile, Entity placer){
+        var chunkTeam = tile.getChunk().getTeam();
+
+        return chunkTeam == placer.getTeam() || chunkTeam == Team.NEUTRAL;
     }
 
     public int getWidth(){

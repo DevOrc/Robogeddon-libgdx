@@ -43,7 +43,7 @@ public class ServerWorld extends World {
         }
         getChunkAt(0, 0).setTeam(Team.NEUTRAL);
 
-        addEntity(EntityType.droneEntity.create(this, Team.RED));
+//        addEntity(EntityType.droneEntity.create(this, Team.RED));
         Log.info("Successfully generated the world!");
     }
 
@@ -140,7 +140,7 @@ public class ServerWorld extends World {
         }
     }
 
-    private void destroyBlock(Tile tile) {
+    public void destroyBlock(Tile tile) {
         Block block = tile.getBlock();
 
         if(block instanceof Multiblock) {
@@ -161,7 +161,7 @@ public class ServerWorld extends World {
             for(int y = root.getY(); y < root.getY() + block.getHeight(); y++) {
                 var tile = getTileAt(x, y);
 
-                if(!teamCanEditTile(builder.getTeam(), tile) || tile.hasBlock())
+                if(tile.hasBlock() || !block.canBuildAt(tile, builder))
                     return false;
             }
         }
