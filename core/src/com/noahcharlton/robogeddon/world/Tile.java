@@ -5,6 +5,8 @@ import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.block.Block;
 import com.noahcharlton.robogeddon.block.Multiblock;
+import com.noahcharlton.robogeddon.block.tileentity.HasTileEntity;
+import com.noahcharlton.robogeddon.block.tileentity.TileEntity;
 import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.floor.Floor;
 
@@ -21,6 +23,7 @@ public class Tile {
 
     private Block block;
     private Floor floor;
+    private TileEntity tileEntity;
 
     /** Used by the server to tell which tiles should be sent to the client, after the next update*/
     @Side(Side.SERVER)
@@ -38,12 +41,11 @@ public class Tile {
             throw new UnsupportedOperationException();
 
         dirty = true;
-        chunk.markDirty();
         Log.debug("Marking " + toString() + " dirty");
     }
 
     @Side(Side.CLIENT)
-    public void update(TileUpdate update) {
+    public void onTileUpdate(TileUpdate update) {
         if(update.floor == null){
             throw new RuntimeException("Cannot have null floor.");
         }else{
@@ -51,16 +53,16 @@ public class Tile {
         }
 
         if(update.block == null){
-            block = null;
+            setBlock(null, false);
         }else if(update.block.startsWith("multi-")){
             var parts = update.block.substring(6).split(",", 3);
             var rootX = Integer.parseInt(parts[0]);
             var rootY = Integer.parseInt(parts[1]);
             var id = parts[2];
 
-            block = new Multiblock(Core.blocks.get(id), rootX, rootY);
+            setBlock(new Multiblock(Core.blocks.get(id), rootX, rootY), false);
         }else{
-            block = Core.blocks.get(update.block);
+            setBlock(Core.blocks.get(update.block), false);
         }
     }
 
@@ -81,6 +83,16 @@ public class Tile {
             markDirty();
 
         this.block = block;
+        if(block instanceof HasTileEntity){
+            this.tileEntity = ((HasTileEntity) block).createTileEntity(this);
+        }else{
+            this.tileEntity = null;
+        }
+    }
+
+    public void update(){
+        if(tileEntity != null)
+            tileEntity.update();
     }
 
     public void setFloor(Floor floor, boolean markDirty) {
@@ -137,5 +149,9 @@ public class Tile {
 
     public Chunk getChunk() {
         return chunk;
+    }
+
+    public TileEntity getTileEntity() {
+        return tileEntity;
     }
 }

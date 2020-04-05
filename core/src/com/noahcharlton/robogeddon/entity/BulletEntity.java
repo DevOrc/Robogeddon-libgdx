@@ -83,6 +83,11 @@ public class BulletEntity extends Entity {
         public String getTypeID() {
             return "bullet";
         }
+
+        @Override
+        public boolean isTargetable() {
+            return false;
+        }
     }
 
 }

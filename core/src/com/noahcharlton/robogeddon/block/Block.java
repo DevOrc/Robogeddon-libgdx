@@ -8,7 +8,7 @@ public abstract class Block implements HasID {
     private final String id;
 
     @Side(Side.CLIENT)
-    private BlockRenderer renderer;
+    protected BlockRenderer renderer;
 
     public Block(String id) {
         this.id = id;

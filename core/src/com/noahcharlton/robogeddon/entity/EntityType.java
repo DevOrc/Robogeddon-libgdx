@@ -52,4 +52,11 @@ public abstract class EntityType implements HasID {
     public int getHealth(){
         return 1;
     }
+
+    /**
+     * @return if this entity type should be shot at by turrets
+     */
+    public boolean isTargetable(){
+        return true;
+    }
 }

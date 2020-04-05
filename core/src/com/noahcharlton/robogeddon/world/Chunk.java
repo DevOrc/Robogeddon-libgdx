@@ -18,7 +18,6 @@ public class Chunk {
     private final World world;
     private final GridPoint2 location;
     private final Tile[][] tiles = new Tile[SIZE][SIZE];
-    private boolean dirty;
 
     private Team team = Team.NEUTRAL;
 
@@ -52,7 +51,7 @@ public class Chunk {
                 var worldY = y + (location.y * 32);
 
                 tiles[index.x][index.y] = new Tile(world,  this, worldX, worldY);
-                tiles[index.x][index.y].update(message.getTiles()[index.x][index.y]);
+                tiles[index.x][index.y].onTileUpdate(message.getTiles()[index.x][index.y]);
             }
         }
     }
@@ -81,6 +80,15 @@ public class Chunk {
          return output;
     }
 
+    public void update() {
+        for(int x = 0; x < SIZE; x++) {
+            for(int y = 0; y < SIZE; y++) {
+                getTile(x, y).update();
+            }
+        }
+    }
+
+    @Side(Side.CLIENT)
     public void render(SpriteBatch batch) {
         for(int x = 0; x < SIZE; x++) {
             for(int y = 0; y < SIZE; y++) {
@@ -143,18 +151,6 @@ public class Chunk {
         }
 
         return tiles[x][y];
-    }
-
-    public void markDirty(){
-        dirty = true;
-    }
-
-    public void clean(){
-        dirty = false;
-    }
-
-    public boolean isDirty() {
-        return dirty;
     }
 
     public GridPoint2 getLocation() {

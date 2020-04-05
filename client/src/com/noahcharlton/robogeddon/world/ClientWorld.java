@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.ServerProvider;
+import com.noahcharlton.robogeddon.block.tileentity.UpdateTileEntitiesMessage;
 import com.noahcharlton.robogeddon.client.LocalServer;
 import com.noahcharlton.robogeddon.client.RemoteServer;
 import com.noahcharlton.robogeddon.entity.Entity;
@@ -69,11 +70,20 @@ public class ClientWorld extends World {
             updateWorld((UpdateWorldMessage) message);
         } else if(message instanceof InventorySyncMessage){
             syncInventory((InventorySyncMessage) message);
+        }else if(message instanceof UpdateTileEntitiesMessage){
+            updateTileEntities((UpdateTileEntitiesMessage) message);
         }else {
             Log.warn("Unknown message type: " + message.getClass());
         }
 
         return false;
+    }
+
+    private void updateTileEntities(UpdateTileEntitiesMessage message) {
+        for(var update : message.getUpdates()){
+            var tile = getTileAt(update.tileX, update.tileY);
+            tile.getTileEntity().receiveData(update.data);
+        }
     }
 
     private void syncInventory(InventorySyncMessage message) {
@@ -97,7 +107,7 @@ public class ClientWorld extends World {
         if(tile == null){
             Log.warn("Updated tile that does not exist: (" + update.x +", " + update.y +")");
         }else{
-            tile.update(update);
+            tile.onTileUpdate(update);
         }
     }
 

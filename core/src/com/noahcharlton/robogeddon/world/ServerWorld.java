@@ -7,6 +7,8 @@ import com.noahcharlton.robogeddon.Server;
 import com.noahcharlton.robogeddon.ServerProvider;
 import com.noahcharlton.robogeddon.block.Block;
 import com.noahcharlton.robogeddon.block.Multiblock;
+import com.noahcharlton.robogeddon.block.tileentity.TileEntity;
+import com.noahcharlton.robogeddon.block.tileentity.UpdateTileEntitiesMessage;
 import com.noahcharlton.robogeddon.entity.*;
 import com.noahcharlton.robogeddon.message.Message;
 import com.noahcharlton.robogeddon.util.Side;
@@ -20,7 +22,7 @@ import java.util.List;
 import java.util.Random;
 
 @Side(Side.SERVER)
-public class ServerWorld extends World{
+public class ServerWorld extends World {
 
     private final WorldGenerator generator = new WorldGenerator(WorldGenerator.seed);
     private final HashMap<Integer, Entity> players = new HashMap<>();
@@ -33,15 +35,15 @@ public class ServerWorld extends World{
         this.server = server;
 
         Random random = new Random();
-        for(int x = -2; x <= 2; x++){
-            for(int y = -2; y <= 2; y++){
+        for(int x = -2; x <= 2; x++) {
+            for(int y = -2; y <= 2; y++) {
                 var team = random.nextBoolean() ? Team.BLUE : Team.RED;
                 createChunk(x, y, team);
             }
         }
         getChunkAt(0, 0).setTeam(Team.NEUTRAL);
 
-//        addEntity(EntityType.droneEntity.create(this, Team.RED));
+        addEntity(EntityType.droneEntity.create(this, Team.RED));
         Log.info("Successfully generated the world!");
     }
 
@@ -59,10 +61,10 @@ public class ServerWorld extends World{
         Log.debug("Created Chunk for " + location + " with team " + team);
     }
 
-    public void update(){
+    public void update() {
         super.update();
 
-        if(inventory.isDirty()){
+        if(inventory.isDirty()) {
             inventory.clean();
             sendMessageToClient(inventory.createSyncMessage());
         }
@@ -72,43 +74,51 @@ public class ServerWorld extends World{
 
     private void sendDirtyTiles() {
         List<Tile> dirtyTiles = new ArrayList<>();
+        List<TileEntity> dirtyTileEntities = new ArrayList<>();
+        chunks.values().forEach(chunk -> getDirtyTilesInChunk(dirtyTiles, dirtyTileEntities, chunk));
 
-        chunks.values().forEach(chunk -> getDirtyTilesInChunk(dirtyTiles, chunk));
-
-        if(!dirtyTiles.isEmpty())
+        if(!dirtyTiles.isEmpty()) {
             sendMessageToClient(new UpdateWorldMessage(dirtyTiles));
+        }
+
+        if(!dirtyTileEntities.isEmpty()) {
+            sendMessageToClient(new UpdateTileEntitiesMessage(dirtyTileEntities));
+        }
     }
 
-    private void getDirtyTilesInChunk(List<Tile> dirtyTiles, Chunk chunk) {
-        if(chunk.isDirty()){
-            for(int x = 0; x < Chunk.SIZE; x++){
-                for(int y = 0; y < Chunk.SIZE; y++){
-                    var tile = chunk.getTile(x, y);
-                    if(tile.isDirty()){
-                        dirtyTiles.add(tile);
-                        tile.clean();
-                    }
+    private void getDirtyTilesInChunk(List<Tile> dirtyTiles, List<TileEntity> dirtyTileEntities, Chunk chunk) {
+        for(int x = 0; x < Chunk.SIZE; x++) {
+            for(int y = 0; y < Chunk.SIZE; y++) {
+                var tile = chunk.getTile(x, y);
+
+                if(tile.isDirty()) {
+                    dirtyTiles.add(tile);
+                    tile.clean();
+                }
+
+                if(tile.getTileEntity() != null && tile.getTileEntity().isDirty()) {
+                    dirtyTileEntities.add(tile.getTileEntity());
+                    tile.getTileEntity().clean();
                 }
             }
         }
-        chunk.clean();
     }
 
-    public void updateMessages(){
+    public void updateMessages() {
         Message message;
-        while((message = server.getMessageFromClient()) != null){
+        while((message = server.getMessageFromClient()) != null) {
             onMessageReceived(message);
         }
     }
 
     protected boolean onMessageReceived(Message message) {
-        if(super.onMessageReceived(message)){
+        if(super.onMessageReceived(message)) {
 
-        }else if(message instanceof LostClientMessage){
+        } else if(message instanceof LostClientMessage) {
             onClientLost((LostClientMessage) message);
-        }else if(message instanceof BuildBlockMessage){
+        } else if(message instanceof BuildBlockMessage) {
             onBuildBlockRequest((BuildBlockMessage) message);
-        }else{
+        } else {
             Log.warn("Unknown message type: " + message.getClass());
         }
 
@@ -123,9 +133,9 @@ public class ServerWorld extends World{
         if(entity == null || entity.isDead())
             return;
 
-        if(block == null && tile.hasBlock() && teamCanEditTile(entity.getTeam(), tile)){
+        if(block == null && tile.hasBlock() && teamCanEditTile(entity.getTeam(), tile)) {
             destroyBlock(tile);
-        }else if(block != null && canBuildBlock(entity, block, tile)){
+        } else if(block != null && canBuildBlock(entity, block, tile)) {
             buildBlock(tile, block);
         }
     }
@@ -133,22 +143,22 @@ public class ServerWorld extends World{
     private void destroyBlock(Tile tile) {
         Block block = tile.getBlock();
 
-        if(block instanceof Multiblock){
+        if(block instanceof Multiblock) {
             var multiBlock = (Multiblock) block;
             destroyBlock(getTileAt(multiBlock.getRootX(), multiBlock.getRootY()));
             return;
         }
 
-        for(int x = tile.getX(); x < tile.getX() + block.getWidth(); x++){
-            for(int y = tile.getY(); y < tile.getY() + block.getHeight(); y++){
+        for(int x = tile.getX(); x < tile.getX() + block.getWidth(); x++) {
+            for(int y = tile.getY(); y < tile.getY() + block.getHeight(); y++) {
                 getTileAt(x, y).setBlock(null, true);
             }
         }
     }
 
-    private boolean canBuildBlock(Entity builder, Block block, Tile root){
-        for(int x = root.getX(); x < root.getX() + block.getWidth(); x++){
-            for(int y = root.getY(); y < root.getY() + block.getHeight(); y++){
+    private boolean canBuildBlock(Entity builder, Block block, Tile root) {
+        for(int x = root.getX(); x < root.getX() + block.getWidth(); x++) {
+            for(int y = root.getY(); y < root.getY() + block.getHeight(); y++) {
                 var tile = getTileAt(x, y);
 
                 if(!teamCanEditTile(builder.getTeam(), tile) || tile.hasBlock())
@@ -160,34 +170,34 @@ public class ServerWorld extends World{
     }
 
     private void buildBlock(Tile tile, Block block) {
-        for(int x = tile.getX(); x < tile.getX() + block.getWidth(); x++){
-            for(int y = tile.getY(); y < tile.getY() + block.getHeight(); y++){
-                if(x == tile.getX() && y == tile.getY()){
+        for(int x = tile.getX(); x < tile.getX() + block.getWidth(); x++) {
+            for(int y = tile.getY(); y < tile.getY() + block.getHeight(); y++) {
+                if(x == tile.getX() && y == tile.getY()) {
                     getTileAt(x, y).setBlock(block, true);
-                }else{
+                } else {
                     getTileAt(x, y).setBlock(new Multiblock(block, tile.getX(), tile.getY()), true);
                 }
             }
         }
     }
 
-    private boolean teamCanEditTile(Team team, Tile tile){
+    private boolean teamCanEditTile(Team team, Tile tile) {
         return team == tile.getChunk().getTeam() || tile.getChunk().getTeam() == Team.NEUTRAL;
     }
 
     private void onClientLost(LostClientMessage message) {
         var entity = players.get(message.getConnectionID());
 
-        if(entity == null){
+        if(entity == null) {
             throw new RuntimeException("Lost client without a player??? ID=" + message.getConnectionID());
-        }else{
+        } else {
             entity.setDead(true);
         }
     }
 
-    public Entity addEntity(Entity entity){
-        if(entity.getId() != Entity.DEFAULT_ID){
-           throw new IllegalStateException("Entity already has an ID: " + entity.getId());
+    public Entity addEntity(Entity entity) {
+        if(entity.getId() != Entity.DEFAULT_ID) {
+            throw new IllegalStateException("Entity already has an ID: " + entity.getId());
         }
 
         entity.setId(++entityID);
@@ -201,10 +211,8 @@ public class ServerWorld extends World{
 
     @Override
     protected void onEntityDead(Entity entity) {
-        if(entity instanceof DroneEntity){
-            createChunk(-3, 0, Team.RED);
-            createChunk(-3, -1, Team.RED);
-            createChunk(-3, 1, Team.RED);
+        if(entity instanceof DroneEntity) {
+            Server.runLater(() -> addEntity(EntityType.droneEntity.create(this, Team.RED)));
         }
         sendMessageToClient(new EntityRemovedMessage(entity.getId()));
     }
@@ -212,7 +220,7 @@ public class ServerWorld extends World{
     public void handleNewConnection(int connID) {
         Log.debug("New client: " + connID);
 
-        for(Entity entity : entities){
+        for(Entity entity : entities) {
             server.sendSingle(connID, new NewEntityMessage(entity));
         }
 
@@ -242,7 +250,7 @@ public class ServerWorld extends World{
     }
 
     @Override
-    public void sendMessageToClient(Message message){
+    public void sendMessageToClient(Message message) {
         Log.trace("Sending message to client: " + message);
         server.sendMessageToClient(message);
     }
@@ -251,7 +259,7 @@ public class ServerWorld extends World{
         return server;
     }
 
-    public Inventory getInventory(){
+    public Inventory getInventory() {
         return inventory;
     }
 }

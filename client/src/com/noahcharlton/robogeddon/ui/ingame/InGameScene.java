@@ -24,6 +24,6 @@ public class InGameScene extends Scene {
     }
 
     private void onStartBuild(ClickEvent clickEvent, Button button) {
-        client.getProcessor().setBuildAction(new BuildBlock(Blocks.testBlock));
+        client.getProcessor().setBuildAction(new BuildBlock(Blocks.turret));
     }
 }

@@ -94,6 +94,7 @@ public abstract class World {
     }
 
     public void update(){
+        chunks.values().forEach(Chunk::update);
         entities.forEach(Entity::onUpdate);
 
         if(isClient())
