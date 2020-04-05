@@ -2,6 +2,7 @@ package com.noahcharlton.robogeddon.input;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.Log;
@@ -43,6 +44,7 @@ public class InputProcessor implements com.badlogic.gdx.InputProcessor {
         } else if(buildAction != null) {
             Vector3 pos = Core.client.mouseToWorld();
             Tile tile = client.getWorld().tileFromPixel(pos);
+            lastTile = tile;
 
             if(tile != null) {
                 buildAction.onClick(tile, button);
@@ -68,7 +70,6 @@ public class InputProcessor implements com.badlogic.gdx.InputProcessor {
                 buildAction.onClick(tile, Input.Buttons.RIGHT);
             }
         }
-
         lastTile = tile;
 
         return false;
@@ -82,6 +83,29 @@ public class InputProcessor implements com.badlogic.gdx.InputProcessor {
         }
 
         this.buildAction = buildAction;
+    }
+
+    @Override
+    public boolean scrolled(int amount) {
+        boolean onGui = ui.isMouseOver();
+
+        if(onGui)
+            return false;
+
+        OrthographicCamera camera = client.getRenderer().getCamera();
+        camera.zoom += amount / 10f;
+
+        limitZoom(camera);
+
+        return false;
+    }
+
+    private void limitZoom(OrthographicCamera camera) {
+        if(camera.zoom < .5){
+            camera.zoom = .5f;
+        }else if(camera.zoom > 2){
+            camera.zoom = 2f;
+        }
     }
 
     public BuildAction getBuildAction() {
@@ -110,11 +134,6 @@ public class InputProcessor implements com.badlogic.gdx.InputProcessor {
 
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
-        return false;
-    }
-
-    @Override
-    public boolean scrolled(int amount) {
         return false;
     }
 }

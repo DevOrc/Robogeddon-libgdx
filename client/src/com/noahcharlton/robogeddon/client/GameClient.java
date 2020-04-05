@@ -167,4 +167,8 @@ public class GameClient extends ApplicationAdapter implements Client {
     public UI getUi() {
         return ui;
     }
+
+    public GameRenderer getRenderer() {
+        return renderer;
+    }
 }

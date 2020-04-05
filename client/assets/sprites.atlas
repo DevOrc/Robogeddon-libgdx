@@ -6,35 +6,35 @@ filter: Nearest,Nearest
 repeat: none
 blocks/beacon_base
   rotate: false
-  xy: 81, 9
+  xy: 1, 9
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/beacon_top
   rotate: false
-  xy: 115, 9
+  xy: 331, 75
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/groups/defense
   rotate: false
-  xy: 149, 9
+  xy: 35, 9
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/groups/misc
   rotate: false
-  xy: 251, 9
+  xy: 399, 75
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/oil
   rotate: false
-  xy: 285, 9
+  xy: 103, 9
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -48,21 +48,21 @@ blocks/test_block
   index: -1
 blocks/turret_base
   rotate: false
-  xy: 441, 41
+  xy: 273, 9
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/turret_top
   rotate: false
-  xy: 475, 41
+  xy: 331, 41
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 entities/bullet
   rotate: false
-  xy: 365, 59
+  xy: 1, 1
   size: 6, 6
   orig: 6, 6
   offset: 0, 0
@@ -97,63 +97,69 @@ entities/robot_on
   index: -1
 floors/dirt
   rotate: false
-  xy: 183, 9
+  xy: 365, 75
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 floors/grass
   rotate: false
-  xy: 217, 9
+  xy: 69, 9
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 floors/oil_rock
   rotate: false
-  xy: 411, 75
+  xy: 433, 75
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 floors/rock
   rotate: false
-  xy: 445, 75
+  xy: 137, 9
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 floors/sand
   rotate: false
-  xy: 373, 46
+  xy: 205, 9
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 items/rock
   rotate: false
-  xy: 479, 75
+  xy: 467, 75
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 items/ruby
   rotate: false
-  xy: 331, 33
+  xy: 171, 9
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 items/sapphire
   rotate: false
-  xy: 407, 41
+  xy: 239, 9
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
+
+sprites2.png
+size: 128,64
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
 ui/button
   rotate: false
-  xy: 43, 14
+  xy: 85, 30
   size: 36, 27
   split: 11, 11, 11, 11
   orig: 36, 27
@@ -161,7 +167,7 @@ ui/button
   index: -1
 ui/buttonHover
   rotate: false
-  xy: 373, 80
+  xy: 85, 1
   size: 36, 27
   split: 11, 11, 11, 11
   orig: 36, 27
@@ -169,14 +175,14 @@ ui/buttonHover
   index: -1
 ui/iconButton
   rotate: false
-  xy: 1, 1
+  xy: 1, 17
   size: 40, 40
   orig: 40, 40
   offset: 0, 0
   index: -1
 ui/iconButtonHover
   rotate: false
-  xy: 331, 67
+  xy: 43, 17
   size: 40, 40
   orig: 40, 40
   offset: 0, 0
