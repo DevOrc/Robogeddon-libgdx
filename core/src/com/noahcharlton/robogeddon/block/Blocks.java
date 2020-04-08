@@ -2,10 +2,10 @@ package com.noahcharlton.robogeddon.block;
 
 import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.block.beacon.BeaconBlock;
-import com.noahcharlton.robogeddon.block.duct.Direction;
 import com.noahcharlton.robogeddon.block.duct.ItemDuct;
 import com.noahcharlton.robogeddon.block.miner.MinerBlock;
 import com.noahcharlton.robogeddon.block.turret.TurretBlock;
+import com.noahcharlton.robogeddon.util.Direction;
 import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.team.Team;
 

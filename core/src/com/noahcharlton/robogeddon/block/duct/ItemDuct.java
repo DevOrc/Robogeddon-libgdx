@@ -5,10 +5,13 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.block.Block;
 import com.noahcharlton.robogeddon.block.BlockRenderer;
+import com.noahcharlton.robogeddon.block.tileentity.HasTileEntity;
+import com.noahcharlton.robogeddon.block.tileentity.TileEntity;
+import com.noahcharlton.robogeddon.util.Direction;
 import com.noahcharlton.robogeddon.world.Tile;
 import com.noahcharlton.robogeddon.world.World;
 
-public class ItemDuct extends Block implements BlockRenderer {
+public class ItemDuct extends Block implements BlockRenderer, HasTileEntity {
 
     private static boolean textureRegistered = false;
     private static TextureRegion centerTexture;
@@ -53,16 +56,17 @@ public class ItemDuct extends Block implements BlockRenderer {
     }
 
     private void drawBranches(SpriteBatch batch, Tile tile) {
-        if(isItemDuct(tile.getX(), tile.getY() + 1, tile.getWorld())){
+        var tileEntity = (ItemDuctTileEntity) tile.getTileEntity();
+        if(tileEntity.isConnectNorth()){
             render(batch, tile, topTexture);
         }
-        if(isItemDuct(tile.getX(), tile.getY() - 1, tile.getWorld())){
+        if(tileEntity.isConnectSouth()){
             render(batch, tile, bottomTexture);
         }
-        if(isItemDuct(tile.getX() - 1, tile.getY(), tile.getWorld())){
+        if(tileEntity.isConnectWest()){
             render(batch, tile, leftTexture);
         }
-        if(isItemDuct(tile.getX() + 1, tile.getY(), tile.getWorld())){
+        if(tileEntity.isConnectEast()){
             render(batch, tile, rightTexture);
         }
     }
@@ -76,7 +80,12 @@ public class ItemDuct extends Block implements BlockRenderer {
     @Override
     public void buildRender(SpriteBatch batch, Tile tile) {
         batch.setColor(1f, 1f, 1f, .5f);
-        render(batch, tile);
+        render(batch, tile, centerTexture);
         batch.setColor(1f, 1f, 1f, 1f);
+    }
+
+    @Override
+    public TileEntity createTileEntity(Tile tile) {
+        return new ItemDuctTileEntity(tile, direction);
     }
 }

@@ -1,4 +1,4 @@
-package com.noahcharlton.robogeddon.block.duct;
+package com.noahcharlton.robogeddon.util;
 
 public enum Direction {
 
