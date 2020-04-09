@@ -20,6 +20,8 @@ public class Tile {
     private final Chunk chunk;
     private final int x;
     private final int y;
+    private final int pixelX;
+    private final int pixelY;
 
     private Block block;
     private Floor floor;
@@ -32,6 +34,8 @@ public class Tile {
     public Tile(World world, Chunk chunk, int x, int y) {
         this.x = x;
         this.y = y;
+        this.pixelX = x * SIZE;
+        this.pixelY = y * SIZE;
         this.chunk = chunk;
         this.world = world;
     }
@@ -126,12 +130,12 @@ public class Tile {
         return y;
     }
 
-    public int getPixelX(){
-        return x * SIZE;
+    public int getPixelX() {
+        return pixelX;
     }
 
-    public int getPixelY(){
-        return y * Tile.SIZE;
+    public int getPixelY() {
+        return pixelY;
     }
 
     public Floor getFloor() {

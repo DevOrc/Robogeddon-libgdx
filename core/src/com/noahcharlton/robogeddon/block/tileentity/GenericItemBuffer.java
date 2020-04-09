@@ -32,6 +32,12 @@ public class GenericItemBuffer implements ItemBuffer {
             return null;
 
         amount--;
+        var item = this.item;
+
+        if(amount == 0){
+            this.item = null;
+        }
+
         return item;
     }
 

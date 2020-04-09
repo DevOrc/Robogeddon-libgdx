@@ -89,18 +89,31 @@ public class Chunk {
     }
 
     @Side(Side.CLIENT)
-    public void render(SpriteBatch batch) {
-        for(int x = 0; x < SIZE; x++) {
-            for(int y = 0; y < SIZE; y++) {
-                getTile(x, y).renderFloor(batch);
+    public void render(SpriteBatch batch, int layer) {
+        if(layer == 0){
+            for(int x = 0; x < SIZE; x++) {
+                for(int y = 0; y < SIZE; y++) {
+                    getTile(x, y).renderFloor(batch);
+                }
+            }
+
+            for(int x = 0; x < SIZE; x++) {
+                for(int y = 0; y < SIZE; y++) {
+                    getTile(x, y).renderBlock(batch);
+                }
+            }
+        }else{
+            for(int x = 0; x < SIZE; x++) {
+                for(int y = 0; y < SIZE; y++) {
+                    var tile = getTile(x, y);
+
+                    if(tile.hasBlock() && getTile(x, y).getBlock().getRenderer() != null){
+                        getTile(x, y).getBlock().getRenderer().renderLayer(batch, tile, layer);
+                    }
+                }
             }
         }
 
-        for(int x = 0; x < SIZE; x++) {
-            for(int y = 0; y < SIZE; y++) {
-                getTile(x, y).renderBlock(batch);
-            }
-        }
     }
 
     void renderTeam() {

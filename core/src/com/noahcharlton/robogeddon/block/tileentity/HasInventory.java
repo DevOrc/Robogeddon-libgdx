@@ -13,7 +13,7 @@ public interface HasInventory {
     void setBuffers(ItemBuffer[] buffers);
 
     @Side(Side.SERVER)
-    Item retrieveItem();
+    Item retrieveItem(boolean simulate);
 
     ItemBuffer[] getBuffers();
 

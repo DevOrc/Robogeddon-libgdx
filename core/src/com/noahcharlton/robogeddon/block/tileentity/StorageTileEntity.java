@@ -24,7 +24,11 @@ public class StorageTileEntity extends TileEntity implements HasInventory{
     }
 
     @Override
-    public Item retrieveItem() {
+    public Item retrieveItem(boolean simulate) {
+        if(simulate){
+            return itemBuffer.getAmount() > 0 ? itemBuffer.currentItem() : null;
+        }
+
         var item = itemBuffer.retrieveItem();
 
         if(item != null){

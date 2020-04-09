@@ -10,4 +10,7 @@ public interface BlockRenderer {
     void render(SpriteBatch batch, Tile tile);
 
     void buildRender(SpriteBatch batch, Tile tile);
+
+    default void renderLayer(SpriteBatch batch, Tile tile, int layer){}
+
 }
