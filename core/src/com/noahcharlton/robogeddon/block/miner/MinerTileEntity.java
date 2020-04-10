@@ -7,7 +7,8 @@ import com.noahcharlton.robogeddon.world.item.Items;
 
 public class MinerTileEntity extends StorageTileEntity {
 
-    private int time = 30;
+    private static final int TIME = 45;
+    private int time = TIME;
 
     public MinerTileEntity(Tile rootTile) {
         super(rootTile, new GenericItemBuffer(300));
@@ -19,7 +20,7 @@ public class MinerTileEntity extends StorageTileEntity {
             time--;
 
             if(time <= 0 && acceptItem(Items.rock)){
-                time = 1000;
+                time = TIME;
                 dirty = true;
             }
         }

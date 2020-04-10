@@ -41,25 +41,36 @@ public class ItemDuctTileEntity extends TileEntity implements HasInventory {
         if(world.isServer()) {
             updateConnections();
             pullFromConnections();
+            pushItems();
         }
 
         updateItemPositions();
-
-        if(direction == Direction.NORTH){
-            pushItems();
-        }
     }
 
     private void pushItems() {
         for(int i = 0; i < itemXs.length; i++) {
-            if(itemYs[i] == 32 && connectNorth && buffers[i].getAmount() >= 1){
+            if(shouldBePushed(i)){
                 pushBuffer(i);
             }
         }
     }
 
+    private boolean shouldBePushed(int i) {
+        if(direction == Direction.NORTH){
+            return itemYs[i] == Tile.SIZE && connectNorth && buffers[i].getAmount() >= 1;
+        }else if(direction == Direction.SOUTH){
+            return itemYs[i] == 0 && connectSouth && buffers[i].getAmount() >= 1;
+        }else if(direction == Direction.EAST){
+            return itemXs[i] == Tile.SIZE && connectEast && buffers[i].getAmount() >= 1;
+        }else{
+            return itemXs[i] == 0 && connectWest && buffers[i].getAmount() >= 1;
+        }
+    }
+
     private void pushBuffer(int item) {
-        var tileEntity = world.getTileAt(getRootTile().getX(), getRootTile().getY() + 1).getTileEntity();
+        int tileX = getRootTile().getX() + direction.getDeltaX();
+        int tileY = getRootTile().getY() + direction.getDeltaY();
+        var tileEntity = world.getTileAt(tileX, tileY).getTileEntity();
 
         if(tileEntity instanceof ItemDuctTileEntity){
             var itemDuct = (ItemDuctTileEntity) tileEntity;
@@ -86,10 +97,80 @@ public class ItemDuctTileEntity extends TileEntity implements HasInventory {
             deltaX = -SPEED;
 
         for(int i = 0; i < itemXs.length; i++) {
-            itemXs[i] = MathUtils.clamp(itemXs[i]  + deltaX, 0, 32);
-            itemYs[i] = MathUtils.clamp(itemYs[i]  + deltaY, 0, 32);
+            if(isBlocked(i)){
+            }else if(!isInCenter(i)){
+                moveToCenter(i);
+            }else{
+                itemXs[i] = MathUtils.clamp(itemXs[i]  + deltaX, getMinXPos(), getMaxXPos());
+                itemYs[i] = MathUtils.clamp(itemYs[i]  + deltaY, getMinYPos(), getMaxYPos());
+            }
         }
-        dirty = true;
+    }
+
+    private boolean isBlocked(int checkIndex) {
+        var checkX = itemXs[checkIndex];
+        var checkY = itemYs[checkIndex];
+        var radius = (2 * Item.ICON_RADIUS) + calculateItemSpacing();
+
+        for(int i = 0; i < itemXs.length; i++) {
+            if(i == checkIndex || buffers[i].getAmount() == 0){
+                continue;
+            }
+
+            var x = itemXs[i];
+            var y = itemYs[i];
+
+            var distance = Math.sqrt(Math.pow(checkX - x, 2) + Math.pow(checkY - y, 2));
+
+            if(radius > distance && inFrontOf(checkIndex, i)){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private boolean inFrontOf(int backIndex, int frontIndex) {
+        if(direction == Direction.NORTH) {
+            return itemYs[frontIndex] > itemYs[backIndex];
+        }else if(direction == Direction.SOUTH){
+            return itemYs[frontIndex] < itemYs[backIndex];
+        }else if(direction == Direction.EAST){
+            return itemXs[frontIndex] > itemXs[backIndex];
+        }else{
+            return itemXs[frontIndex] < itemXs[backIndex];
+        }
+    }
+
+    private float calculateItemSpacing() {
+        float size;
+        if(direction.isNorthSouth()){
+            size = getMaxYPos() - getMinYPos();
+        }else{
+            size = getMaxXPos() - getMinXPos();
+        }
+
+        if(size > 30)
+            return 1.1f;
+        return 0;
+    }
+
+    private boolean isInCenter(int i) {
+        if(direction.isNorthSouth()){
+            return itemXs[i] == Tile.SIZE / 2f;
+        }else{
+            return itemYs[i] == Tile.SIZE / 2f;
+        }
+    }
+
+    private void moveToCenter(int i) {
+        if(direction.isNorthSouth()){
+            float error = 16 - itemXs[i];
+            itemXs[i] += SPEED * Math.signum(error);
+        }else{
+            float error = 16 - itemYs[i];
+            itemYs[i] += SPEED * Math.signum(error);
+        }
     }
 
     private void pullFromConnections() {
@@ -261,6 +342,22 @@ public class ItemDuctTileEntity extends TileEntity implements HasInventory {
 
     private static float booleanToFloat(boolean connectNorth) {
         return connectNorth ? 1 : 0;
+    }
+
+    private float getMinXPos() {
+        return connectWest ? 0 : 8;
+    }
+
+    private float getMinYPos() {
+        return connectSouth ? 0 : 8;
+    }
+
+    private float getMaxXPos() {
+        return connectEast ? Tile.SIZE : 24;
+    }
+
+    private float getMaxYPos(){
+        return connectNorth ? Tile.SIZE : 24;
     }
 
     public boolean isConnectEast() {
