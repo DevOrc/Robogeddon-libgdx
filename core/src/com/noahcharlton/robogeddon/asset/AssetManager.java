@@ -34,6 +34,13 @@ public class AssetManager {
         return asset;
     }
 
+    public TextureGroupAsset registerTextureGroup(String path) {
+        var asset = new TextureGroupAsset(path);
+        registerAsset(asset);
+
+        return asset;
+    }
+
     public NinePatchAsset registerNinePatch(String path) {
         var asset = new NinePatchAsset(path);
         registerAsset(asset);

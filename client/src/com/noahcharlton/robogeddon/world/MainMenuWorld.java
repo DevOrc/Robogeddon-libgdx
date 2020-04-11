@@ -45,7 +45,7 @@ public class MainMenuWorld extends ClientWorld {
 
     @Override
     public void render(SpriteBatch batch) {
-        chunks.values().forEach(chunk -> chunk.render(batch, 0));
+        chunks.values().forEach(chunk -> chunk.renderBlocks(batch, 0));
 
         if(getPlayersRobot() != null)
             getPlayersRobot().getType().render(batch, getPlayersRobot());

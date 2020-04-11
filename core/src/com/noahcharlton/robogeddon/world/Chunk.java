@@ -89,14 +89,8 @@ public class Chunk {
     }
 
     @Side(Side.CLIENT)
-    public void render(SpriteBatch batch, int layer) {
+    public void renderBlocks(SpriteBatch batch, int layer) {
         if(layer == 0){
-            for(int x = 0; x < SIZE; x++) {
-                for(int y = 0; y < SIZE; y++) {
-                    getTile(x, y).renderFloor(batch);
-                }
-            }
-
             for(int x = 0; x < SIZE; x++) {
                 for(int y = 0; y < SIZE; y++) {
                     getTile(x, y).renderBlock(batch);
@@ -114,6 +108,14 @@ public class Chunk {
             }
         }
 
+    }
+
+    public void renderFloors(SpriteBatch batch) {
+        for(int x = 0; x < SIZE; x++) {
+            for(int y = 0; y < SIZE; y++) {
+                getTile(x, y).renderFloor(batch);
+            }
+        }
     }
 
     void renderTeam() {

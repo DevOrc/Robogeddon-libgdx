@@ -30,12 +30,6 @@ public class ClientWorld extends World {
         this.server = local ? new LocalServer() : new RemoteServer();
     }
 
-    public ClientWorld(ServerProvider server) {
-        super(false);
-
-        this.server = server;
-    }
-
     public void shutdown(){
         server.getThread().interrupt();
     }
@@ -169,9 +163,10 @@ public class ClientWorld extends World {
     }
 
     public void render(SpriteBatch batch) {
-        chunks.values().forEach(chunk -> chunk.render(batch, 0));
-        chunks.values().forEach(chunk -> chunk.render(batch, 1));
-        chunks.values().forEach(chunk -> chunk.render(batch, 2));
+        chunks.values().forEach(chunk -> chunk.renderFloors(batch));
+        chunks.values().forEach(chunk -> chunk.renderBlocks(batch, 0));
+        chunks.values().forEach(chunk -> chunk.renderBlocks(batch, 1));
+        chunks.values().forEach(chunk -> chunk.renderBlocks(batch, 2));
         chunks.values().forEach(Chunk::renderTeam);
 
         for(Entity entity : entities) {
