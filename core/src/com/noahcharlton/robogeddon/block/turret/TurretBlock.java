@@ -20,6 +20,11 @@ public class TurretBlock extends Block implements BlockRenderer, HasTileEntity {
     }
 
     @Override
+    public String getDisplayName() {
+        return "Turret";
+    }
+
+    @Override
     public void initRenderer() {
         Core.assets.registerTexture("blocks/turret_base").setOnLoad(texture -> baseTexture = texture);
         Core.assets.registerTexture("blocks/turret_top").setOnLoad(texture -> topTexture = texture);

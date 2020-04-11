@@ -27,6 +27,11 @@ public class BeaconBlock extends Block implements BlockRenderer, HasTileEntity {
     }
 
     @Override
+    public String getDisplayName() {
+        return "Team Beacon";
+    }
+
+    @Override
     public void initRenderer() {
         renderer = this;
         if(texturesRegistered)

@@ -10,6 +10,11 @@ public class OilBlock extends Block implements Mineable{
     }
 
     @Override
+    public String getDisplayName() {
+        return "Oil";
+    }
+
+    @Override
     public ItemStack onMine() {
         return Items.rock.stack(3);
     }

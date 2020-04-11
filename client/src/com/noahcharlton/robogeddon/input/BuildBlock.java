@@ -12,8 +12,8 @@ import com.noahcharlton.robogeddon.world.Tile;
 
 public class BuildBlock implements BuildAction {
 
-    private final GameClient client = GameClient.getInstance();
-    private final Block block;
+    protected final GameClient client = GameClient.getInstance();
+    protected Block block;
 
     public BuildBlock(Block block) {
         this.block = block;

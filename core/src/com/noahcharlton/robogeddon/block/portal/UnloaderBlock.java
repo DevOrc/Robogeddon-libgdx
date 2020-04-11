@@ -12,6 +12,11 @@ public class UnloaderBlock extends Block implements HasTileEntity {
     }
 
     @Override
+    public String getDisplayName() {
+        return "Unloader";
+    }
+
+    @Override
     public TileEntity createTileEntity(Tile tile) {
         return new UnloaderTileEntity(tile);
     }

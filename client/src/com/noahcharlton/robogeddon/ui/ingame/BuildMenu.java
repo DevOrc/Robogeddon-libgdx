@@ -3,7 +3,11 @@ package com.noahcharlton.robogeddon.ui.ingame;
 import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.block.Block;
 import com.noahcharlton.robogeddon.block.BlockGroup;
+import com.noahcharlton.robogeddon.block.beacon.BeaconBlock;
+import com.noahcharlton.robogeddon.block.duct.ItemDuct;
+import com.noahcharlton.robogeddon.input.BuildBeacon;
 import com.noahcharlton.robogeddon.input.BuildBlock;
+import com.noahcharlton.robogeddon.input.BuildItemDuct;
 import com.noahcharlton.robogeddon.ui.background.ColorBackground;
 import com.noahcharlton.robogeddon.ui.widget.IconButton;
 import com.noahcharlton.robogeddon.ui.widget.Stack;
@@ -69,7 +73,7 @@ public class BuildMenu extends Widget{
         menu.setVisible(false);
 
         for(Block block : group.getBlocks()){
-            var button = new TextButton(block.getTypeID())
+            var button = new TextButton(block.getDisplayName())
                     .setOnClick((event, b) -> startBuilding(block))
                     .setWidth(SUB_MENU_WIDTH - 10)
                     .pad().left(5).right(5);
@@ -81,6 +85,12 @@ public class BuildMenu extends Widget{
     }
 
     private void startBuilding(Block block) {
-        client.getProcessor().setBuildAction(new BuildBlock(block));
+        if(block instanceof ItemDuct){
+            client.getProcessor().setBuildAction(new BuildItemDuct(block));
+        }else if(block instanceof BeaconBlock){
+            client.getProcessor().setBuildAction(new BuildBeacon(block));
+        }else{
+            client.getProcessor().setBuildAction(new BuildBlock(block));
+        }
     }
 }

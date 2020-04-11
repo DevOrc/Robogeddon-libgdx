@@ -46,10 +46,10 @@ public class Blocks{
 
     @Side(Side.CLIENT)
     public static void init() {
-        BlockGroup defense = new BlockGroup("defense", Blocks.turretBlock, minerBlock, unloaderBlock);
-        BlockGroup misc = new BlockGroup("misc", oilBlock, testBlock, blueBeacon, redBeacon);
+        BlockGroup defense = new BlockGroup("defense", Blocks.turretBlock, minerBlock);
+        BlockGroup misc = new BlockGroup("misc", oilBlock, testBlock, blueBeacon);
         BlockGroup transport = new BlockGroup("transport",
-                itemDuctNorth, itemDuctEast, itemDuctSouth, itemDuctWest, inventoryPortal);
+                itemDuctNorth, unloaderBlock, inventoryPortal);
 
         Core.blockGroups.register(misc);
         Core.blockGroups.register(defense);

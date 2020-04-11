@@ -27,14 +27,14 @@ blocks/groups/defense
   index: -1
 blocks/groups/misc
   rotate: false
-  xy: 299, 11
+  xy: 333, 11
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/groups/transport
   rotate: false
-  xy: 595, 43
+  xy: 629, 43
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -60,86 +60,93 @@ blocks/item_duct
   orig: 32, 32
   offset: 0, 0
   index: -1
-blocks/item_duct_roof_bottom
+blocks/item_duct_arrow
   rotate: false
   xy: 731, 77
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-blocks/item_duct_roof_center
+blocks/item_duct_roof_bottom
   rotate: false
   xy: 765, 77
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-blocks/item_duct_roof_left
+blocks/item_duct_roof_center
   rotate: false
   xy: 799, 77
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-blocks/item_duct_roof_right
+blocks/item_duct_roof_left
   rotate: false
   xy: 833, 77
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-blocks/item_duct_roof_top
+blocks/item_duct_roof_right
   rotate: false
   xy: 867, 77
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-blocks/item_duct_wall_bottom
+blocks/item_duct_roof_top
   rotate: false
   xy: 901, 77
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-blocks/item_duct_wall_center
+blocks/item_duct_wall_bottom
   rotate: false
   xy: 935, 77
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-blocks/item_duct_wall_left
+blocks/item_duct_wall_center
   rotate: false
   xy: 969, 77
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-blocks/item_duct_wall_right
+blocks/item_duct_wall_left
   rotate: false
   xy: 197, 11
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-blocks/item_duct_wall_top
+blocks/item_duct_wall_right
   rotate: false
   xy: 231, 11
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-blocks/miner
+blocks/item_duct_wall_top
   rotate: false
   xy: 265, 11
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
+blocks/miner
+  rotate: false
+  xy: 299, 11
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 blocks/oil
   rotate: false
-  xy: 333, 11
+  xy: 367, 11
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -153,28 +160,28 @@ blocks/test_block
   index: -1
 blocks/turret_base
   rotate: false
-  xy: 629, 43
+  xy: 663, 43
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/turret_top
   rotate: false
-  xy: 663, 43
+  xy: 697, 43
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/unloader
   rotate: false
-  xy: 697, 43
+  xy: 731, 43
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 entities/bullet
   rotate: false
-  xy: 731, 69
+  xy: 765, 69
   size: 6, 6
   orig: 6, 6
   offset: 0, 0
@@ -223,28 +230,28 @@ floors/grass
   index: -1
 floors/oil_rock
   rotate: false
-  xy: 367, 11
+  xy: 401, 11
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 floors/rock
   rotate: false
-  xy: 401, 11
+  xy: 435, 11
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 floors/sand
   rotate: false
-  xy: 527, 43
+  xy: 561, 43
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 items/rock
   rotate: false
-  xy: 435, 11
+  xy: 469, 11
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -258,7 +265,7 @@ items/rock_tiny
   index: -1
 items/ruby
   rotate: false
-  xy: 469, 11
+  xy: 527, 43
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -272,7 +279,7 @@ items/ruby_tiny
   index: -1
 items/sapphire
   rotate: false
-  xy: 561, 43
+  xy: 595, 43
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

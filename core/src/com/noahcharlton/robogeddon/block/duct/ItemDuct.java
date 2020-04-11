@@ -39,6 +39,11 @@ public class ItemDuct extends Block implements BlockRenderer, HasTileEntity {
     }
 
     @Override
+    public String getDisplayName() {
+        return "Item Duct";
+    }
+
+    @Override
     public void initRenderer() {
         this.renderer = this;
 

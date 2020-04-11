@@ -29,6 +29,10 @@ public abstract class Block implements HasID {
         return chunkTeam == placer.getTeam() || chunkTeam == Team.NEUTRAL;
     }
 
+    public String getDisplayName(){
+        return getTypeID();
+    }
+
     public int getWidth(){
         return 1;
     }

@@ -13,6 +13,7 @@ public class UIAssets {
     public static BitmapFont titleFont;
     public static TextureRegion iconButton;
     public static TextureRegion iconButtonHover;
+    public static TextureRegion itemDuctArrow;
 
     public static void init(){
         Core.assets.registerNinePatch("ui/button").setOnLoad(b -> button = b);
@@ -21,5 +22,6 @@ public class UIAssets {
         Core.assets.registerBitmapFont("title").setOnLoad(font -> titleFont = font);
         Core.assets.registerTexture("ui/iconButton").setOnLoad(t -> iconButton = t);
         Core.assets.registerTexture("ui/iconButtonHover").setOnLoad(t -> iconButtonHover = t);
+        Core.assets.registerTexture("blocks/item_duct_arrow").setOnLoad(t -> itemDuctArrow = t);
     }
 }

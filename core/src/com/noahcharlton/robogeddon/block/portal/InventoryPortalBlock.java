@@ -28,6 +28,11 @@ public class InventoryPortalBlock extends Block implements BlockRenderer, HasTil
     }
 
     @Override
+    public String getDisplayName() {
+        return "Inventory Portal";
+    }
+
+    @Override
     public int getWidth() {
         return 3;
     }

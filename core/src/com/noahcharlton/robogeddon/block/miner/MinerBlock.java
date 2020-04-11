@@ -12,6 +12,11 @@ public class MinerBlock extends Block implements HasTileEntity {
     }
 
     @Override
+    public String getDisplayName() {
+        return "AutoMiner";
+    }
+
+    @Override
     public TileEntity createTileEntity(Tile tile) {
         return new MinerTileEntity(tile);
     }
