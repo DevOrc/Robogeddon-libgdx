@@ -80,6 +80,14 @@ public class ItemDuctTileEntity extends TileEntity implements HasInventory {
                 buffer.retrieveItem();
                 dirty = true;
             }
+        }else if(tileEntity instanceof HasInventory){
+            var itemDuct = (HasInventory) tileEntity;
+            var buffer = buffers[item];
+
+            if(itemDuct.acceptItem(buffer.currentItem())){
+                buffer.retrieveItem();
+                dirty = true;
+            }
         }
     }
 
@@ -297,7 +305,7 @@ public class ItemDuctTileEntity extends TileEntity implements HasInventory {
     private boolean hasInventory(int tileX, int tileY, Direction from) {
         var tile = world.getTileAt(tileX, tileY);
 
-        return tile.getTileEntity() != null && tile.getTileEntity() instanceof HasInventory
+        return tile != null && tile.getTileEntity() != null && tile.getTileEntity() instanceof HasInventory
                 && ((HasInventory) tile.getTileEntity()).canConnect(from, direction);
     }
 

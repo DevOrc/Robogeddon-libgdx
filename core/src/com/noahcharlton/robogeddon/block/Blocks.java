@@ -4,6 +4,7 @@ import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.block.beacon.BeaconBlock;
 import com.noahcharlton.robogeddon.block.duct.ItemDuct;
 import com.noahcharlton.robogeddon.block.miner.MinerBlock;
+import com.noahcharlton.robogeddon.block.portal.InventoryPortalBlock;
 import com.noahcharlton.robogeddon.block.turret.TurretBlock;
 import com.noahcharlton.robogeddon.util.Direction;
 import com.noahcharlton.robogeddon.util.Side;
@@ -23,6 +24,7 @@ public class Blocks{
     public static final Block itemDuctSouth = new ItemDuct(itemDuctID, Direction.SOUTH);
     public static final Block itemDuctEast = new ItemDuct(itemDuctID, Direction.EAST);
     public static final Block itemDuctWest = new ItemDuct(itemDuctID, Direction.WEST);
+    public static final Block inventoryPortal = new InventoryPortalBlock("inventory_portal");
 
     @Side(Side.BOTH)
     public static void preInit() {
@@ -36,6 +38,7 @@ public class Blocks{
         Core.blocks.register(itemDuctSouth);
         Core.blocks.register(itemDuctEast);
         Core.blocks.register(itemDuctWest);
+        Core.blocks.register(inventoryPortal);
     }
 
     @Side(Side.CLIENT)
@@ -43,7 +46,7 @@ public class Blocks{
         BlockGroup defense = new BlockGroup("defense", Blocks.turretBlock, minerBlock);
         BlockGroup misc = new BlockGroup("misc", oilBlock, testBlock, blueBeacon, redBeacon);
         BlockGroup transport = new BlockGroup("transport",
-                itemDuctNorth, itemDuctEast, itemDuctSouth, itemDuctWest);
+                itemDuctNorth, itemDuctEast, itemDuctSouth, itemDuctWest, inventoryPortal);
 
         Core.blockGroups.register(misc);
         Core.blockGroups.register(defense);
