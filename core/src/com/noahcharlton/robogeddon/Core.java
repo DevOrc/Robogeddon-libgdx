@@ -4,7 +4,11 @@ import com.noahcharlton.robogeddon.asset.AssetManager;
 import com.noahcharlton.robogeddon.block.Block;
 import com.noahcharlton.robogeddon.block.BlockGroup;
 import com.noahcharlton.robogeddon.block.Blocks;
+import com.noahcharlton.robogeddon.block.tileentity.ItemBuffer;
 import com.noahcharlton.robogeddon.entity.EntityType;
+import com.noahcharlton.robogeddon.message.InterfaceSerializer;
+import com.noahcharlton.robogeddon.message.MessageSerializer;
+import com.noahcharlton.robogeddon.message.RegistrySerializer;
 import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.floor.Floor;
 import com.noahcharlton.robogeddon.world.floor.Floors;
@@ -41,17 +45,25 @@ public class Core {
         Blocks.preInit();
         Floors.preInit();
         Items.preInit();
+        createMessageSerializers();
 
         entities.setFinalized(true);
         blocks.setFinalized(true);
         floors.setFinalized(true);
         items.setFinalized(true);
+        MessageSerializer.finalizeSerializer();
+
 
         //Throw an exception if any block ID starts with multi, because those are reserved for multiblocks
         blocks.keys().stream().filter(id -> id.startsWith("multi")).findAny().ifPresent(x -> {
             throw new RuntimeException("Cannot have any block IDs that start with multi!");
         });
         Log.debug("PreInit End");
+    }
+
+    private static void createMessageSerializers() {
+        MessageSerializer.registerType(ItemBuffer.class, InterfaceSerializer.create());
+        MessageSerializer.registerType(Item.class, new RegistrySerializer<>(Core.items));
     }
 
     @Side(Side.CLIENT)

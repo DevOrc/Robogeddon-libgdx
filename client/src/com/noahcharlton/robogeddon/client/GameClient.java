@@ -44,6 +44,8 @@ public class GameClient extends ApplicationAdapter implements Client {
         ui = new UI(this);
         processor = new InputProcessor(this);
         setWorld(new MainMenuWorld());
+
+        Log.info("Assets registered: " + Core.assets.getAssetCount());
     }
 
     @Override
