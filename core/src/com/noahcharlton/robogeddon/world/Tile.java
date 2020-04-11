@@ -110,6 +110,28 @@ public class Tile {
         dirty = false;
     }
 
+    public Tile[] getNeighbors(){
+        var tiles = new Tile[4];
+
+        tiles[0] = world.getTileAt(x - 1, y);
+        tiles[1] = world.getTileAt(x + 1, y);
+        tiles[2] = world.getTileAt(x, y - 1);
+        tiles[3] = world.getTileAt(x, y + 1);
+
+        return tiles;
+    }
+
+    public boolean isBlockOrMulti(Block block) {
+        if(this.block == block)
+            return true;
+
+        if(this.block instanceof Multiblock){
+            return ((Multiblock) this.block).getBlock() == block;
+        }
+
+        return false;
+    }
+
     public Block getBlock() {
         return block;
     }
@@ -156,6 +178,12 @@ public class Tile {
     }
 
     public TileEntity getTileEntity() {
+        if(block instanceof Multiblock){
+            var block = ((Multiblock) this.block);
+            var tile = world.getTileAt(block.getRootX(), block.getRootY());
+            return tile == null ? null : tile.getTileEntity();
+        }
+
         return tileEntity;
     }
 }

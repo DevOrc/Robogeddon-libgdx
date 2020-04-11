@@ -31,6 +31,15 @@ public class Inventory {
         changeItem(stack.getItem(), stack.getAmount());
     }
 
+    public boolean useItemIfEnough(Item item, int amount){
+        if(getItem(item) >= amount){
+            changeItem(item, -amount);
+            return true;
+        }
+
+        return false;
+    }
+
     public void changeItem(Item item, int delta){
         setItem(item, getItem(item) + delta);
     }

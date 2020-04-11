@@ -165,9 +165,16 @@ blocks/turret_top
   orig: 32, 32
   offset: 0, 0
   index: -1
+blocks/unloader
+  rotate: false
+  xy: 697, 43
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 entities/bullet
   rotate: false
-  xy: 697, 69
+  xy: 731, 69
   size: 6, 6
   orig: 6, 6
   offset: 0, 0
