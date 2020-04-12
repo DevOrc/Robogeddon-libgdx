@@ -10,7 +10,7 @@ public class Stack extends Widget {
 
         float y = getY();
         float startY = y;
-        float width = 0;
+        float width = getMinWidth();
 
         for(int i = childrenCount - 1; i >= 0; i--) {
             var widget = getChildren().get(i);
@@ -23,6 +23,7 @@ public class Stack extends Widget {
 
         setHeight(y - startY);
         setWidth(width);
+        getChildren().forEach(child -> child.setWidth(getWidth()));
     }
 
     public Stack setSpacing(int spacing) {

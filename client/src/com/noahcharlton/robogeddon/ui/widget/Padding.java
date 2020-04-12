@@ -24,6 +24,8 @@ public class Padding extends Widget{
         var width = (widget.getWidth() / Scale.scale) + left + right;
         var height = (widget.getHeight() / Scale.scale) + bottom + top;
 
+        widget.setWidth(getWidth() - left - right);
+        widget.setHeight(getHeight() - bottom - top);
         setWidth(width);
         setHeight(height);
     }

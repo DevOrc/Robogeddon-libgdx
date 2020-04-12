@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Align;
 import com.noahcharlton.robogeddon.ui.Scale;
 
 import java.util.function.Supplier;
@@ -14,6 +15,7 @@ public class Label extends NoChildrenWidget {
     private BitmapFont font;
     private String text = "";
     private Color textColor = Color.WHITE;
+    private boolean wrap;
 
     @Override
     public void update() {
@@ -29,7 +31,7 @@ public class Label extends NoChildrenWidget {
 
         font.getData().setScale(Scale.scale);
         font.setColor(Color.WHITE);
-        font.draw(batch, text, x, y);
+        font.draw(batch, text, x, y, getWidth(), Align.center, wrap);
     }
 
     @Override
@@ -37,19 +39,8 @@ public class Label extends NoChildrenWidget {
         font.getData().setScale(Scale.scale);
         var textLayout = new GlyphLayout(font, text);
 
-        if(getWidth() == getMinWidth()){
-            setMinWidth(textLayout.width);
-            setWidth(textLayout.width);
-        }else{
-            setWidth(textLayout.width);
-        }
-
-        if(getHeight() == getMinHeight()){
-            setMinHeight(textLayout.height);
-            setHeight(textLayout.height);
-        }else{
-            setMinHeight(textLayout.height);
-        }
+        setMinWidth(textLayout.width);
+        setMinHeight(textLayout.height);
     }
 
     public Label setSupplier(Supplier<String> supplier) {
@@ -79,6 +70,13 @@ public class Label extends NoChildrenWidget {
     @Override
     public String toString() {
         return "Label(" + text + ")";
+    }
+
+    public Label setWrap(boolean wrap) {
+        this.wrap = wrap;
+        invalidate();
+
+        return this;
     }
 
     public Label setText(String text) {

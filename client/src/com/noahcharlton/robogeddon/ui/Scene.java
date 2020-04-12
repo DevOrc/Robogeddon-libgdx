@@ -19,7 +19,7 @@ public class Scene extends Widget {
     @Override
     public boolean isMouseOver(){
         for(Widget widget : getChildren()) {
-            if(widget.isMouseOver())
+            if(widget.isMouseOver() && widget.isVisible())
                 return true;
         }
 

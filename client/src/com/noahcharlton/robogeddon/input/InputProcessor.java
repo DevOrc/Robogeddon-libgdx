@@ -9,6 +9,7 @@ import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.client.GameClient;
 import com.noahcharlton.robogeddon.ui.UI;
 import com.noahcharlton.robogeddon.ui.event.ClickEvent;
+import com.noahcharlton.robogeddon.util.Selectable;
 import com.noahcharlton.robogeddon.world.Tile;
 
 public class InputProcessor implements com.badlogic.gdx.InputProcessor {
@@ -17,6 +18,7 @@ public class InputProcessor implements com.badlogic.gdx.InputProcessor {
     private final UI ui;
 
     private BuildAction buildAction;
+    private Selectable selectable;
     private Tile lastTile;
 
     public InputProcessor(GameClient client) {
@@ -38,17 +40,21 @@ public class InputProcessor implements com.badlogic.gdx.InputProcessor {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         screenY = Gdx.graphics.getHeight() - screenY;
+        Vector3 pos = Core.client.mouseToWorld();
+        Tile tile = client.getWorld().tileFromPixel(pos);
 
         if(ui.isMouseOver()) {
             ui.onClick(new ClickEvent(ui, screenX, screenY, button));
         } else if(buildAction != null) {
-            Vector3 pos = Core.client.mouseToWorld();
-            Tile tile = client.getWorld().tileFromPixel(pos);
             lastTile = tile;
 
             if(tile != null) {
                 buildAction.onClick(tile, button);
             }
+        }else if(tile != null){
+            setSelectable(button == Input.Buttons.LEFT ? tile : null);
+        }else{
+            setSelectable(null);
         }
 
         return false;
@@ -82,7 +88,23 @@ public class InputProcessor implements com.badlogic.gdx.InputProcessor {
             Log.info("Set Build Action: None");
         }
 
+        if(buildAction instanceof Selectable){
+            setSelectable((Selectable) buildAction);
+        }else{
+            setSelectable(null);
+        }
+
         this.buildAction = buildAction;
+    }
+
+    public void setSelectable(Selectable selectable) {
+        if(selectable != null) {
+            Log.info("Set Selectable: " + selectable.getTitle());
+        } else {
+            Log.info("Set Selectable: None");
+        }
+
+        this.selectable = selectable;
     }
 
     @Override
@@ -135,5 +157,9 @@ public class InputProcessor implements com.badlogic.gdx.InputProcessor {
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
         return false;
+    }
+
+    public Selectable getSelectable() {
+        return selectable;
     }
 }

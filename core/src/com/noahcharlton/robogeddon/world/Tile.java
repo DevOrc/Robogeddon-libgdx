@@ -7,12 +7,13 @@ import com.noahcharlton.robogeddon.block.Block;
 import com.noahcharlton.robogeddon.block.Multiblock;
 import com.noahcharlton.robogeddon.block.tileentity.HasTileEntity;
 import com.noahcharlton.robogeddon.block.tileentity.TileEntity;
+import com.noahcharlton.robogeddon.util.Selectable;
 import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.floor.Floor;
 
 import java.util.Objects;
 
-public class Tile {
+public class Tile implements Selectable {
 
     public static final int SIZE = 32;
 
@@ -27,8 +28,11 @@ public class Tile {
     private Floor floor;
     private TileEntity tileEntity;
 
-    /** Used by the server to tell which tiles should be sent to the client, after the next update*/
-    @Side(Side.SERVER)
+    /**
+     * On the server, if true, the tile is sent to client.
+     * <p>
+     * On the client, if true, the info is updated on the GUI
+     */
     private boolean dirty;
 
     public Tile(World world, Chunk chunk, int x, int y) {
@@ -41,15 +45,14 @@ public class Tile {
     }
 
     public void markDirty(){
-        if(world.isClient())
-            throw new UnsupportedOperationException();
-
         dirty = true;
-        Log.debug("Marking " + toString() + " dirty");
+        Log.trace("Marking " + toString() + " dirty");
     }
 
     @Side(Side.CLIENT)
     public void onTileUpdate(TileUpdate update) {
+        markDirty();
+
         if(update.floor == null){
             throw new RuntimeException("Cannot have null floor.");
         }else{
@@ -104,6 +107,33 @@ public class Tile {
             markDirty();
 
         this.floor = Objects.requireNonNull(floor);
+    }
+
+    @Side(Side.CLIENT)
+    @Override
+    public String getTitle() {
+        return toString();
+    }
+
+    @Side(Side.CLIENT)
+    @Override
+    public String[] getDetails() {
+        return new String[]{
+                "Block: " + (hasBlock() ? block.getDisplayName() : "None"),
+                "Floor: " + floor.getTypeID(),
+        };
+    }
+
+    @Side(Side.CLIENT)
+    @Override
+    public boolean isInfoInvalid() {
+        return dirty;
+    }
+
+    @Side(Side.CLIENT)
+    @Override
+    public void onInfoValidated() {
+        clean();
     }
 
     public void clean() {
