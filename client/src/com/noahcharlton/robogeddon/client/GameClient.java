@@ -13,6 +13,7 @@ import com.noahcharlton.robogeddon.ui.MainMenu;
 import com.noahcharlton.robogeddon.ui.UI;
 import com.noahcharlton.robogeddon.ui.UIAssets;
 import com.noahcharlton.robogeddon.ui.ingame.InGameScene;
+import com.noahcharlton.robogeddon.ui.selectable.SelectableSubMenus;
 import com.noahcharlton.robogeddon.world.ClientWorld;
 import com.noahcharlton.robogeddon.world.MainMenuWorld;
 import space.earlygrey.shapedrawer.ShapeDrawer;
@@ -39,6 +40,7 @@ public class GameClient extends ApplicationAdapter implements Client {
         Log.info("Game Client created!");
         Core.init();
         UIAssets.init();
+        SelectableSubMenus.init();
 
         renderer = new GameRenderer(this);
         ui = new UI(this);

@@ -9,14 +9,16 @@ public class Item implements HasID {
 
     public static final int ICON_RADIUS = 5;
     private final String id;
+    private final String displayName;
 
     @Side(Side.CLIENT)
     private TextureRegion texture;
     @Side(Side.CLIENT)
     private TextureRegion tinyTexture;
 
-    public Item(String id) {
+    public Item(String id, String displayName) {
         this.id = id;
+        this.displayName = displayName;
     }
 
     @Side(Side.CLIENT)
@@ -36,6 +38,10 @@ public class Item implements HasID {
 
     public TextureRegion getTinyTexture() {
         return tinyTexture;
+    }
+
+    public String getDisplayName() {
+        return displayName;
     }
 
     @Override

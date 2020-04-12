@@ -14,6 +14,10 @@ public class Stack extends Widget {
 
         for(int i = childrenCount - 1; i >= 0; i--) {
             var widget = getChildren().get(i);
+
+            if(!widget.isVisible())
+                continue;
+
             widget.setX(getX());
             widget.setY(y);
 

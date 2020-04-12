@@ -5,8 +5,10 @@ import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.block.Block;
 import com.noahcharlton.robogeddon.block.Multiblock;
+import com.noahcharlton.robogeddon.block.tileentity.HasInventory;
 import com.noahcharlton.robogeddon.block.tileentity.HasTileEntity;
 import com.noahcharlton.robogeddon.block.tileentity.TileEntity;
+import com.noahcharlton.robogeddon.block.tileentity.TileEntitySelectable;
 import com.noahcharlton.robogeddon.util.Selectable;
 import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.floor.Floor;
@@ -118,10 +120,36 @@ public class Tile implements Selectable {
     @Side(Side.CLIENT)
     @Override
     public String[] getDetails() {
-        return new String[]{
+        var defaultInfo = new String[]{
                 "Block: " + (hasBlock() ? block.getDisplayName() : "None"),
                 "Floor: " + floor.getTypeID(),
         };
+
+        return Selectable.combineArrays(defaultInfo, getTileEntityInfo());
+    }
+
+    private String[] getTileEntityInfo(){
+        var tileEntity = getTileEntity();
+        var inventory = tileEntity instanceof HasInventory ? ((HasInventory) tileEntity).getInventoryDetails()
+                : new String[]{};
+        var details = tileEntity instanceof TileEntitySelectable ? ((TileEntitySelectable) tileEntity).getDetails()
+                : new String[]{};
+
+        return Selectable.combineArrays(details, inventory);
+    }
+
+    @Override
+    public String getDesc() {
+        var tileEntity = getTileEntity();
+
+        return tileEntity instanceof TileEntitySelectable ? ((TileEntitySelectable) tileEntity).getDesc() : "";
+    }
+
+    @Override
+    public String getSubMenuID() {
+        var tileEntity = getTileEntity();
+
+        return tileEntity instanceof TileEntitySelectable ? ((TileEntitySelectable) tileEntity).getSubMenuID() : null;
     }
 
     @Side(Side.CLIENT)

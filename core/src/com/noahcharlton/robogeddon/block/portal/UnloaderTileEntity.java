@@ -4,15 +4,17 @@ import com.noahcharlton.robogeddon.block.Blocks;
 import com.noahcharlton.robogeddon.block.tileentity.HasInventory;
 import com.noahcharlton.robogeddon.block.tileentity.ItemBuffer;
 import com.noahcharlton.robogeddon.block.tileentity.TileEntity;
+import com.noahcharlton.robogeddon.block.tileentity.TileEntitySelectable;
 import com.noahcharlton.robogeddon.world.ServerWorld;
 import com.noahcharlton.robogeddon.world.Tile;
 import com.noahcharlton.robogeddon.world.item.Inventory;
 import com.noahcharlton.robogeddon.world.item.Item;
 import com.noahcharlton.robogeddon.world.item.Items;
 
-public class UnloaderTileEntity extends TileEntity implements HasInventory {
+public class UnloaderTileEntity extends TileEntity implements HasInventory, TileEntitySelectable {
 
     private static final int TIME = 60;
+    public static final String subMenuID = "unloader_tile_entity";
 
     private Inventory inventory;
     private int tick = 0;
@@ -60,5 +62,10 @@ public class UnloaderTileEntity extends TileEntity implements HasInventory {
     @Override
     public ItemBuffer[] getBuffers() {
         return new ItemBuffer[0];
+    }
+
+    @Override
+    public String getSubMenuID() {
+        return subMenuID;
     }
 }

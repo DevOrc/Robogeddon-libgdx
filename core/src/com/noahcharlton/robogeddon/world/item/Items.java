@@ -4,9 +4,9 @@ import com.noahcharlton.robogeddon.Core;
 
 public class Items {
 
-    public static final Item rock = new Item("rock");
-    public static final Item ruby = new Item("ruby");
-    public static final Item sapphire = new Item("sapphire");
+    public static final Item rock = new Item("rock", "Rock");
+    public static final Item ruby = new Item("ruby", "Ruby");
+    public static final Item sapphire = new Item("sapphire", "Sapphire");
 
     public static void preInit(){
         Core.items.register(rock);

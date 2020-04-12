@@ -1,12 +1,13 @@
 package com.noahcharlton.robogeddon.block.beacon;
 
 import com.noahcharlton.robogeddon.block.tileentity.TileEntity;
+import com.noahcharlton.robogeddon.block.tileentity.TileEntitySelectable;
 import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.ServerWorld;
 import com.noahcharlton.robogeddon.world.Tile;
 import com.noahcharlton.robogeddon.world.team.Team;
 
-public class BeaconTileEntity extends TileEntity {
+public class BeaconTileEntity extends TileEntity implements TileEntitySelectable {
 
     private static final int CLAIM_TIME = 1800;
     private static final int NEUTRALIZE_TIME = 300;
@@ -49,5 +50,17 @@ public class BeaconTileEntity extends TileEntity {
     @Side(Side.CLIENT)
     public int getRenderSide(){
         return Math.min(time / 50, 3);
+    }
+
+    @Override
+    public String getDesc() {
+        return "Team: " + team.getDisplayName();
+    }
+
+    @Override
+    public String[] getDetails() {
+        return new String[]{
+                "Test Detail"
+        };
     }
 }

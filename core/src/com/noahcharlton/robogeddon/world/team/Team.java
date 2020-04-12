@@ -23,4 +23,8 @@ public enum Team {
     public Color getColor() {
         return color;
     }
+
+    public String getDisplayName() {
+        return name().substring(0, 1) + name().substring(1).toLowerCase();
+    }
 }

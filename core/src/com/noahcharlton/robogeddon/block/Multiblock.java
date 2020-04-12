@@ -23,6 +23,11 @@ public final class Multiblock extends Block{
     }
 
     @Override
+    public String getDisplayName() {
+        return block.getDisplayName();
+    }
+
+    @Override
     public BlockRenderer getRenderer() {
         return null;
     }

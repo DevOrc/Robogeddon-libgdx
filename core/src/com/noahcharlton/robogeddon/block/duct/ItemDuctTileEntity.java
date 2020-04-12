@@ -1,15 +1,12 @@
 package com.noahcharlton.robogeddon.block.duct;
 
 import com.badlogic.gdx.math.MathUtils;
-import com.noahcharlton.robogeddon.block.tileentity.GenericItemBuffer;
-import com.noahcharlton.robogeddon.block.tileentity.HasInventory;
-import com.noahcharlton.robogeddon.block.tileentity.ItemBuffer;
-import com.noahcharlton.robogeddon.block.tileentity.TileEntity;
+import com.noahcharlton.robogeddon.block.tileentity.*;
 import com.noahcharlton.robogeddon.util.Direction;
 import com.noahcharlton.robogeddon.world.Tile;
 import com.noahcharlton.robogeddon.world.item.Item;
 
-public class ItemDuctTileEntity extends TileEntity implements HasInventory {
+public class ItemDuctTileEntity extends TileEntity implements HasInventory, TileEntitySelectable {
 
     private static final int SPEED = 1;
     private final Direction direction;
@@ -307,6 +304,16 @@ public class ItemDuctTileEntity extends TileEntity implements HasInventory {
 
         return tile != null && tile.getTileEntity() != null && tile.getTileEntity() instanceof HasInventory
                 && ((HasInventory) tile.getTileEntity()).canConnect(from, direction);
+    }
+
+    @Override
+    public String[] getInventoryDetails() {
+        return new String[]{};
+    }
+
+    @Override
+    public String[] getDetails() {
+        return new String[]{"Direction: " + direction.toString()};
     }
 
     @Override
