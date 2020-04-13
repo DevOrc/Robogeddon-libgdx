@@ -25,7 +25,7 @@ public class SelectableSubMenus {
         var clazz = Objects.requireNonNull(subMenus.get(name), "No Sub Menu registered with ID: " + name);
 
         try {
-            return clazz.getDeclaredConstructor().newInstance();
+            return clazz.getConstructor(String.class).newInstance(name);
         } catch(ReflectiveOperationException e) {
             throw new RuntimeException("Failed to create GUI: " + name, e);
         }

@@ -39,7 +39,20 @@ public class InGameScene extends Scene {
     }
 
     public void closeSelectableSubMenu() {
-        getSelectableSubMenu().ifPresent(widget -> getChildren().remove(widget));
+        boolean close = false;
+        var selectable = client.getProcessor().getSelectable();
+
+        if(selectable == null || getSelectableSubMenu().isEmpty()){
+            close = true;
+        }else { //If the current selectable matches the menu, it was opened automatically (via right click),
+            //so it should not be closed
+            var selectableSubMenu = (SelectableSubMenu) getSelectableSubMenu().get();
+
+            close = !selectableSubMenu.getId().equals(selectable.getSubMenuID());
+        }
+
+        if(close)
+            getSelectableSubMenu().ifPresent(widget -> getChildren().remove(widget));
     }
 
     public void toggleSelectableSubMenu(Selectable selectable) {

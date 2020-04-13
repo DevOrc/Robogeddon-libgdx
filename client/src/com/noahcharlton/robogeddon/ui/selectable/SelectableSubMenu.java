@@ -9,7 +9,11 @@ import com.noahcharlton.robogeddon.world.Tile;
 
 public class SelectableSubMenu extends Widget {
 
-    public SelectableSubMenu() {
+    private final String id;
+
+    public SelectableSubMenu(String id) {
+        this.id = id;
+
         setBackground(new NinePatchBackground(UIAssets.selectableMenu));
         setSize(250, 250);
     }
@@ -48,5 +52,9 @@ public class SelectableSubMenu extends Widget {
             return null;
 
         return ((Tile) client.getProcessor().getSelectable()).getTileEntity();
+    }
+
+    public String getId() {
+        return id;
     }
 }

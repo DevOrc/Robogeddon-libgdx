@@ -13,7 +13,8 @@ public class UnloaderSubMenu extends SelectableSubMenu {
 
     private final Stack stack = new Stack();
 
-    public UnloaderSubMenu() {
+    public UnloaderSubMenu(String id) {
+        super(id);
         Core.items.values().forEach(item -> stack.add(new ItemButton(item)));
         add(stack.pad().all(5));
     }

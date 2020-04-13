@@ -9,6 +9,7 @@ import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.client.GameClient;
 import com.noahcharlton.robogeddon.ui.UI;
 import com.noahcharlton.robogeddon.ui.event.ClickEvent;
+import com.noahcharlton.robogeddon.ui.ingame.InGameScene;
 import com.noahcharlton.robogeddon.util.Selectable;
 import com.noahcharlton.robogeddon.world.Tile;
 
@@ -52,12 +53,27 @@ public class InputProcessor implements com.badlogic.gdx.InputProcessor {
                 buildAction.onClick(tile, button);
             }
         }else if(tile != null){
-            setSelectable(button == Input.Buttons.LEFT ? tile : null);
+            if(button == Input.Buttons.RIGHT){
+                if(tile.getSubMenuID() != null){
+                    setSelectable(tile);
+                    openSubMenuWindow();
+                }else{
+                    setSelectable(null);
+                }
+            }else{
+                setSelectable(tile);
+            }
         }else{
             setSelectable(null);
         }
 
         return false;
+    }
+
+    private void openSubMenuWindow() {
+        if(ui.getCurrentScene() instanceof InGameScene){
+            ((InGameScene) ui.getCurrentScene()).toggleSelectableSubMenu(selectable);
+        }
     }
 
     @Override
