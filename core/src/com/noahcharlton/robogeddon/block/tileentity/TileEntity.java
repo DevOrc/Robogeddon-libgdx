@@ -1,5 +1,6 @@
 package com.noahcharlton.robogeddon.block.tileentity;
 
+import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.Tile;
 import com.noahcharlton.robogeddon.world.World;
@@ -26,6 +27,11 @@ public class TileEntity {
     @Side(Side.CLIENT)
     public void receiveData(float[] data){
 
+    }
+
+    @Side(Side.BOTH)
+    public void onCustomMessageReceived(CustomTileEntityMessage message){
+        Log.warn("Unhandled custom tile entity message: " + message);
     }
 
     public void clean(){

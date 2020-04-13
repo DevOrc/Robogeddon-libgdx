@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.noahcharlton.robogeddon.Log;
+import com.noahcharlton.robogeddon.block.tileentity.CustomTileEntityMessage;
 import com.noahcharlton.robogeddon.entity.CustomEntityMessage;
 import com.noahcharlton.robogeddon.entity.Entity;
 import com.noahcharlton.robogeddon.message.Message;
@@ -75,11 +76,23 @@ public abstract class World {
     protected boolean onMessageReceived(Message message){
         if(message instanceof CustomEntityMessage){
             onCustomEntityMessage((CustomEntityMessage) message);
+        }else if(message instanceof CustomTileEntityMessage){
+            onCustomTileEntityMessage((CustomTileEntityMessage) message);
         }else{
             return false;
         }
 
         return true;
+    }
+
+    private void onCustomTileEntityMessage(CustomTileEntityMessage message) {
+        var tile = getTileAt(message.getX(), message.getY());
+
+        if(tile != null && tile.getTileEntity() != null){
+            tile.getTileEntity().onCustomMessageReceived(message);
+        }else{
+            Log.error("Received invalid custom tile entity message: " + message);
+        }
     }
 
     private void onCustomEntityMessage(CustomEntityMessage message) {

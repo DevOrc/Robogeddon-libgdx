@@ -2,6 +2,7 @@ package com.noahcharlton.robogeddon;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Random;
 
 public class Registry<T extends HasID>  {
 
@@ -20,6 +21,10 @@ public class Registry<T extends HasID>  {
 
         items.put(item.getTypeID(), item);
         Log.trace("Registered " + item.getTypeID() + ": " + item.getClass().getName());
+    }
+
+    public T random() {
+        return (T) values().toArray()[new Random().nextInt(values().size())];
     }
 
     public T get(String id){

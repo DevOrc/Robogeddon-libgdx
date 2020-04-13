@@ -40,6 +40,15 @@ public class Padding extends Widget{
         return this;
     }
 
+    public Widget all(int i) {
+        top(i);
+        left(i);
+        right(i);
+        bottom(i);
+
+        return this;
+    }
+
     public Padding top(int top) {
         this.top = top;
         invalidateParent();

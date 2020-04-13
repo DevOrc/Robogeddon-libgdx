@@ -1,10 +1,7 @@
 package com.noahcharlton.robogeddon.block.portal;
 
 import com.noahcharlton.robogeddon.block.Blocks;
-import com.noahcharlton.robogeddon.block.tileentity.HasInventory;
-import com.noahcharlton.robogeddon.block.tileentity.ItemBuffer;
-import com.noahcharlton.robogeddon.block.tileentity.TileEntity;
-import com.noahcharlton.robogeddon.block.tileentity.TileEntitySelectable;
+import com.noahcharlton.robogeddon.block.tileentity.*;
 import com.noahcharlton.robogeddon.world.ServerWorld;
 import com.noahcharlton.robogeddon.world.Tile;
 import com.noahcharlton.robogeddon.world.item.Inventory;
@@ -16,11 +13,13 @@ public class UnloaderTileEntity extends TileEntity implements HasInventory, Tile
     private static final int TIME = 60;
     public static final String subMenuID = "unloader_tile_entity";
 
+    private ItemBuffer item;
     private Inventory inventory;
     private int tick = 0;
 
     public UnloaderTileEntity(Tile rootTile) {
         super(rootTile);
+        item = new SingleItemBuffer(Items.rock, 0);
 
         if(world.isServer())
             this.inventory = ((ServerWorld) world).getInventory();
@@ -43,29 +42,46 @@ public class UnloaderTileEntity extends TileEntity implements HasInventory, Tile
     }
 
     @Override
+    public void onCustomMessageReceived(CustomTileEntityMessage message) {
+        if(message instanceof UnloaderSetMessage){
+            item = new SingleItemBuffer(((UnloaderSetMessage) message).getItem(), 0);
+            dirty = true;
+        }else{
+            super.onCustomMessageReceived(message);
+        }
+    }
+
+    @Override
     public boolean acceptItem(Item item) {
         return false;
     }
 
     @Override
-    public void setBuffers(ItemBuffer[] buffers) {}
+    public void setBuffers(ItemBuffer[] buffers) {
+        this.item = buffers[0];
+    }
 
     @Override
     public Item retrieveItem(boolean simulate) {
-        if(tick >= TIME && inventory.useItemIfEnough(Items.rock, 1)){
+        if(tick >= TIME && inventory.useItemIfEnough(item.currentItem(), 1)){
             tick = 0;
-            return Items.rock;
+            return item.currentItem();
         }
         return null;
     }
 
     @Override
     public ItemBuffer[] getBuffers() {
-        return new ItemBuffer[0];
+        return new ItemBuffer[]{item};
     }
 
     @Override
     public String getSubMenuID() {
         return subMenuID;
+    }
+
+    @Override
+    public String[] getInventoryDetails() {
+        return new String[]{"Unloading: " + item.currentItem().getDisplayName()};
     }
 }

@@ -9,6 +9,8 @@ public class UIAssets {
 
     public static NinePatch button;
     public static NinePatch buttonHover;
+    public static NinePatch buttonSelected;
+    public static NinePatch selectableMenu;
     public static BitmapFont smallFont;
     public static BitmapFont titleFont;
     public static TextureRegion iconButton;
@@ -18,6 +20,8 @@ public class UIAssets {
     public static void init(){
         Core.assets.registerNinePatch("ui/button").setOnLoad(b -> button = b);
         Core.assets.registerNinePatch("ui/buttonHover").setOnLoad(b -> buttonHover = b);
+        Core.assets.registerNinePatch("ui/buttonSelected").setOnLoad(b -> buttonSelected = b);
+        Core.assets.registerNinePatch("ui/selectable_menu").setOnLoad(b -> selectableMenu = b);
         Core.assets.registerBitmapFont("small").setOnLoad(font -> smallFont = font);
         Core.assets.registerBitmapFont("title").setOnLoad(font -> titleFont = font);
         Core.assets.registerTexture("ui/iconButton").setOnLoad(t -> iconButton = t);

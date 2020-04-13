@@ -13,7 +13,7 @@ public class Inventory {
     private boolean dirty;
 
     public Inventory() {
-        Core.items.values().forEach(item -> inventory.put(item.getTypeID(), 0));
+        Core.items.values().forEach(item -> inventory.put(item.getTypeID(), 50));
     }
 
     public Message createSyncMessage() {
