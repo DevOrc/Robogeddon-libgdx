@@ -9,9 +9,11 @@ import com.noahcharlton.robogeddon.entity.EntityType;
 import com.noahcharlton.robogeddon.message.InterfaceSerializer;
 import com.noahcharlton.robogeddon.message.MessageSerializer;
 import com.noahcharlton.robogeddon.message.RegistrySerializer;
+import com.noahcharlton.robogeddon.util.GameData;
 import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.floor.Floor;
 import com.noahcharlton.robogeddon.world.floor.Floors;
+import com.noahcharlton.robogeddon.world.io.WorldIOHandler;
 import com.noahcharlton.robogeddon.world.item.Item;
 import com.noahcharlton.robogeddon.world.item.Items;
 
@@ -29,6 +31,8 @@ public class Core {
     public static final Registry<Item> items = new Registry<>();
     @Side(Side.CLIENT)
     public static final Registry<BlockGroup> blockGroups = new Registry<>();
+    @Side(Side.SERVER)
+    public static final Registry<WorldIOHandler> saveGameHandlers = new Registry<>();
 
     @Side(Side.CLIENT)
     public static AssetManager assets;
@@ -40,17 +44,20 @@ public class Core {
     @Side(Side.BOTH)
     public static void preInit(){
         Log.debug("PreInit Start");
+        GameData.init();
 
         EntityType.preInit();
         Blocks.preInit();
         Floors.preInit();
         Items.preInit();
+        WorldIOHandler.preInit();
         createMessageSerializers();
 
         entities.setFinalized(true);
         blocks.setFinalized(true);
         floors.setFinalized(true);
         items.setFinalized(true);
+        saveGameHandlers.setFinalized(true);
         MessageSerializer.finalizeSerializer();
 
 

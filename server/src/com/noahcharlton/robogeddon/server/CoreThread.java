@@ -48,4 +48,9 @@ public class CoreThread extends ServerProvider {
     SimpleEntry<Integer, Message> getNextSingleMessage() {
         return singleMessages.poll();
     }
+
+    @Override
+    public boolean isRemote() {
+        return true;
+    }
 }

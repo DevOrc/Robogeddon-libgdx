@@ -69,4 +69,9 @@ public class RemoteServer extends ServerProvider {
     public String getName() {
         return "Remote Server";
     }
+
+    @Override
+    public boolean isRemote() {
+        return true;
+    }
 }

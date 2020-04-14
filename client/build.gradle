@@ -4,7 +4,7 @@ sourceCompatibility = 11
 sourceSets.main.java.srcDirs = [ "src/" ]
 sourceSets.main.resources.srcDirs = ["/assets"]
 
-project.ext.mainClassName = "com.noahcharlton.robogeddon.client.DesktopLauncher"
+project.ext.mainClassName = "com.noahcharlton.robogeddon.client.ClientLauncher"
 project.ext.assetsDir = new File("/assets")
 
 task run(dependsOn: classes, type: JavaExec) {

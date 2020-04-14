@@ -13,6 +13,8 @@ import com.noahcharlton.robogeddon.entity.*;
 import com.noahcharlton.robogeddon.message.Message;
 import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.gen.WorldGenerator;
+import com.noahcharlton.robogeddon.world.io.SaveWorldMessage;
+import com.noahcharlton.robogeddon.world.io.WorldIO;
 import com.noahcharlton.robogeddon.world.item.Inventory;
 import com.noahcharlton.robogeddon.world.team.Team;
 
@@ -118,7 +120,9 @@ public class ServerWorld extends World {
             onClientLost((LostClientMessage) message);
         } else if(message instanceof BuildBlockMessage) {
             onBuildBlockRequest((BuildBlockMessage) message);
-        } else {
+        } else if(message instanceof SaveWorldMessage && !server.isRemote()) {
+            WorldIO.save(this);
+        }else {
             Log.warn("Unknown message type: " + message.getClass());
         }
 

@@ -48,4 +48,9 @@ public class LocalServer extends ServerProvider {
     public String getName() {
         return "Local Server Thread";
     }
+
+    @Override
+    public boolean isRemote() {
+        return false;
+    }
 }

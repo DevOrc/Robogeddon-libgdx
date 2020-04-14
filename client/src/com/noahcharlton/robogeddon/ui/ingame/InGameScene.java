@@ -1,6 +1,7 @@
 package com.noahcharlton.robogeddon.ui.ingame;
 
 import com.badlogic.gdx.utils.Align;
+import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.ui.Scene;
 import com.noahcharlton.robogeddon.ui.event.ClickEvent;
 import com.noahcharlton.robogeddon.ui.selectable.SelectableSubMenu;
@@ -9,19 +10,30 @@ import com.noahcharlton.robogeddon.ui.widget.Button;
 import com.noahcharlton.robogeddon.ui.widget.TextButton;
 import com.noahcharlton.robogeddon.ui.widget.Widget;
 import com.noahcharlton.robogeddon.util.Selectable;
+import com.noahcharlton.robogeddon.world.io.SaveWorldMessage;
 
 import java.util.Optional;
 
 public class InGameScene extends Scene {
 
     private final TextButton quitButton = new TextButton("Quit!");
+    private final TextButton saveButton = new TextButton("Save!");
     private final SelectableMenu selectableMenu = new SelectableMenu(this);
 
     public InGameScene() {
+        add(saveButton).setOnClick(this::onSave).align(Align.topRight);
         add(quitButton).setOnClick(this::onQuit).align(Align.bottom);
         add(selectableMenu).align(Align.bottomRight);
         add(new InventoryList()).align(Align.topLeft);
         add(new BuildMenu()).align(Align.bottomLeft).pad().bottom(1).left(1);
+    }
+
+    private void onSave(ClickEvent clickEvent, Button button) {
+        if(!client.getWorld().getServer().isRemote()) {
+            client.getWorld().sendMessageToServer(new SaveWorldMessage());
+        }else{
+            Log.warn("Can't save remote server??");
+        }
     }
 
     @Override
@@ -32,6 +44,9 @@ public class InGameScene extends Scene {
             closeSelectableSubMenu();
             selectableMenu.setVisible(false);
         }
+
+        if(client.getWorld() != null)
+            saveButton.setVisible(!client.getWorld().getServer().isRemote());
     }
 
     private void onQuit(ClickEvent clickEvent, Button button) {
