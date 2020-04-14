@@ -32,10 +32,20 @@ public class ServerWorld extends World {
 
     private int entityID = 0;
 
-    public ServerWorld(ServerProvider server) {
+    public ServerWorld(ServerProvider server, boolean loadWorld) {
         super(true);
         this.server = server;
 
+        if(loadWorld){
+            WorldIO.load(this);
+        }else{
+            generateWorld();
+        }
+
+        Log.info("Successfully generated the world!");
+    }
+
+    public void generateWorld() {
         Random random = new Random();
         for(int x = -2; x <= 2; x++) {
             for(int y = -2; y <= 2; y++) {
@@ -44,9 +54,7 @@ public class ServerWorld extends World {
             }
         }
         getChunkAt(0, 0).setTeam(Team.NEUTRAL);
-
 //        addEntity(EntityType.droneEntity.create(this, Team.RED));
-        Log.info("Successfully generated the world!");
     }
 
     private void createChunk(int x, int y, Team team) {

@@ -19,6 +19,7 @@ public class MainMenu extends Scene{
 
         var buttonStack = new Stack()
                 .chainAdd(new TextButton("Singleplayer").setOnClick(this::playSingle).setSize(145f, 30f))
+                .chainAdd(new TextButton("Load Game").setOnClick(this::loadGame).setSize(145f, 30f))
                 .chainAdd(new TextButton("Multiplayer").setOnClick(this::playMulti).setSize(145f, 30f))
                 .chainAdd(new TextButton("Quit").setOnClick(this::quit).setSize(145f, 30f))
                 .pad().bottom(100);
@@ -28,16 +29,20 @@ public class MainMenu extends Scene{
         add(buttonStack).align(Align.bottom);
     }
 
+    private void loadGame(ClickEvent clickEvent, Button button) {
+        client.startGame(true, true);
+    }
+
     private void quit(ClickEvent clickEvent, Button button) {
         Gdx.app.exit();
     }
 
     private void playMulti(ClickEvent clickEvent, Button button) {
-        client.startGame(false);
+        client.startGame(false, false);
     }
 
     private void playSingle(ClickEvent clickEvent, Button button) {
-        client.startGame(true);
+        client.startGame(true, false);
     }
 
     @Override

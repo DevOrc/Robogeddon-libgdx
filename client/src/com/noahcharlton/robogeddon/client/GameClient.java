@@ -77,12 +77,12 @@ public class GameClient extends ApplicationAdapter implements Client {
         updateFPSCount();
     }
 
-    public void startGame(boolean local){
+    public void startGame(boolean local, boolean load){
         Log.info("Starting " + (local ? "local":"remote") + " game");
 
         updateLastFrame = System.nanoTime();
         nextFpsCheck = System.currentTimeMillis() + 10000;
-        setWorld(new ClientWorld(local));
+        setWorld(new ClientWorld(local, load));
         ui.setScene(new InGameScene());
     }
 

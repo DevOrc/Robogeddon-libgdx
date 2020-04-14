@@ -9,7 +9,7 @@ import com.noahcharlton.robogeddon.message.Message;
 public class MainMenuWorld extends ClientWorld {
 
     public MainMenuWorld() {
-        super(true);
+        super(true, false);
     }
 
     @Override

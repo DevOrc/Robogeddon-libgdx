@@ -3,6 +3,7 @@ package com.noahcharlton.robogeddon.world.io;
 import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.HasID;
 import com.noahcharlton.robogeddon.world.ServerWorld;
+import com.noahcharlton.robogeddon.world.io.handlers.VersionIOHandler;
 
 public interface WorldIOHandler extends HasID {
 
@@ -10,7 +11,7 @@ public interface WorldIOHandler extends HasID {
         Core.saveGameHandlers.register(new VersionIOHandler());
     }
 
-    void save(XmlWriter writer, ServerWorld world);
+    void save(XmlWriter xml, ServerWorld world);
 
-    void load(XmlWriter writer, ServerWorld world);
+    void load(Element xml, ServerWorld world);
 }

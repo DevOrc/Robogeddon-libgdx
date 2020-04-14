@@ -24,10 +24,10 @@ public class ClientWorld extends World {
     private final ServerProvider server;
     private Entity playersRobot;
 
-    public ClientWorld(boolean local) {
+    public ClientWorld(boolean local, boolean load) {
         super(false);
 
-        this.server = local ? new LocalServer() : new RemoteServer();
+        this.server = local ? new LocalServer(load) : new RemoteServer();
     }
 
     public void shutdown(){

@@ -10,11 +10,16 @@ public class LocalServer extends ServerProvider {
 
     private ServerWorld world;
     private boolean worldLoaded = false;
+    private boolean loadWorld;
+
+    public LocalServer(boolean load) {
+        this.loadWorld = load;
+    }
 
     @Override
     public void run() {
         Log.info("Starting local server!");
-        world = new ServerWorld(this);
+        world = new ServerWorld(this, loadWorld);
         worldLoaded = true;
         Log.info("World loaded, connecting client");
         world.handleNewConnection(0);

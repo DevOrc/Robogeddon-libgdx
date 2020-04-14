@@ -20,7 +20,7 @@ public class CoreThread extends ServerProvider {
     @Override
     public void run() {
         Log.info("Starting Core Thread");
-        world = new ServerWorld(this);
+        world = new ServerWorld(this, false);
         Server.runServer(world, this::update);
     }
 
