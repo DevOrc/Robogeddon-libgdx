@@ -35,6 +35,16 @@ public class XmlWriter {
 		return this;
 	}
 
+	public XmlWriter dataElement(String name, float[] data){
+		var element = element(name);
+
+		for(float f : data){
+			element.element("Value", f);
+		}
+
+		return pop();
+	}
+
 	public XmlWriter element (String name, Object text) {
 		return element(name).text(text).pop();
 	}

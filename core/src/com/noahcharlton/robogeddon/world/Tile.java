@@ -63,7 +63,7 @@ public class Tile implements Selectable {
 
         if(update.block == null){
             setBlock(null, false);
-        }else if(update.block.startsWith("multi-")){
+        }else if(update.block.startsWith("multi,")){
             var parts = update.block.substring(6).split(",", 3);
             var rootX = Integer.parseInt(parts[0]);
             var rootY = Integer.parseInt(parts[1]);

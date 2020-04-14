@@ -4,6 +4,8 @@ import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.Tile;
 import com.noahcharlton.robogeddon.world.World;
+import com.noahcharlton.robogeddon.world.io.Element;
+import com.noahcharlton.robogeddon.world.io.XmlWriter;
 
 public class TileEntity {
 
@@ -19,12 +21,39 @@ public class TileEntity {
 
     public void update(){}
 
+    public void save(XmlWriter xml) {
+        xml.dataElement("Data", getSaveData());
+
+        if(this instanceof HasInventory){
+            HasInventory.save((HasInventory) this, xml);
+        }
+    }
+
+    public void load(Element xml) {
+        loadSaveData(xml.getDataElement("Data"));
+
+        if(this instanceof HasInventory){
+            HasInventory.load((HasInventory) this, xml);
+        }
+
+        dirty = true;
+    }
+
+    @Side(Side.SERVER)
+    protected float[] getSaveData(){
+        return getData();
+    }
+
+    @Side(Side.SERVER)
+    protected void loadSaveData(float[] data){
+        receiveData(data);
+    }
+
     @Side(Side.SERVER)
     public float[] getData(){
         return new float[]{};
     }
 
-    @Side(Side.CLIENT)
     public void receiveData(float[] data){
 
     }

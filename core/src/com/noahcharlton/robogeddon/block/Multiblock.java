@@ -11,7 +11,7 @@ public final class Multiblock extends Block{
     private final int rootY;
 
     public Multiblock(Block block, int rootX, int rootY) {
-        super("multi-" + rootX +"," + rootY + "," + block.getTypeID());
+        super("multi," + rootX +"," + rootY + "," + block.getTypeID());
 
         this.block = block;
         this.rootX = rootX;

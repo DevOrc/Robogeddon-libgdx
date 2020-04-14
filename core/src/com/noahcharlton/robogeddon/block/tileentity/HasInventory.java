@@ -1,9 +1,13 @@
 package com.noahcharlton.robogeddon.block.tileentity;
 
+import com.noahcharlton.robogeddon.message.MessageSerializer;
 import com.noahcharlton.robogeddon.util.Direction;
 import com.noahcharlton.robogeddon.util.Side;
+import com.noahcharlton.robogeddon.world.io.Element;
+import com.noahcharlton.robogeddon.world.io.XmlWriter;
 import com.noahcharlton.robogeddon.world.item.Item;
 
+import java.util.Arrays;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -40,6 +44,28 @@ public interface HasInventory {
         }
 
         return data;
+    }
+
+    static void save(HasInventory inventory, XmlWriter xml) {
+        var element = xml.element("Inventory");
+
+        for(ItemBuffer buffer : inventory.getBuffers()){
+            element.element("Buffer", MessageSerializer.toJson(buffer, ItemBuffer.class));
+        }
+
+        element.pop();
+    }
+
+    static void load(HasInventory inventory, Element xml) {
+        var element = xml.getChildByName("Inventory");
+        var buffers = new ItemBuffer[element.getChildCount()];
+
+        for(int i = 0; i < buffers.length; i++) {
+            buffers[i] = MessageSerializer.fromJson(element.getChild(i).getText(), ItemBuffer.class);
+        }
+
+        System.out.println(Arrays.toString(buffers));
+        inventory.setBuffers(buffers);
     }
 
 }

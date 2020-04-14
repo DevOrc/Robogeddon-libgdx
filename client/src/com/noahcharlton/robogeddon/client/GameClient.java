@@ -84,6 +84,9 @@ public class GameClient extends ApplicationAdapter implements Client {
         nextFpsCheck = System.currentTimeMillis() + 10000;
         setWorld(new ClientWorld(local, load));
         ui.setScene(new InGameScene());
+
+        processor.setSelectable(null);
+        processor.setBuildAction(null);
     }
 
     public void gotoMainMenu(){

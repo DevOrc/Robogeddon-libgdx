@@ -1,6 +1,7 @@
 package com.noahcharlton.robogeddon.world.io.handlers;
 
 import com.noahcharlton.robogeddon.Core;
+import com.noahcharlton.robogeddon.block.Multiblock;
 import com.noahcharlton.robogeddon.world.Chunk;
 import com.noahcharlton.robogeddon.world.ServerWorld;
 import com.noahcharlton.robogeddon.world.io.Element;
@@ -41,6 +42,12 @@ public class ChunkIOHandler implements WorldIOHandler {
         if(tile.hasBlock())
             element.element("Block", tile.getBlock().getTypeID());
 
+        if(!(tile.getBlock() instanceof Multiblock) && tile.getTileEntity() != null){
+            var tileEntityElement = element.element("TileEntity");
+            tile.getTileEntity().save(tileEntityElement);
+            tileEntityElement.pop();
+        }
+
         element.pop();
     }
 
@@ -67,8 +74,22 @@ public class ChunkIOHandler implements WorldIOHandler {
 
         tile.setFloor(Core.floors.get(floor), false);
 
-        if(block != null){
+        if(block == null)
+            return;
+
+        if(block.startsWith("multi,")) {
+            var parts = block.substring(6).split(",", 3);
+            var rootX = Integer.parseInt(parts[0]);
+            var rootY = Integer.parseInt(parts[1]);
+            var id = parts[2];
+
+            tile.setBlock(new Multiblock(Core.blocks.get(block), rootX, rootY), false);
+        }else{
             tile.setBlock(Core.blocks.get(block), false);
+        }
+
+        if(!(tile.getBlock() instanceof Multiblock) && tile.getTileEntity() != null){
+            tile.getTileEntity().load(tileXml.getChildByName("TileEntity"));
         }
     }
 

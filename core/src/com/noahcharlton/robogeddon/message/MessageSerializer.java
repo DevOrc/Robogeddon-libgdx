@@ -1,6 +1,7 @@
 package com.noahcharlton.robogeddon.message;
 
 import com.google.gson.*;
+import com.noahcharlton.robogeddon.block.tileentity.ItemBuffer;
 
 import java.lang.reflect.Type;
 import java.util.Collections;
@@ -8,7 +9,7 @@ import java.util.Map;
 
 public class MessageSerializer {
 
-    private static final GsonBuilder builder = new GsonBuilder();
+    private static final GsonBuilder builder = new GsonBuilder().serializeNulls();
     private static Gson gson;
 
     public static void registerType(Type type, Object adapter){
@@ -23,6 +24,10 @@ public class MessageSerializer {
             throw new UnsupportedOperationException("Serializer has already been finalized!");
 
         gson = builder.create();
+    }
+
+    public static String toJson(Object data, Type type){
+        return gson.toJson(data, type);
     }
 
     public static String messageToString(Message message){
@@ -50,5 +55,9 @@ public class MessageSerializer {
         } catch(RuntimeException e){
             throw new RuntimeException("Failed to parse message: " + text, e);
         }
+    }
+
+    public static ItemBuffer fromJson(String text, Type type) {
+        return gson.fromJson(text, type);
     }
 }

@@ -14,7 +14,7 @@ import java.util.function.Consumer;
 
 public class WorldGenerator {
 
-    public static long seed = -432985239;
+    public static long seed = -4329852391L;
 
     private final Random random;
     private Chunk currentChunk;

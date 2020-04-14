@@ -58,9 +58,12 @@ public class BeaconTileEntity extends TileEntity implements TileEntitySelectable
     }
 
     @Override
-    public String[] getDetails() {
-        return new String[]{
-                "Test Detail"
-        };
+    protected float[] getSaveData() {
+        return new float[]{time};
+    }
+
+    @Override
+    protected void loadSaveData(float[] data) {
+        time = (int) data[0];
     }
 }
