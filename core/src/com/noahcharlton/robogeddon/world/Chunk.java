@@ -22,7 +22,7 @@ public class Chunk {
     private Team team = Team.NEUTRAL;
 
     @Side(Side.SERVER)
-    Chunk(World world, GridPoint2 location) {
+    public Chunk(World world, GridPoint2 location) {
         this.location = location;
         this.world = world;
 

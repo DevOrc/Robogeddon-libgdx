@@ -18,10 +18,7 @@ import com.noahcharlton.robogeddon.world.io.WorldIO;
 import com.noahcharlton.robogeddon.world.item.Inventory;
 import com.noahcharlton.robogeddon.world.team.Team;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 @Side(Side.SERVER)
 public class ServerWorld extends World {
@@ -50,23 +47,25 @@ public class ServerWorld extends World {
         for(int x = -2; x <= 2; x++) {
             for(int y = -2; y <= 2; y++) {
                 var team = random.nextBoolean() ? Team.BLUE : Team.RED;
-                createChunk(x, y, team);
+                createChunk(x, y, team, true);
             }
         }
         getChunkAt(0, 0).setTeam(Team.NEUTRAL);
 //        addEntity(EntityType.droneEntity.create(this, Team.RED));
     }
 
-    private void createChunk(int x, int y, Team team) {
+    public void createChunk(int x, int y, Team team, boolean generate) {
         if(getChunkAt(x, y) != null)
             throw new RuntimeException("Cannot override a chunk!");
 
         var location = new GridPoint2(x, y);
         Chunk chunk = new Chunk(this, location);
         chunk.setTeam(team);
-        generator.genChunk(chunk);
-        sendMessageToClient(new WorldSyncMessage(chunk));
 
+        if(generate)
+            generator.genChunk(chunk);
+
+        sendMessageToClient(new WorldSyncMessage(chunk));
         chunks.put(location, chunk);
         Log.debug("Created Chunk for " + location + " with team " + team);
     }
@@ -273,5 +272,9 @@ public class ServerWorld extends World {
 
     public Inventory getInventory() {
         return inventory;
+    }
+
+    public Iterator<Chunk> getChunks(){
+        return chunks.values().iterator();
     }
 }
