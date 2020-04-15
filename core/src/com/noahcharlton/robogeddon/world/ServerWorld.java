@@ -27,7 +27,7 @@ public class ServerWorld extends World {
     private final HashMap<Integer, Entity> players = new HashMap<>();
     private final ServerProvider server;
 
-    private int entityID = 0;
+    private int lastEntityID = 0;
 
     public ServerWorld(ServerProvider server, boolean loadWorld) {
         super(true);
@@ -51,7 +51,7 @@ public class ServerWorld extends World {
             }
         }
         getChunkAt(0, 0).setTeam(Team.NEUTRAL);
-//        addEntity(EntityType.droneEntity.create(this, Team.RED));
+        addEntity(EntityType.droneEntity.create(this, Team.RED));
     }
 
     public void createChunk(int x, int y, Team team, boolean generate) {
@@ -208,10 +208,12 @@ public class ServerWorld extends World {
 
     public Entity addEntity(Entity entity) {
         if(entity.getId() != Entity.DEFAULT_ID) {
-            throw new IllegalStateException("Entity already has an ID: " + entity.getId());
+            if(getEntityByID(entity.getId()) != null)
+                throw new IllegalStateException("Duplicate Entity ID: " + entity.getId());
+        }else{
+            entity.setId(++lastEntityID);
         }
 
-        entity.setId(++entityID);
         entities.add(entity);
 
         Log.debug("New Entity: ID=" + entity.getId() + " Type=" + entity.getClass().getName());
@@ -276,5 +278,13 @@ public class ServerWorld extends World {
 
     public Iterator<Chunk> getChunks(){
         return chunks.values().iterator();
+    }
+
+    public void setLastEntityID(int lastEntityID) {
+        this.lastEntityID = lastEntityID;
+    }
+
+    public int getLastEntityID() {
+        return lastEntityID;
     }
 }

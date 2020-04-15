@@ -56,7 +56,7 @@ public class Inventory {
         dirty = false;
     }
 
-    HashMap<String, Integer> getMap() {
+    public HashMap<String, Integer> getMap() {
         return inventory;
     }
 }

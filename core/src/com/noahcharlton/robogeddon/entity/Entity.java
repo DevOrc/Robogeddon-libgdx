@@ -4,6 +4,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.World;
+import com.noahcharlton.robogeddon.world.io.Element;
+import com.noahcharlton.robogeddon.world.io.XmlWriter;
 import com.noahcharlton.robogeddon.world.team.Team;
 
 import java.util.Objects;
@@ -62,15 +64,19 @@ public class Entity {
     }
 
     private void sendUpdatedValues() {
-        var message = new EntityUpdateMessage(id, x, y, angle, velocity, angularVelocity, health);
+        var message = createUpdateMessage();
 
         world.sendMessageToClient(message);
+    }
+
+    public EntityUpdateMessage createUpdateMessage() {
+        return new EntityUpdateMessage(id, x, y, angle, velocity, angularVelocity, health);
     }
 
     public void onUpdateMessage(EntityUpdateMessage message) {
         health = message.getHealth();
 
-        if(Math.abs(message.getX() - getX()) > 3 && Math.abs(message.getY() - getY()) > 3){
+        if(Math.abs(message.getX() - getX()) > 3 || Math.abs(message.getY() - getY()) > 3){
             x = message.getX();
             y = message.getY();
         }
@@ -100,6 +106,10 @@ public class Entity {
     protected Vector2 createVectorBetween(Entity other){
         return new Vector2(other.x, other.y).sub(x, y);
     }
+
+    public void onSave(XmlWriter xml){}
+
+    public void onLoad(Element element){ }
 
     @Override
     public boolean equals(Object o) {

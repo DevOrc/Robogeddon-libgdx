@@ -227,6 +227,10 @@ public class Element {
         return Integer.parseInt(value);
     }
 
+    public <T extends Enum<T>> T getEnumAttribute(String name, Class<T> type){
+        return Enum.valueOf(type, getAttribute(name));
+    }
+
     /**
      * @throws GdxRuntimeException if the attribute was not found.
      */
@@ -290,6 +294,10 @@ public class Element {
         String value = get(name, null);
         if(value == null) return defaultValue;
         return Integer.parseInt(value);
+    }
+
+    public int getTextAsInt(){
+        return Integer.parseInt(getText());
     }
 
     /**
