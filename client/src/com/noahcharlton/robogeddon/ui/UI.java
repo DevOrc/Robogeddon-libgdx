@@ -12,6 +12,7 @@ import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.client.GameClient;
 import com.noahcharlton.robogeddon.graphics.LoadingScreen;
 import com.noahcharlton.robogeddon.ui.event.ClickEvent;
+import com.noahcharlton.robogeddon.ui.event.KeyEvent;
 import com.noahcharlton.robogeddon.ui.widget.Widget;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
@@ -22,6 +23,8 @@ public class UI {
     private final ShapeDrawer drawer;
     private final GameClient client;
     private Scene currentScene;
+
+    private Widget keyFocus;
 
     public UI(GameClient client) {
         this.client = client;
@@ -99,8 +102,23 @@ public class UI {
         return currentScene.isMouseOver();
     }
 
+    public void setKeyFocus(Widget keyFocus) {
+        Log.debug("Requested Key Focus: " + keyFocus);
+        this.keyFocus = keyFocus;
+    }
+
     public void onClick(ClickEvent clickEvent) {
+        setKeyFocus(null);
         currentScene.handleClick(clickEvent);
+    }
+
+    public void onKeyEvent(KeyEvent keyEvent) {
+        if(this.keyFocus != null)
+            keyFocus.onKeyEvent(keyEvent);
+    }
+
+    public Widget getKeyFocus() {
+        return keyFocus;
     }
 
     public Scene getCurrentScene() {

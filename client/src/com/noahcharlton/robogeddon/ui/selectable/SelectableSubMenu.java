@@ -14,7 +14,7 @@ public class SelectableSubMenu extends Widget {
     public SelectableSubMenu(String id) {
         this.id = id;
 
-        setBackground(new NinePatchBackground(UIAssets.selectableMenu));
+        setBackground(new NinePatchBackground(UIAssets.dialog));
         setSize(250, 250);
     }
 
@@ -37,15 +37,12 @@ public class SelectableSubMenu extends Widget {
 
     @Override
     protected void onClick(ClickEvent event) {
-        float width = 14;
-        float height = 12;
-        float x = getX() + getWidth() - width;
-        float y = getY() + getHeight() - height;
-
-        if(event.getX() > x && event.getY() > y && event.getX() < x + width && event.getY() < y + height){
+        if(UIAssets.isEventOnDialogCloseButton(this, event)){
             client.getProcessor().setSelectable(null);
         }
     }
+
+
 
     protected TileEntity getTileEntity(){
         if(client.getProcessor().getSelectable() == null)

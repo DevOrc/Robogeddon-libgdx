@@ -19,6 +19,10 @@ public class GameData {
     }
 
     public static FileHandle getSaveFile(String name){
-        return directory.child(name + ".xml");
+        return saveDirectory.child(name + ".xml");
+    }
+
+    public static FileHandle[] getSaveFiles() {
+        return saveDirectory.list();
     }
 }

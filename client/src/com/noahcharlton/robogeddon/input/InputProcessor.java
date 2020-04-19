@@ -9,6 +9,7 @@ import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.client.GameClient;
 import com.noahcharlton.robogeddon.ui.UI;
 import com.noahcharlton.robogeddon.ui.event.ClickEvent;
+import com.noahcharlton.robogeddon.ui.event.KeyEvent;
 import com.noahcharlton.robogeddon.ui.ingame.InGameScene;
 import com.noahcharlton.robogeddon.util.Selectable;
 import com.noahcharlton.robogeddon.world.Tile;
@@ -153,6 +154,7 @@ public class InputProcessor implements com.badlogic.gdx.InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
+        ui.onKeyEvent(new KeyEvent(keycode, ui));
         return false;
     }
 
@@ -163,6 +165,7 @@ public class InputProcessor implements com.badlogic.gdx.InputProcessor {
 
     @Override
     public boolean keyTyped(char character) {
+        ui.onKeyEvent(new KeyEvent(character, ui));
         return false;
     }
 

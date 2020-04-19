@@ -8,6 +8,7 @@ import com.noahcharlton.robogeddon.client.GameClient;
 import com.noahcharlton.robogeddon.ui.Scale;
 import com.noahcharlton.robogeddon.ui.background.Background;
 import com.noahcharlton.robogeddon.ui.event.ClickEvent;
+import com.noahcharlton.robogeddon.ui.event.KeyEvent;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
 import java.util.ArrayList;
@@ -123,6 +124,10 @@ public class Widget {
         var x = Gdx.input.getX();
         var y = Gdx.graphics.getHeight() - Gdx.input.getY();
         return x > getX() && y > getY() && x < getX() + getWidth() && y < getY() + getHeight();
+    }
+
+    public void onKeyEvent(KeyEvent keyEvent) {
+
     }
 
     public Widget setPosition(float x, float y){

@@ -11,7 +11,7 @@ import com.noahcharlton.robogeddon.graphics.GameRenderer;
 import com.noahcharlton.robogeddon.input.InputProcessor;
 import com.noahcharlton.robogeddon.message.PauseGameMessage;
 import com.noahcharlton.robogeddon.ui.MainMenu;
-import com.noahcharlton.robogeddon.ui.PauseMenu;
+import com.noahcharlton.robogeddon.ui.pause.PauseMenu;
 import com.noahcharlton.robogeddon.ui.UI;
 import com.noahcharlton.robogeddon.ui.UIAssets;
 import com.noahcharlton.robogeddon.ui.ingame.InGameScene;

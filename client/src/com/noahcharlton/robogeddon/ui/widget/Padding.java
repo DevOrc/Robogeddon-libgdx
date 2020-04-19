@@ -40,7 +40,7 @@ public class Padding extends Widget{
         return this;
     }
 
-    public Widget all(int i) {
+    public Padding all(int i) {
         top(i);
         left(i);
         right(i);

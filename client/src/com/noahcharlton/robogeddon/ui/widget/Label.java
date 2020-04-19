@@ -6,16 +6,24 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Align;
 import com.noahcharlton.robogeddon.ui.Scale;
+import com.noahcharlton.robogeddon.ui.UIAssets;
 
 import java.util.function.Supplier;
 
 public class Label extends NoChildrenWidget {
 
     private Supplier<String> supplier = null;
-    private BitmapFont font;
+    private BitmapFont font = UIAssets.smallFont;
     private String text = "";
     private Color textColor = Color.WHITE;
     private boolean wrap;
+
+    public Label() {
+    }
+
+    public Label(String text) {
+        this.text = text;
+    }
 
     @Override
     public void update() {

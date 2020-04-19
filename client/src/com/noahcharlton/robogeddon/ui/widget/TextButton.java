@@ -19,14 +19,13 @@ public class TextButton extends Button {
     private static final int topPadding = 9;
     private static final int defaultHeight = 30;
 
-    private BitmapFont font;
+    private BitmapFont font = UIAssets.smallFont;
     private Color textColor = Color.WHITE;
     private String text;
     private float textHeight;
 
     public TextButton(String text) {
         this.text = text;
-        this.font = UIAssets.smallFont;
 
         setDefaultBackground(new NinePatchBackground(UIAssets.button));
         setOnHover(new NinePatchBackground(UIAssets.buttonHover));
