@@ -15,4 +15,6 @@ public interface Client {
     ShapeDrawer getGameShapeDrawer();
 
     boolean isMouseOnUI();
+
+    boolean isPauseMenuOpen();
 }

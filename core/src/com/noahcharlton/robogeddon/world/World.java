@@ -26,6 +26,7 @@ public abstract class World {
 
     protected final Inventory inventory = new Inventory();
     protected final List<Entity> entities = new LinkedList<>();
+    protected boolean paused;
 
     World(boolean isServer) {
         this.isServer = isServer;
@@ -107,6 +108,9 @@ public abstract class World {
     }
 
     public void update(){
+        if(paused)
+            throw new IllegalStateException();
+
         chunks.values().forEach(Chunk::update);
         entities.forEach(Entity::onUpdate);
 
@@ -175,6 +179,10 @@ public abstract class World {
 
     public boolean isClient(){
         return !isServer;
+    }
+
+    public boolean isPaused() {
+        return paused;
     }
 
     public List<Entity> getEntities() {

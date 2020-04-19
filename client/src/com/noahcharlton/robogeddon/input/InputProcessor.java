@@ -33,7 +33,8 @@ public class InputProcessor implements com.badlogic.gdx.InputProcessor {
     public void update() {
         if(client.getWorld() == null
                 || client.getWorld().getPlayersRobot() == null
-                || client.getWorld().getPlayersRobot().isDead()) {
+                || client.getWorld().getPlayersRobot().isDead()
+                || client.getWorld().isPaused()) {
             buildAction = null;
         }
     }

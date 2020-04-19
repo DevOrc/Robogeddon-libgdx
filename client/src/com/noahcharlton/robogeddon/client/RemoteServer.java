@@ -23,7 +23,9 @@ public class RemoteServer extends ServerProvider {
 
         try {
             var socket = waitForConnection();
-            runWithConnection(socket);
+
+            if(socket != null) //socket is null if the user quit the game, while connecting
+                runWithConnection(socket);
         } catch(IOException e) {
             throw new RuntimeException("Failed to connect to remote server: " + ip, e);
         }

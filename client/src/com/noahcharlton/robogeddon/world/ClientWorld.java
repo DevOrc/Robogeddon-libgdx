@@ -13,6 +13,7 @@ import com.noahcharlton.robogeddon.entity.EntityRemovedMessage;
 import com.noahcharlton.robogeddon.entity.EntityUpdateMessage;
 import com.noahcharlton.robogeddon.entity.NewEntityMessage;
 import com.noahcharlton.robogeddon.message.Message;
+import com.noahcharlton.robogeddon.message.PauseGameMessage;
 import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.item.InventorySyncMessage;
 
@@ -35,6 +36,8 @@ public class ClientWorld extends World {
     }
 
     public void update() {
+        if(paused)
+            return;
         super.update();
     }
 
@@ -69,6 +72,8 @@ public class ClientWorld extends World {
             updateTileEntities((UpdateTileEntitiesMessage) message);
         }else if(message instanceof ChunkTeamUpdateMessage){
             updateChunkTeam((ChunkTeamUpdateMessage) message);
+        }else if(message instanceof PauseGameMessage){
+            paused = ((PauseGameMessage) message).isPaused();
         }else {
             Log.warn("Unknown message type: " + message.getClass());
         }

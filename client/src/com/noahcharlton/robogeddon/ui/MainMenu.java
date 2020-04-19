@@ -47,7 +47,7 @@ public class MainMenu extends Scene{
 
     @Override
     public boolean isMouseOver() {
-        //The mouse is always over the main menu
+        //the main menu covers the whole screen, so the mouse is always over it
         return true;
     }
 }

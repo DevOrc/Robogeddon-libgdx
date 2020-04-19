@@ -1,5 +1,7 @@
 package com.noahcharlton.robogeddon.ui.ingame;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.utils.Align;
 import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.ui.Scene;
@@ -47,6 +49,10 @@ public class InGameScene extends Scene {
 
         if(client.getWorld() != null)
             saveButton.setVisible(!client.getWorld().getServer().isRemote());
+
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
+            client.pauseGame();
+        }
     }
 
     private void onQuit(ClickEvent clickEvent, Button button) {

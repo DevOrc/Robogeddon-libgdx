@@ -11,6 +11,7 @@ import com.noahcharlton.robogeddon.block.tileentity.TileEntity;
 import com.noahcharlton.robogeddon.block.tileentity.UpdateTileEntitiesMessage;
 import com.noahcharlton.robogeddon.entity.*;
 import com.noahcharlton.robogeddon.message.Message;
+import com.noahcharlton.robogeddon.message.PauseGameMessage;
 import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.gen.WorldGenerator;
 import com.noahcharlton.robogeddon.world.io.SaveWorldMessage;
@@ -71,6 +72,8 @@ public class ServerWorld extends World {
     }
 
     public void update() {
+        if(paused)
+            return;
         super.update();
 
         if(inventory.isDirty()) {
@@ -129,11 +132,22 @@ public class ServerWorld extends World {
             onBuildBlockRequest((BuildBlockMessage) message);
         } else if(message instanceof SaveWorldMessage && !server.isRemote()) {
             WorldIO.save(this);
+        }else if(message instanceof PauseGameMessage){
+            updatePausedState((PauseGameMessage) message);
         }else {
             Log.warn("Unknown message type: " + message.getClass());
         }
 
         return false;
+    }
+
+    private void updatePausedState(PauseGameMessage message) {
+        if(server.isRemote()) //a multiplayer server never pauses!
+            return;
+
+        paused = message.isPaused();
+        Log.info("Server Paused: " + paused);
+        sendMessageToClient(new PauseGameMessage(paused));
     }
 
     private void onBuildBlockRequest(BuildBlockMessage message) {

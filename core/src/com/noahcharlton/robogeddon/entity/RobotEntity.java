@@ -164,6 +164,13 @@ public class RobotEntity extends Entity implements HasCollision {
         boolean rightClicking = Gdx.input.isButtonPressed(Input.Buttons.RIGHT) && !Core.client.isMouseOnUI();
         Vector3 currMining = rightClicking ? trimMiningPosition(Core.client.mouseToWorld()) : null;
 
+        if(Core.client.isPauseMenuOpen()){
+            //This is needed cause on multiplayer, when pause, the world is still updated,
+            // but the player should not be able to move
+            w = a = s = d = space = false;
+            currMining = null;
+        }
+
         if(wKey != w || a != aKey || s != sKey || d != dKey || space != spaceKey ||
                 !Objects.equals(miningPos, currMining)){
             var message = new RobotInputMessage(getId(), w, a, s, d, space, currMining);

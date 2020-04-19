@@ -9,7 +9,9 @@ import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.graphics.GameRenderer;
 import com.noahcharlton.robogeddon.input.InputProcessor;
+import com.noahcharlton.robogeddon.message.PauseGameMessage;
 import com.noahcharlton.robogeddon.ui.MainMenu;
+import com.noahcharlton.robogeddon.ui.PauseMenu;
 import com.noahcharlton.robogeddon.ui.UI;
 import com.noahcharlton.robogeddon.ui.UIAssets;
 import com.noahcharlton.robogeddon.ui.ingame.InGameScene;
@@ -89,6 +91,32 @@ public class GameClient extends ApplicationAdapter implements Client {
         processor.setBuildAction(null);
     }
 
+    public void pauseGame() {
+        if(world == null)
+            throw new UnsupportedOperationException("Cannot pause when not in game!");
+
+        Log.info("Pausing game!");
+        ui.setScene(new PauseMenu());
+        world.sendMessageToServer(new PauseGameMessage(true));
+    }
+
+    @Override
+    @Deprecated
+    public void pause() {}
+
+    public void resumeGame() {
+        if(world == null)
+            throw new UnsupportedOperationException("Cannot resume when not in game!");
+
+        Log.info("Resuming game!");
+        ui.setScene(new InGameScene());
+        world.sendMessageToServer(new PauseGameMessage(false));
+    }
+
+    @Override
+    @Deprecated
+    public void resume(){}
+
     public void gotoMainMenu(){
         Log.info("Going to main menu");
         ui.setScene(new MainMenu());
@@ -152,6 +180,11 @@ public class GameClient extends ApplicationAdapter implements Client {
     @Override
     public boolean isMouseOnUI() {
         return ui.isMouseOver();
+    }
+
+    @Override
+    public boolean isPauseMenuOpen() {
+        return ui.getCurrentScene() instanceof PauseMenu;
     }
 
     public static GameClient getInstance() {
