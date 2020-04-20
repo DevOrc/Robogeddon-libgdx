@@ -11,7 +11,6 @@ import com.noahcharlton.robogeddon.ui.widget.Label;
 import com.noahcharlton.robogeddon.ui.widget.Stack;
 import com.noahcharlton.robogeddon.ui.widget.TextButton;
 import com.noahcharlton.robogeddon.world.settings.NewWorldSettings;
-import com.noahcharlton.robogeddon.world.settings.RemoteWorldSettings;
 
 public class MainMenu extends Scene {
 
@@ -42,7 +41,7 @@ public class MainMenu extends Scene {
     }
 
     private void playMulti(ClickEvent clickEvent, Button button) {
-        client.startGame(new RemoteWorldSettings("localhost"));
+        clickEvent.getUi().setScene(new MultiplayerScreen());
     }
 
     private void playSingle(ClickEvent clickEvent, Button button) {

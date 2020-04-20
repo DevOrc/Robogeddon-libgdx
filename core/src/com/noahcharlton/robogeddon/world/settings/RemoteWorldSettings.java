@@ -11,4 +11,9 @@ public class RemoteWorldSettings implements WorldSettings {
     public String getIp() {
         return ip;
     }
+
+    @Override
+    public String toString() {
+        return "RemoteWorld(" + ip + ")";
+    }
 }

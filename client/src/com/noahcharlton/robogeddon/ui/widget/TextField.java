@@ -168,6 +168,7 @@ public class TextField extends Widget{
     public TextField setText(String text) {
         invalidate();
         this.text = text;
+        this.cursorPos = text.length();
 
         return this;
     }

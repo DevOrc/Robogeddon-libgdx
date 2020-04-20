@@ -154,7 +154,7 @@ public class GameClient extends ApplicationAdapter implements Client {
 
     private void setWorld(ClientWorld world){
         if(this.world != null)
-            this.world .shutdown();
+            this.world.shutdown();
 
         this.world = world;
     }

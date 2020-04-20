@@ -14,4 +14,9 @@ public class SavedWorldSettings implements WorldSettings {
     public FileHandle getFile() {
         return GameData.getSaveFile(name);
     }
+
+    @Override
+    public String toString() {
+        return "SavedWorld(" + name + ")";
+    }
 }
