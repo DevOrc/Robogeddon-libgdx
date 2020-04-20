@@ -10,7 +10,6 @@ import com.noahcharlton.robogeddon.ui.UIAssets;
 import com.noahcharlton.robogeddon.ui.background.ColorBackground;
 import com.noahcharlton.robogeddon.ui.event.ClickEvent;
 import com.noahcharlton.robogeddon.ui.widget.*;
-import com.noahcharlton.robogeddon.world.io.SaveWorldMessage;
 
 public class PauseMenu extends Scene {
 
@@ -64,7 +63,6 @@ public class PauseMenu extends Scene {
     }
 
     private void saveGame(ClickEvent clickEvent, Button button) {
-        client.getWorld().sendMessageToServer(new SaveWorldMessage());
         mainStack.setVisible(false);
         saveMenu.setVisible(true);
     }

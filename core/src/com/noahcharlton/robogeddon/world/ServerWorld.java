@@ -131,7 +131,7 @@ public class ServerWorld extends World {
         } else if(message instanceof BuildBlockMessage) {
             onBuildBlockRequest((BuildBlockMessage) message);
         } else if(message instanceof SaveWorldMessage && !server.isRemote()) {
-            WorldIO.save(this);
+            WorldIO.save(this, ((SaveWorldMessage) message).getPath());
         }else if(message instanceof PauseGameMessage){
             updatePausedState((PauseGameMessage) message);
         }else {

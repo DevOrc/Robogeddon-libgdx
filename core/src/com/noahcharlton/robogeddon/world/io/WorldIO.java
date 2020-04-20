@@ -11,8 +11,11 @@ import java.nio.charset.StandardCharsets;
 @Side(Side.SERVER)
 public class WorldIO {
 
-    public static void save(ServerWorld world){
-        var saveFile = GameData.getSaveFile("save");
+    public static void save(ServerWorld world, String path){
+        if(path == null || path.isBlank())
+            return;
+
+        var saveFile = GameData.getSaveFile(path);
         Log.info("Saving world: " + saveFile);
 
         var xml = new XmlWriter(saveFile).element("SaveGame");
@@ -43,5 +46,4 @@ public class WorldIO {
         var element = reader.getChildByName(handler.getTypeID());
         handler.load(element, world);
     }
-
 }

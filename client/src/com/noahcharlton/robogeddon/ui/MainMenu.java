@@ -19,7 +19,6 @@ public class MainMenu extends Scene{
                 .chainAdd(new TextButton("Load Game").setOnClick(this::loadGame).setSize(145f, 30f))
                 .chainAdd(new TextButton("Multiplayer").setOnClick(this::playMulti).setSize(145f, 30f))
                 .chainAdd(new TextButton("Quit").setOnClick(this::quit).setSize(145f, 30f))
-                .chainAdd(new TextField())
                 .pad().bottom(100);
 
         add(title).align(Align.top);
