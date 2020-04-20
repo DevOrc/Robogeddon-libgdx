@@ -16,6 +16,10 @@ import com.noahcharlton.robogeddon.message.Message;
 import com.noahcharlton.robogeddon.message.PauseGameMessage;
 import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.item.InventorySyncMessage;
+import com.noahcharlton.robogeddon.world.settings.NewWorldSettings;
+import com.noahcharlton.robogeddon.world.settings.RemoteWorldSettings;
+import com.noahcharlton.robogeddon.world.settings.SavedWorldSettings;
+import com.noahcharlton.robogeddon.world.settings.WorldSettings;
 
 import java.util.Iterator;
 
@@ -25,10 +29,16 @@ public class ClientWorld extends World {
     private final ServerProvider server;
     private Entity playersRobot;
 
-    public ClientWorld(boolean local, boolean load) {
+    public ClientWorld(WorldSettings settings) {
         super(false);
 
-        this.server = local ? new LocalServer(load) : new RemoteServer();
+        if(settings instanceof NewWorldSettings || settings instanceof SavedWorldSettings){
+            server = new LocalServer(settings);
+        }else if(settings instanceof RemoteWorldSettings){
+            server = new RemoteServer((RemoteWorldSettings) settings);
+        }else{
+            throw new IllegalArgumentException("Unknown settings: " + settings);
+        }
     }
 
     public void shutdown(){

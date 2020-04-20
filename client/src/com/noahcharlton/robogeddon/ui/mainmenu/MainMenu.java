@@ -1,12 +1,19 @@
-package com.noahcharlton.robogeddon.ui;
+package com.noahcharlton.robogeddon.ui.mainmenu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Align;
 import com.noahcharlton.robogeddon.Core;
+import com.noahcharlton.robogeddon.ui.Scene;
+import com.noahcharlton.robogeddon.ui.UIAssets;
 import com.noahcharlton.robogeddon.ui.event.ClickEvent;
-import com.noahcharlton.robogeddon.ui.widget.*;
+import com.noahcharlton.robogeddon.ui.widget.Button;
+import com.noahcharlton.robogeddon.ui.widget.Label;
+import com.noahcharlton.robogeddon.ui.widget.Stack;
+import com.noahcharlton.robogeddon.ui.widget.TextButton;
+import com.noahcharlton.robogeddon.world.settings.NewWorldSettings;
+import com.noahcharlton.robogeddon.world.settings.RemoteWorldSettings;
 
-public class MainMenu extends Scene{
+public class MainMenu extends Scene {
 
     public MainMenu() {
         var versionText =  "v" + Core.VERSION + "-" + Core.VERSION_TYPE;
@@ -27,7 +34,7 @@ public class MainMenu extends Scene{
     }
 
     private void loadGame(ClickEvent clickEvent, Button button) {
-        client.startGame(true, true);
+        clickEvent.getUi().setScene(new LoadGameScreen());
     }
 
     private void quit(ClickEvent clickEvent, Button button) {
@@ -35,11 +42,11 @@ public class MainMenu extends Scene{
     }
 
     private void playMulti(ClickEvent clickEvent, Button button) {
-        client.startGame(false, false);
+        client.startGame(new RemoteWorldSettings("localhost"));
     }
 
     private void playSingle(ClickEvent clickEvent, Button button) {
-        client.startGame(true, false);
+        client.startGame(new NewWorldSettings());
     }
 
     @Override

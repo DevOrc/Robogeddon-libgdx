@@ -5,21 +5,22 @@ import com.noahcharlton.robogeddon.Server;
 import com.noahcharlton.robogeddon.ServerProvider;
 import com.noahcharlton.robogeddon.message.Message;
 import com.noahcharlton.robogeddon.world.ServerWorld;
+import com.noahcharlton.robogeddon.world.settings.WorldSettings;
 
 public class LocalServer extends ServerProvider {
 
     private ServerWorld world;
     private boolean worldLoaded = false;
-    private boolean loadWorld;
+    private WorldSettings worldSettings;
 
-    public LocalServer(boolean load) {
-        this.loadWorld = load;
+    public LocalServer(WorldSettings worldSettings) {
+        this.worldSettings = worldSettings;
     }
 
     @Override
     public void run() {
         Log.info("Starting local server!");
-        world = new ServerWorld(this, loadWorld);
+        world = new ServerWorld(this, worldSettings);
         worldLoaded = true;
         Log.info("World loaded, connecting client");
         world.handleNewConnection(0);

@@ -5,6 +5,7 @@ import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.util.GameData;
 import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.ServerWorld;
+import com.noahcharlton.robogeddon.world.settings.SavedWorldSettings;
 
 import java.nio.charset.StandardCharsets;
 
@@ -33,7 +34,7 @@ public class WorldIO {
         xml.pop();
     }
 
-    public static void load(ServerWorld world){
+    public static void load(ServerWorld world, SavedWorldSettings settings){
         var file = GameData.getSaveFile("save");
         Log.info("loading world: " + file);
 

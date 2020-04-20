@@ -27,8 +27,18 @@ public class Stack extends Widget {
 
         setHeight(y - startY);
         setWidth(width);
+
         getChildren().forEach(child -> child.setWidth(getWidth()));
+        centerAllChildren();
     }
+
+    private void centerAllChildren() {
+        getChildren().forEach(child -> {
+            var innerX = (getWidth() / 2f) - (child.getWidth() / 2f);
+            child.setX(getX() + innerX);
+        });
+    }
+
     public Stack setSpacing(int spacing) {
         this.spacing = spacing;
         this.invalidate();

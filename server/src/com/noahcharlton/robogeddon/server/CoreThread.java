@@ -5,6 +5,7 @@ import com.noahcharlton.robogeddon.Server;
 import com.noahcharlton.robogeddon.ServerProvider;
 import com.noahcharlton.robogeddon.message.Message;
 import com.noahcharlton.robogeddon.world.ServerWorld;
+import com.noahcharlton.robogeddon.world.settings.NewWorldSettings;
 
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Queue;
@@ -20,7 +21,7 @@ public class CoreThread extends ServerProvider {
     @Override
     public void run() {
         Log.info("Starting Core Thread");
-        world = new ServerWorld(this, false);
+        world = new ServerWorld(this, new NewWorldSettings());
         Server.runServer(world, this::update);
     }
 

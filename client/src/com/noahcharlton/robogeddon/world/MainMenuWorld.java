@@ -5,11 +5,12 @@ import com.noahcharlton.robogeddon.entity.EntityType;
 import com.noahcharlton.robogeddon.entity.NewEntityMessage;
 import com.noahcharlton.robogeddon.entity.RobotEntity;
 import com.noahcharlton.robogeddon.message.Message;
+import com.noahcharlton.robogeddon.world.settings.NewWorldSettings;
 
 public class MainMenuWorld extends ClientWorld {
 
     public MainMenuWorld() {
-        super(true, false);
+        super(new NewWorldSettings());
     }
 
     @Override

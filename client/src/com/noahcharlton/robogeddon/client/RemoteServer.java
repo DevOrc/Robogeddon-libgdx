@@ -5,6 +5,7 @@ import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.ServerProvider;
 import com.noahcharlton.robogeddon.message.Message;
 import com.noahcharlton.robogeddon.message.MessageSerializer;
+import com.noahcharlton.robogeddon.world.settings.RemoteWorldSettings;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -15,7 +16,11 @@ import java.net.SocketTimeoutException;
 
 public class RemoteServer extends ServerProvider {
 
-    private static final String ip = "localhost";
+    private final String ip;
+
+    public RemoteServer(RemoteWorldSettings settings) {
+        ip = settings.getIp();
+    }
 
     @Override
     public void run() {

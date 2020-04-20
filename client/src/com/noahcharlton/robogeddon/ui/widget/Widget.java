@@ -2,6 +2,7 @@ package com.noahcharlton.robogeddon.ui.widget;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Align;
 import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.client.GameClient;
@@ -28,6 +29,8 @@ public class Widget {
     private float height;
     private float minWidth;
     private float minHeight;
+    private float maxWidth = Float.MAX_VALUE;
+    private float maxHeight = Float.MAX_VALUE;
     private boolean visible = true;
 
     private int align = Align.center;
@@ -166,12 +169,13 @@ public class Widget {
     }
 
     public Widget setWidth(float width) {
-        this.width = Math.max(width * Scale.scale, minWidth);
+        this.width = MathUtils.clamp(width * Scale.scale, minWidth, maxWidth);
         return this;
     }
 
     public Widget setHeight(float height) {
-        this.height = Math.max(height * Scale.scale, minHeight);
+        this.height = MathUtils.clamp(height * Scale.scale, minHeight, maxHeight);
+
         return this;
     }
 
@@ -189,14 +193,28 @@ public class Widget {
 
     public Widget setMinHeight(float minHeight) {
         this.minHeight = minHeight;
-        this.height = Math.max(height, minHeight);
+        this.height = MathUtils.clamp(height * Scale.scale, minHeight, maxHeight);
 
         return this;
     }
 
     public Widget setMinWidth(float minWidth) {
         this.minWidth = minWidth;
-        this.width = Math.max(width, minWidth);
+        this.width = MathUtils.clamp(width * Scale.scale, minWidth, maxWidth);
+
+        return this;
+    }
+
+    public Widget setMaxWidth(float maxWidth) {
+        this.maxWidth = maxWidth;
+        this.width = MathUtils.clamp(width * Scale.scale, minWidth, maxWidth);
+
+        return this;
+    }
+
+    public Widget setMaxHeight(float maxHeight) {
+        this.maxHeight = maxHeight;
+        this.height = MathUtils.clamp(height * Scale.scale, minHeight, maxHeight);
 
         return this;
     }

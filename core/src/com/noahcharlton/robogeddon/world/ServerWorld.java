@@ -17,6 +17,9 @@ import com.noahcharlton.robogeddon.world.gen.WorldGenerator;
 import com.noahcharlton.robogeddon.world.io.SaveWorldMessage;
 import com.noahcharlton.robogeddon.world.io.WorldIO;
 import com.noahcharlton.robogeddon.world.item.Inventory;
+import com.noahcharlton.robogeddon.world.settings.NewWorldSettings;
+import com.noahcharlton.robogeddon.world.settings.SavedWorldSettings;
+import com.noahcharlton.robogeddon.world.settings.WorldSettings;
 import com.noahcharlton.robogeddon.world.team.Team;
 
 import java.util.*;
@@ -30,14 +33,16 @@ public class ServerWorld extends World {
 
     private int lastEntityID = 0;
 
-    public ServerWorld(ServerProvider server, boolean loadWorld) {
+    public ServerWorld(ServerProvider server, WorldSettings settings) {
         super(true);
         this.server = server;
 
-        if(loadWorld){
-            WorldIO.load(this);
-        }else{
+        if(settings instanceof SavedWorldSettings){
+            WorldIO.load(this, (SavedWorldSettings) settings);
+        }else if(settings instanceof NewWorldSettings){
             generateWorld();
+        }else{
+            throw new IllegalArgumentException("Unknown settings: " + settings);
         }
 
         Log.info("Successfully generated the world!");

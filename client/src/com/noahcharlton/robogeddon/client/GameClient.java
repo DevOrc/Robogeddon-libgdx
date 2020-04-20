@@ -10,7 +10,7 @@ import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.graphics.GameRenderer;
 import com.noahcharlton.robogeddon.input.InputProcessor;
 import com.noahcharlton.robogeddon.message.PauseGameMessage;
-import com.noahcharlton.robogeddon.ui.MainMenu;
+import com.noahcharlton.robogeddon.ui.mainmenu.MainMenu;
 import com.noahcharlton.robogeddon.ui.pause.PauseMenu;
 import com.noahcharlton.robogeddon.ui.UI;
 import com.noahcharlton.robogeddon.ui.UIAssets;
@@ -18,6 +18,7 @@ import com.noahcharlton.robogeddon.ui.ingame.InGameScene;
 import com.noahcharlton.robogeddon.ui.selectable.SelectableSubMenus;
 import com.noahcharlton.robogeddon.world.ClientWorld;
 import com.noahcharlton.robogeddon.world.MainMenuWorld;
+import com.noahcharlton.robogeddon.world.settings.WorldSettings;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
 public class GameClient extends ApplicationAdapter implements Client {
@@ -79,12 +80,12 @@ public class GameClient extends ApplicationAdapter implements Client {
         updateFPSCount();
     }
 
-    public void startGame(boolean local, boolean load){
-        Log.info("Starting " + (local ? "local":"remote") + " game");
+    public void startGame(WorldSettings settings){
+        Log.info("Starting new world: " + settings);
 
         updateLastFrame = System.nanoTime();
         nextFpsCheck = System.currentTimeMillis() + 10000;
-        setWorld(new ClientWorld(local, load));
+        setWorld(new ClientWorld(settings));
         ui.setScene(new InGameScene());
 
         processor.setSelectable(null);
