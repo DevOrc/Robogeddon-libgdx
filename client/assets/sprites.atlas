@@ -193,9 +193,16 @@ blocks/unloader
   orig: 32, 32
   offset: 0, 0
   index: -1
+blocks/wall
+  rotate: false
+  xy: 833, 43
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 entities/bullet
   rotate: false
-  xy: 833, 69
+  xy: 867, 69
   size: 6, 6
   orig: 6, 6
   offset: 0, 0

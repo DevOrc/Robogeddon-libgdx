@@ -27,6 +27,7 @@ public class Blocks{
     public static final Block itemDuctWest = new ItemDuct(itemDuctID, Direction.WEST);
     public static final Block inventoryPortal = new InventoryPortalBlock("inventory_portal");
     public static final Block unloaderBlock = new UnloaderBlock("unloader");
+    public static final Block wall = new WallBlock("wall");
 
     @Side(Side.BOTH)
     public static void preInit() {
@@ -42,11 +43,12 @@ public class Blocks{
         Core.blocks.register(itemDuctWest);
         Core.blocks.register(inventoryPortal);
         Core.blocks.register(unloaderBlock);
+        Core.blocks.register(wall);
     }
 
     @Side(Side.CLIENT)
     public static void init() {
-        BlockGroup defense = new BlockGroup("defense", Blocks.turretBlock, minerBlock);
+        BlockGroup defense = new BlockGroup("defense", Blocks.turretBlock, minerBlock, wall);
         BlockGroup misc = new BlockGroup("misc", oilBlock, testBlock, blueBeacon);
         BlockGroup transport = new BlockGroup("transport",
                 itemDuctNorth, unloaderBlock, inventoryPortal);

@@ -188,6 +188,10 @@ public class Entity {
         return type;
     }
 
+    protected void setHealth(int health) {
+        this.health = health;
+    }
+
     public int getHealth() {
         return health;
     }

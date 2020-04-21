@@ -18,6 +18,7 @@ public class DroneEntity extends Entity implements HasCollision {
     private static final int RADIUS = DroneEntityType.RADIUS;
     private static final int SHOOT_TIME = 30;
     private static final int MAX_VEL = 4;
+    private static final int SHOOT_RANGE = (int) Math.pow(500, 2);
 
     private Entity target;
 
@@ -53,7 +54,7 @@ public class DroneEntity extends Entity implements HasCollision {
 
         if(shooterTime > 0){
             shooterTime--;
-        }else{
+        }else if(this.createVectorBetween(target).len2() < SHOOT_RANGE){
             shooterTime = SHOOT_TIME;
             shoot();
         }
@@ -155,6 +156,9 @@ public class DroneEntity extends Entity implements HasCollision {
             float y = entity.getY() - RADIUS;
             TextureRegion texture = entity.velocity < .25 ? offTexture : onTexture;
 
+            batch.setColor(0f ,0f, 0f, .2f);
+            GraphicsUtil.drawRotated(batch, texture, x - 10, y - 10, angle);
+            batch.setColor(1f ,1f, 1f, 1f);
             GraphicsUtil.drawRotated(batch, texture, x, y, angle);
             renderHealthBar(batch, entity, RADIUS);
         }

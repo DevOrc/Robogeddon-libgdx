@@ -52,6 +52,20 @@ public class RobotEntity extends Entity implements HasCollision {
     }
 
     @Override
+    public void damage(int amount) {
+        super.damage(amount);
+
+
+        if(getHealth() < 0){
+            setHealth(getType().getHealth());
+            setDead(false);
+            setX(0);
+            setY(0);
+            setDirty(true);
+        }
+    }
+
+    @Override
     public void update() {
         if(world.isClient() && controlling){
             sendInputValues();
@@ -252,6 +266,9 @@ public class RobotEntity extends Entity implements HasCollision {
             float x = entity.getX() - RADIUS;
             float y = entity.getY() - RADIUS;
 
+            batch.setColor(0f ,0f, 0f, .2f);
+            GraphicsUtil.drawRotated(batch, texture, x - 10, y - 10, angle);
+            batch.setColor(1f, 1f, 1f, 1f);
             GraphicsUtil.drawRotated(batch, texture, x, y, angle);
             renderHealthBar(batch, entity, RADIUS);
 
