@@ -44,5 +44,7 @@ public abstract class ServerProvider implements Runnable{
         return thread;
     }
 
+    public abstract boolean isConnected();
+
     public abstract boolean isRemote();
 }

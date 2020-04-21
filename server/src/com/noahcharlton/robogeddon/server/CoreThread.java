@@ -46,6 +46,11 @@ public class CoreThread extends ServerProvider {
         singleMessages.add(new SimpleEntry<>(id, message));
     }
 
+    @Override
+    public boolean isConnected() {
+        return true;
+    }
+
     SimpleEntry<Integer, Message> getNextSingleMessage() {
         return singleMessages.poll();
     }

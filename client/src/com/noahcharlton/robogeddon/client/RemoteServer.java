@@ -17,6 +17,7 @@ import java.net.SocketTimeoutException;
 public class RemoteServer extends ServerProvider {
 
     private final String ip;
+    private Socket socket;
 
     public RemoteServer(RemoteWorldSettings settings) {
         ip = settings.getIp();
@@ -27,20 +28,25 @@ public class RemoteServer extends ServerProvider {
         Log.info("Starting Remote Server Thread");
 
         try {
-            var socket = waitForConnection();
-
-            if(socket != null) //socket is null if the user quit the game, while connecting
-                runWithConnection(socket);
+            socket = waitForConnection();
         } catch(IOException e) {
             throw new RuntimeException("Failed to connect to remote server: " + ip, e);
+        }
+
+        if(socket != null) { //socket is null if the user quit the game, while connecting
+            try {
+                runWithConnection();
+            } catch(IOException e) {
+                throw new RuntimeException("Socket IO Exception", e);
+            }
         }
 
         Log.info("Shutting down remote server connection!");
     }
 
-    public void runWithConnection(Socket connection) throws IOException {
-        var reader = new DataInputStream(connection.getInputStream());
-        var writer = new DataOutputStream(connection.getOutputStream());
+    public void runWithConnection() throws IOException {
+        var reader = new DataInputStream(socket.getInputStream());
+        var writer = new DataOutputStream(socket.getOutputStream());
 
         Message m;
         while(!Thread.interrupted()){
@@ -75,6 +81,11 @@ public class RemoteServer extends ServerProvider {
     @Override
     public String getName() {
         return "Remote Server";
+    }
+
+    @Override
+    public synchronized boolean isConnected() {
+        return getThread().isAlive() && socket != null && socket.isConnected();
     }
 
     @Override

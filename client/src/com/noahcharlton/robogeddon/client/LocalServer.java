@@ -56,6 +56,11 @@ public class LocalServer extends ServerProvider {
     }
 
     @Override
+    public synchronized boolean isConnected() {
+        return this.getThread().isAlive();
+    }
+
+    @Override
     public boolean isRemote() {
         return false;
     }

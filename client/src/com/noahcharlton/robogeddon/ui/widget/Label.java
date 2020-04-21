@@ -51,6 +51,11 @@ public class Label extends NoChildrenWidget {
         setMinHeight(textLayout.height);
     }
 
+    public void pack(){
+        setWidth(getMinWidth());
+        setHeight(getMinHeight());
+    }
+
     public Label setSupplier(Supplier<String> supplier) {
         this.supplier = supplier;
         return this;

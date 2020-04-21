@@ -10,6 +10,8 @@ import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.graphics.GameRenderer;
 import com.noahcharlton.robogeddon.input.InputProcessor;
 import com.noahcharlton.robogeddon.message.PauseGameMessage;
+import com.noahcharlton.robogeddon.ui.DisconnectedScene;
+import com.noahcharlton.robogeddon.ui.WorldLoadingScene;
 import com.noahcharlton.robogeddon.ui.mainmenu.MainMenu;
 import com.noahcharlton.robogeddon.ui.pause.PauseMenu;
 import com.noahcharlton.robogeddon.ui.UI;
@@ -63,6 +65,8 @@ public class GameClient extends ApplicationAdapter implements Client {
             loadingAssets = true;
             Core.assets.reload();
             return;
+        }else if(!world.getServer().isConnected() && ui.getCurrentScene() instanceof InGameScene){
+            onServerDisconnect();
         }
 
         while(updateLastFrame + updateFrameTime <= System.nanoTime()){
@@ -80,13 +84,23 @@ public class GameClient extends ApplicationAdapter implements Client {
         updateFPSCount();
     }
 
+    public void onServerDisconnect() {
+        if(world.getServer() instanceof LocalServer){
+            ui.setScene(new DisconnectedScene("Local server crash! See log for more details"));
+        }else if(world.getServer() instanceof RemoteServer){
+            ui.setScene(new DisconnectedScene("Remote server disconnect! See log for more details"));
+        }else{
+            ui.setScene(new DisconnectedScene("Server Disconnected for unknown reasons!"));
+        }
+    }
+
     public void startGame(WorldSettings settings){
         Log.info("Starting new world: " + settings);
 
         updateLastFrame = System.nanoTime();
         nextFpsCheck = System.currentTimeMillis() + 10000;
         setWorld(new ClientWorld(settings));
-        ui.setScene(new InGameScene());
+        ui.setScene(new WorldLoadingScene());
 
         processor.setSelectable(null);
         processor.setBuildAction(null);

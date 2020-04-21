@@ -35,7 +35,7 @@ public class WorldIO {
     }
 
     public static void load(ServerWorld world, SavedWorldSettings settings){
-        var file = GameData.getSaveFile("save");
+        var file = settings.getFile();
         Log.info("loading world: " + file);
 
         var reader = new XmlReader().parse(file.readString(String.valueOf(StandardCharsets.UTF_8)));
