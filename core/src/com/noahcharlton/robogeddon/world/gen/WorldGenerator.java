@@ -80,7 +80,7 @@ public class WorldGenerator {
             for(int y = 1; y < Chunk.SIZE; y++) {
                 Tile tile = currentChunk.getTile(x, y);
 
-                if(tile.getFloor() == Floors.dirt){
+                if(Floors.isDirt(tile.getFloor())){
                     List<Tile> neighbors = getNeighborTiles(x, y);
 
                     int floorCount = (int) neighbors.stream().filter(t -> t.getFloor() == main).count();
