@@ -1,6 +1,5 @@
 package com.noahcharlton.robogeddon.world.gen;
 
-import com.noahcharlton.robogeddon.block.Blocks;
 import com.noahcharlton.robogeddon.world.Chunk;
 import com.noahcharlton.robogeddon.world.Tile;
 import com.noahcharlton.robogeddon.world.floor.Floor;
@@ -29,15 +28,16 @@ public class WorldGenerator {
         for(int i = 0; i < 3; i++){
             int x = random.nextInt(Chunk.SIZE);
             int y = random.nextInt(Chunk.SIZE);
-            generateFeature(x, y, 5 + (int) (45 * random.nextDouble()), this::setOil);
+            generateFeature(x, y, 5 + (int) (45 * random.nextDouble()), this::setRock);
         }
-        fixPatches(Floors.oil_rock, this::setOil);
-        surroundFloor(Floors.oil_rock, Floors.sand);
+        fixPatches(Floors.rock, this::setRock);
     }
 
-    private void setOil(Tile tile) {
-        tile.setFloor(Floors.oil_rock, false);
-        tile.setBlock(Blocks.oilBlock, false);
+    private void setRock(Tile tile) {
+        if(random.nextInt(3) == 0)
+            tile.setFloor(Floors.ironRock, false);
+        else
+            tile.setFloor(Floors.rock, false);
     }
 
     private void generateFeature(int startX, int startY, int i, Consumer<Tile> feature) {
@@ -69,24 +69,6 @@ public class WorldGenerator {
 
                     if(floorCount == 4){
                         consumer.accept(tile);
-                    }
-                }
-            }
-        }
-    }
-
-    private void surroundFloor(Floor main, Floor border) {
-        for(int x = 1; x < Chunk.SIZE; x++) {
-            for(int y = 1; y < Chunk.SIZE; y++) {
-                Tile tile = currentChunk.getTile(x, y);
-
-                if(Floors.isDirt(tile.getFloor())){
-                    List<Tile> neighbors = getNeighborTiles(x, y);
-
-                    int floorCount = (int) neighbors.stream().filter(t -> t.getFloor() == main).count();
-
-                    if(floorCount > 0 && floorCount < 4){
-                        tile.setFloor(border, false);
                     }
                 }
             }

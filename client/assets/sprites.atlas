@@ -256,30 +256,30 @@ floors/dirt2
   orig: 32, 32
   offset: 0, 0
   index: -1
-floors/dirt3
+floors/grass
   rotate: false
   xy: 731, 77
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-floors/grass
+floors/iron
   rotate: false
   xy: 765, 77
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-floors/oil_rock
+floors/rock
   rotate: false
   xy: 595, 43
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-floors/rock
+floors/rockyDirt
   rotate: false
-  xy: 629, 43
+  xy: 663, 43
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -293,7 +293,7 @@ floors/sand
   index: -1
 items/rock
   rotate: false
-  xy: 663, 43
+  xy: 629, 43
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
