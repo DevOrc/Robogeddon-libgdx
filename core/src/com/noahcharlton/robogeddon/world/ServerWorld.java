@@ -27,13 +27,13 @@ import java.util.*;
 @Side(Side.SERVER)
 public class ServerWorld extends World {
 
-    private final WorldGenerator generator = new WorldGenerator(WorldGenerator.seed);
     private final HashMap<Integer, Entity> players = new HashMap<>();
     private final ServerProvider server;
 
     private final Team playerTeam = Team.BLUE;
     private final Team enemyTeam = Team.RED;
 
+    private WorldGenerator generator;
     private int lastEntityID = 0;
 
     public ServerWorld(ServerProvider server, WorldSettings settings) {
@@ -43,6 +43,7 @@ public class ServerWorld extends World {
         if(settings instanceof SavedWorldSettings){
             WorldIO.load(this, (SavedWorldSettings) settings);
         }else if(settings instanceof NewWorldSettings){
+            generator = new WorldGenerator(((NewWorldSettings) settings).getSeed());
             generator.createInitialWorld(this);
         }else{
             throw new IllegalArgumentException("Unknown settings: " + settings);
@@ -294,6 +295,14 @@ public class ServerWorld extends World {
         server.sendMessageToClient(message);
     }
 
+
+    public void setGenerator(WorldGenerator generator) {
+        if(this.generator != null)
+            throw new UnsupportedOperationException("Generator already set!");
+
+        this.generator = generator;
+    }
+
     public ServerProvider getServer() {
         return server;
     }
@@ -320,5 +329,9 @@ public class ServerWorld extends World {
 
     public Team getPlayerTeam() {
         return playerTeam;
+    }
+
+    public WorldGenerator getGenerator() {
+        return generator;
     }
 }

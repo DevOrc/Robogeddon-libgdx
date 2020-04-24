@@ -10,14 +10,12 @@ import java.util.Random;
 
 public class WorldGenerator {
 
-    public static long seed = -4329852391L;
-
-    private final Random random;
     private final SimplexNoise2D noiseMap;
+    private final long seed;
 
     public WorldGenerator(long seed) {
-        this.random = new Random();
-        this.noiseMap = new SimplexNoise2D(random);
+        this.seed = seed;
+        this.noiseMap = new SimplexNoise2D(new Random(seed));
     }
 
     public void genChunksAround(ServerWorld world, Chunk chunk) {
@@ -75,5 +73,9 @@ public class WorldGenerator {
 
     private double getNoise(int tileX, int tileY) {
         return noiseMap.noise(tileX / 16f, tileY / 16f);
+    }
+
+    public long getSeed() {
+        return seed;
     }
 }

@@ -3,10 +3,7 @@ package com.noahcharlton.robogeddon.world.io;
 import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.HasID;
 import com.noahcharlton.robogeddon.world.ServerWorld;
-import com.noahcharlton.robogeddon.world.io.handlers.ChunkIOHandler;
-import com.noahcharlton.robogeddon.world.io.handlers.EntityIOHandler;
-import com.noahcharlton.robogeddon.world.io.handlers.InventoryIOHandler;
-import com.noahcharlton.robogeddon.world.io.handlers.VersionIOHandler;
+import com.noahcharlton.robogeddon.world.io.handlers.*;
 
 public interface WorldIOHandler extends HasID {
 
@@ -15,6 +12,7 @@ public interface WorldIOHandler extends HasID {
         Core.saveGameHandlers.register(new ChunkIOHandler());
         Core.saveGameHandlers.register(new InventoryIOHandler());
         Core.saveGameHandlers.register(new EntityIOHandler());
+        Core.saveGameHandlers.register(new SeedHandler());
     }
 
     void save(XmlWriter xml, ServerWorld world);

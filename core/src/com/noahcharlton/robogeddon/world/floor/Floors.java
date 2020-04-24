@@ -1,6 +1,7 @@
 package com.noahcharlton.robogeddon.world.floor;
 
 import com.noahcharlton.robogeddon.Core;
+import com.noahcharlton.robogeddon.world.item.Items;
 
 public class Floors {
 
@@ -11,7 +12,7 @@ public class Floors {
     public static final Floor grass = new Floor("grass");
     public static final Floor sand = new Floor("sand");
 
-    public static final Floor ironRock = new OreFloor("iron");
+    public static final Floor ironRock = new OreFloor("iron", Items.iron);
 
     public static final Floor[] dirtTypes = new Floor[]{dirt1, rockyDirt, dirt2};
 

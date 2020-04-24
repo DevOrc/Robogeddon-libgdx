@@ -25,7 +25,7 @@ public class ClientLauncher {
 		config.forceExit = false;
 		config.foregroundFPS = 0;
 		config.backgroundFPS = 120;
-		config.vSyncEnabled = false;
+		config.vSyncEnabled = true;
 		config.title = "Robogeddon " + Core.VERSION + "-" + Core.VERSION_TYPE;
 
 		new LwjglApplication(GameClient.getInstance(), config);

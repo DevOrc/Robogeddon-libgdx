@@ -3,19 +3,26 @@ package com.noahcharlton.robogeddon.block.miner;
 import com.noahcharlton.robogeddon.block.tileentity.GenericItemBuffer;
 import com.noahcharlton.robogeddon.block.tileentity.StorageTileEntity;
 import com.noahcharlton.robogeddon.world.Tile;
+import com.noahcharlton.robogeddon.world.floor.OreFloor;
 import com.noahcharlton.robogeddon.world.item.Item;
 import com.noahcharlton.robogeddon.world.item.Items;
 
 public class MinerTileEntity extends StorageTileEntity {
 
-    static final int TIME = 60;
+    static final int TIME = 120;
 
-    private final Item item = Items.rock;
+    private final Item item;
 
     private int time = 0;
 
     public MinerTileEntity(Tile rootTile) {
         super(rootTile, new GenericItemBuffer(10));
+
+        if(rootTile.getFloor() instanceof OreFloor){
+            item = ((OreFloor) rootTile.getFloor()).getOre();
+        }else{
+            item = Items.rock;
+        }
     }
 
     @Override

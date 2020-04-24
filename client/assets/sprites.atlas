@@ -27,14 +27,14 @@ blocks/groups/defense
   index: -1
 blocks/groups/misc
   rotate: false
-  xy: 527, 43
+  xy: 561, 43
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/groups/transport
   rotate: false
-  xy: 799, 43
+  xy: 765, 43
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -55,112 +55,112 @@ blocks/inventory_portal_top
   index: -1
 blocks/item_duct
   rotate: false
-  xy: 799, 77
+  xy: 833, 77
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/item_duct_arrow
   rotate: false
-  xy: 833, 77
+  xy: 867, 77
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/item_duct_roof_bottom
   rotate: false
-  xy: 867, 77
+  xy: 901, 77
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/item_duct_roof_center
   rotate: false
-  xy: 901, 77
+  xy: 935, 77
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/item_duct_roof_left
   rotate: false
-  xy: 935, 77
+  xy: 969, 77
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/item_duct_roof_right
   rotate: false
-  xy: 969, 77
+  xy: 197, 11
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/item_duct_roof_top
   rotate: false
-  xy: 197, 11
+  xy: 231, 11
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/item_duct_wall_bottom
   rotate: false
-  xy: 231, 11
+  xy: 265, 11
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/item_duct_wall_center
   rotate: false
-  xy: 265, 11
+  xy: 299, 11
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/item_duct_wall_left
   rotate: false
-  xy: 299, 11
+  xy: 333, 11
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/item_duct_wall_right
   rotate: false
-  xy: 333, 11
+  xy: 367, 11
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/item_duct_wall_top
   rotate: false
-  xy: 367, 11
+  xy: 401, 11
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/miner
   rotate: false
-  xy: 401, 11
+  xy: 435, 11
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 1
 blocks/miner
   rotate: false
-  xy: 435, 11
+  xy: 469, 11
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 2
 blocks/miner
   rotate: false
-  xy: 469, 11
+  xy: 527, 43
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 3
 blocks/oil
   rotate: false
-  xy: 561, 43
+  xy: 595, 43
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -174,35 +174,35 @@ blocks/test_block
   index: -1
 blocks/turret_base
   rotate: false
-  xy: 833, 43
+  xy: 799, 43
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/turret_top
   rotate: false
-  xy: 867, 43
+  xy: 833, 43
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/unloader
   rotate: false
-  xy: 901, 43
+  xy: 867, 43
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/wall
   rotate: false
-  xy: 935, 43
+  xy: 901, 43
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 entities/bullet
   rotate: false
-  xy: 969, 69
+  xy: 503, 37
   size: 6, 6
   orig: 6, 6
   offset: 0, 0
@@ -272,14 +272,14 @@ floors/iron
   index: -1
 floors/rock
   rotate: false
-  xy: 595, 43
+  xy: 629, 43
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 floors/rockyDirt
   rotate: false
-  xy: 663, 43
+  xy: 697, 43
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -291,44 +291,30 @@ floors/sand
   orig: 32, 32
   offset: 0, 0
   index: -1
-items/rock
+items/iron
   rotate: false
-  xy: 629, 43
+  xy: 799, 77
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-items/rock_tiny
+items/iron_tiny
   rotate: false
   xy: 1003, 99
   size: 10, 10
   orig: 10, 10
   offset: 0, 0
   index: -1
-items/ruby
+items/rock
   rotate: false
-  xy: 697, 43
+  xy: 663, 43
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-items/ruby_tiny
+items/rock_tiny
   rotate: false
   xy: 1, 1
-  size: 10, 10
-  orig: 10, 10
-  offset: 0, 0
-  index: -1
-items/sapphire
-  rotate: false
-  xy: 765, 43
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-items/sapphire_tiny
-  rotate: false
-  xy: 503, 33
   size: 10, 10
   orig: 10, 10
   offset: 0, 0

@@ -2,11 +2,16 @@ package com.noahcharlton.robogeddon.world.floor;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.noahcharlton.robogeddon.world.Tile;
+import com.noahcharlton.robogeddon.world.item.Item;
 
 public class OreFloor extends Floor {
 
-    public OreFloor(String id) {
+    private final Item ore;
+
+    public OreFloor(String id, Item ore) {
         super(id);
+
+        this.ore = ore;
     }
 
     @Override
@@ -14,5 +19,9 @@ public class OreFloor extends Floor {
         Floors.rock.render(batch, tile);
 
         super.render(batch, tile);
+    }
+
+    public Item getOre() {
+        return ore;
     }
 }
