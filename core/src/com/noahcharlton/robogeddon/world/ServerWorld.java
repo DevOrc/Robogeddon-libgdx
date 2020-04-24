@@ -56,6 +56,7 @@ public class ServerWorld extends World {
                 createChunk(x, y, team, true);
             }
         }
+//        createChunk(0, 0, Team.NEUTRAL, true);
         getChunkAt(0, 0).setTeam(Team.NEUTRAL);
         addEntity(EntityType.droneEntity.create(this, Team.RED));
     }

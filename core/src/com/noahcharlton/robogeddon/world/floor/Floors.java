@@ -2,8 +2,6 @@ package com.noahcharlton.robogeddon.world.floor;
 
 import com.noahcharlton.robogeddon.Core;
 
-import java.util.Random;
-
 public class Floors {
 
     public static final Floor rock = new Floor("rock");
@@ -25,10 +23,6 @@ public class Floors {
         Core.floors.register(grass);
         Core.floors.register(sand);
         Core.floors.register(ironRock);
-    }
-
-    public static Floor randomDirt(){
-        return dirtTypes[new Random().nextInt(dirtTypes.length)];
     }
 
     public static boolean isDirt(Floor floor){

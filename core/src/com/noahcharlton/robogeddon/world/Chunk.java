@@ -33,7 +33,7 @@ public class Chunk {
                 var worldY = y + (location.y * 32);
 
                 tiles[index.x][index.y] = new Tile(world,  this, worldX, worldY);
-                tiles[index.x][index.y].setFloor(Floors.randomDirt(), false);
+                tiles[index.x][index.y].setFloor(Floors.dirt1, false);
             }
         }
     }
