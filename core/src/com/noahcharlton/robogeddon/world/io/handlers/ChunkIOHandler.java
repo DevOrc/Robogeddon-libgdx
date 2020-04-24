@@ -59,8 +59,8 @@ public class ChunkIOHandler implements WorldIOHandler {
     private void loadChunk(Element chunkXml, ServerWorld world) {
         var chunkX = chunkXml.getIntAttribute("x");
         var chunkY = chunkXml.getIntAttribute("y");
-        var team = chunkXml.getAttribute("team");
-        world.createChunk(chunkX, chunkY, Team.valueOf(team), false);
+        var team = chunkXml.getEnumAttribute("team", Team.class);
+        world.createChunk(chunkX, chunkY, false).setTeam(team);
 
         chunkXml.getChildrenByName("Tile").forEach(tileXml -> loadTile(tileXml, world));
     }

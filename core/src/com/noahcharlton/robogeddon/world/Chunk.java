@@ -9,6 +9,8 @@ import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.floor.Floors;
 import com.noahcharlton.robogeddon.world.team.Team;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class Chunk {
@@ -166,6 +168,14 @@ public class Chunk {
         }
 
         return tiles[x][y];
+    }
+
+    public List<GridPoint2> getNeighborLocations(){
+        return Arrays.asList(
+                location.cpy().add(1, 0),
+                location.cpy().add(-1, 0),
+                location.cpy().add(0, 1),
+                location.cpy().add(0, -1));
     }
 
     public GridPoint2 getLocation() {

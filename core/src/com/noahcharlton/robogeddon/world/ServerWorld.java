@@ -31,6 +31,9 @@ public class ServerWorld extends World {
     private final HashMap<Integer, Entity> players = new HashMap<>();
     private final ServerProvider server;
 
+    private final Team playerTeam = Team.BLUE;
+    private final Team enemyTeam = Team.RED;
+
     private int lastEntityID = 0;
 
     public ServerWorld(ServerProvider server, WorldSettings settings) {
@@ -40,7 +43,7 @@ public class ServerWorld extends World {
         if(settings instanceof SavedWorldSettings){
             WorldIO.load(this, (SavedWorldSettings) settings);
         }else if(settings instanceof NewWorldSettings){
-            generateWorld();
+            generator.createInitialWorld(this);
         }else{
             throw new IllegalArgumentException("Unknown settings: " + settings);
         }
@@ -48,33 +51,22 @@ public class ServerWorld extends World {
         Log.info("Successfully generated the world!");
     }
 
-    public void generateWorld() {
-        Random random = new Random();
-        for(int x = -2; x <= 2; x++) {
-            for(int y = -2; y <= 2; y++) {
-                var team = random.nextBoolean() ? Team.BLUE : Team.RED;
-                createChunk(x, y, team, true);
-            }
-        }
-//        createChunk(0, 0, Team.NEUTRAL, true);
-        getChunkAt(0, 0).setTeam(Team.NEUTRAL);
-        addEntity(EntityType.droneEntity.create(this, Team.RED));
-    }
-
-    public void createChunk(int x, int y, Team team, boolean generate) {
+    public Chunk createChunk(int x, int y, boolean generate) {
         if(getChunkAt(x, y) != null)
             throw new RuntimeException("Cannot override a chunk!");
 
         var location = new GridPoint2(x, y);
         Chunk chunk = new Chunk(this, location);
-        chunk.setTeam(team);
+        chunk.setTeam(Team.NEUTRAL);
 
         if(generate)
             generator.genChunk(chunk);
 
         sendMessageToClient(new WorldSyncMessage(chunk));
         chunks.put(location, chunk);
-        Log.debug("Created Chunk for " + location + " with team " + team);
+        Log.debug("Created Chunk at " + location);
+
+        return chunk;
     }
 
     public void update() {
@@ -87,7 +79,21 @@ public class ServerWorld extends World {
             sendMessageToClient(inventory.createSyncMessage());
         }
 
+        createPlayerChunkBuffer();
         sendDirtyTiles();
+    }
+
+    private void createPlayerChunkBuffer() {
+        for(Chunk chunk: chunks.values()){
+            if(chunk.getTeam() == playerTeam){
+                boolean chunkOnEdge = chunk.getNeighborLocations().stream()
+                        .map(pt -> getChunkAt(pt.x, pt.y)).anyMatch(Objects::isNull);
+
+                if(chunkOnEdge){
+                    generator.genChunksAround(this, chunk);
+                }
+            }
+        }
     }
 
     private void sendDirtyTiles() {
@@ -306,5 +312,13 @@ public class ServerWorld extends World {
 
     public int getLastEntityID() {
         return lastEntityID;
+    }
+
+    public Team getEnemyTeam() {
+        return enemyTeam;
+    }
+
+    public Team getPlayerTeam() {
+        return playerTeam;
     }
 }

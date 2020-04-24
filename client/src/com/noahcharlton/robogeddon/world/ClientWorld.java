@@ -92,7 +92,10 @@ public class ClientWorld extends World {
     }
 
     private void updateChunkTeam(ChunkTeamUpdateMessage message) {
-        getChunkAt(message.getChunkX(), message.getChunkY()).setTeam(message.getNewTeam());
+        Chunk chunk = getChunkAt(message.getChunkX(), message.getChunkY());
+
+        if(chunk != null) //Chunk might be null if the server hasn't sent the chunk yet
+            chunk.setTeam(message.getNewTeam());
     }
 
     private void updateTileEntities(UpdateTileEntitiesMessage message) {
