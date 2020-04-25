@@ -5,6 +5,7 @@ import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.ServerProvider;
 import com.noahcharlton.robogeddon.block.tileentity.HasInventory;
+import com.noahcharlton.robogeddon.block.tileentity.ItemBuffer;
 import com.noahcharlton.robogeddon.block.tileentity.UpdateTileEntitiesMessage;
 import com.noahcharlton.robogeddon.client.LocalServer;
 import com.noahcharlton.robogeddon.client.RemoteServer;
@@ -103,8 +104,14 @@ public class ClientWorld extends World {
             var tile = getTileAt(update.tileX, update.tileY);
             var tileEntity = tile.getTileEntity();
 
-            if(tileEntity instanceof HasInventory)
-                ((HasInventory) tileEntity).setBuffers(update.items);
+            if(tileEntity instanceof HasInventory){
+                var buffers = update.items;
+                var inventory = (HasInventory) tileEntity;
+
+                if(buffers != null)
+                    inventory.setBuffers(buffers.toArray(new ItemBuffer[0]));
+            }
+
 
             tileEntity.receiveData(update.data);
         }

@@ -8,7 +8,7 @@ import com.noahcharlton.robogeddon.world.item.Item;
 
 public class ItemDuctTileEntity extends TileEntity implements HasInventory, TileEntitySelectable {
 
-    private static final int SPEED = 1;
+    private static final float SPEED = 1f;
     private final Direction direction;
 
     private ItemBuffer[] buffers;
@@ -89,8 +89,8 @@ public class ItemDuctTileEntity extends TileEntity implements HasInventory, Tile
     }
 
     private void updateItemPositions() {
-        var deltaX = 0;
-        var deltaY = 0;
+        float deltaX = 0;
+        float deltaY = 0;
 
         if(direction == Direction.NORTH)
             deltaY = SPEED;
@@ -102,7 +102,7 @@ public class ItemDuctTileEntity extends TileEntity implements HasInventory, Tile
             deltaX = -SPEED;
 
         for(int i = 0; i < itemXs.length; i++) {
-            if(isBlocked(i)){
+            if(buffers[i].getAmount() == 0 || isBlocked(i)){
             }else if(!isInCenter(i)){
                 moveToCenter(i);
             }else{

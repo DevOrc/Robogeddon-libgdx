@@ -43,6 +43,14 @@ public class SingleItemBuffer implements ItemBuffer{
     }
 
     @Override
+    public ItemBuffer copy() {
+        var buffer = new SingleItemBuffer(this.item, this.capacity);
+        buffer.amount = this.amount;
+
+        return buffer;
+    }
+
+    @Override
     public String toString() {
         return "SingleItemBuffer{" +
                 "item=" + item +

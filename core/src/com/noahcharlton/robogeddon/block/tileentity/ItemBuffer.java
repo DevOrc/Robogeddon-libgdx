@@ -11,4 +11,6 @@ public interface ItemBuffer {
     Item currentItem();
 
     int getAmount();
+
+    ItemBuffer copy();
 }

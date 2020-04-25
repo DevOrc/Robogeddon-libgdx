@@ -11,7 +11,7 @@ public class WorldSyncMessage implements Message {
     private final Team team;
 
     public WorldSyncMessage(Chunk chunk) {
-        this.chunk = chunk.getLocation();
+        this.chunk = chunk.getLocation().cpy();
         this.tiles = new TileUpdate[Chunk.SIZE][Chunk.SIZE];
         this.team = chunk.getTeam();
 

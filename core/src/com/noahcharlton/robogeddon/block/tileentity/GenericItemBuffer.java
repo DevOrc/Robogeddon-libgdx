@@ -52,6 +52,15 @@ public class GenericItemBuffer implements ItemBuffer {
     }
 
     @Override
+    public ItemBuffer copy() {
+        var buffer = new GenericItemBuffer(capacity);
+        buffer.amount = this.amount;
+        buffer.item = this.item;
+
+        return buffer;
+    }
+
+    @Override
     public String toString() {
         return "GenericItemBuffer{" +
                 "item=" + item +

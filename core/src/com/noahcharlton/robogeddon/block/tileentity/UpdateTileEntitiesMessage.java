@@ -2,7 +2,9 @@ package com.noahcharlton.robogeddon.block.tileentity;
 
 import com.noahcharlton.robogeddon.message.Message;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UpdateTileEntitiesMessage implements Message {
 
@@ -10,7 +12,7 @@ public class UpdateTileEntitiesMessage implements Message {
         public final int tileX;
         public final int tileY;
         public final float[] data;
-        public final ItemBuffer[] items;
+        public final List<ItemBuffer> items;
 
         public TileEntityUpdate(TileEntity entity) {
             this.tileX = entity.getRootTile().getX();
@@ -19,7 +21,7 @@ public class UpdateTileEntitiesMessage implements Message {
 
             if(entity instanceof HasInventory){
                 var inventory = (HasInventory) entity;
-                items = inventory.getBuffers();
+                items = Arrays.stream(inventory.getBuffers()).map(ItemBuffer::copy).collect(Collectors.toList());
             }else{
                 items = null;
             }
