@@ -17,6 +17,7 @@ import com.noahcharlton.robogeddon.world.gen.WorldGenerator;
 import com.noahcharlton.robogeddon.world.io.SaveWorldMessage;
 import com.noahcharlton.robogeddon.world.io.WorldIO;
 import com.noahcharlton.robogeddon.world.item.Inventory;
+import com.noahcharlton.robogeddon.world.item.ItemStack;
 import com.noahcharlton.robogeddon.world.settings.NewWorldSettings;
 import com.noahcharlton.robogeddon.world.settings.SavedWorldSettings;
 import com.noahcharlton.robogeddon.world.settings.WorldSettings;
@@ -195,6 +196,12 @@ public class ServerWorld extends World {
     }
 
     private boolean canBuildBlock(Entity builder, Block block, Tile root) {
+        for(ItemStack requirement: block.getRequirements()){
+            if(getInventoryForItem(requirement.getItem()) < requirement.getAmount()){
+                return false;
+            }
+        }
+
         for(int x = root.getX(); x < root.getX() + block.getWidth(); x++) {
             for(int y = root.getY(); y < root.getY() + block.getHeight(); y++) {
                 var tile = getTileAt(x, y);
@@ -208,6 +215,10 @@ public class ServerWorld extends World {
     }
 
     private void buildBlock(Tile tile, Block block) {
+        for(ItemStack requirement: block.getRequirements()){
+            inventory.changeItem(requirement.getItem(), -requirement.getAmount());
+        }
+
         for(int x = tile.getX(); x < tile.getX() + block.getWidth(); x++) {
             for(int y = tile.getY(); y < tile.getY() + block.getHeight(); y++) {
                 if(x == tile.getX() && y == tile.getY()) {

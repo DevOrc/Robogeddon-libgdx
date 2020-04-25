@@ -53,7 +53,29 @@ public class BuildBlock implements BuildAction, Selectable {
 
         if(tile != null) {
             block.getRenderer().buildRender(batch, tile);
+
+            if(notEnoughResources()){
+                renderRedCover(tile);
+            }
         }
+    }
+
+    private void renderRedCover(Tile tile) {
+        var shapeDrawer = client.getGameShapeDrawer();
+
+        shapeDrawer.setColor(1f, 0f, 0f, .3f);
+        shapeDrawer.filledRectangle(tile.getPixelX(), tile.getPixelY(), Tile.SIZE * block.getWidth(),
+                Tile.SIZE * block.getHeight());
+    }
+
+    private boolean notEnoughResources() {
+        for(ItemStack requirement: block.getRequirements()){
+            if(client.getWorld().getInventoryForItem(requirement.getItem()) < requirement.getAmount()){
+                return true;
+            }
+        }
+
+        return false;
     }
 
     @Override
