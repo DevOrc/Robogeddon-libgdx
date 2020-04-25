@@ -7,10 +7,14 @@ import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.block.Block;
 import com.noahcharlton.robogeddon.client.GameClient;
+import com.noahcharlton.robogeddon.util.Selectable;
 import com.noahcharlton.robogeddon.world.BuildBlockMessage;
 import com.noahcharlton.robogeddon.world.Tile;
+import com.noahcharlton.robogeddon.world.item.ItemStack;
 
-public class BuildBlock implements BuildAction {
+import java.util.List;
+
+public class BuildBlock implements BuildAction, Selectable {
 
     protected final GameClient client = GameClient.getInstance();
     protected Block block;
@@ -50,5 +54,37 @@ public class BuildBlock implements BuildAction {
         if(tile != null) {
             block.getRenderer().buildRender(batch, tile);
         }
+    }
+
+    @Override
+    public String getTitle() {
+        return "Build " + block.getDisplayName();
+    }
+
+    @Override
+    public String getDesc() {
+        return "";
+    }
+
+    @Override
+    public String[] getDetails() {
+        List<ItemStack> requirements = block.getRequirements();
+
+        if(requirements.size() == 0)
+            return new String[]{"Requirements: None"};
+
+        String[] info = new String[requirements.size() + 1];
+        info[0] = "Requirements: ";
+
+        for(int i = 0; i < requirements.size(); i++){
+            info[i + 1] = requirements.get(i).getDisplayInfo();
+        }
+
+        return info;
+    }
+
+    @Override
+    public boolean isInfoInvalid() {
+        return false;
     }
 }

@@ -25,4 +25,16 @@ public class ItemStack {
     public int getAmount() {
         return amount;
     }
+
+    public String getDisplayInfo(){
+        return amount + " " + item.getDisplayName();
+    }
+
+    @Override
+    public String toString() {
+        return "ItemStack{" +
+                "item=" + item +
+                ", amount=" + amount +
+                '}';
+    }
 }

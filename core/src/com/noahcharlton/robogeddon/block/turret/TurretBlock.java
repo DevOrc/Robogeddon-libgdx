@@ -9,6 +9,11 @@ import com.noahcharlton.robogeddon.block.tileentity.HasTileEntity;
 import com.noahcharlton.robogeddon.block.tileentity.TileEntity;
 import com.noahcharlton.robogeddon.util.GraphicsUtil;
 import com.noahcharlton.robogeddon.world.Tile;
+import com.noahcharlton.robogeddon.world.item.ItemStack;
+import com.noahcharlton.robogeddon.world.item.Items;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class TurretBlock extends Block implements BlockRenderer, HasTileEntity {
 
@@ -17,6 +22,11 @@ public class TurretBlock extends Block implements BlockRenderer, HasTileEntity {
 
     public TurretBlock(String id) {
         super(id);
+    }
+
+    @Override
+    public List<ItemStack> getRequirements() {
+        return Arrays.asList(Items.rock.stack(25), Items.iron.stack(5));
     }
 
     @Override

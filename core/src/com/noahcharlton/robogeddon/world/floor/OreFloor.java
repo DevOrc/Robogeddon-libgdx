@@ -8,8 +8,8 @@ public class OreFloor extends Floor {
 
     private final Item ore;
 
-    public OreFloor(String id, Item ore) {
-        super(id);
+    public OreFloor(String id, String displayName, Item ore) {
+        super(id, displayName);
 
         this.ore = ore;
     }

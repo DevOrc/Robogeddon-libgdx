@@ -78,6 +78,11 @@ public class Padding extends Widget{
     }
 
     @Override
+    public boolean isVisible() {
+        return super.isVisible() && widget.isVisible();
+    }
+
+    @Override
     public String toString() {
         return "Padding(" + widget + ")";
     }

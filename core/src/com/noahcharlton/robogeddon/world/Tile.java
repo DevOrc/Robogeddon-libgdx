@@ -122,7 +122,7 @@ public class Tile implements Selectable {
     public String[] getDetails() {
         var defaultInfo = new String[]{
                 "Block: " + (hasBlock() ? block.getDisplayName() : "None"),
-                "Floor: " + floor.getTypeID(),
+                "Floor: " + floor.getDisplayName(),
         };
 
         return Selectable.combineArrays(defaultInfo, getTileEntityInfo());

@@ -38,7 +38,7 @@ public class Label extends NoChildrenWidget {
         var y = getY() + getHeight();
 
         font.getData().setScale(Scale.scale);
-        font.setColor(Color.WHITE);
+        font.setColor(textColor);
         font.draw(batch, text, x, y, getWidth(), Align.center, wrap);
     }
 

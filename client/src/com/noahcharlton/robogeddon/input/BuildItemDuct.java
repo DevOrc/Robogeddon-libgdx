@@ -99,4 +99,9 @@ public class BuildItemDuct extends BuildBlock {
                 throw new RuntimeException();
         }
     }
+
+    @Override
+    public String getDesc() {
+        return "Direction: " + direction.toString();
+    }
 }

@@ -4,7 +4,11 @@ import com.noahcharlton.robogeddon.HasID;
 import com.noahcharlton.robogeddon.entity.Entity;
 import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.Tile;
+import com.noahcharlton.robogeddon.world.item.ItemStack;
 import com.noahcharlton.robogeddon.world.team.Team;
+
+import java.util.Collections;
+import java.util.List;
 
 public abstract class Block implements HasID {
 
@@ -27,6 +31,10 @@ public abstract class Block implements HasID {
         var chunkTeam = tile.getChunk().getTeam();
 
         return chunkTeam == placer.getTeam() || chunkTeam == Team.NEUTRAL;
+    }
+
+    public List<ItemStack> getRequirements(){
+        return Collections.emptyList();
     }
 
     public String getDisplayName(){

@@ -1,7 +1,7 @@
 package com.noahcharlton.robogeddon.ui.ingame;
 
 import com.badlogic.gdx.Gdx;
-import com.noahcharlton.robogeddon.ui.UIAssets;
+import com.badlogic.gdx.graphics.Color;
 import com.noahcharlton.robogeddon.ui.background.ColorBackground;
 import com.noahcharlton.robogeddon.ui.widget.Button;
 import com.noahcharlton.robogeddon.ui.widget.Label;
@@ -11,9 +11,9 @@ import com.noahcharlton.robogeddon.util.Selectable;
 
 public class SelectableMenu extends Stack {
 
-    private final Label title = new Label().setFont(UIAssets.smallFont);
-    private final Label desc = new Label().setFont(UIAssets.smallFont);
-    private final Label details = new Label().setFont(UIAssets.smallFont);
+    private final Label title = new Label();
+    private final Label desc = new Label().setTextColor(Color.LIGHT_GRAY);
+    private final Label details = new Label().setTextColor(Color.LIGHT_GRAY);
     private final Button button = new TextButton("Block Options").setOnClick((event, ui) ->
             Gdx.app.postRunnable(this::clickSubMenuButton));
 
@@ -27,7 +27,7 @@ public class SelectableMenu extends Stack {
         setBackground(new ColorBackground());
         setMinSize(250, 100);
 
-        add(title.pad().top(10).bottom(10));
+        add(title.pad().top(10).bottom(15));
         add(desc.pad().bottom(10));
         add(details.pad().bottom(10));
         add(button.pad().bottom(10).left(30).right(30));
@@ -38,8 +38,8 @@ public class SelectableMenu extends Stack {
         if(this.selectable != client.getProcessor().getSelectable()){
             selectable = client.getProcessor().getSelectable();
             Gdx.app.postRunnable(mainScene::closeSelectableSubMenu);
-            setWidth(getMinWidth());
-            setHeight(getMinHeight());
+            setMinSize(250, 100);
+            setSize(250, 100);
             invalidate();
         }
 

@@ -5,14 +5,14 @@ import com.noahcharlton.robogeddon.world.item.Items;
 
 public class Floors {
 
-    public static final Floor rock = new Floor("rock");
-    public static final Floor dirt1 = new Floor("dirt1");
-    public static final Floor dirt2 = new Floor("dirt2");
-    public static final Floor rockyDirt = new Floor("rockyDirt");
-    public static final Floor grass = new Floor("grass");
-    public static final Floor sand = new Floor("sand");
+    public static final Floor rock = new Floor("rock", "Rock");
+    public static final Floor dirt1 = new Floor("dirt1", "Dirt");
+    public static final Floor dirt2 = new Floor("dirt2", "Dirt");
+    public static final Floor rockyDirt = new Floor("rockyDirt", "Rocky Dirt");
+    public static final Floor grass = new Floor("grass", "Grass");
+    public static final Floor sand = new Floor("sand", "Sand");
 
-    public static final Floor ironRock = new OreFloor("iron", Items.iron);
+    public static final Floor ironRock = new OreFloor("iron", "Iron Ore", Items.iron);
 
     public static final Floor[] dirtTypes = new Floor[]{dirt1, rockyDirt, dirt2};
 
