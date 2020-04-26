@@ -16,7 +16,7 @@ public class SingleItemBuffer implements ItemBuffer{
 
     @Override
     public boolean acceptItem(Item item) {
-        if(amount >= capacity)
+        if(amount >= capacity || item != this.item)
             return false;
 
         amount++;
@@ -30,6 +30,11 @@ public class SingleItemBuffer implements ItemBuffer{
 
         amount--;
         return item;
+    }
+
+    @Override
+    public boolean isFull() {
+        return amount >= capacity;
     }
 
     @Override

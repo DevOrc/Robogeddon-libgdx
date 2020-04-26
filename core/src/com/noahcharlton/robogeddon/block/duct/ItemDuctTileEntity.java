@@ -182,16 +182,16 @@ public class ItemDuctTileEntity extends TileEntity implements HasInventory, Tile
         var tileX = getRootTile().getX();
         var tileY = getRootTile().getY();
 
-        if(connectNorth) {
+        if(connectNorth && direction != Direction.NORTH) {
             pullFrom(tileX, tileY + 1);
         }
-        if(connectSouth) {
+        if(connectSouth && direction != Direction.SOUTH) {
             pullFrom(tileX, tileY - 1);
         }
-        if(connectEast) {
+        if(connectEast && direction != Direction.EAST) {
             pullFrom(tileX + 1, tileY);
         }
-        if(connectWest) {
+        if(connectWest && direction != Direction.WEST) {
             pullFrom(tileX - 1, tileY);
         }
     }

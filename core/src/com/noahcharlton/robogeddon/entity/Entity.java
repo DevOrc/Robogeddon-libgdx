@@ -76,11 +76,8 @@ public class Entity {
     public void onUpdateMessage(EntityUpdateMessage message) {
         health = message.getHealth();
 
-        if(Math.abs(message.getX() - getX()) > 3 || Math.abs(message.getY() - getY()) > 3){
-            x = message.getX();
-            y = message.getY();
-        }
-
+        x = message.getX();
+        y = message.getY();
         angle = message.getAngle();
         velocity = message.getVelocity();
         angularVelocity = message.getAngularVelocity();

@@ -63,6 +63,14 @@ public class UnloaderTileEntity extends TileEntity implements HasInventory, Tile
 
     @Override
     public Item retrieveItem(boolean simulate) {
+        if(simulate){
+            if(tick < TIME || inventory.getItem(item.currentItem()) <= 0){
+                return null;
+            }
+
+            return item.currentItem();
+        }
+
         if(tick >= TIME && inventory.useItemIfEnough(item.currentItem(), 1)){
             tick = 0;
             return item.currentItem();

@@ -5,6 +5,7 @@ import com.noahcharlton.robogeddon.ui.UIAssets;
 import com.noahcharlton.robogeddon.ui.background.NinePatchBackground;
 import com.noahcharlton.robogeddon.ui.event.ClickEvent;
 import com.noahcharlton.robogeddon.ui.widget.Widget;
+import com.noahcharlton.robogeddon.util.Selectable;
 import com.noahcharlton.robogeddon.world.Tile;
 
 public class SelectableSubMenu extends Widget {
@@ -45,10 +46,12 @@ public class SelectableSubMenu extends Widget {
 
 
     protected TileEntity getTileEntity(){
-        if(client.getProcessor().getSelectable() == null)
+        Selectable selectable = client.getProcessor().getSelectable();
+
+        if(!(selectable instanceof Tile))
             return null;
 
-        return ((Tile) client.getProcessor().getSelectable()).getTileEntity();
+        return ((Tile) selectable).getTileEntity();
     }
 
     public String getId() {

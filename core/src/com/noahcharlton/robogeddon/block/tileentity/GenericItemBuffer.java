@@ -42,6 +42,11 @@ public class GenericItemBuffer implements ItemBuffer {
     }
 
     @Override
+    public boolean isFull() {
+        return amount >= capacity;
+    }
+
+    @Override
     public Item currentItem() {
         return item;
     }

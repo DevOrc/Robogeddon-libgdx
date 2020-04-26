@@ -27,7 +27,7 @@ public class TurretTileEntity extends TileEntity implements HasInventory {
     public TurretTileEntity(Tile rootTile) {
         super(rootTile);
 
-        ammo = new SingleItemBuffer(Items.iron, 5);
+        ammo = new SingleItemBuffer(Items.ironBullet, 5);
     }
 
     @Override

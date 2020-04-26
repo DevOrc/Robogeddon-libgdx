@@ -83,7 +83,7 @@ public class ChunkIOHandler implements WorldIOHandler {
             var rootY = Integer.parseInt(parts[1]);
             var id = parts[2];
 
-            tile.setBlock(new Multiblock(Core.blocks.get(block), rootX, rootY), false);
+            tile.setBlock(new Multiblock(Core.blocks.get(id), rootX, rootY), false);
         }else{
             tile.setBlock(Core.blocks.get(block), false);
         }

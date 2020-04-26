@@ -13,7 +13,7 @@ public class Inventory {
     private boolean dirty;
 
     public Inventory() {
-        Core.items.values().forEach(item -> inventory.put(item.getTypeID(), 0));
+        Core.items.values().forEach(item -> inventory.put(item.getTypeID(), 5));
     }
 
     public Message createSyncMessage() {
@@ -24,7 +24,7 @@ public class Inventory {
         inventory.put(item.getTypeID(), amount);
         dirty = true;
 
-        Log.debug("Set " + item.getTypeID() + " to " + amount);
+        Log.trace("Set " + item.getTypeID() + " to " + amount);
     }
 
     public void changeItem(ItemStack stack){

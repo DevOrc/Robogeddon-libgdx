@@ -2,6 +2,7 @@ package com.noahcharlton.robogeddon.block;
 
 import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.block.beacon.BeaconBlock;
+import com.noahcharlton.robogeddon.block.crafting.MetalFormerBlock;
 import com.noahcharlton.robogeddon.block.duct.ItemDuct;
 import com.noahcharlton.robogeddon.block.miner.MinerBlock;
 import com.noahcharlton.robogeddon.block.portal.InventoryPortalBlock;
@@ -27,6 +28,7 @@ public class Blocks{
     public static final Block inventoryPortal = new InventoryPortalBlock("inventory_portal");
     public static final Block unloaderBlock = new UnloaderBlock("unloader");
     public static final Block wall = new WallBlock("wall");
+    public static final Block metalFormer = new MetalFormerBlock("metal_former");
 
     @Side(Side.BOTH)
     public static void preInit() {
@@ -42,12 +44,13 @@ public class Blocks{
         Core.blocks.register(inventoryPortal);
         Core.blocks.register(unloaderBlock);
         Core.blocks.register(wall);
+        Core.blocks.register(metalFormer);
     }
 
     @Side(Side.CLIENT)
     public static void init() {
         BlockGroup defense = new BlockGroup("defense", Blocks.turretBlock, minerBlock, wall);
-        BlockGroup misc = new BlockGroup("misc", testBlock, blueBeacon);
+        BlockGroup misc = new BlockGroup("misc", testBlock, blueBeacon, metalFormer);
         BlockGroup transport = new BlockGroup("transport",
                 itemDuctNorth, unloaderBlock, inventoryPortal);
 

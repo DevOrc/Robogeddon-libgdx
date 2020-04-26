@@ -7,7 +7,6 @@ import com.noahcharlton.robogeddon.world.io.Element;
 import com.noahcharlton.robogeddon.world.io.XmlWriter;
 import com.noahcharlton.robogeddon.world.item.Item;
 
-import java.util.Arrays;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -64,7 +63,6 @@ public interface HasInventory {
             buffers[i] = MessageSerializer.fromJson(element.getChild(i).getText(), ItemBuffer.class);
         }
 
-        System.out.println(Arrays.toString(buffers));
         inventory.setBuffers(buffers);
     }
 

@@ -13,4 +13,6 @@ public interface ItemBuffer {
     int getAmount();
 
     ItemBuffer copy();
+
+    boolean isFull();
 }
