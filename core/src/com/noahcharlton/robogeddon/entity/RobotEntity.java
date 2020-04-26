@@ -3,6 +3,7 @@ package com.noahcharlton.robogeddon.entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
@@ -243,6 +244,8 @@ public class RobotEntity extends Entity implements HasCollision {
 
         private TextureRegion onTexture;
         private TextureRegion offTexture;
+        private ParticleEffect sparksEffect;
+        private ParticleEffect laserCenter;
 
         @Override
         public Entity create(World world, Team team) {
@@ -253,6 +256,9 @@ public class RobotEntity extends Entity implements HasCollision {
         public void initRenderer() {
             Core.assets.registerTexture("entities/robot_on").setOnLoad(texture -> onTexture = texture);
             Core.assets.registerTexture("entities/robot_off").setOnLoad(texture -> offTexture = texture);
+            Core.assets.registerParticleEffect("sparks").setOnLoad(effect -> sparksEffect = effect);
+            Core.assets.registerParticleEffect("laser_center").setOnLoad(effect -> laserCenter = effect);
+
         }
 
         @Override
@@ -273,15 +279,24 @@ public class RobotEntity extends Entity implements HasCollision {
             renderHealthBar(batch, entity, RADIUS);
 
             if(robotEntity.miningPos != null)
-                drawMiningLaser(robotEntity, robotEntity.miningPos);
+                drawMiningLaser(robotEntity, robotEntity.miningPos, batch);
         }
 
-        private void drawMiningLaser(RobotEntity entity, Vector3 position) {
+        private void drawMiningLaser(RobotEntity entity, Vector3 position, SpriteBatch batch) {
             var drawer = Core.client.getGameShapeDrawer();
             drawer.setColor(Color.YELLOW);
             drawer.line(entity.x, entity.y, position.x, position.y, 3);
             drawer.setColor(Color.RED);
             drawer.filledCircle(position.x, position.y, 4);
+
+            drawParticleEffect(position, batch, sparksEffect);
+            drawParticleEffect(position, batch, laserCenter);
+        }
+
+        private void drawParticleEffect(Vector3 position, SpriteBatch batch, ParticleEffect effect) {
+            effect.setPosition(position.x, position.y);
+            effect.update(Gdx.graphics.getDeltaTime());
+            effect.draw(batch);
         }
 
         @Override

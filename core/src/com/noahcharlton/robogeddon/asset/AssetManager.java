@@ -48,6 +48,13 @@ public class AssetManager {
         return asset;
     }
 
+    public ParticleEffectAsset registerParticleEffect(String path) {
+        var asset = new ParticleEffectAsset(path);
+        registerAsset(asset);
+
+        return asset;
+    }
+
     public BitmapFontAsset registerBitmapFont(String name) {
         var asset = new BitmapFontAsset(name);
         registerAsset(asset);

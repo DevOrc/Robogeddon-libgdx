@@ -34,7 +34,7 @@ blocks/groups/misc
   index: -1
 blocks/groups/transport
   rotate: false
-  xy: 765, 43
+  xy: 799, 43
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -174,28 +174,28 @@ blocks/test_block
   index: -1
 blocks/turret_base
   rotate: false
-  xy: 799, 43
+  xy: 833, 43
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/turret_top
   rotate: false
-  xy: 833, 43
+  xy: 867, 43
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/unloader
   rotate: false
-  xy: 867, 43
+  xy: 901, 43
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/wall
   rotate: false
-  xy: 901, 43
+  xy: 935, 43
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -272,21 +272,21 @@ floors/iron
   index: -1
 floors/rock
   rotate: false
-  xy: 629, 43
+  xy: 663, 43
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 floors/rockyDirt
   rotate: false
-  xy: 697, 43
+  xy: 731, 43
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 floors/sand
   rotate: false
-  xy: 731, 43
+  xy: 765, 43
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -307,7 +307,7 @@ items/iron_tiny
   index: -1
 items/rock
   rotate: false
-  xy: 663, 43
+  xy: 697, 43
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -317,6 +317,13 @@ items/rock_tiny
   xy: 1, 1
   size: 10, 10
   orig: 10, 10
+  offset: 0, 0
+  index: -1
+particle
+  rotate: false
+  xy: 629, 43
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1
 
