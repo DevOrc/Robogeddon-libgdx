@@ -9,7 +9,6 @@ import com.badlogic.gdx.math.Vector3;
 import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.Server;
-import com.noahcharlton.robogeddon.block.Mineable;
 import com.noahcharlton.robogeddon.entity.collision.HasCollision;
 import com.noahcharlton.robogeddon.util.GraphicsUtil;
 import com.noahcharlton.robogeddon.util.Side;
@@ -17,7 +16,8 @@ import com.noahcharlton.robogeddon.world.AssignRobotMessage;
 import com.noahcharlton.robogeddon.world.ServerWorld;
 import com.noahcharlton.robogeddon.world.Tile;
 import com.noahcharlton.robogeddon.world.World;
-import com.noahcharlton.robogeddon.world.item.ItemStack;
+import com.noahcharlton.robogeddon.world.floor.MineableFloor;
+import com.noahcharlton.robogeddon.world.item.Item;
 import com.noahcharlton.robogeddon.world.team.Team;
 
 import java.util.Objects;
@@ -125,11 +125,11 @@ public class RobotEntity extends Entity implements HasCollision {
             return;
         }
 
-        if(tile.getBlock() instanceof Mineable){
-            ItemStack items = ((Mineable) tile.getBlock()).onMine();
+        if(tile.getFloor() instanceof MineableFloor){
+            Item item = ((MineableFloor) tile.getFloor()).getOre();
             var serverWorld = (ServerWorld) world;
 
-            serverWorld.getInventory().changeItem(items);
+            serverWorld.getInventory().changeItem(item, 10);
         }
     }
 

@@ -16,7 +16,6 @@ public class Blocks{
     private static final String itemDuctID = "item_duct";
 
     public static final Block testBlock = new TestBlock("test_block");
-    public static final Block oilBlock = new OilBlock("oil");
     public static final Block turretBlock = new TurretBlock("turret");
     public static final Block blueBeacon = new BeaconBlock("beacon", Team.BLUE);
     public static final Block redBeacon = new BeaconBlock("beacon", Team.RED);
@@ -32,7 +31,6 @@ public class Blocks{
     @Side(Side.BOTH)
     public static void preInit() {
         Core.blocks.register(testBlock);
-        Core.blocks.register(oilBlock);
         Core.blocks.register(turretBlock);
         Core.blocks.register(blueBeacon);
         Core.blocks.register(redBeacon);
@@ -49,7 +47,7 @@ public class Blocks{
     @Side(Side.CLIENT)
     public static void init() {
         BlockGroup defense = new BlockGroup("defense", Blocks.turretBlock, minerBlock, wall);
-        BlockGroup misc = new BlockGroup("misc", oilBlock, testBlock, blueBeacon);
+        BlockGroup misc = new BlockGroup("misc", testBlock, blueBeacon);
         BlockGroup transport = new BlockGroup("transport",
                 itemDuctNorth, unloaderBlock, inventoryPortal);
 

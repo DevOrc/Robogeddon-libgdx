@@ -1,6 +1,6 @@
 package com.noahcharlton.robogeddon.world.gen;
 
-import com.noahcharlton.robogeddon.entity.EntityType;
+import com.noahcharlton.robogeddon.block.Blocks;
 import com.noahcharlton.robogeddon.world.Chunk;
 import com.noahcharlton.robogeddon.world.ServerWorld;
 import com.noahcharlton.robogeddon.world.Tile;
@@ -37,7 +37,9 @@ public class WorldGenerator {
             }
         }
 
-        world.addEntity(EntityType.droneEntity.create(world, world.getEnemyTeam()));
+        world.buildBlock(world.getTileAt(-1, -1), Blocks.inventoryPortal);
+//        world.addEntity(EntityType.droneEntity.create(world, world.getEnemyTeam()));
+
     }
 
     public void genChunk(Chunk chunk) {

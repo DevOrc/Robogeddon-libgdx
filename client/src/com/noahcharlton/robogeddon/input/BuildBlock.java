@@ -54,7 +54,7 @@ public class BuildBlock implements BuildAction, Selectable {
         if(tile != null) {
             block.getRenderer().buildRender(batch, tile);
 
-            if(notEnoughResources()){
+            if(notEnoughResources() || !block.canBuildAt(tile, client.getWorld().getPlayersRobot())){
                 renderRedCover(tile);
             }
         }

@@ -214,7 +214,7 @@ public class ServerWorld extends World {
         return true;
     }
 
-    private void buildBlock(Tile tile, Block block) {
+    public void buildBlock(Tile tile, Block block) {
         for(ItemStack requirement: block.getRequirements()){
             inventory.changeItem(requirement.getItem(), -requirement.getAmount());
         }

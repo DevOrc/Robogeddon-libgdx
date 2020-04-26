@@ -3,9 +3,8 @@ package com.noahcharlton.robogeddon.block.miner;
 import com.noahcharlton.robogeddon.block.tileentity.GenericItemBuffer;
 import com.noahcharlton.robogeddon.block.tileentity.StorageTileEntity;
 import com.noahcharlton.robogeddon.world.Tile;
-import com.noahcharlton.robogeddon.world.floor.OreFloor;
+import com.noahcharlton.robogeddon.world.floor.MineableFloor;
 import com.noahcharlton.robogeddon.world.item.Item;
-import com.noahcharlton.robogeddon.world.item.Items;
 
 public class MinerTileEntity extends StorageTileEntity {
 
@@ -18,10 +17,10 @@ public class MinerTileEntity extends StorageTileEntity {
     public MinerTileEntity(Tile rootTile) {
         super(rootTile, new GenericItemBuffer(10));
 
-        if(rootTile.getFloor() instanceof OreFloor){
-            item = ((OreFloor) rootTile.getFloor()).getOre();
+        if(rootTile.getFloor() instanceof MineableFloor){
+            item = ((MineableFloor) rootTile.getFloor()).getOre();
         }else{
-            item = Items.rock;
+            throw new RuntimeException("Cannot place miner on non-mineable floor!");
         }
     }
 

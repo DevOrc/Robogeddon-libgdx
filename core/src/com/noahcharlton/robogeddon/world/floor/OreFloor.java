@@ -4,12 +4,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.noahcharlton.robogeddon.world.Tile;
 import com.noahcharlton.robogeddon.world.item.Item;
 
-public class OreFloor extends Floor {
+public class OreFloor extends MineableFloor {
 
     private final Item ore;
 
     public OreFloor(String id, String displayName, Item ore) {
-        super(id, displayName);
+        super(id, displayName, ore);
 
         this.ore = ore;
     }

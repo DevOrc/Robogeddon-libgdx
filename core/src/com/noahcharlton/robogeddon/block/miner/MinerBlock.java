@@ -8,7 +8,9 @@ import com.noahcharlton.robogeddon.block.Block;
 import com.noahcharlton.robogeddon.block.BlockRenderer;
 import com.noahcharlton.robogeddon.block.tileentity.HasTileEntity;
 import com.noahcharlton.robogeddon.block.tileentity.TileEntity;
+import com.noahcharlton.robogeddon.entity.Entity;
 import com.noahcharlton.robogeddon.world.Tile;
+import com.noahcharlton.robogeddon.world.floor.MineableFloor;
 
 public class MinerBlock extends Block implements HasTileEntity, BlockRenderer {
 
@@ -23,6 +25,11 @@ public class MinerBlock extends Block implements HasTileEntity, BlockRenderer {
         this.renderer = this;
 
         Core.assets.registerTextureGroup("blocks/miner").setOnLoad(t -> textures = t);
+    }
+
+    @Override
+    public boolean canBuildAt(Tile tile, Entity placer) {
+        return super.canBuildAt(tile, placer) && tile.getFloor() instanceof MineableFloor;
     }
 
     @Override
