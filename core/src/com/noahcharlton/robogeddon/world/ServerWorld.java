@@ -66,7 +66,7 @@ public class ServerWorld extends World {
 
         sendMessageToClient(new WorldSyncMessage(chunk));
         chunks.put(location, chunk);
-        Log.debug("Created Chunk at " + location);
+        Log.trace("Created Chunk at " + location);
 
         return chunk;
     }

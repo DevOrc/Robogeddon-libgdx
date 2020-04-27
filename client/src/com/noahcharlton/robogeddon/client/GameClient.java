@@ -10,6 +10,7 @@ import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.graphics.GameRenderer;
 import com.noahcharlton.robogeddon.input.InputProcessor;
 import com.noahcharlton.robogeddon.message.PauseGameMessage;
+import com.noahcharlton.robogeddon.settings.Setting;
 import com.noahcharlton.robogeddon.ui.DisconnectedScene;
 import com.noahcharlton.robogeddon.ui.WorldLoadingScene;
 import com.noahcharlton.robogeddon.ui.mainmenu.MainMenu;
@@ -51,6 +52,7 @@ public class GameClient extends ApplicationAdapter implements Client {
         ui = new UI(this);
         processor = new InputProcessor(this);
         setWorld(new MainMenuWorld());
+        Setting.applyAll();
 
         Log.info("Assets registered: " + Core.assets.getAssetCount());
     }

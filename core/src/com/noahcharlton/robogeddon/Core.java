@@ -9,6 +9,8 @@ import com.noahcharlton.robogeddon.entity.EntityType;
 import com.noahcharlton.robogeddon.message.InterfaceSerializer;
 import com.noahcharlton.robogeddon.message.MessageSerializer;
 import com.noahcharlton.robogeddon.message.RegistrySerializer;
+import com.noahcharlton.robogeddon.settings.Setting;
+import com.noahcharlton.robogeddon.settings.SettingsIO;
 import com.noahcharlton.robogeddon.util.GameData;
 import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.floor.Floor;
@@ -29,6 +31,8 @@ public class Core {
     public static final Registry<Block> blocks = new Registry<>();
     public static final Registry<Floor> floors = new Registry<>();
     public static final Registry<Item> items = new Registry<>();
+    public static final Registry<Setting> settings = new Registry<>();
+
     @Side(Side.CLIENT)
     public static final Registry<BlockGroup> blockGroups = new Registry<>();
     @Side(Side.SERVER)
@@ -58,6 +62,8 @@ public class Core {
         floors.setFinalized(true);
         items.setFinalized(true);
         saveGameHandlers.setFinalized(true);
+        settings.setFinalized(true);
+        SettingsIO.load();
         MessageSerializer.finalizeSerializer();
 
 

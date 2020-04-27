@@ -14,7 +14,7 @@ public class ParticleEffectAsset extends Asset<ParticleEffect> {
 
     @Override
     protected String getName() {
-        return "BitmapFont(" + path + ")";
+        return "ParticleEffect(" + path + ")";
     }
 
     @Override

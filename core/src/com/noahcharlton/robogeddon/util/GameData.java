@@ -18,6 +18,10 @@ public class GameData {
         }
     }
 
+    public static FileHandle getSettingsFile(){
+        return directory.child("settings.xml");
+    }
+
     public static FileHandle getSaveFile(String name){
         return saveDirectory.child(name + ".xml");
     }
