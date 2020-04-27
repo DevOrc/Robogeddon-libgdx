@@ -15,7 +15,7 @@ import com.noahcharlton.robogeddon.world.item.Items;
 
 public class MetalFormerBlock extends Block implements HasTileEntity, BlockRenderer {
 
-    private static final float CRAFT_TIME = 120;
+    private static final float CRAFT_TIME = 80;
 
     private TextureRegion baseTexture;
     private TextureRegion tankTexture;
@@ -52,8 +52,8 @@ public class MetalFormerBlock extends Block implements HasTileEntity, BlockRende
         return new CrafterTileEntity(
                 tile,
                 (int) CRAFT_TIME,
-                new SingleItemBuffer(Items.ironBullet, 5),
-                new SingleItemBuffer(Items.iron, 5)
+                new SingleItemBuffer(Items.ironBullet, 10),
+                new SingleItemBuffer(Items.iron, 10)
         );
     }
 

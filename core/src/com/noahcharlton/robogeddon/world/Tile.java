@@ -179,6 +179,17 @@ public class Tile implements Selectable {
         return tiles;
     }
 
+    public Tile[] getNeighborCorners(){
+        var tiles = new Tile[4];
+
+        tiles[0] = world.getTileAt(x - 1, y - 1);
+        tiles[1] = world.getTileAt(x - 1, y + 1);
+        tiles[2] = world.getTileAt(x + 1, y - 1);
+        tiles[3] = world.getTileAt(x + 1, y + 1);
+
+        return tiles;
+    }
+
     public boolean isBlockOrMulti(Block block) {
         if(this.block == block)
             return true;

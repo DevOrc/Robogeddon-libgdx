@@ -20,8 +20,56 @@ public class WorldGenerator {
     }
 
     public void genChunksAround(ServerWorld world, Chunk chunk) {
-        chunk.getNeighborLocations().stream().filter(pt -> world.getChunkAt(pt.x, pt.y) == null)
-                .forEach(pt -> world.createChunk(pt.x, pt.y, true).setTeam(world.getEnemyTeam()));
+        chunk.getNeighborLocations().stream().filter(pt -> world.getChunkAt(pt.x, pt.y) == null).forEach(pt -> {
+            var createdChunk = world.createChunk(pt.x, pt.y, true);
+            createdChunk.setTeam(world.getEnemyTeam());
+            generateEnemyStructures(createdChunk);
+        });
+    }
+
+    private void generateEnemyStructures(Chunk chunk) {
+        for(int x = 2; x < Chunk.SIZE - 2; x++) {
+            for(int y = 2; y < Chunk.SIZE - 2; y++) {
+                Tile tile = chunk.getTile(x, y);
+
+                if(tile != null){
+                    double noise = getNoise(tile);
+
+                    if(noise < -.25 && noise > -.251){
+                        spawnTurret(tile);
+
+                        x += 4;
+                        y += 4;
+                    }
+                }
+            }
+        }
+    }
+
+    private void spawnTurret(Tile tile) {
+        ServerWorld world = (ServerWorld) tile.getWorld();
+        int tileX = tile.getX();
+        int tileY = tile.getY();
+
+        for (int x = tileX - 2; x <= tileX + 2; x++){
+            for (int y = tileY - 2; y <= tileY + 2; y++){
+                world.getTileAt(x, y).setBlock(Blocks.wall, false);
+            }
+        }
+        Tile metalFormerTile = world.getTileAt(tileX - 1, tileY - 1);
+        world.buildBlock(metalFormerTile, Blocks.metalFormer);
+        world.getTileAt(tileX, tileY + 1).setBlock(Blocks.itemDuctSouth, false);
+        world.getTileAt(tileX + 1, tileY - 1).setBlock(Blocks.itemDuctNorth, false);
+        world.getTileAt(tileX + 1, tileY).setBlock(Blocks.turretBlock, false);
+
+
+        setMiner(tileX - 1, tileY + 1, world);
+        setMiner(tileX + 1, tileY + 1, world);
+    }
+
+    private void setMiner(int tileX, int tileY, ServerWorld world) {
+        world.getTileAt(tileX, tileY).setFloor(Floors.ironRock, false);
+        world.getTileAt(tileX, tileY).setBlock(Blocks.minerBlock, false);
     }
 
     public void createInitialWorld(ServerWorld world) {
@@ -29,9 +77,10 @@ public class WorldGenerator {
             for(int y = -4; y <= 4; y++) {
                 var chunk = world.createChunk(x, y, true);
 
-                if(Math.abs(x) >= 3 || Math.abs(y) >= 3){
+                if(Math.abs(x) >= 3 || Math.abs(y) >= 3) {
                     chunk.setTeam(world.getEnemyTeam());
-                }else{
+                    generateEnemyStructures(chunk);
+                } else {
                     chunk.setTeam(world.getPlayerTeam());
                 }
             }
@@ -51,23 +100,23 @@ public class WorldGenerator {
         }
     }
 
-    private Floor getFloorFor(Tile tile){
+    private Floor getFloorFor(Tile tile) {
         double noise = getNoise(tile);
 
         if(noise > .5) {
             if(noise > .7) {
                 return Floors.ironRock;
-            }else{
+            } else {
                 return Floors.rock;
             }
         }
 
         var dirtVal = (Math.abs(noise) % .1) * 10;
-        if(dirtVal < .2){
+        if(dirtVal < .2) {
             return Floors.rockyDirt;
-        }else if(dirtVal < .6) {
+        } else if(dirtVal < .6) {
             return Floors.dirt1;
-        }else{
+        } else {
             return Floors.dirt2;
         }
     }
