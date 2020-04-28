@@ -53,7 +53,10 @@ public class WorldGenerator {
 
         for (int x = tileX - 2; x <= tileX + 2; x++){
             for (int y = tileY - 2; y <= tileY + 2; y++){
-                world.getTileAt(x, y).setBlock(Blocks.wall, false);
+                var wallTile = world.getTileAt(x, y);
+
+                if(wallTile != null)
+                    wallTile.setBlock(Blocks.wall, false);
             }
         }
         Tile metalFormerTile = world.getTileAt(tileX - 1, tileY - 1);

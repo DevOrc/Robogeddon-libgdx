@@ -1,9 +1,9 @@
 package com.noahcharlton.robogeddon.client;
 
-import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.Log;
+import com.noahcharlton.robogeddon.client.watchdog.WatchdogApplication;
 
 import java.util.Arrays;
 
@@ -34,6 +34,6 @@ public class ClientLauncher {
 		config.vSyncEnabled = false;
 		config.title = "Robogeddon " + Core.VERSION + "-" + Core.VERSION_TYPE;
 
-		new LwjglApplication(GameClient.getInstance(), config);
+		new WatchdogApplication(GameClient.getInstance(), config);
 	}
 }
