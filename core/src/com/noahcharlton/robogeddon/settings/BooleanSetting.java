@@ -16,12 +16,12 @@ public class BooleanSetting extends Setting<Boolean>{
     }
 
     @Override
-    void onButtonClick() {
-
+    public void onButtonClick() {
+        setValue(!getValue());
     }
 
     @Override
-    String getButtonText() {
+    public String getButtonText() {
         return getValue() ? "On" : "Off";
     }
 

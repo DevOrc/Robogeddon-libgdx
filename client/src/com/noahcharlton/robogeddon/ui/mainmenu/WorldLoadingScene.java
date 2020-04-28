@@ -1,4 +1,4 @@
-package com.noahcharlton.robogeddon.ui;
+package com.noahcharlton.robogeddon.ui.mainmenu;
 
 import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.ui.ingame.InGameScene;
@@ -8,6 +8,8 @@ public class WorldLoadingScene extends TextScene{
     private final long timeoutTime = System.currentTimeMillis() + 5000;
 
     public WorldLoadingScene() {
+        super("");
+
         backButton.setVisible(false);
     }
 
@@ -36,6 +38,6 @@ public class WorldLoadingScene extends TextScene{
     private void onWorldTimeout() {
         Log.warn("World load timeout reached!");
         client.gotoMainMenu();
-        client.getUi().setScene(new DisconnectedScene("World Load timeout reached!"));
+        client.getUi().setScene(new TextScene("World Load timeout reached!"));
     }
 }

@@ -11,8 +11,8 @@ import com.noahcharlton.robogeddon.graphics.GameRenderer;
 import com.noahcharlton.robogeddon.input.InputProcessor;
 import com.noahcharlton.robogeddon.message.PauseGameMessage;
 import com.noahcharlton.robogeddon.settings.Setting;
-import com.noahcharlton.robogeddon.ui.DisconnectedScene;
-import com.noahcharlton.robogeddon.ui.WorldLoadingScene;
+import com.noahcharlton.robogeddon.ui.mainmenu.TextScene;
+import com.noahcharlton.robogeddon.ui.mainmenu.WorldLoadingScene;
 import com.noahcharlton.robogeddon.ui.mainmenu.MainMenu;
 import com.noahcharlton.robogeddon.ui.pause.PauseMenu;
 import com.noahcharlton.robogeddon.ui.UI;
@@ -88,11 +88,11 @@ public class GameClient extends ApplicationAdapter implements Client {
 
     public void onServerDisconnect() {
         if(world.getServer() instanceof LocalServer){
-            ui.setScene(new DisconnectedScene("Local server crash! See log for more details"));
+            ui.setScene(new TextScene("Local server crash! See log for more details"));
         }else if(world.getServer() instanceof RemoteServer){
-            ui.setScene(new DisconnectedScene("Remote server disconnect! See log for more details"));
+            ui.setScene(new TextScene("Remote server disconnect! See log for more details"));
         }else{
-            ui.setScene(new DisconnectedScene("Server Disconnected for unknown reasons!"));
+            ui.setScene(new TextScene("Server Disconnected for unknown reasons!"));
         }
     }
 

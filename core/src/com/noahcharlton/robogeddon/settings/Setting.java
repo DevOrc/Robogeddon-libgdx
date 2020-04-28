@@ -29,15 +29,15 @@ public abstract class Setting<T> implements HasID {
         Core.settings.values().forEach(Setting::apply);
     }
 
-    private void apply() {
+    public void apply() {
         applier.accept(value);
     }
 
-    String getButtonText(){
+    public String getButtonText(){
         return value.toString();
     }
 
-    abstract void onButtonClick();
+    public abstract void onButtonClick();
 
     abstract void save(XmlWriter writer);
 

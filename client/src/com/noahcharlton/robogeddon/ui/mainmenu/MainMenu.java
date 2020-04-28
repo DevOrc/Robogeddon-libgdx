@@ -24,12 +24,17 @@ public class MainMenu extends Scene {
                 .chainAdd(new TextButton("Singleplayer").setOnClick(this::playSingle).setSize(145f, 30f))
                 .chainAdd(new TextButton("Load Game").setOnClick(this::loadGame).setSize(145f, 30f))
                 .chainAdd(new TextButton("Multiplayer").setOnClick(this::playMulti).setSize(145f, 30f))
+                .chainAdd(new TextButton("Settings").setOnClick(this::gotoSettings).setSize(145f, 30f))
                 .chainAdd(new TextButton("Quit").setOnClick(this::quit).setSize(145f, 30f))
                 .pad().bottom(100);
 
         add(title).align(Align.top);
         add(version).align(Align.bottomRight);
         add(buttonStack).align(Align.bottom);
+    }
+
+    private void gotoSettings(ClickEvent clickEvent, Button button) {
+        clickEvent.getUi().setScene(new SettingsScreen());
     }
 
     private void loadGame(ClickEvent clickEvent, Button button) {
