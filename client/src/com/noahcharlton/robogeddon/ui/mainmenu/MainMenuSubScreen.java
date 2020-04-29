@@ -28,4 +28,10 @@ public class MainMenuSubScreen extends Scene {
     private void toMainMenu(ClickEvent clickEvent, Button button) {
         client.gotoMainMenu();
     }
+
+    @Override
+    public boolean isMouseOver() {
+        //the main menu covers the whole screen, so the mouse is always over it
+        return true;
+    }
 }

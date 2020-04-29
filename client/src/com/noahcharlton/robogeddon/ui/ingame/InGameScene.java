@@ -65,4 +65,9 @@ public class InGameScene extends Scene {
     public Optional<Widget> getSelectableSubMenu() {
         return getChildren().stream().filter(widget -> widget instanceof SelectableSubMenu).findAny();
     }
+
+    @Override
+    public boolean isWorldVisible() {
+        return true;
+    }
 }

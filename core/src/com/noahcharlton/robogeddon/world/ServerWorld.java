@@ -41,12 +41,12 @@ public class ServerWorld extends World {
         super(true);
         this.server = server;
 
-        if(settings instanceof SavedWorldSettings){
+        if(settings instanceof SavedWorldSettings) {
             WorldIO.load(this, (SavedWorldSettings) settings);
-        }else if(settings instanceof NewWorldSettings){
+        } else if(settings instanceof NewWorldSettings) {
             generator = new WorldGenerator(((NewWorldSettings) settings).getSeed());
             generator.createInitialWorld(this);
-        }else{
+        } else {
             throw new IllegalArgumentException("Unknown settings: " + settings);
         }
 
@@ -86,12 +86,12 @@ public class ServerWorld extends World {
     }
 
     private void createPlayerChunkBuffer() {
-        for(Chunk chunk: chunks.values()){
-            if(chunk.getTeam() == playerTeam){
+        for(Chunk chunk : chunks.values()) {
+            if(chunk.getTeam() == playerTeam) {
                 boolean chunkOnEdge = chunk.getNeighborLocations().stream()
                         .map(pt -> getChunkAt(pt.x, pt.y)).anyMatch(Objects::isNull);
 
-                if(chunkOnEdge){
+                if(chunkOnEdge) {
                     generator.genChunksAround(this, chunk);
                 }
             }
@@ -146,9 +146,9 @@ public class ServerWorld extends World {
             onBuildBlockRequest((BuildBlockMessage) message);
         } else if(message instanceof SaveWorldMessage && !server.isRemote()) {
             WorldIO.save(this, ((SaveWorldMessage) message).getPath());
-        }else if(message instanceof PauseGameMessage){
+        } else if(message instanceof PauseGameMessage) {
             updatePausedState((PauseGameMessage) message);
-        }else {
+        } else {
             Log.warn("Unknown message type: " + message.getClass());
         }
 
@@ -196,8 +196,8 @@ public class ServerWorld extends World {
     }
 
     private boolean canBuildBlock(Entity builder, Block block, Tile root) {
-        for(ItemStack requirement: block.getRequirements()){
-            if(getInventoryForItem(requirement.getItem()) < requirement.getAmount()){
+        for(ItemStack requirement : block.getRequirements()) {
+            if(getInventoryForItem(requirement.getItem()) < requirement.getAmount()) {
                 return false;
             }
         }
@@ -215,7 +215,12 @@ public class ServerWorld extends World {
     }
 
     public void buildBlock(Tile tile, Block block) {
-        for(ItemStack requirement: block.getRequirements()){
+        if(tile == null) {
+            Log.warn("Cannot build on null tile!!");
+            return;
+        }
+
+        for(ItemStack requirement : block.getRequirements()) {
             inventory.changeItem(requirement.getItem(), -requirement.getAmount());
         }
 
@@ -248,7 +253,7 @@ public class ServerWorld extends World {
         if(entity.getId() != Entity.DEFAULT_ID) {
             if(getEntityByID(entity.getId()) != null)
                 throw new IllegalStateException("Duplicate Entity ID: " + entity.getId());
-        }else{
+        } else {
             entity.setId(++lastEntityID);
         }
 
@@ -322,7 +327,7 @@ public class ServerWorld extends World {
         return inventory;
     }
 
-    public Iterator<Chunk> getChunks(){
+    public Iterator<Chunk> getChunks() {
         return chunks.values().iterator();
     }
 

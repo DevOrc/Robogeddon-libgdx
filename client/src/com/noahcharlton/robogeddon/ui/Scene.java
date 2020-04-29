@@ -16,6 +16,10 @@ public class Scene extends Widget {
         }
     }
 
+    public boolean isWorldVisible(){
+        return false;
+    }
+
     @Override
     public boolean isMouseOver(){
         for(Widget widget : getChildren()) {

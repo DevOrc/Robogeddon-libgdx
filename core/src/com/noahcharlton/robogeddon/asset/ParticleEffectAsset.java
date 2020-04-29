@@ -27,6 +27,7 @@ public class ParticleEffectAsset extends Asset<ParticleEffect> {
 
     @Override
     protected void dispose() {
-        effect.dispose();
+        if(effect != null)
+            effect.dispose();
     }
 }

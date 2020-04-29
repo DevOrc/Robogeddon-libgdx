@@ -74,12 +74,17 @@ public class GameClient extends ApplicationAdapter implements Client {
         while(updateLastFrame + updateFrameTime <= System.nanoTime()){
             updateLastFrame += updateFrameTime;
             updateFrames++;
-            world.update();
-            processor.update();
+
+            if(ui.getCurrentScene().isWorldVisible()){
+                world.update();
+                processor.update();
+            }
         }
 
+        if(ui.getCurrentScene().isWorldVisible()) {
+            renderer.render();
+        }
         renderFrames++;
-        renderer.render();
         ui.render();
 
         world.updateMessages();

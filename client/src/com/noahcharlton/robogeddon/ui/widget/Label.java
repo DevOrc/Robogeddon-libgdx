@@ -16,6 +16,7 @@ public class Label extends NoChildrenWidget {
     private BitmapFont font = UIAssets.smallFont;
     private String text = "";
     private Color textColor = Color.WHITE;
+    private Color hoverColor = null;
     private boolean wrap;
 
     public Label() {
@@ -37,18 +38,26 @@ public class Label extends NoChildrenWidget {
         var x = getX();
         var y = getY() + getHeight();
 
+        font.setColor(getRenderColor());
         font.getData().setScale(Scale.scale);
-        font.setColor(textColor);
         font.draw(batch, text, x, y, getWidth(), Align.center, wrap);
+    }
+
+    protected Color getRenderColor() {
+        return isMouseOver() && hoverColor != null ? hoverColor : textColor;
     }
 
     @Override
     public void layout() {
         font.getData().setScale(Scale.scale);
-        var textLayout = new GlyphLayout(font, text);
+        var textLayout = getTextLayout();
 
         setMinWidth(textLayout.width);
         setMinHeight(textLayout.height);
+    }
+
+    protected GlyphLayout getTextLayout() {
+        return new GlyphLayout(font, text);
     }
 
     public void pack(){
@@ -88,6 +97,12 @@ public class Label extends NoChildrenWidget {
     public Label setWrap(boolean wrap) {
         this.wrap = wrap;
         invalidate();
+
+        return this;
+    }
+
+    public Label setHoverColor(Color hoverColor) {
+        this.hoverColor = hoverColor;
 
         return this;
     }
