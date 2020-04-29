@@ -15,7 +15,7 @@ import com.noahcharlton.robogeddon.world.floor.Floor;
 
 import java.util.Objects;
 
-public class Tile implements Selectable {
+public class Tile implements Selectable, HasWorldPosition {
 
     public static final int SIZE = 32;
 
@@ -254,5 +254,15 @@ public class Tile implements Selectable {
         }
 
         return tileEntity;
+    }
+
+    @Override
+    public float getWorldXPos() {
+        return pixelX + (Tile.SIZE / 2f);
+    }
+
+    @Override
+    public float getWorldYPos() {
+        return pixelY + (Tile.SIZE / 2f);
     }
 }

@@ -3,6 +3,7 @@ package com.noahcharlton.robogeddon.entity;
 import com.badlogic.gdx.math.Vector2;
 import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.util.Side;
+import com.noahcharlton.robogeddon.world.HasWorldPosition;
 import com.noahcharlton.robogeddon.world.World;
 import com.noahcharlton.robogeddon.world.io.Element;
 import com.noahcharlton.robogeddon.world.io.XmlWriter;
@@ -10,7 +11,7 @@ import com.noahcharlton.robogeddon.world.team.Team;
 
 import java.util.Objects;
 
-public class Entity {
+public class Entity implements HasWorldPosition {
 
     public static final int DEFAULT_ID = -1;
 
@@ -195,5 +196,15 @@ public class Entity {
 
     public Team getTeam() {
         return team;
+    }
+
+    @Override
+    public float getWorldXPos() {
+        return x;
+    }
+
+    @Override
+    public float getWorldYPos() {
+        return y;
     }
 }

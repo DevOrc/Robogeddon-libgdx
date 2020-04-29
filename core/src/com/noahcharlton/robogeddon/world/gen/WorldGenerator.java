@@ -28,8 +28,8 @@ public class WorldGenerator {
     }
 
     private void generateEnemyStructures(Chunk chunk) {
-        for(int x = 2; x < Chunk.SIZE - 2; x++) {
-            for(int y = 2; y < Chunk.SIZE - 2; y++) {
+        for(int x = 4; x < Chunk.SIZE - 4; x++) {
+            for(int y = 4; y < Chunk.SIZE - 4; y++) {
                 Tile tile = chunk.getTile(x, y);
 
                 if(tile != null){
