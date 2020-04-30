@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.noahcharlton.robogeddon.client.GameClient;
 import com.noahcharlton.robogeddon.entity.Entity;
@@ -48,9 +49,15 @@ public class GameRenderer {
 
     private void syncCameraToPlayer() {
         Entity player = client.getWorld().getPlayersRobot();
+        if(player == null)
+            return;
 
-        if(player != null){
-            camera.position.set(player.getX(), player.getY(), 0);
+        Vector3 vec = new Vector3(player.getX(), player.getY(), 0).sub(camera.position);
+        float length = vec.len();
+        float maxLength = Gdx.graphics.getHeight() * .4f * camera.zoom;
+
+        if(length > maxLength){
+            camera.position.add(vec.setLength(length - maxLength));
         }
     }
 
