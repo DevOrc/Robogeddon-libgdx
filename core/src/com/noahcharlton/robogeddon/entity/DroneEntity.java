@@ -68,6 +68,7 @@ public class DroneEntity extends Entity implements HasCollision {
         bullet.setX((float) (getX() + (RADIUS * Math.cos(angle))));
         bullet.setY((float) (getY() + (RADIUS * Math.sin(angle))));
         bullet.setAngle(angle);
+        bullet.setIgnoreBlocks(true);
 
         Server.runLater(() -> world.addEntity(bullet));
     }

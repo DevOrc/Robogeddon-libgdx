@@ -18,6 +18,34 @@ blocks/beacon_top
   orig: 32, 32
   offset: 0, 0
   index: -1
+blocks/break/stage
+  rotate: false
+  xy: 965, 43
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 0
+blocks/break/stage
+  rotate: false
+  xy: 639, 9
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
+blocks/break/stage
+  rotate: false
+  xy: 673, 9
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 2
+blocks/break/stage
+  rotate: false
+  xy: 707, 9
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 3
 blocks/groups/defense
   rotate: false
   xy: 761, 77
@@ -34,7 +62,7 @@ blocks/groups/misc
   index: -1
 blocks/groups/transport
   rotate: false
-  xy: 965, 43
+  xy: 741, 9
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -188,28 +216,28 @@ blocks/test_block
   index: -1
 blocks/turret_base
   rotate: false
-  xy: 639, 9
+  xy: 775, 9
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/turret_top
   rotate: false
-  xy: 673, 9
+  xy: 809, 9
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/unloader
   rotate: false
-  xy: 707, 9
+  xy: 843, 9
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/wall
   rotate: false
-  xy: 741, 9
+  xy: 877, 9
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -342,7 +370,7 @@ items/rock
   index: -1
 items/rock_tiny
   rotate: false
-  xy: 775, 31
+  xy: 911, 31
   size: 10, 10
   orig: 10, 10
   offset: 0, 0

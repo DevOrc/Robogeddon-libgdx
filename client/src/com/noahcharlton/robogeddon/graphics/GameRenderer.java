@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.noahcharlton.robogeddon.client.GameClient;
 import com.noahcharlton.robogeddon.entity.Entity;
+import com.noahcharlton.robogeddon.world.MainMenuWorld;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
 public class GameRenderer {
@@ -35,7 +36,7 @@ public class GameRenderer {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        syncCameraToPlayer();
+        syncCameraToPlayer(client.getWorld() instanceof MainMenuWorld);
         camera.update();
         batch.setProjectionMatrix(camera.combined);
 
@@ -47,17 +48,21 @@ public class GameRenderer {
         batch.end();
     }
 
-    private void syncCameraToPlayer() {
+    private void syncCameraToPlayer(boolean trueCenter) {
         Entity player = client.getWorld().getPlayersRobot();
         if(player == null)
             return;
 
-        Vector3 vec = new Vector3(player.getX(), player.getY(), 0).sub(camera.position);
-        float length = vec.len();
-        float maxLength = Gdx.graphics.getHeight() * .4f * camera.zoom;
+        if(trueCenter){
+            camera.position.set(player.getX(), player.getY(), 0);
+        }else{
+            Vector3 vec = new Vector3(player.getX(), player.getY(), 0).sub(camera.position);
+            float length = vec.len();
+            float maxLength = Gdx.graphics.getHeight() * .4f * camera.zoom;
 
-        if(length > maxLength){
-            camera.position.add(vec.setLength(length - maxLength));
+            if(length > maxLength){
+                camera.position.add(vec.setLength(length - maxLength));
+            }
         }
     }
 

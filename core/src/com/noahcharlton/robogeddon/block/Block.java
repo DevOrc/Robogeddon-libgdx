@@ -49,6 +49,14 @@ public abstract class Block implements HasID {
         return 1;
     }
 
+    /**
+     * How resistant a block is to damage
+     * (higher does less damage per hit)
+     */
+    public float getHardness(){
+        return 1f;
+    }
+
     public BlockRenderer getRenderer() {
         return renderer;
     }

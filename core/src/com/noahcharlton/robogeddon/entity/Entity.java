@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.HasWorldPosition;
+import com.noahcharlton.robogeddon.world.Tile;
 import com.noahcharlton.robogeddon.world.World;
 import com.noahcharlton.robogeddon.world.io.Element;
 import com.noahcharlton.robogeddon.world.io.XmlWriter;
@@ -103,6 +104,10 @@ public class Entity implements HasWorldPosition {
 
     protected Vector2 createVectorBetween(Entity other){
         return new Vector2(other.x, other.y).sub(x, y);
+    }
+
+    public Tile getTile(){
+        return world.getTileAt((int) x / Tile.SIZE, (int) y / Tile.SIZE);
     }
 
     public void onSave(XmlWriter xml){}

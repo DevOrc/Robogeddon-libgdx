@@ -27,6 +27,7 @@ public class Tile implements Selectable, HasWorldPosition {
     private final int pixelY;
 
     private Block block;
+    private float blockHealth = 1f;
     private Floor floor;
     private TileEntity tileEntity;
 
@@ -53,7 +54,7 @@ public class Tile implements Selectable, HasWorldPosition {
 
     @Side(Side.CLIENT)
     public void onTileUpdate(TileUpdate update) {
-        markDirty();
+        markDirty(); //mark dirty on client for selectable
 
         if(update.floor == null){
             throw new RuntimeException("Cannot have null floor.");
@@ -73,6 +74,8 @@ public class Tile implements Selectable, HasWorldPosition {
         }else{
             setBlock(Core.blocks.get(update.block), false);
         }
+
+        blockHealth = update.blockHealth;
     }
 
     @Side(Side.CLIENT)
@@ -92,6 +95,7 @@ public class Tile implements Selectable, HasWorldPosition {
             markDirty();
 
         this.block = block;
+        this.blockHealth = 1f;
         if(block instanceof HasTileEntity){
             this.tileEntity = ((HasTileEntity) block).createTileEntity(this);
         }else{
@@ -102,6 +106,10 @@ public class Tile implements Selectable, HasWorldPosition {
     public void update(){
         if(tileEntity != null)
             tileEntity.update();
+
+        if(blockHealth <= 0 && world.isServer()){
+            ((ServerWorld) world).destroyBlock(this);
+        }
     }
 
     public void setFloor(Floor floor, boolean markDirty) {
@@ -109,6 +117,12 @@ public class Tile implements Selectable, HasWorldPosition {
             markDirty();
 
         this.floor = Objects.requireNonNull(floor);
+    }
+
+    @Side(Side.SERVER)
+    public void damage(){
+        blockHealth -= .25 / block.getHardness();
+        dirty = true;
     }
 
     @Side(Side.CLIENT)
@@ -123,6 +137,7 @@ public class Tile implements Selectable, HasWorldPosition {
         var defaultInfo = new String[]{
                 "Block: " + (hasBlock() ? block.getDisplayName() : "None"),
                 "Floor: " + floor.getDisplayName(),
+                String.format("Health: %2.0f %%", blockHealth * 100),
         };
 
         return Selectable.combineArrays(defaultInfo, getTileEntityInfo());
@@ -199,6 +214,10 @@ public class Tile implements Selectable, HasWorldPosition {
         }
 
         return false;
+    }
+
+    public float getBlockHealth() {
+        return blockHealth;
     }
 
     public Block getBlock() {

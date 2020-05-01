@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.GridPoint2;
 import com.noahcharlton.robogeddon.Core;
+import com.noahcharlton.robogeddon.util.MiscTextures;
 import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.floor.Floors;
 import com.noahcharlton.robogeddon.world.team.Team;
@@ -105,6 +106,13 @@ public class Chunk {
 
                     if(tile.hasBlock() && getTile(x, y).getBlock().getRenderer() != null){
                         getTile(x, y).getBlock().getRenderer().renderLayer(batch, tile, layer);
+                    }
+
+                    if(layer == 2 && tile.getBlockHealth() < 1){
+                        var texture = MiscTextures.getBrokenBlock(tile.getBlockHealth());
+
+                        if(texture != null)
+                            batch.draw(texture, tile.getPixelX(), tile.getPixelY());
                     }
                 }
             }

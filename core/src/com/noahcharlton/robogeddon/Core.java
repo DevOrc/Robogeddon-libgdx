@@ -12,6 +12,7 @@ import com.noahcharlton.robogeddon.message.RegistrySerializer;
 import com.noahcharlton.robogeddon.settings.Setting;
 import com.noahcharlton.robogeddon.settings.SettingsIO;
 import com.noahcharlton.robogeddon.util.GameData;
+import com.noahcharlton.robogeddon.util.MiscTextures;
 import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.floor.Floor;
 import com.noahcharlton.robogeddon.world.floor.Floors;
@@ -85,6 +86,7 @@ public class Core {
         assets = new AssetManager();
 
         Blocks.init();
+        MiscTextures.init();
         blockGroups.setFinalized(true);
 
         entities.values().forEach(EntityType::initRenderer);

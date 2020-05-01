@@ -7,6 +7,11 @@ public class WallBlock extends Block {
     }
 
     @Override
+    public float getHardness() {
+        return 2f;
+    }
+
+    @Override
     public String getDisplayName() {
         return "Rock Wall";
     }

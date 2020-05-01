@@ -19,6 +19,8 @@ public class BulletEntity extends Entity {
     private static final float VELOCITY = 20;
 
     @Side(Side.SERVER)
+    private boolean ignoreBlocks;
+    @Side(Side.SERVER)
     private int dirtyCount = 0;
 
     public BulletEntity(World world, Team team) {
@@ -51,12 +53,15 @@ public class BulletEntity extends Entity {
 
     private void checkBlockHit(Tile tile) {
         if(tile != null && tile.hasBlock() && canHitBlock(tile)){
-            tile.setBlock(null, true);
+            tile.damage();
             this.setDead(true);
         }
     }
 
     private boolean canHitBlock(Tile tile) {
+        if(ignoreBlocks)
+            return false;
+
         if(tile.getBlock() instanceof BeaconBlock)
             return true;
 
@@ -90,6 +95,11 @@ public class BulletEntity extends Entity {
         return (world.isServer() && !isInWorld()) || super.isDead();
     }
 
+    @Side(Side.SERVER)
+    public void setIgnoreBlocks(boolean ignoreBlocks) {
+        this.ignoreBlocks = ignoreBlocks;
+    }
+
     static class BulletEntityType extends EntityType{
 
         private static final float RADIUS = 3;
@@ -108,6 +118,12 @@ public class BulletEntity extends Entity {
 
         @Override
         public void render(SpriteBatch batch, Entity entity) {
+            var tile = entity.getTile();
+
+            if(tile != null && tile.hasBlock()){
+                return;
+            }
+
             if(entity.isInWorld())
                 batch.draw(texture, entity.getX() - RADIUS, entity.getY() - RADIUS);
         }
