@@ -9,15 +9,16 @@ public class Watchdog implements Thread.UncaughtExceptionHandler {
 
     private static final int MAX_STACKTRACE_LENGTH = 2000;
 
-    public static void watch(Thread gameThread){
+    public static void watch(Thread thread){
         Watchdog watchdog = new Watchdog();
 
-        gameThread.setUncaughtExceptionHandler(watchdog);
+        thread.setUncaughtExceptionHandler(watchdog);
     }
 
     @Override
     public void uncaughtException(Thread t, Throwable e) {
-        Gdx.app.exit();
+        if(Gdx.app != null)
+            Gdx.app.exit();
 
         Log.error("Game threw exception! Exiting app...");
         e.printStackTrace();

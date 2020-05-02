@@ -10,8 +10,10 @@ import com.noahcharlton.robogeddon.entity.CustomEntityMessage;
 import com.noahcharlton.robogeddon.entity.Entity;
 import com.noahcharlton.robogeddon.message.Message;
 import com.noahcharlton.robogeddon.util.Side;
+import com.noahcharlton.robogeddon.world.electricity.PowerGraph;
 import com.noahcharlton.robogeddon.world.item.Inventory;
 import com.noahcharlton.robogeddon.world.item.Item;
+import com.noahcharlton.robogeddon.world.team.Team;
 
 import java.util.Collections;
 import java.util.Iterator;
@@ -150,6 +152,8 @@ public abstract class World {
     public void sendMessageToServer(Message m){
         throw new UnsupportedOperationException();
     }
+
+    public abstract PowerGraph getPowerForTeam(Team team);
 
     public Tile tileFromPixel(Vector3 pos){
         if(pos == null)

@@ -6,7 +6,7 @@ import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.block.Block;
 import com.noahcharlton.robogeddon.block.BlockRenderer;
-import com.noahcharlton.robogeddon.block.tileentity.HasTileEntity;
+import com.noahcharlton.robogeddon.block.tileentity.inventory.HasTileEntity;
 import com.noahcharlton.robogeddon.block.tileentity.TileEntity;
 import com.noahcharlton.robogeddon.entity.Entity;
 import com.noahcharlton.robogeddon.world.Chunk;

@@ -1,9 +1,11 @@
 package com.noahcharlton.robogeddon.block.tileentity;
 
 import com.noahcharlton.robogeddon.Log;
+import com.noahcharlton.robogeddon.block.tileentity.inventory.HasInventory;
 import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.Tile;
 import com.noahcharlton.robogeddon.world.World;
+import com.noahcharlton.robogeddon.world.electricity.PowerGraph;
 import com.noahcharlton.robogeddon.world.io.Element;
 import com.noahcharlton.robogeddon.world.io.XmlWriter;
 
@@ -61,6 +63,10 @@ public class TileEntity {
     @Side(Side.BOTH)
     public void onCustomMessageReceived(CustomTileEntityMessage message){
         Log.warn("Unhandled custom tile entity message: " + message);
+    }
+
+    protected PowerGraph getTeamPowerGraph(){
+        return world.getPowerForTeam(getRootTile().getChunk().getTeam());
     }
 
     public void clean(){

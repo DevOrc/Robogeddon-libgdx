@@ -2,9 +2,9 @@ package com.noahcharlton.robogeddon.block.turret;
 
 import com.badlogic.gdx.math.Vector2;
 import com.noahcharlton.robogeddon.block.beacon.BeaconBlock;
-import com.noahcharlton.robogeddon.block.tileentity.HasInventory;
-import com.noahcharlton.robogeddon.block.tileentity.ItemBuffer;
-import com.noahcharlton.robogeddon.block.tileentity.SingleItemBuffer;
+import com.noahcharlton.robogeddon.block.tileentity.inventory.HasInventory;
+import com.noahcharlton.robogeddon.block.tileentity.inventory.ItemBuffer;
+import com.noahcharlton.robogeddon.block.tileentity.inventory.SingleItemBuffer;
 import com.noahcharlton.robogeddon.block.tileentity.TileEntity;
 import com.noahcharlton.robogeddon.entity.Entity;
 import com.noahcharlton.robogeddon.entity.EntityType;

@@ -13,6 +13,8 @@ import com.noahcharlton.robogeddon.entity.*;
 import com.noahcharlton.robogeddon.message.Message;
 import com.noahcharlton.robogeddon.message.PauseGameMessage;
 import com.noahcharlton.robogeddon.util.Side;
+import com.noahcharlton.robogeddon.world.electricity.ServerPowerGraph;
+import com.noahcharlton.robogeddon.world.electricity.PowerGraphUpdate;
 import com.noahcharlton.robogeddon.world.gen.WorldGenerator;
 import com.noahcharlton.robogeddon.world.io.SaveWorldMessage;
 import com.noahcharlton.robogeddon.world.io.WorldIO;
@@ -29,6 +31,7 @@ import java.util.*;
 public class ServerWorld extends World {
 
     private final HashMap<Integer, Entity> players = new HashMap<>();
+    private final EnumMap<Team, ServerPowerGraph> powerGraphs = new EnumMap<>(Team.class);
     private final ServerProvider server;
 
     private final Team playerTeam = Team.BLUE;
@@ -37,9 +40,13 @@ public class ServerWorld extends World {
     private WorldGenerator generator;
     private int lastEntityID = 0;
 
+    private int powerUpdateTick = 0;
+
     public ServerWorld(ServerProvider server, WorldSettings settings) {
         super(true);
+
         this.server = server;
+        Arrays.stream(Team.values()).forEach(team -> powerGraphs.put(team, new ServerPowerGraph()));
 
         if(settings instanceof SavedWorldSettings) {
             WorldIO.load(this, (SavedWorldSettings) settings);
@@ -81,8 +88,20 @@ public class ServerWorld extends World {
             sendMessageToClient(inventory.createSyncMessage());
         }
 
+        updatePowerGraphs();
         createPlayerChunkBuffer();
         sendDirtyTiles();
+    }
+
+    public void updatePowerGraphs() {
+        powerGraphs.values().forEach(ServerPowerGraph::update);
+
+        powerUpdateTick++;
+
+        if(powerUpdateTick > 60){
+            powerUpdateTick = 0;
+            sendMessageToClient(new PowerGraphUpdate(powerGraphs));
+        }
     }
 
     private void createPlayerChunkBuffer() {
@@ -311,6 +330,9 @@ public class ServerWorld extends World {
         server.sendMessageToClient(message);
     }
 
+    public ServerPowerGraph getPowerForTeam(Team team){
+        return powerGraphs.get(team);
+    }
 
     public void setGenerator(WorldGenerator generator) {
         if(this.generator != null)

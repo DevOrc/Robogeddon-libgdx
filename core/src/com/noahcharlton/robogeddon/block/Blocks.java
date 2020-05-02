@@ -4,6 +4,8 @@ import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.block.beacon.BeaconBlock;
 import com.noahcharlton.robogeddon.block.crafting.MetalFormerBlock;
 import com.noahcharlton.robogeddon.block.duct.ItemDuct;
+import com.noahcharlton.robogeddon.block.electricity.RelayBlock;
+import com.noahcharlton.robogeddon.block.electricity.SolarPanelBlock;
 import com.noahcharlton.robogeddon.block.miner.MinerBlock;
 import com.noahcharlton.robogeddon.block.portal.InventoryPortalBlock;
 import com.noahcharlton.robogeddon.block.portal.UnloaderBlock;
@@ -29,6 +31,8 @@ public class Blocks{
     public static final Block unloaderBlock = new UnloaderBlock("unloader");
     public static final Block wall = new WallBlock("wall");
     public static final Block metalFormer = new MetalFormerBlock("metal_former");
+    public static final Block relayBlock = new RelayBlock("relay");
+    public static final Block solarPanel = new SolarPanelBlock("solar_panel");
 
     @Side(Side.BOTH)
     public static void preInit() {
@@ -45,17 +49,21 @@ public class Blocks{
         Core.blocks.register(unloaderBlock);
         Core.blocks.register(wall);
         Core.blocks.register(metalFormer);
+        Core.blocks.register(relayBlock);
+        Core.blocks.register(solarPanel);
     }
 
     @Side(Side.CLIENT)
     public static void init() {
         BlockGroup defense = new BlockGroup("defense", Blocks.turretBlock, minerBlock, wall);
         BlockGroup misc = new BlockGroup("misc", testBlock, blueBeacon, metalFormer);
-        BlockGroup transport = new BlockGroup("transport",
-                itemDuctNorth, unloaderBlock, inventoryPortal);
+        BlockGroup transport = new BlockGroup("transport", itemDuctNorth, unloaderBlock, inventoryPortal);
+        BlockGroup power = new BlockGroup("power", relayBlock, solarPanel);
+
 
         Core.blockGroups.register(misc);
         Core.blockGroups.register(defense);
         Core.blockGroups.register(transport);
+        Core.blockGroups.register(power);
     }
 }

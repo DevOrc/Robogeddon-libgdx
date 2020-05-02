@@ -1,5 +1,7 @@
 package com.noahcharlton.robogeddon.block.tileentity;
 
+import com.noahcharlton.robogeddon.block.tileentity.inventory.HasInventory;
+import com.noahcharlton.robogeddon.block.tileentity.inventory.ItemBuffer;
 import com.noahcharlton.robogeddon.message.Message;
 
 import java.util.Arrays;

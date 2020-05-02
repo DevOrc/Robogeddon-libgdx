@@ -2,6 +2,9 @@ package com.noahcharlton.robogeddon.block.duct;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.noahcharlton.robogeddon.block.tileentity.*;
+import com.noahcharlton.robogeddon.block.tileentity.inventory.GenericItemBuffer;
+import com.noahcharlton.robogeddon.block.tileentity.inventory.HasInventory;
+import com.noahcharlton.robogeddon.block.tileentity.inventory.ItemBuffer;
 import com.noahcharlton.robogeddon.util.Direction;
 import com.noahcharlton.robogeddon.world.Tile;
 import com.noahcharlton.robogeddon.world.item.Item;

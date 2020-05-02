@@ -27,7 +27,7 @@ public class Server {
                 frames++;
 
                 if(nextFPSCheck <= System.currentTimeMillis()){
-                    Log.debug("Server FPS: " + (frames / 10));
+                    Log.info("Server FPS: " + (frames / 10));
                     frames = 0;
                     nextFPSCheck = System.currentTimeMillis() + 10_000;
                 }

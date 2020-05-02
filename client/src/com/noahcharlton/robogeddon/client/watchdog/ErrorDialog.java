@@ -28,6 +28,7 @@ public class ErrorDialog extends JFrame implements WindowListener {
         pane.add(createButtonBar(error), BorderLayout.SOUTH);
 
 
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.add(pane);
         this.setMinimumSize(new Dimension(400, 300));
         this.addWindowListener(this);

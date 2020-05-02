@@ -5,8 +5,9 @@ import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.block.Block;
 import com.noahcharlton.robogeddon.block.Multiblock;
-import com.noahcharlton.robogeddon.block.tileentity.HasInventory;
-import com.noahcharlton.robogeddon.block.tileentity.HasTileEntity;
+import com.noahcharlton.robogeddon.block.tileentity.electricity.HasElectricity;
+import com.noahcharlton.robogeddon.block.tileentity.inventory.HasInventory;
+import com.noahcharlton.robogeddon.block.tileentity.inventory.HasTileEntity;
 import com.noahcharlton.robogeddon.block.tileentity.TileEntity;
 import com.noahcharlton.robogeddon.block.tileentity.TileEntitySelectable;
 import com.noahcharlton.robogeddon.util.Selectable;
@@ -147,10 +148,12 @@ public class Tile implements Selectable, HasWorldPosition {
         var tileEntity = getTileEntity();
         var inventory = tileEntity instanceof HasInventory ? ((HasInventory) tileEntity).getInventoryDetails()
                 : new String[]{};
+        var electricity = tileEntity instanceof HasElectricity ? ((HasElectricity) tileEntity).getElectricityDetails()
+                : new String[]{};
         var details = tileEntity instanceof TileEntitySelectable ? ((TileEntitySelectable) tileEntity).getDetails()
                 : new String[]{};
 
-        return Selectable.combineArrays(details, inventory);
+        return Selectable.combineArrays(details, Selectable.combineArrays(inventory, electricity));
     }
 
     @Override
@@ -273,6 +276,21 @@ public class Tile implements Selectable, HasWorldPosition {
         }
 
         return tileEntity;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if(this == o) return true;
+        if(!(o instanceof Tile)) return false;
+        Tile tile = (Tile) o;
+        return getX() == tile.getX() &&
+                getY() == tile.getY() &&
+                getWorld().equals(tile.getWorld());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getX(), getY());
     }
 
     @Override

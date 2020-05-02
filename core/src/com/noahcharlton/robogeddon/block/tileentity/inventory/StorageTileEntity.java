@@ -1,5 +1,6 @@
-package com.noahcharlton.robogeddon.block.tileentity;
+package com.noahcharlton.robogeddon.block.tileentity.inventory;
 
+import com.noahcharlton.robogeddon.block.tileentity.TileEntity;
 import com.noahcharlton.robogeddon.world.Tile;
 import com.noahcharlton.robogeddon.world.item.Item;
 

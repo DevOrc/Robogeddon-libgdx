@@ -1,7 +1,7 @@
 package com.noahcharlton.robogeddon.block.crafting;
 
-import com.noahcharlton.robogeddon.block.tileentity.HasInventory;
-import com.noahcharlton.robogeddon.block.tileentity.ItemBuffer;
+import com.noahcharlton.robogeddon.block.tileentity.inventory.HasInventory;
+import com.noahcharlton.robogeddon.block.tileentity.inventory.ItemBuffer;
 import com.noahcharlton.robogeddon.block.tileentity.TileEntity;
 import com.noahcharlton.robogeddon.world.Tile;
 import com.noahcharlton.robogeddon.world.item.Item;

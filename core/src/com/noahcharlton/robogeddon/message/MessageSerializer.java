@@ -1,7 +1,7 @@
 package com.noahcharlton.robogeddon.message;
 
 import com.google.gson.*;
-import com.noahcharlton.robogeddon.block.tileentity.ItemBuffer;
+import com.noahcharlton.robogeddon.block.tileentity.inventory.ItemBuffer;
 
 import java.lang.reflect.Type;
 import java.util.Collections;

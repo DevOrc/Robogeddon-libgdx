@@ -4,7 +4,7 @@ import com.noahcharlton.robogeddon.asset.AssetManager;
 import com.noahcharlton.robogeddon.block.Block;
 import com.noahcharlton.robogeddon.block.BlockGroup;
 import com.noahcharlton.robogeddon.block.Blocks;
-import com.noahcharlton.robogeddon.block.tileentity.ItemBuffer;
+import com.noahcharlton.robogeddon.block.tileentity.inventory.ItemBuffer;
 import com.noahcharlton.robogeddon.entity.EntityType;
 import com.noahcharlton.robogeddon.message.InterfaceSerializer;
 import com.noahcharlton.robogeddon.message.MessageSerializer;

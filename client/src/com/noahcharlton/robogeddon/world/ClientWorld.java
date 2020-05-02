@@ -4,9 +4,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.ServerProvider;
-import com.noahcharlton.robogeddon.block.tileentity.HasInventory;
-import com.noahcharlton.robogeddon.block.tileentity.ItemBuffer;
 import com.noahcharlton.robogeddon.block.tileentity.UpdateTileEntitiesMessage;
+import com.noahcharlton.robogeddon.block.tileentity.inventory.HasInventory;
+import com.noahcharlton.robogeddon.block.tileentity.inventory.ItemBuffer;
 import com.noahcharlton.robogeddon.client.LocalServer;
 import com.noahcharlton.robogeddon.client.RemoteServer;
 import com.noahcharlton.robogeddon.entity.Entity;
@@ -16,18 +16,24 @@ import com.noahcharlton.robogeddon.entity.NewEntityMessage;
 import com.noahcharlton.robogeddon.message.Message;
 import com.noahcharlton.robogeddon.message.PauseGameMessage;
 import com.noahcharlton.robogeddon.util.Side;
+import com.noahcharlton.robogeddon.world.electricity.ClientPowerGraph;
+import com.noahcharlton.robogeddon.world.electricity.PowerGraphUpdate;
 import com.noahcharlton.robogeddon.world.item.InventorySyncMessage;
 import com.noahcharlton.robogeddon.world.settings.NewWorldSettings;
 import com.noahcharlton.robogeddon.world.settings.RemoteWorldSettings;
 import com.noahcharlton.robogeddon.world.settings.SavedWorldSettings;
 import com.noahcharlton.robogeddon.world.settings.WorldSettings;
+import com.noahcharlton.robogeddon.world.team.Team;
 
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.Map;
 
 @Side(Side.CLIENT)
 public class ClientWorld extends World {
 
     private final ServerProvider server;
+    private Map<Team, ClientPowerGraph> powerGraphs = Collections.emptyMap();
     private Entity playersRobot;
 
     public ClientWorld(WorldSettings settings) {
@@ -85,6 +91,8 @@ public class ClientWorld extends World {
             updateChunkTeam((ChunkTeamUpdateMessage) message);
         }else if(message instanceof PauseGameMessage){
             paused = ((PauseGameMessage) message).isPaused();
+        }else if(message instanceof PowerGraphUpdate){
+            powerGraphs = ((PowerGraphUpdate) message).getPowerGraphs();
         }else {
             Log.warn("Unknown message type: " + message.getClass());
         }
@@ -205,6 +213,10 @@ public class ClientWorld extends World {
 
     public Entity getPlayersRobot() {
         return playersRobot;
+    }
+
+    public ClientPowerGraph getPowerForTeam(Team team) {
+        return powerGraphs.get(team);
     }
 
     @Override

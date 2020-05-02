@@ -1,23 +1,23 @@
-package com.noahcharlton.robogeddon.block.portal;
+package com.noahcharlton.robogeddon.block.electricity;
 
 import com.noahcharlton.robogeddon.block.Block;
-import com.noahcharlton.robogeddon.block.tileentity.inventory.HasTileEntity;
 import com.noahcharlton.robogeddon.block.tileentity.TileEntity;
+import com.noahcharlton.robogeddon.block.tileentity.inventory.HasTileEntity;
 import com.noahcharlton.robogeddon.world.Tile;
 
-public class UnloaderBlock extends Block implements HasTileEntity {
+public class RelayBlock extends Block implements HasTileEntity {
 
-    public UnloaderBlock(String id) {
+    public RelayBlock(String id) {
         super(id);
     }
 
     @Override
     public String getDisplayName() {
-        return "Unloader";
+        return "Relay";
     }
 
     @Override
     public TileEntity createTileEntity(Tile tile) {
-        return new UnloaderTileEntity(tile);
+        return new RelayTileEntity(tile);
     }
 }

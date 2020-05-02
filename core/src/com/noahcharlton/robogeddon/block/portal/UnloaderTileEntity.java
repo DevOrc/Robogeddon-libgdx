@@ -2,6 +2,9 @@ package com.noahcharlton.robogeddon.block.portal;
 
 import com.noahcharlton.robogeddon.block.Blocks;
 import com.noahcharlton.robogeddon.block.tileentity.*;
+import com.noahcharlton.robogeddon.block.tileentity.inventory.HasInventory;
+import com.noahcharlton.robogeddon.block.tileentity.inventory.ItemBuffer;
+import com.noahcharlton.robogeddon.block.tileentity.inventory.SingleItemBuffer;
 import com.noahcharlton.robogeddon.world.ServerWorld;
 import com.noahcharlton.robogeddon.world.Tile;
 import com.noahcharlton.robogeddon.world.item.Inventory;

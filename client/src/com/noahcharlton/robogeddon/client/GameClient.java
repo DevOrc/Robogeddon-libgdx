@@ -164,7 +164,7 @@ public class GameClient extends ApplicationAdapter implements Client {
 
     private void updateFPSCount() {
         if(nextFpsCheck <= System.currentTimeMillis()){
-            Log.debug("Client Update FPS: " + (updateFrames / 10));
+            Log.info("Client Update FPS: " + (updateFrames / 10));
             Log.debug("Client Render FPS: " + (renderFrames / 10));
 
             nextFpsCheck += 10000;

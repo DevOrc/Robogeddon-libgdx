@@ -3,6 +3,7 @@ package com.noahcharlton.robogeddon.client;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.Log;
+import com.noahcharlton.robogeddon.client.watchdog.Watchdog;
 import com.noahcharlton.robogeddon.client.watchdog.WatchdogApplication;
 
 import java.util.Arrays;
@@ -16,6 +17,8 @@ public class ClientLauncher {
 		Log.info("Client Launcher started!");
 		Log.info("Core Version: " + Core.VERSION + "-" + Core.VERSION_TYPE);
 		Log.info("Args: " + Arrays.toString(args));
+
+		Watchdog.watch(Thread.currentThread());
 		ClientSettings.init();
 
 		Core.client = GameClient.getInstance();

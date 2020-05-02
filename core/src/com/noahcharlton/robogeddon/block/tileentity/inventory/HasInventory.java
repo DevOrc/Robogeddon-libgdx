@@ -1,4 +1,4 @@
-package com.noahcharlton.robogeddon.block.tileentity;
+package com.noahcharlton.robogeddon.block.tileentity.inventory;
 
 import com.noahcharlton.robogeddon.message.MessageSerializer;
 import com.noahcharlton.robogeddon.util.Direction;
