@@ -1,3 +1,7 @@
+plugins {
+    id 'org.beryx.runtime' version '1.8.3'
+}
+
 apply plugin: "java"
 
 sourceCompatibility = 11
@@ -7,21 +11,16 @@ sourceSets.main.resources.srcDirs = ["/assets"]
 project.ext.mainClassName = "com.noahcharlton.robogeddon.client.ClientLauncher"
 project.ext.assetsDir = new File("/assets")
 
-task run(dependsOn: classes, type: JavaExec) {
-    main = project.mainClassName
-    classpath = sourceSets.main.runtimeClasspath
-    standardInput = System.in
-    workingDir = project.assetsDir
-    ignoreExitValue = true
+application{
+    mainClassName = "com.noahcharlton.robogeddon.client.ClientLauncher"
 }
 
-task debug(dependsOn: classes, type: JavaExec) {
+task runGame(dependsOn: classes, type: JavaExec) {
     main = project.mainClassName
     classpath = sourceSets.main.runtimeClasspath
     standardInput = System.in
     workingDir = project.assetsDir
     ignoreExitValue = true
-    debug = true
 }
 
 task dist(type: Jar) {
@@ -34,6 +33,5 @@ task dist(type: Jar) {
     }
     with jar
 }
-
 
 dist.dependsOn classes
