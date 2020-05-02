@@ -55,4 +55,9 @@ public class GeneratorTileEntity extends TileEntity implements HasElectricity, P
     public float getPowerGenerated() {
         return powerPerTick;
     }
+
+    @Override
+    public void receivePower(float amount) {
+
+    }
 }

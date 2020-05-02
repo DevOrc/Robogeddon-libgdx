@@ -11,4 +11,9 @@ public class EmptyPowerBuffer implements PowerBuffer{
     public float getPowerGenerated() {
         return 0;
     }
+
+    @Override
+    public void receivePower(float amount) {
+
+    }
 }

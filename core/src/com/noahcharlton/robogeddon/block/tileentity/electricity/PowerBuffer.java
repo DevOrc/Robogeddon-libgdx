@@ -6,6 +6,8 @@ public interface PowerBuffer {
 
     float getPowerGenerated();
 
+    void receivePower(float amount);
+
     default String[] getPowerBufferDetails(){
         return new String[0];
     }

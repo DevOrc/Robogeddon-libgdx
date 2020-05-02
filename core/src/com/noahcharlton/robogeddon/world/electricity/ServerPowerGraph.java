@@ -15,7 +15,6 @@ public class ServerPowerGraph implements PowerGraph {
 
     public void add(Tile tile, HasElectricity electricity) {
         if(!connections.containsKey(tile)){
-            System.out.println("Added connection: " + tile);
             connections.put(tile, electricity);
         }
     }
@@ -24,11 +23,41 @@ public class ServerPowerGraph implements PowerGraph {
         generatedPower = 0;
         consumedPower = 0;
 
+        int consumerCount = 0;
+
         connections.entrySet().removeIf(e -> !isConnectionValid(e));
 
         for(HasElectricity connection : connections.values()){
             generatedPower += connection.getPowerBuffer().getPowerGenerated();
-            consumedPower += connection.getPowerBuffer().getPowerWanted();
+            var consumedPower = connection.getPowerBuffer().getPowerWanted();
+
+            consumerCount += consumedPower > 0 ? 1 : 0;
+
+            this.consumedPower += consumedPower;
+        }
+
+        //pull from batteries if need be
+        distributePower(consumerCount);
+    }
+
+    private void distributePower(int consumerCount) {
+        if(generatedPower >= consumedPower){
+            for(HasElectricity connection : connections.values()){
+                var powerWanted = connection.getPowerBuffer().getPowerWanted();
+                connection.getPowerBuffer().receivePower(powerWanted);
+            }
+
+            //Send extra to batteries
+        }else{
+            float powerPer = generatedPower / consumerCount;
+
+            for(HasElectricity connection : connections.values()){
+                var wantsPower = connection.getPowerBuffer().getPowerWanted() > 0;
+
+                if(wantsPower){
+                    connection.getPowerBuffer().receivePower(powerPer);
+                }
+            }
         }
     }
 
