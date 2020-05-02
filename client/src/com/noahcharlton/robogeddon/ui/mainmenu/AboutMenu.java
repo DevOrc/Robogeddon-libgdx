@@ -47,7 +47,8 @@ public class AboutMenu extends MainMenuSubScreen {
                 "",
                 "Links:",
                 "Github (Source Code) !link=https://github.com/DevOrc/Robogeddon",
-                "Report a bug !link=https://github.com/DevOrc/Robogeddon/issues/new"
+                "Report a bug !link=https://github.com/DevOrc/Robogeddon/issues/new",
+                "Trello Board !link=https://trello.com/b/wLF3CEK6/robogeddon",
         };
     }
 }
