@@ -61,12 +61,13 @@ public interface HasElectricity {
         var power = getTeamPowerGraph();
 
         if(power == null || !isConnectedToRelay())
-            return new String[]{"Not connected to team power!!"};
+            return new String[]{"\nNot connected to team power!!"};
 
         var details = new String[]{
+                "\n Power:",
                 "Team Power Generated: " + String.format("%2.1f", power.getGeneratedPower()),
                 "Team Power Consumed: " + String.format("%2.1f", power.getConsumedPower()),
-                String.format("Team Power Used: %2.0f%%", getPowerUsed(power) * 100)
+                String.format("Team Power Used: %2.1f%%", getPowerUsed(power) * 100)
         };
 
         return Selectable.combineArrays(details, getPowerBuffer().getPowerBufferDetails());

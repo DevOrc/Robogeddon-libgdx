@@ -4,10 +4,7 @@ import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.block.beacon.BeaconBlock;
 import com.noahcharlton.robogeddon.block.crafting.MetalFormerBlock;
 import com.noahcharlton.robogeddon.block.duct.ItemDuct;
-import com.noahcharlton.robogeddon.block.electricity.BatteryBlock;
-import com.noahcharlton.robogeddon.block.electricity.LampBlock;
-import com.noahcharlton.robogeddon.block.electricity.RelayBlock;
-import com.noahcharlton.robogeddon.block.electricity.SolarPanelBlock;
+import com.noahcharlton.robogeddon.block.electricity.*;
 import com.noahcharlton.robogeddon.block.miner.MinerBlock;
 import com.noahcharlton.robogeddon.block.portal.InventoryPortalBlock;
 import com.noahcharlton.robogeddon.block.portal.UnloaderBlock;
@@ -37,6 +34,7 @@ public class Blocks{
     public static final Block solarPanel = new SolarPanelBlock("solar_panel");
     public static final Block lamp = new LampBlock("lamp");
     public static final Block battery = new BatteryBlock("battery");
+    public static final Block coalGenerator = new CoalGeneratorBlock("coal_generator");
 
     @Side(Side.BOTH)
     public static void preInit() {
@@ -57,6 +55,7 @@ public class Blocks{
         Core.blocks.register(solarPanel);
         Core.blocks.register(lamp);
         Core.blocks.register(battery);
+        Core.blocks.register(coalGenerator);
     }
 
     @Side(Side.CLIENT)
@@ -64,7 +63,7 @@ public class Blocks{
         BlockGroup defense = new BlockGroup("defense", Blocks.turretBlock, minerBlock, wall);
         BlockGroup misc = new BlockGroup("misc", testBlock, blueBeacon, metalFormer);
         BlockGroup transport = new BlockGroup("transport", itemDuctNorth, unloaderBlock, inventoryPortal);
-        BlockGroup power = new BlockGroup("power", relayBlock, solarPanel, lamp, battery);
+        BlockGroup power = new BlockGroup("power", relayBlock, solarPanel, lamp, battery, coalGenerator);
 
 
         Core.blockGroups.register(misc);

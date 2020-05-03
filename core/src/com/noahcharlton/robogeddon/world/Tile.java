@@ -139,7 +139,7 @@ public class Tile implements Selectable, HasWorldPosition {
                 "Block: " + (hasBlock() ? block.getDisplayName() : "None"),
                 "Floor: " + floor.getDisplayName(),
                 String.format("Health: %2.0f %%", blockHealth * 100),
-        };
+         };
 
         return Selectable.combineArrays(defaultInfo, getTileEntityInfo());
     }

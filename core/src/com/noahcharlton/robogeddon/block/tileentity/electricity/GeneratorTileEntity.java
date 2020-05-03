@@ -10,6 +10,8 @@ public class GeneratorTileEntity extends TileEntity implements HasElectricity, P
 
     private Tile relayTile;
 
+    protected boolean generating = true;
+
     public GeneratorTileEntity(Tile rootTile, int powerPerTick) {
         super(rootTile);
 
@@ -28,7 +30,7 @@ public class GeneratorTileEntity extends TileEntity implements HasElectricity, P
 
     @Override
     public String[] getPowerBufferDetails() {
-        return new String[] {"Generating " + powerPerTick + " EU"};
+        return new String[] {"Generating " + getPowerGenerated() + " EU"};
     }
 
     @Override
@@ -53,11 +55,15 @@ public class GeneratorTileEntity extends TileEntity implements HasElectricity, P
 
     @Override
     public float getPowerGenerated() {
-        return powerPerTick;
+        return generating ? powerPerTick : 0;
     }
 
     @Override
     public void receivePower(float amount) {
 
+    }
+
+    public boolean isGenerating() {
+        return generating;
     }
 }
