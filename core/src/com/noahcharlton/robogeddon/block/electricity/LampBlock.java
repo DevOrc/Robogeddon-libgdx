@@ -29,6 +29,11 @@ public class LampBlock extends Block implements BlockRenderer, HasTileEntity {
     }
 
     @Override
+    public String getDisplayName() {
+        return "Lamp";
+    }
+
+    @Override
     public void render(SpriteBatch batch, Tile tile) {
         PoweredTileEntity tileEntity = (PoweredTileEntity) tile.getTileEntity();
         var texture = tileEntity.hasPower() ? on : off;

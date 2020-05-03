@@ -64,8 +64,8 @@ public interface HasElectricity {
             return new String[]{"Not connected to team power!!"};
 
         var details = new String[]{
-                "Team Power Generated: " + power.getGeneratedPower(),
-                "Team Power Consumed: " + power.getConsumedPower(),
+                "Team Power Generated: " + String.format("%2.1f", power.getGeneratedPower()),
+                "Team Power Consumed: " + String.format("%2.1f", power.getConsumedPower()),
                 String.format("Team Power Used: %2.0f%%", getPowerUsed(power) * 100)
         };
 
