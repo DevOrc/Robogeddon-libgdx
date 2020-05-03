@@ -30,7 +30,7 @@ public class ErrorDialog extends JFrame implements WindowListener {
 
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.add(pane);
-        this.setMinimumSize(new Dimension(400, 300));
+        this.setMinimumSize(new Dimension(600, 300));
         this.addWindowListener(this);
         this.setResizable(true);
     }
@@ -48,6 +48,9 @@ public class ErrorDialog extends JFrame implements WindowListener {
         buttons.add(createButton("Copy Stacktrace", ()-> {
             var clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
             clipboard.setContents(new StringSelection(getDetails(error)), null);
+        }));
+        buttons.add(createButton("Submit Bug Report", ()-> {
+            GithubIssue.open(error);
         }));
         buttons.add(createButton("Close",
                 () -> window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING))));

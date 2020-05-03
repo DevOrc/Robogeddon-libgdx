@@ -118,9 +118,11 @@ public class BulletEntity extends Entity {
 
         @Override
         public void render(SpriteBatch batch, Entity entity) {
+            BulletEntity bullet = (BulletEntity) entity;
             var tile = entity.getTile();
 
-            if(tile != null && tile.hasBlock()){
+            if(tile != null && tile.hasBlock() && tile.getChunk().getTeam() != entity.getTeam()
+                    && !bullet.ignoreBlocks){
                 return;
             }
 
