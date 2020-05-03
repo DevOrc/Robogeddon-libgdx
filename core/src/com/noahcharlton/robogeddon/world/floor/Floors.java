@@ -12,7 +12,8 @@ public class Floors {
 
     public static final Floor rock = new MineableFloor("rock", "Rock", Items.rock);
     public static final Floor rockyDirt = new MineableFloor("rockyDirt", "Rocky Dirt", Items.rock);
-    public static final Floor ironRock = new OreFloor("iron", "Iron Ore", Items.iron);
+    public static final Floor ironOre = new OreFloor("iron", "Iron Ore", Items.iron);
+    public static final Floor coalOre = new OreFloor("coal", "Coal Ore", Items.coal);
 
     public static final Floor[] dirtTypes = new Floor[]{dirt1, rockyDirt, dirt2};
 
@@ -23,7 +24,8 @@ public class Floors {
         Core.floors.register(dirt2);
         Core.floors.register(grass);
         Core.floors.register(sand);
-        Core.floors.register(ironRock);
+        Core.floors.register(ironOre);
+        Core.floors.register(coalOre);
     }
 
     public static boolean isDirt(Floor floor){

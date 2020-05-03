@@ -71,7 +71,7 @@ public class WorldGenerator {
     }
 
     private void setMiner(int tileX, int tileY, ServerWorld world) {
-        world.getTileAt(tileX, tileY).setFloor(Floors.ironRock, false);
+        world.getTileAt(tileX, tileY).setFloor(Floors.ironOre, false);
         world.getTileAt(tileX, tileY).setBlock(Blocks.minerBlock, false);
     }
 
@@ -107,7 +107,15 @@ public class WorldGenerator {
 
         if(noise > .5) {
             if(noise > .7) {
-                return Floors.ironRock;
+                return Floors.ironOre;
+            } else {
+                return Floors.rock;
+            }
+        }
+
+        if(noise < -.5) {
+            if(noise < -.7) {
+                return Floors.coalOre;
             } else {
                 return Floors.rock;
             }

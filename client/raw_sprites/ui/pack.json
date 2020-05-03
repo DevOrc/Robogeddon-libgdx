@@ -1,4 +1,1 @@
-{
-  filterMin: Linear,
-  filterMag: Linear,
-}
+{  filterMin: Linear,  filterMag: Linear,}
