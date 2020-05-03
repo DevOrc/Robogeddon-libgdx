@@ -2,20 +2,17 @@ package com.noahcharlton.robogeddon.ui.widget;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.noahcharlton.robogeddon.ui.Scale;
 import com.noahcharlton.robogeddon.ui.UIAssets;
 import com.noahcharlton.robogeddon.ui.background.TextureBackground;
 
 public class IconButton extends Button {
 
-    private static final int SIZE = 40;
-
+    private static final float BORDER = 8;
     private TextureRegion texture;
 
     public IconButton(TextureRegion texture) {
         this.texture = texture;
-
-        setSize(SIZE, SIZE);
-        setMinSize(SIZE, SIZE);
 
         setDefaultBackground(new TextureBackground(UIAssets.iconButton));
         setOnHover(new TextureBackground(UIAssets.iconButtonHover));
@@ -23,13 +20,14 @@ public class IconButton extends Button {
 
     @Override
     public void draw(SpriteBatch batch) {
-        batch.draw(texture, getX() + 4, getY() + 4);
+        batch.draw(texture, getX() + (BORDER / 2f), getY() + (BORDER / 2f),
+                getWidth() - BORDER, getHeight() - BORDER);
     }
 
     @Override
     public void layout() {
-        setSize(SIZE, SIZE);
-        setMinSize(SIZE, SIZE);
+        float size = (BORDER + (texture.getRegionWidth() * Scale.scale));
+        setSize(size, size);
     }
 
     public IconButton setTexture(TextureRegion texture) {

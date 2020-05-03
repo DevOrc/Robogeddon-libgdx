@@ -179,6 +179,17 @@ public class Widget {
         return this;
     }
 
+    public Widget setWidthScaled(float width) {
+        this.width = MathUtils.clamp(width, minWidth, maxWidth);
+        return this;
+    }
+
+    public Widget setHeightScaled(float height) {
+        this.height = MathUtils.clamp(height, minHeight, maxHeight);
+
+        return this;
+    }
+
     public Widget setBackground(Background background) {
         this.background = background;
         return this;
@@ -193,28 +204,28 @@ public class Widget {
 
     public Widget setMinHeight(float minHeight) {
         this.minHeight = minHeight;
-        this.height = MathUtils.clamp(height * Scale.scale, minHeight, maxHeight);
+        this.height = MathUtils.clamp(height, minHeight, maxHeight);
 
         return this;
     }
 
     public Widget setMinWidth(float minWidth) {
         this.minWidth = minWidth;
-        this.width = MathUtils.clamp(width * Scale.scale, minWidth, maxWidth);
+        this.width = MathUtils.clamp(width, minWidth, maxWidth);
 
         return this;
     }
 
     public Widget setMaxWidth(float maxWidth) {
         this.maxWidth = maxWidth;
-        this.width = MathUtils.clamp(width * Scale.scale, minWidth, maxWidth);
+        this.width = MathUtils.clamp(width, minWidth, maxWidth);
 
         return this;
     }
 
     public Widget setMaxHeight(float maxHeight) {
         this.maxHeight = maxHeight;
-        this.height = MathUtils.clamp(height * Scale.scale, minHeight, maxHeight);
+        this.height = MathUtils.clamp(height, minHeight, maxHeight);
 
         return this;
     }

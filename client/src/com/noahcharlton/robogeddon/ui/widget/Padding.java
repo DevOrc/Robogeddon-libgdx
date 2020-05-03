@@ -26,8 +26,8 @@ public class Padding extends Widget{
 
         widget.setWidth(getWidth() - left - right);
         widget.setHeight(getHeight() - bottom - top);
-        setWidth(width);
-        setHeight(height);
+        setWidthScaled(width);
+        setHeightScaled(height);
     }
 
     public Padding setWidget(Widget widget) {

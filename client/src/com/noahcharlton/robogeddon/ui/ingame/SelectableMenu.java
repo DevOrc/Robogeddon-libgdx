@@ -28,6 +28,7 @@ public class SelectableMenu extends Stack {
         setMinSize(250, 100);
 
         add(title.pad().top(10).bottom(15));
+        add(title);
         add(desc.pad().bottom(10));
         add(details.pad().bottom(10).left(10).right(10));
         add(button.pad().bottom(10).left(30).right(30));

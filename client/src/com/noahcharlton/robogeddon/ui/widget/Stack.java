@@ -25,10 +25,10 @@ public class Stack extends Widget {
             width = Math.max(width, widget.getWidth());
         }
 
-        setHeight(y - startY);
-        setWidth(width);
+        setHeightScaled(y - startY);
+        setWidthScaled(width);
 
-        getChildren().forEach(child -> child.setWidth(getWidth()));
+        getChildren().forEach(child -> child.setWidthScaled(getWidth()));
         centerAllChildren();
     }
 

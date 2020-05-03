@@ -1,15 +1,14 @@
 package com.noahcharlton.robogeddon.ui.ingame;
 
-import com.badlogic.gdx.Gdx;
 import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.ui.UIAssets;
 import com.noahcharlton.robogeddon.ui.widget.Label;
 import com.noahcharlton.robogeddon.ui.widget.PairLayout;
+import com.noahcharlton.robogeddon.ui.widget.Stack;
 import com.noahcharlton.robogeddon.ui.widget.TextureWidget;
-import com.noahcharlton.robogeddon.ui.widget.Widget;
 import com.noahcharlton.robogeddon.world.item.Item;
 
-public class InventoryList extends Widget {
+public class InventoryList extends Stack {
 
     public InventoryList() {
         for(Item item: Core.items.values()){
@@ -33,14 +32,6 @@ public class InventoryList extends Widget {
 
     @Override
     public void layout() {
-        float x = getX() + 10;
-        float y = Gdx.graphics.getHeight() - 40;
-
-        for(Widget child: getChildren()){
-            child.setX(x);
-            child.setY(y);
-
-            y -= 40;
-        }
+        super.layout();
     }
 }

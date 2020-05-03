@@ -54,9 +54,14 @@ public class BuildMenu extends Widget{
 
     @Override
     public void layout() {
+        iconStack.setX(0);
+        iconStack.setY(0);
+
         for(Widget child: getChildren()){
             child.setMinHeight(HEIGHT);
 
+            //If its a submenu, render it to the right
+            //of the icon stack
             if(child != iconStack){
                 child.setX(iconStack.getWidth() + iconStack.getX());
             }
@@ -69,7 +74,6 @@ public class BuildMenu extends Widget{
     private Stack createSubMenu(BlockGroup group) {
         var menu = new Stack();
         menu.setBackground(new ColorBackground());
-        menu.setWidth(SUB_MENU_WIDTH);
         menu.setVisible(false);
 
         for(Block block : group.getBlocks()){

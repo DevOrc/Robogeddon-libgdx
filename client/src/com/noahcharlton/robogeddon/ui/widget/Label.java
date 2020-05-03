@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Align;
+import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.ui.Scale;
 import com.noahcharlton.robogeddon.ui.UIAssets;
 
@@ -68,6 +69,15 @@ public class Label extends NoChildrenWidget {
     public Label setSupplier(Supplier<String> supplier) {
         this.supplier = supplier;
         return this;
+    }
+
+    @Override
+    public Widget setWidth(float width) {
+        if(text != null && text.contains("bullet") && width > 1000){
+            var x = Core.VERSION;
+        }
+
+        return super.setWidth(width);
     }
 
     public Label setTextColor(Color textColor) {

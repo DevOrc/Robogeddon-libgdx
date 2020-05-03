@@ -16,8 +16,9 @@ public class PairLayout extends Widget {
         right.setX(getX() + left.getWidth() + spacing);
         right.setY(getY());
 
-        setWidth(width);
-        setHeight(height);
+//        System.out.println("Right: " + right + " " + right.getWidth() + "  left" + left.getWidth() );
+        setWidthScaled(width);
+        setHeightScaled(height);
     }
 
     private void updateChildren(){
