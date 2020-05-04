@@ -11,12 +11,18 @@ import java.util.function.Consumer;
 public abstract class Setting<T> implements HasID {
 
     private final String name;
+    private final String id;
     private final Consumer<T> applier;
+    private final T defaultVal;
     private T value;
+
+    private boolean onSettingsScreen = true;
 
     public Setting(String name, T value, Consumer<T> applier) {
         this.name = name;
+        this.id = name.replace(" ", "_");
         this.value = value;
+        this.defaultVal = value;
         this.applier = applier;
     }
 
@@ -33,6 +39,11 @@ public abstract class Setting<T> implements HasID {
         applier.accept(value);
     }
 
+    public void resetToDefault(){
+        setValue(defaultVal);
+        apply();
+    }
+
     public String getButtonText(){
         return value.toString();
     }
@@ -42,6 +53,14 @@ public abstract class Setting<T> implements HasID {
     abstract void save(XmlWriter writer);
 
     abstract void load(Element element);
+
+    public void setOnSettingsScreen(boolean onScreen) {
+        this.onSettingsScreen = onScreen;
+    }
+
+    public boolean isOnSettingsScreen() {
+        return onSettingsScreen;
+    }
 
     public String getName() {
         return name;
@@ -57,6 +76,6 @@ public abstract class Setting<T> implements HasID {
 
     @Override
     public String getTypeID() {
-        return name;
+        return id;
     }
 }

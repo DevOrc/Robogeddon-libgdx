@@ -2,7 +2,7 @@ package com.noahcharlton.robogeddon;
 
 public class Log {
 
-    public static boolean debug = true;
+    public static boolean debug = false;
     public static boolean trace = false;
 
     public static void info(String text){
@@ -10,9 +10,7 @@ public class Log {
     }
 
     public static void info(String text, Throwable e){
-        if(debug){
-            log("INFO", text, e);
-        }
+        log("INFO", text, e);
     }
 
     public static void warn(String text){
@@ -20,9 +18,7 @@ public class Log {
     }
 
     public static void warn(String text, Throwable e){
-        if(debug){
-            log("WARN", text, e);
-        }
+        log("WARN", text, e);
     }
 
     public static void error(String text){
@@ -30,9 +26,7 @@ public class Log {
     }
 
     public static void error(String text, Throwable e){
-        if(debug){
-            log("ERROR", text, e);
-        }
+        log("ERROR", text, e);
     }
 
     public static void debug(String text){
@@ -54,7 +48,7 @@ public class Log {
     }
 
     public static void trace(String text, Throwable e){
-        if(trace){
+        if(trace && debug){
             log("TRACE", text, e);
         }
     }

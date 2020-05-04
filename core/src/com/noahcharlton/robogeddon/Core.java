@@ -34,7 +34,7 @@ public class Core {
     public static final Registry<Block> blocks = new Registry<>();
     public static final Registry<Floor> floors = new Registry<>();
     public static final Registry<Item> items = new Registry<>();
-    public static final Registry<Setting> settings = new Registry<>();
+    public static final OrderedRegistry<Setting> settings = new OrderedRegistry<>();
 
     @Side(Side.CLIENT)
     public static final Registry<BlockGroup> blockGroups = new Registry<>();

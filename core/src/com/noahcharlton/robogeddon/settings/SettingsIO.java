@@ -1,6 +1,8 @@
 package com.noahcharlton.robogeddon.settings;
 
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.utils.GdxRuntimeException;
+import com.badlogic.gdx.utils.SerializationException;
 import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.util.GameData;
@@ -25,10 +27,36 @@ public class SettingsIO {
     }
 
     private static void load(FileHandle settingsFile) {
-        Element element = new XmlReader().parse(settingsFile.readString(String.valueOf(StandardCharsets.UTF_8)));
+        Element element;
 
-        Core.settings.values().forEach(setting -> setting.load(element));
+        try{
+            element = new XmlReader().parse(settingsFile.readString(String.valueOf(StandardCharsets.UTF_8)));
+        }catch(GdxRuntimeException | SerializationException e){
+            Log.error("Failed to parse settings", e);
+            Log.error("Due to error creating new settings file!");
+            save();
+            return;
+        }
 
+        load(element);
+    }
+
+    private static void load(Element element) {
+        boolean failed = false;
+
+        for(Setting setting : Core.settings.values()){
+            try{
+                setting.load(element);
+            }catch(RuntimeException e){
+                Log.warn("Failed to load setting " + setting.getName(), e);
+                failed = true;
+            }
+        }
+
+        if(failed){
+            Log.warn("Due to error creating new settings file!");
+            save();
+        }
     }
 
     public static void save(){

@@ -11,6 +11,7 @@ import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.Server;
 import com.noahcharlton.robogeddon.entity.collision.HasCollision;
+import com.noahcharlton.robogeddon.settings.ClientSettings;
 import com.noahcharlton.robogeddon.util.GraphicsUtil;
 import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.AssignRobotMessage;
@@ -171,11 +172,11 @@ public class RobotEntity extends Entity implements HasCollision {
 
     @Side(Side.CLIENT)
     private void sendInputValues() {
-        boolean w = Gdx.input.isKeyPressed(Input.Keys.W);
-        boolean a = Gdx.input.isKeyPressed(Input.Keys.A);
-        boolean s = Gdx.input.isKeyPressed(Input.Keys.S);
-        boolean d = Gdx.input.isKeyPressed(Input.Keys.D);
-        boolean space = Gdx.input.isKeyPressed(Input.Keys.SPACE);
+        boolean w = ClientSettings.keyForward.isKeyPressed();
+        boolean a = ClientSettings.keyLeft.isKeyPressed();
+        boolean s = ClientSettings.keyReverse.isKeyPressed();
+        boolean d = ClientSettings.keyRight.isKeyPressed();
+        boolean space = ClientSettings.keyShoot.isKeyPressed();
         boolean rightClicking = Gdx.input.isButtonPressed(Input.Buttons.RIGHT) && !Core.client.isMouseOnUI();
         Vector3 currMining = rightClicking ? trimMiningPosition(Core.client.mouseToWorld()) : null;
 
