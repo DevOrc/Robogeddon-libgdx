@@ -27,28 +27,28 @@ blocks/beacon_top
   index: -1
 blocks/break/stage
   rotate: false
-  xy: 137, 9
+  xy: 205, 9
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 0
 blocks/break/stage
   rotate: false
-  xy: 171, 9
+  xy: 239, 9
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 1
 blocks/break/stage
   rotate: false
-  xy: 205, 9
+  xy: 273, 9
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 2
 blocks/break/stage
   rotate: false
-  xy: 239, 9
+  xy: 307, 7
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -90,7 +90,7 @@ blocks/groups/power
   index: -1
 blocks/groups/transport
   rotate: false
-  xy: 273, 9
+  xy: 341, 7
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -258,7 +258,7 @@ blocks/relay
   index: -1
 blocks/solar_panel
   rotate: false
-  xy: 103, 9
+  xy: 171, 9
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -272,28 +272,28 @@ blocks/test_block
   index: -1
 blocks/turret_base
   rotate: false
-  xy: 307, 7
+  xy: 375, 7
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/turret_top
   rotate: false
-  xy: 341, 7
+  xy: 409, 5
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/unloader
   rotate: false
-  xy: 375, 7
+  xy: 443, 5
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/wall
   rotate: false
-  xy: 409, 5
+  xy: 477, 5
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -389,9 +389,23 @@ floors/rockyDirt
   orig: 32, 32
   offset: 0, 0
   index: -1
-floors/sand
+floors/rockySand
   rotate: false
   xy: 69, 9
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+floors/sand
+  rotate: false
+  xy: 103, 9
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+floors/sand2
+  rotate: false
+  xy: 137, 9
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -433,7 +447,7 @@ items/iron
   index: -1
 items/iron_tiny
   rotate: false
-  xy: 443, 27
+  xy: 497, 219
   size: 10, 10
   orig: 10, 10
   offset: 0, 0
@@ -447,7 +461,7 @@ items/rock
   index: -1
 items/rock_tiny
   rotate: false
-  xy: 497, 219
+  xy: 13, 1
   size: 10, 10
   orig: 10, 10
   offset: 0, 0

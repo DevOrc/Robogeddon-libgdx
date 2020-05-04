@@ -4,7 +4,6 @@ import com.noahcharlton.robogeddon.block.Blocks;
 import com.noahcharlton.robogeddon.world.Chunk;
 import com.noahcharlton.robogeddon.world.ServerWorld;
 import com.noahcharlton.robogeddon.world.Tile;
-import com.noahcharlton.robogeddon.world.floor.Floor;
 import com.noahcharlton.robogeddon.world.floor.Floors;
 
 import java.util.Random;
@@ -12,11 +11,13 @@ import java.util.Random;
 public class WorldGenerator {
 
     private final SimplexNoise2D noiseMap;
+    private final SimplexNoise2D biomeMap;
     private final long seed;
 
     public WorldGenerator(long seed) {
         this.seed = seed;
         this.noiseMap = new SimplexNoise2D(new Random(seed));
+        this.biomeMap = new SimplexNoise2D(new Random(2 * seed));
     }
 
     public void genChunksAround(ServerWorld world, Chunk chunk) {
@@ -33,7 +34,7 @@ public class WorldGenerator {
                 Tile tile = chunk.getTile(x, y);
 
                 if(tile != null){
-                    double noise = getNoise(tile);
+                    double noise = getGenericNoise(tile);
 
                     if(noise < -.25 && noise > -.251){
                         spawnTurret(tile);
@@ -71,7 +72,8 @@ public class WorldGenerator {
     }
 
     private void setMiner(int tileX, int tileY, ServerWorld world) {
-        world.getTileAt(tileX, tileY).setFloor(Floors.ironOre, false);
+        world.getTileAt(tileX, tileY).setFloor(Floors.rock, false);
+        world.getTileAt(tileX, tileY).setUpperFloor(Floors.ironOre, false);
         world.getTileAt(tileX, tileY).setBlock(Blocks.minerBlock, false);
     }
 
@@ -96,47 +98,17 @@ public class WorldGenerator {
     public void genChunk(Chunk chunk) {
         for(int x = 0; x < Chunk.SIZE; x++) {
             for(int y = 0; y < Chunk.SIZE; y++) {
-                Tile tile = chunk.getTile(x, y);
-                tile.setFloor(getFloorFor(tile), false);
+                var tile = chunk.getTile(x, y);
+                var biomeVal = biomeMap.noise(tile.getX() / 128f, tile.getY() / 128f);
+                var biome = Biomes.get(biomeVal);
+
+                biome.gen(tile, getGenericNoise(tile));
             }
         }
     }
 
-    private Floor getFloorFor(Tile tile) {
-        double noise = getNoise(tile);
-
-        if(noise > .5) {
-            if(noise > .7) {
-                return Floors.ironOre;
-            } else {
-                return Floors.rock;
-            }
-        }
-
-        if(noise < -.5) {
-            if(noise < -.7) {
-                return Floors.coalOre;
-            } else {
-                return Floors.rock;
-            }
-        }
-
-        var dirtVal = (Math.abs(noise) % .1) * 10;
-        if(dirtVal < .2) {
-            return Floors.rockyDirt;
-        } else if(dirtVal < .6) {
-            return Floors.dirt1;
-        } else {
-            return Floors.dirt2;
-        }
-    }
-
-    private double getNoise(Tile tile) {
-        return getNoise(tile.getX(), tile.getY());
-    }
-
-    private double getNoise(int tileX, int tileY) {
-        return noiseMap.noise(tileX / 16f, tileY / 16f);
+    private double getGenericNoise(Tile tile) {
+        return noiseMap.noise(tile.getX() / 16f, tile.getY() / 16f);
     }
 
     public long getSeed() {

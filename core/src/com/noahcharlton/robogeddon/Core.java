@@ -16,6 +16,8 @@ import com.noahcharlton.robogeddon.util.MiscTextures;
 import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.floor.Floor;
 import com.noahcharlton.robogeddon.world.floor.Floors;
+import com.noahcharlton.robogeddon.world.gen.Biome;
+import com.noahcharlton.robogeddon.world.gen.Biomes;
 import com.noahcharlton.robogeddon.world.io.WorldIOHandler;
 import com.noahcharlton.robogeddon.world.item.Item;
 import com.noahcharlton.robogeddon.world.item.Items;
@@ -38,6 +40,7 @@ public class Core {
     public static final Registry<BlockGroup> blockGroups = new Registry<>();
     @Side(Side.SERVER)
     public static final Registry<WorldIOHandler> saveGameHandlers = new Registry<>();
+    public static final Registry<Biome> biomes = new Registry<>();
 
     @Side(Side.CLIENT)
     public static AssetManager assets;
@@ -56,6 +59,7 @@ public class Core {
         Floors.preInit();
         Items.preInit();
         WorldIOHandler.preInit();
+        Biomes.init();
         createMessageSerializers();
 
         entities.setFinalized(true);

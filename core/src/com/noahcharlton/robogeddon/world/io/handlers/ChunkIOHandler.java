@@ -39,6 +39,9 @@ public class ChunkIOHandler implements WorldIOHandler {
                 .attribute("y", tile.getY())
                 .element("Floor", tile.getFloor().getTypeID());
 
+        if(tile.getUpperFloor() != null)
+            element.element("UpperFloor", tile.getUpperFloor().getTypeID());
+
         if(tile.hasBlock())
             element.element("Block", tile.getBlock().getTypeID());
 
@@ -70,9 +73,14 @@ public class ChunkIOHandler implements WorldIOHandler {
         var tileY = tileXml.getIntAttribute("y");
         var tile = world.getTileAt(tileX, tileY);
         var floor = tileXml.get("Floor");
+        var upperFloor = tileXml.get("UpperFloor", null);
         var block = tileXml.get("Block", null);
 
         tile.setFloor(Core.floors.get(floor), false);
+
+        if(upperFloor != null){
+            tile.setUpperFloor(Core.floors.get(upperFloor), false);
+        }
 
         if(block == null)
             return;

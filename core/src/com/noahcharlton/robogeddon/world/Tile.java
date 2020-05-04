@@ -30,6 +30,7 @@ public class Tile implements Selectable, HasWorldPosition {
     private Block block;
     private float blockHealth = 1f;
     private Floor floor;
+    private Floor upperFloor;
     private TileEntity tileEntity;
 
     /**
@@ -63,6 +64,12 @@ public class Tile implements Selectable, HasWorldPosition {
             floor = Core.floors.get(update.floor);
         }
 
+        if(update.upperFloor != null){
+            upperFloor = Core.floors.get(update.upperFloor);
+        }else{
+            upperFloor = null;
+        }
+
         if(update.block == null){
             setBlock(null, false);
         }else if(update.block.startsWith("multi,")){
@@ -83,6 +90,9 @@ public class Tile implements Selectable, HasWorldPosition {
     public void renderFloor(SpriteBatch batch) {
         if(floor != null)
             floor.render(batch, this);
+
+        if(upperFloor != null)
+            upperFloor.render(batch, this);
     }
 
     @Side(Side.CLIENT)
@@ -111,6 +121,13 @@ public class Tile implements Selectable, HasWorldPosition {
         if(blockHealth <= 0 && world.isServer()){
             ((ServerWorld) world).destroyBlock(this);
         }
+    }
+
+    public void setUpperFloor(Floor upperFloor, boolean markDirty) {
+        if(markDirty)
+            markDirty();
+
+        this.upperFloor = upperFloor;
     }
 
     public void setFloor(Floor floor, boolean markDirty) {
@@ -286,6 +303,10 @@ public class Tile implements Selectable, HasWorldPosition {
         return getX() == tile.getX() &&
                 getY() == tile.getY() &&
                 getWorld().equals(tile.getWorld());
+    }
+
+    public Floor getUpperFloor() {
+        return upperFloor;
     }
 
     @Override

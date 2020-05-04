@@ -17,8 +17,8 @@ public class MinerTileEntity extends StorageTileEntity {
     public MinerTileEntity(Tile rootTile) {
         super(rootTile, new GenericItemBuffer(10));
 
-        if(rootTile.getFloor() instanceof MineableFloor){
-            item = ((MineableFloor) rootTile.getFloor()).getOre();
+        if(rootTile.getUpperFloor() instanceof MineableFloor){
+            item = ((MineableFloor) rootTile.getUpperFloor()).getOre();
         }else{
             throw new RuntimeException("Cannot place miner on non-mineable floor!");
         }
