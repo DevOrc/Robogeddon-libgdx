@@ -77,6 +77,15 @@ public class AssetManager {
         assets.add(asset);
     }
 
+    public void registerAssetFirst(Asset asset) {
+        unloadedAssets.addFirst(asset);
+        assets.add(asset);
+    }
+
+    public int getLoadedAssets(){
+        return assets.size() - unloadedAssets.size();
+    }
+
     public float getPercentDone() {
         return 1f - ((float) unloadedAssets.size() / (float) assets.size());
     }

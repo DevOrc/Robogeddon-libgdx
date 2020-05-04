@@ -77,35 +77,29 @@ public class Biomes {
 
         @Override
         public void gen(Tile tile, double noise) {
-            if(noise > .5) {
+            if(noise > .55) {
                 tile.setFloor(Floors.rockySand, false);
 
                 if(noise > .7) {
-                    tile.setFloor(Floors.sand, false);
+                    tile.setFloor(Floors.sand2, false);
                     tile.setUpperFloor(Floors.ironOre, false);
                 }
 
                 return;
             }
 
-            if(noise < -.5) {
+            if(noise < -.55) {
                 tile.setFloor(Floors.rockySand, false);
 
                 if(noise < -.7) {
-                    tile.setFloor(Floors.sand, false);
+                    tile.setFloor(Floors.sand2, false);
                     tile.setUpperFloor(Floors.coalOre, false);
                 }
 
                 return;
             }
 
-            var dirtVal = (Math.abs(noise) % .1) * 10;
-
-            if(dirtVal < .6) {
-                tile.setFloor(Floors.sand, false);
-            } else {
-                tile.setFloor(Floors.sand2, false);
-            }
+            tile.setFloor(Floors.sand, false);
         }
     }
 }
