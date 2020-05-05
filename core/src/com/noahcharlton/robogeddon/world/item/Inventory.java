@@ -13,7 +13,10 @@ public class Inventory {
     private boolean dirty;
 
     public Inventory() {
-        Core.items.values().forEach(item -> inventory.put(item.getTypeID(), 5));
+        Core.items.values().forEach(item -> inventory.put(item.getTypeID(), 0));
+        setItem(Items.rock, 25);
+        setItem(Items.iron, 15);
+        setItem(Items.coal, 15);
     }
 
     public Message createSyncMessage() {
