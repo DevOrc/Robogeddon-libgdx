@@ -8,11 +8,10 @@ public class Floors {
     public static final Floor dirt1 = new Floor("dirt1", "Dirt");
     public static final Floor dirt2 = new Floor("dirt2", "Dirt");
     public static final Floor grass = new Floor("grass", "Grass");
-    public static final Floor sand = new Floor("sand", "Sand");
-    public static final Floor sand2 = new Floor("sand2", "Sand");
-    public static final Floor rockySand = new Floor("rockySand", "Rocky Sand");
 
-
+    public static final Floor sand = new MineableFloor("sand", "Sand", Items.sand);
+    public static final Floor sand2 = new MineableFloor("sand2", "Sand", Items.sand);
+    public static final Floor rockySand = new MineableFloor("rockySand", "Rocky Sand", Items.rock);
     public static final Floor rock = new MineableFloor("rock", "Rock", Items.rock);
     public static final Floor rockyDirt = new MineableFloor("rockyDirt", "Rocky Dirt", Items.rock);
     public static final Floor ironOre = new MineableFloor("iron", "Iron Ore", Items.iron);

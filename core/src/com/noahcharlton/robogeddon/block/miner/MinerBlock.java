@@ -29,7 +29,8 @@ public class MinerBlock extends Block implements HasTileEntity, BlockRenderer {
 
     @Override
     public boolean canBuildAt(Tile tile, Entity placer) {
-        return super.canBuildAt(tile, placer) && tile.getUpperFloor() instanceof MineableFloor;
+        return super.canBuildAt(tile, placer) &&
+                (tile.getUpperFloor() instanceof MineableFloor || tile.getFloor() instanceof MineableFloor);
     }
 
     @Override

@@ -128,11 +128,17 @@ public class RobotEntity extends Entity implements HasCollision {
         }
 
         if(tile.getUpperFloor() instanceof MineableFloor){
-            Item item = ((MineableFloor) tile.getUpperFloor()).getOre();
-            var serverWorld = (ServerWorld) world;
-
-            serverWorld.getInventory().changeItem(item, 10);
+            mineFloor((MineableFloor) tile.getUpperFloor());
+        } else if(tile.getFloor() instanceof MineableFloor){
+            mineFloor((MineableFloor) tile.getFloor());
         }
+    }
+
+    private void mineFloor(MineableFloor floor) {
+        Item item = floor.getOre();
+        var serverWorld = (ServerWorld) world;
+
+        serverWorld.getInventory().changeItem(item, 10);
     }
 
     @Override

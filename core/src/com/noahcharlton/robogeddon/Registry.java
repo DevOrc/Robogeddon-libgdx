@@ -3,6 +3,7 @@ package com.noahcharlton.robogeddon;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Random;
+import java.util.stream.Stream;
 
 public class Registry<T extends HasID>  {
 
@@ -21,6 +22,11 @@ public class Registry<T extends HasID>  {
 
         items.put(item.getTypeID(), item);
         Log.trace("Registered " + item.getTypeID() + ": " + item.getClass().getName());
+    }
+
+    @SafeVarargs
+    public final void registerAll(T... items){
+        Stream.of(items).forEach(this::register);
     }
 
     public T random() {

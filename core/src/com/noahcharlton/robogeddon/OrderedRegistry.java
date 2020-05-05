@@ -1,7 +1,6 @@
 package com.noahcharlton.robogeddon;
 
 import java.util.ArrayList;
-import java.util.stream.Stream;
 
 public class OrderedRegistry<T extends HasID> extends Registry<T> {
 
@@ -12,10 +11,6 @@ public class OrderedRegistry<T extends HasID> extends Registry<T> {
         super.register(item);
 
         orderedValues.add(item);
-    }
-
-    public void registerAll(T... items){
-        Stream.of(items).forEach(this::register);
     }
 
     public ArrayList<T> getOrderedValues() {
