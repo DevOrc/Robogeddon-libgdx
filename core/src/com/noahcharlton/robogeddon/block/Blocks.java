@@ -2,6 +2,7 @@ package com.noahcharlton.robogeddon.block;
 
 import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.block.beacon.BeaconBlock;
+import com.noahcharlton.robogeddon.block.crafting.CircuitFactory;
 import com.noahcharlton.robogeddon.block.crafting.MetalFormerBlock;
 import com.noahcharlton.robogeddon.block.duct.ItemDuct;
 import com.noahcharlton.robogeddon.block.electricity.*;
@@ -35,36 +36,21 @@ public class Blocks{
     public static final Block lamp = new LampBlock("lamp");
     public static final Block battery = new BatteryBlock("battery");
     public static final Block coalGenerator = new CoalGeneratorBlock("coal_generator");
+    public static final Block circuitFactory = new CircuitFactory("circuit_factory");
 
     @Side(Side.BOTH)
     public static void preInit() {
-        Core.blocks.register(testBlock);
-        Core.blocks.register(turretBlock);
-        Core.blocks.register(blueBeacon);
-        Core.blocks.register(redBeacon);
-        Core.blocks.register(minerBlock);
-        Core.blocks.register(itemDuctNorth);
-        Core.blocks.register(itemDuctSouth);
-        Core.blocks.register(itemDuctEast);
-        Core.blocks.register(itemDuctWest);
-        Core.blocks.register(inventoryPortal);
-        Core.blocks.register(unloaderBlock);
-        Core.blocks.register(wall);
-        Core.blocks.register(metalFormer);
-        Core.blocks.register(relayBlock);
-        Core.blocks.register(solarPanel);
-        Core.blocks.register(lamp);
-        Core.blocks.register(battery);
-        Core.blocks.register(coalGenerator);
+        Core.blocks.registerAll(testBlock, turretBlock, blueBeacon, redBeacon, minerBlock, itemDuctNorth, itemDuctSouth,
+                itemDuctEast, itemDuctWest, inventoryPortal, unloaderBlock, wall, metalFormer, relayBlock, solarPanel,
+                lamp, battery, coalGenerator, circuitFactory);
     }
 
     @Side(Side.CLIENT)
     public static void init() {
         BlockGroup defense = new BlockGroup("defense", Blocks.turretBlock, minerBlock, wall);
-        BlockGroup misc = new BlockGroup("misc", testBlock, blueBeacon, metalFormer);
+        BlockGroup misc = new BlockGroup("misc", testBlock, blueBeacon, metalFormer, circuitFactory);
         BlockGroup transport = new BlockGroup("transport", itemDuctNorth, unloaderBlock, inventoryPortal);
         BlockGroup power = new BlockGroup("power", relayBlock, solarPanel, lamp, battery, coalGenerator);
-
 
         Core.blockGroups.register(misc);
         Core.blockGroups.register(defense);

@@ -24,7 +24,7 @@ public class CrafterTileEntity extends TileEntity implements HasInventory {
 
     @Override
     public void update() {
-        if(!hasInputs())
+        if(!canBeCrating())
             return;
 
         tick++;
@@ -41,7 +41,7 @@ public class CrafterTileEntity extends TileEntity implements HasInventory {
         }
     }
 
-    private boolean hasInputs() {
+    protected boolean canBeCrating() {
         for(ItemBuffer inputBuffer: inputBuffers){
             if(inputBuffer.getAmount() <= 0)
                 return false;
