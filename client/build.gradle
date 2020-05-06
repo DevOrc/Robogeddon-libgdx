@@ -1,1 +1,54 @@
-apply plugin: "java"sourceCompatibility = 11sourceSets.main.java.srcDirs = [ "src/" ]sourceSets.main.resources.srcDirs = ["/assets"]project.ext.mainClassName = "com.noahcharlton.robogeddon.client.ClientLauncher"project.ext.assetsDir = new File("/assets")task run(dependsOn: classes, type: JavaExec) {    main = project.mainClassName    classpath = sourceSets.main.runtimeClasspath    standardInput = System.in    workingDir = project.assetsDir    ignoreExitValue = true}task debug(dependsOn: classes, type: JavaExec) {    main = project.mainClassName    classpath = sourceSets.main.runtimeClasspath    standardInput = System.in    workingDir = project.assetsDir    ignoreExitValue = true    debug = true}task dist(type: Jar) {    manifest {        attributes 'Main-Class': project.mainClassName    }    dependsOn configurations.runtimeClasspath    from {        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }    }    with jar}dist.dependsOn classes
+plugins {
+    id 'org.beryx.runtime' version '1.8.4'
+}
+
+apply plugin: "java"
+
+sourceCompatibility = 11
+sourceSets.main.java.srcDirs = [ "src/" ]
+sourceSets.main.resources.srcDirs = ["/assets"]
+
+project.ext.mainClassName = "com.noahcharlton.robogeddon.client.ClientLauncher"
+project.ext.assetsDir = new File("/assets")
+
+application{
+    mainClassName = "com.noahcharlton.robogeddon.client.ClientLauncher"
+}
+
+task runGame(dependsOn: classes, type: JavaExec) {
+    main = project.mainClassName
+    classpath = sourceSets.main.runtimeClasspath
+    standardInput = System.in
+    workingDir = project.assetsDir
+    ignoreExitValue = true
+}
+
+task dist(type: Jar) {
+    manifest {
+        attributes 'Main-Class': project.mainClassName
+    }
+    dependsOn configurations.runtimeClasspath
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    with jar
+}
+
+runtime {
+    modules = ['java.sql', 'jdk.unsupported']
+    additive = true;
+}
+
+tasks.runtime.doLast{
+    copy {
+        from("$rootProject.projectDir/client/image_src/"){
+            include "", "/README.md", "/run.bat"
+        }
+        from("$rootProject.projectDir"){
+            include "LICENSE"
+        }
+        into "$buildDir/image/"
+    }
+}
+
+dist.dependsOn classes

@@ -5,3 +5,13 @@ sourceCompatibility = 11
 
 sourceSets.main.java.srcDirs = [ "src/" ]
 sourceSets.main.resources.srcDirs = [ "src/resources" ]
+
+project.ext.mainClassName = "com.noahcharlton.robogeddon.server.ServerLauncher"
+
+task runServer(dependsOn: classes, type: JavaExec) {
+    main = project.mainClassName
+    classpath = sourceSets.main.runtimeClasspath
+    standardInput = System.in
+    workingDir = "$rootProject.projectDir"
+    ignoreExitValue = true
+}

@@ -76,7 +76,6 @@ project(":core") {
     }
 }
 
-
 import com.badlogic.gdx.tools.texturepacker.TexturePacker
 
 task packSprites {
