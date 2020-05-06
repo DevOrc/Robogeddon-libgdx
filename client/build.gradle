@@ -1,5 +1,5 @@
 plugins {
-    id 'org.beryx.runtime' version '1.8.3'
+    id 'org.beryx.runtime' version '1.8.4'
 }
 
 apply plugin: "java"
@@ -32,6 +32,23 @@ task dist(type: Jar) {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
     with jar
+}
+
+runtime {
+    modules = ['java.sql', 'jdk.unsupported']
+    additive = true;
+}
+
+tasks.runtime.doLast{
+    copy {
+        from("$rootProject.projectDir/client/image_src/"){
+            include "", "/README.md", "/run.bat"
+        }
+        from("$rootProject.projectDir"){
+            include "LICENSE"
+        }
+        into "$buildDir/image/"
+    }
 }
 
 dist.dependsOn classes
