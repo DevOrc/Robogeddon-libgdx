@@ -42,7 +42,7 @@ runtime {
 tasks.runtime.doLast{
     copy {
         from("$rootProject.projectDir/client/image_src/"){
-            include "", "/README.md", "/run.bat"
+            include "/Robogeddon.exe", "/Robogeddon.bat"
         }
         from("$rootProject.projectDir"){
             include "LICENSE"
