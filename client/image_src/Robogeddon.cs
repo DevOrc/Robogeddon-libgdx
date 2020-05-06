@@ -5,7 +5,7 @@ using System.IO;
 
 class RobogeddonRunner {
     static void Main() {
-        string batFile = Directory.GetCurrentDirectory() + "\\bin\\client.bat";
+        string batFile = Directory.GetCurrentDirectory() + "\\src\\bin\\client.bat";
 
         if (!File.Exists(batFile)) {
             MessageBox.Show("The launch script could not be found: " + batFile,
@@ -30,6 +30,6 @@ class RobogeddonRunner {
         process.WaitForExit();
 
         Console.WriteLine("ExitCode: {0}", process.ExitCode);
-        process.Close();
+        process.Kill();
     }
 }

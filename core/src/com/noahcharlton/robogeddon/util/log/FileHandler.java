@@ -19,7 +19,11 @@ public class FileHandler extends Handler {
     @Override
     public void publish(LogRecord record) {
         if(isLoggable(record)){
-            writer.print(getFormatter().format(record));
+            var text = getFormatter().format(record);
+
+            synchronized(writer){
+                writer.print(text);
+            }
         }
     }
 

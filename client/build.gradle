@@ -37,6 +37,7 @@ task dist(type: Jar) {
 runtime {
     modules = ['java.sql', 'jdk.unsupported']
     additive = true;
+    imageDir = file("$buildDir/image/src")
 }
 
 tasks.runtime.doLast{
