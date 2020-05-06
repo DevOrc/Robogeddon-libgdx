@@ -1,7 +1,7 @@
 package com.noahcharlton.robogeddon.asset;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.noahcharlton.robogeddon.Log;
+import com.noahcharlton.robogeddon.util.log.Log;
 
 public class TextureAsset extends Asset<TextureRegion> {
 

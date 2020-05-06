@@ -1,7 +1,7 @@
 package com.noahcharlton.robogeddon.world.item;
 
 import com.noahcharlton.robogeddon.Core;
-import com.noahcharlton.robogeddon.Log;
+import com.noahcharlton.robogeddon.util.log.Log;
 import com.noahcharlton.robogeddon.message.Message;
 
 import java.util.HashMap;

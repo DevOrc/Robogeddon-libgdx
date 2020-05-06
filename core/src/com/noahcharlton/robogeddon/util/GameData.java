@@ -1,7 +1,7 @@
 package com.noahcharlton.robogeddon.util;
 
 import com.badlogic.gdx.files.FileHandle;
-import com.noahcharlton.robogeddon.Log;
+import com.noahcharlton.robogeddon.util.log.Log;
 
 public class GameData {
 

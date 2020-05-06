@@ -11,9 +11,9 @@ import com.noahcharlton.robogeddon.message.MessageSerializer;
 import com.noahcharlton.robogeddon.message.RegistrySerializer;
 import com.noahcharlton.robogeddon.settings.Setting;
 import com.noahcharlton.robogeddon.settings.SettingsIO;
-import com.noahcharlton.robogeddon.util.GameData;
 import com.noahcharlton.robogeddon.util.MiscTextures;
 import com.noahcharlton.robogeddon.util.Side;
+import com.noahcharlton.robogeddon.util.log.Log;
 import com.noahcharlton.robogeddon.world.floor.Floor;
 import com.noahcharlton.robogeddon.world.floor.Floors;
 import com.noahcharlton.robogeddon.world.gen.Biome;
@@ -52,7 +52,6 @@ public class Core {
     @Side(Side.BOTH)
     public static void preInit(){
         Log.debug("PreInit Start");
-        GameData.init();
 
         EntityType.preInit();
         Blocks.preInit();

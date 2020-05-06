@@ -4,7 +4,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.SerializationException;
 import com.noahcharlton.robogeddon.Core;
-import com.noahcharlton.robogeddon.Log;
+import com.noahcharlton.robogeddon.util.log.Log;
 import com.noahcharlton.robogeddon.util.GameData;
 import com.noahcharlton.robogeddon.world.io.Element;
 import com.noahcharlton.robogeddon.world.io.XmlReader;

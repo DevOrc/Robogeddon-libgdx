@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ObjectMap;
-import com.noahcharlton.robogeddon.Log;
+import com.noahcharlton.robogeddon.util.log.Log;
 import com.noahcharlton.robogeddon.block.tileentity.CustomTileEntityMessage;
 import com.noahcharlton.robogeddon.entity.CustomEntityMessage;
 import com.noahcharlton.robogeddon.entity.Entity;

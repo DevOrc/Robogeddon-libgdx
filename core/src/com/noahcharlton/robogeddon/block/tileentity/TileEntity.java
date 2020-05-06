@@ -1,6 +1,6 @@
 package com.noahcharlton.robogeddon.block.tileentity;
 
-import com.noahcharlton.robogeddon.Log;
+import com.noahcharlton.robogeddon.util.log.Log;
 import com.noahcharlton.robogeddon.block.tileentity.inventory.HasInventory;
 import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.Tile;

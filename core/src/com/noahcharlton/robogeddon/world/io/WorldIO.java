@@ -1,7 +1,7 @@
 package com.noahcharlton.robogeddon.world.io;
 
 import com.noahcharlton.robogeddon.Core;
-import com.noahcharlton.robogeddon.Log;
+import com.noahcharlton.robogeddon.util.log.Log;
 import com.noahcharlton.robogeddon.util.GameData;
 import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.ServerWorld;

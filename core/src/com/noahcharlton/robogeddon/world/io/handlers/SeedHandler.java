@@ -1,6 +1,6 @@
 package com.noahcharlton.robogeddon.world.io.handlers;
 
-import com.noahcharlton.robogeddon.Log;
+import com.noahcharlton.robogeddon.util.log.Log;
 import com.noahcharlton.robogeddon.world.ServerWorld;
 import com.noahcharlton.robogeddon.world.gen.WorldGenerator;
 import com.noahcharlton.robogeddon.world.io.Element;

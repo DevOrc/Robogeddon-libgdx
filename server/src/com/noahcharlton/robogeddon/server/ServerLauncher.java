@@ -1,9 +1,9 @@
 package com.noahcharlton.robogeddon.server;
 
 import com.noahcharlton.robogeddon.Core;
-import com.noahcharlton.robogeddon.Log;
 import com.noahcharlton.robogeddon.message.Message;
 import com.noahcharlton.robogeddon.message.MessageSerializer;
+import com.noahcharlton.robogeddon.util.log.Log;
 import com.noahcharlton.robogeddon.world.LostClientMessage;
 
 import java.io.IOException;
@@ -110,6 +110,7 @@ public class ServerLauncher {
     }
 
     public static void main(String[] args) {
+        Log.init();
         Log.info("Server Launcher started!");
         Log.info("Core Version: " + Core.VERSION + "-" + Core.VERSION_TYPE);
 

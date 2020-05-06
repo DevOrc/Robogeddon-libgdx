@@ -2,7 +2,7 @@ package com.noahcharlton.robogeddon.world;
 
 import com.badlogic.gdx.math.GridPoint2;
 import com.noahcharlton.robogeddon.Core;
-import com.noahcharlton.robogeddon.Log;
+import com.noahcharlton.robogeddon.util.log.Log;
 import com.noahcharlton.robogeddon.Server;
 import com.noahcharlton.robogeddon.ServerProvider;
 import com.noahcharlton.robogeddon.block.Block;

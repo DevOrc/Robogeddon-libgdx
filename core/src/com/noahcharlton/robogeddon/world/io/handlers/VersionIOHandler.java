@@ -1,7 +1,7 @@
 package com.noahcharlton.robogeddon.world.io.handlers;
 
 import com.noahcharlton.robogeddon.Core;
-import com.noahcharlton.robogeddon.Log;
+import com.noahcharlton.robogeddon.util.log.Log;
 import com.noahcharlton.robogeddon.world.ServerWorld;
 import com.noahcharlton.robogeddon.world.io.Element;
 import com.noahcharlton.robogeddon.world.io.WorldIOException;

@@ -1,5 +1,7 @@
 package com.noahcharlton.robogeddon;
 
+import com.noahcharlton.robogeddon.util.log.Log;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Random;

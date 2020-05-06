@@ -1,6 +1,6 @@
 package com.noahcharlton.robogeddon.asset;
 
-import com.noahcharlton.robogeddon.Log;
+import com.noahcharlton.robogeddon.util.log.Log;
 
 import java.util.function.Consumer;
 

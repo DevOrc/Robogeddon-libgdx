@@ -3,7 +3,7 @@ package com.noahcharlton.robogeddon.block.beacon;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.noahcharlton.robogeddon.Core;
-import com.noahcharlton.robogeddon.Log;
+import com.noahcharlton.robogeddon.util.log.Log;
 import com.noahcharlton.robogeddon.block.Block;
 import com.noahcharlton.robogeddon.block.BlockRenderer;
 import com.noahcharlton.robogeddon.block.tileentity.inventory.HasTileEntity;

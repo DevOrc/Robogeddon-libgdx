@@ -1,7 +1,7 @@
 package com.noahcharlton.robogeddon.server;
 
 import com.noahcharlton.robogeddon.Core;
-import com.noahcharlton.robogeddon.Log;
+import com.noahcharlton.robogeddon.util.log.Log;
 
 import java.io.IOException;
 import java.net.ServerSocket;

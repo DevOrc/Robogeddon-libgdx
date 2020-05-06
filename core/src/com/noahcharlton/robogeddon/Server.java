@@ -1,5 +1,6 @@
 package com.noahcharlton.robogeddon;
 
+import com.noahcharlton.robogeddon.util.log.Log;
 import com.noahcharlton.robogeddon.world.ServerWorld;
 
 import java.util.LinkedList;

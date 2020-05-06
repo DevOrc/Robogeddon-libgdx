@@ -2,7 +2,7 @@ package com.noahcharlton.robogeddon.world;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.noahcharlton.robogeddon.Core;
-import com.noahcharlton.robogeddon.Log;
+import com.noahcharlton.robogeddon.util.log.Log;
 import com.noahcharlton.robogeddon.block.Block;
 import com.noahcharlton.robogeddon.block.Multiblock;
 import com.noahcharlton.robogeddon.block.tileentity.electricity.HasElectricity;

@@ -2,7 +2,7 @@ package com.noahcharlton.robogeddon.settings;
 
 import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.HasID;
-import com.noahcharlton.robogeddon.Log;
+import com.noahcharlton.robogeddon.util.log.Log;
 import com.noahcharlton.robogeddon.world.io.Element;
 import com.noahcharlton.robogeddon.world.io.XmlWriter;
 

@@ -1,7 +1,7 @@
 package com.noahcharlton.robogeddon.entity;
 
 import com.badlogic.gdx.math.Vector2;
-import com.noahcharlton.robogeddon.Log;
+import com.noahcharlton.robogeddon.util.log.Log;
 import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.HasWorldPosition;
 import com.noahcharlton.robogeddon.world.Tile;

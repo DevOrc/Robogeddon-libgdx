@@ -1,6 +1,6 @@
 package com.noahcharlton.robogeddon.server;
 
-import com.noahcharlton.robogeddon.Log;
+import com.noahcharlton.robogeddon.util.log.Log;
 import com.noahcharlton.robogeddon.message.Message;
 import com.noahcharlton.robogeddon.message.MessageSerializer;
 
