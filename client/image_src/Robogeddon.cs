@@ -3,13 +3,16 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using System.IO;
 
-class BatCaller {
+class RobogeddonRunner {
     static void Main() {
-        var batFile = System.Reflection.Assembly.GetEntryAssembly().Location.Replace(".exe", ".bat");
+        string batFile = Directory.GetCurrentDirectory() + "\\bin\\client.bat";
+
         if (!File.Exists(batFile)) {
-            MessageBox.Show("The launch script could not be found.", "Critical error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show("The launch script could not be found: " + batFile,
+                "Critical error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             System.Environment.Exit(42);
         }
+
         var processInfo = new ProcessStartInfo("cmd.exe", "/c \"" + batFile + "\"");
         processInfo.CreateNoWindow = true;
         processInfo.UseShellExecute = false;
