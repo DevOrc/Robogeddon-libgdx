@@ -14,6 +14,7 @@ public class ServerPowerGraph implements PowerGraph {
 
     private float generatedPower;
     private float consumedPower;
+    private float batteryPower;
 
     public void add(Tile tile, HasElectricity electricity) {
         if(!connections.containsKey(tile)){
@@ -28,6 +29,7 @@ public class ServerPowerGraph implements PowerGraph {
     public void update() {
         generatedPower = 0;
         consumedPower = 0;
+        batteryPower = 0;
 
         int consumerCount = 0;
 
@@ -60,7 +62,7 @@ public class ServerPowerGraph implements PowerGraph {
             if(generatedPower != consumedPower)
                 storeExtraPower();
         }else{
-            float powerPer = generatedPower / consumerCount;
+            float powerPer = (generatedPower + batteryPower) / consumerCount;
 
             for(HasElectricity connection : connections.values()){
                 var wantsPower = connection.getPowerBuffer().getPowerWanted() > 0;
@@ -84,7 +86,7 @@ public class ServerPowerGraph implements PowerGraph {
 
             battery.getPowerBuffer().setStored(stored - withdrawn);
             powerNeeded -= withdrawn;
-            generatedPower += withdrawn;
+            batteryPower += withdrawn;
 
             if(powerNeeded == 0){
                 return;

@@ -31,6 +31,11 @@ public class InventoryPortalTileEntity extends TileEntity implements HasInventor
     }
 
     @Override
+    public String[] getInventoryDetails() {
+        return new String[0];
+    }
+
+    @Override
     public ItemBuffer[] getBuffers() {
         return new ItemBuffer[0];
     }
