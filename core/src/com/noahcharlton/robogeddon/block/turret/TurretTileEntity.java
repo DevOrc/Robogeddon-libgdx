@@ -8,6 +8,7 @@ import com.noahcharlton.robogeddon.block.tileentity.inventory.SingleItemBuffer;
 import com.noahcharlton.robogeddon.block.tileentity.TileEntity;
 import com.noahcharlton.robogeddon.entity.Entity;
 import com.noahcharlton.robogeddon.entity.EntityType;
+import com.noahcharlton.robogeddon.util.Direction;
 import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.HasWorldPosition;
 import com.noahcharlton.robogeddon.world.ServerWorld;
@@ -152,7 +153,7 @@ public class TurretTileEntity extends TileEntity implements HasInventory {
     }
 
     @Override
-    public Item retrieveItem(boolean simulate) {
+    public Item retrieveItem(boolean simulate, Direction to) {
         return null;
     }
 

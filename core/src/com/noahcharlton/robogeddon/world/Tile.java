@@ -1,17 +1,19 @@
 package com.noahcharlton.robogeddon.world;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.noahcharlton.robogeddon.Core;
-import com.noahcharlton.robogeddon.util.log.Log;
 import com.noahcharlton.robogeddon.block.Block;
 import com.noahcharlton.robogeddon.block.Multiblock;
+import com.noahcharlton.robogeddon.block.tileentity.TileEntity;
+import com.noahcharlton.robogeddon.block.tileentity.TileEntitySelectable;
 import com.noahcharlton.robogeddon.block.tileentity.electricity.HasElectricity;
 import com.noahcharlton.robogeddon.block.tileentity.inventory.HasInventory;
 import com.noahcharlton.robogeddon.block.tileentity.inventory.HasTileEntity;
-import com.noahcharlton.robogeddon.block.tileentity.TileEntity;
-import com.noahcharlton.robogeddon.block.tileentity.TileEntitySelectable;
+import com.noahcharlton.robogeddon.util.Direction;
 import com.noahcharlton.robogeddon.util.Selectable;
 import com.noahcharlton.robogeddon.util.Side;
+import com.noahcharlton.robogeddon.util.log.Log;
 import com.noahcharlton.robogeddon.world.floor.Floor;
 
 import java.util.Objects;
@@ -147,6 +149,21 @@ public class Tile implements Selectable, HasWorldPosition {
     @Override
     public String getTitle() {
         return toString();
+    }
+
+    public Tile getNeighbor(Direction direction) {
+        switch(direction){
+            case NORTH:
+                return world.getTileAt(x, y + 1);
+            case EAST:
+                return world.getTileAt(x + 1, y);
+            case SOUTH:
+                return world.getTileAt(x, y - 1);
+            case WEST:
+                return world.getTileAt(x - 1, y);
+        }
+
+        throw new GdxRuntimeException("Unknown Direction: " + direction);
     }
 
     @Side(Side.CLIENT)

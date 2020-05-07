@@ -186,26 +186,26 @@ public class ItemDuctTileEntity extends TileEntity implements HasInventory, Tile
         var tileY = getRootTile().getY();
 
         if(connectNorth && direction != Direction.NORTH) {
-            pullFrom(tileX, tileY + 1);
+            pullFrom(tileX, tileY + 1, Direction.SOUTH);
         }
         if(connectSouth && direction != Direction.SOUTH) {
-            pullFrom(tileX, tileY - 1);
+            pullFrom(tileX, tileY - 1, Direction.NORTH);
         }
         if(connectEast && direction != Direction.EAST) {
-            pullFrom(tileX + 1, tileY);
+            pullFrom(tileX + 1, tileY, Direction.WEST);
         }
         if(connectWest && direction != Direction.WEST) {
-            pullFrom(tileX - 1, tileY);
+            pullFrom(tileX - 1, tileY, Direction.EAST);
         }
     }
 
-    private void pullFrom(int x, int y) {
+    private void pullFrom(int x, int y, Direction to) {
         var inventory = (HasInventory) world.getTileAt(x, y).getTileEntity();
         Item item;
 
-        if((item = inventory.retrieveItem(true)) != null) {
+        if((item = inventory.retrieveItem(true, to)) != null) {
             if(acceptItem(item, x, y)) {
-                inventory.retrieveItem(false);
+                inventory.retrieveItem(false, to);
                 dirty = true;
             }
         }
@@ -255,7 +255,7 @@ public class ItemDuctTileEntity extends TileEntity implements HasInventory, Tile
     }
 
     @Override
-    public Item retrieveItem(boolean simulate) {
+    public Item retrieveItem(boolean simulate, Direction to) {
         //Items are never retrieved by item ducts,
         //they are always pushed into the other block
         return null;
@@ -352,6 +352,10 @@ public class ItemDuctTileEntity extends TileEntity implements HasInventory, Tile
         }
 
         return data;
+    }
+
+    public Direction getDirection() {
+        return direction;
     }
 
     private boolean floatToBoolean(float data) {

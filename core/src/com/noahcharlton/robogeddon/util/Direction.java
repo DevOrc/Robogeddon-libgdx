@@ -32,6 +32,21 @@ public enum Direction {
         throw new RuntimeException();
     }
 
+    public Direction flip() {
+        switch(this) {
+            case NORTH:
+                return SOUTH;
+            case SOUTH:
+                return NORTH;
+            case EAST:
+                return WEST;
+            case WEST:
+                return EAST;
+        }
+
+        throw new RuntimeException();
+    }
+
     public boolean isNorthSouth(){
         return this == NORTH || this == SOUTH;
     }

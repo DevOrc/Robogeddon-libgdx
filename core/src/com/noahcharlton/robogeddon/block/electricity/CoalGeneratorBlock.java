@@ -11,6 +11,7 @@ import com.noahcharlton.robogeddon.block.tileentity.inventory.HasInventory;
 import com.noahcharlton.robogeddon.block.tileentity.inventory.HasTileEntity;
 import com.noahcharlton.robogeddon.block.tileentity.inventory.ItemBuffer;
 import com.noahcharlton.robogeddon.block.tileentity.inventory.SingleItemBuffer;
+import com.noahcharlton.robogeddon.util.Direction;
 import com.noahcharlton.robogeddon.world.Tile;
 import com.noahcharlton.robogeddon.world.item.Item;
 import com.noahcharlton.robogeddon.world.item.Items;
@@ -136,7 +137,7 @@ public class CoalGeneratorBlock extends Block implements HasTileEntity, BlockRen
         }
 
         @Override
-        public Item retrieveItem(boolean simulate) {
+        public Item retrieveItem(boolean simulate, Direction to) {
             return null;
         }
 

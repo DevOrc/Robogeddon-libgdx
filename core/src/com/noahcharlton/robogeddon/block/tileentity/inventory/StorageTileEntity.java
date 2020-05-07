@@ -1,6 +1,7 @@
 package com.noahcharlton.robogeddon.block.tileentity.inventory;
 
 import com.noahcharlton.robogeddon.block.tileentity.TileEntity;
+import com.noahcharlton.robogeddon.util.Direction;
 import com.noahcharlton.robogeddon.world.Tile;
 import com.noahcharlton.robogeddon.world.item.Item;
 
@@ -25,7 +26,7 @@ public class StorageTileEntity extends TileEntity implements HasInventory{
     }
 
     @Override
-    public Item retrieveItem(boolean simulate) {
+    public Item retrieveItem(boolean simulate, Direction to) {
         if(simulate){
             return itemBuffer.getAmount() > 0 ? itemBuffer.currentItem() : null;
         }

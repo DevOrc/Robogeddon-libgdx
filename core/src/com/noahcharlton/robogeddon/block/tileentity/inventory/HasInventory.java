@@ -19,7 +19,7 @@ public interface HasInventory {
     void setBuffers(ItemBuffer[] buffers);
 
     @Side(Side.SERVER)
-    Item retrieveItem(boolean simulate);
+    Item retrieveItem(boolean simulate, Direction to);
 
     ItemBuffer[] getBuffers();
 
