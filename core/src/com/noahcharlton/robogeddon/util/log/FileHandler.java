@@ -23,6 +23,7 @@ public class FileHandler extends Handler {
 
             synchronized(writer){
                 writer.print(text);
+                writer.flush();
             }
         }
     }
