@@ -6,6 +6,7 @@ import com.noahcharlton.robogeddon.block.tileentity.inventory.GenericItemBuffer;
 import com.noahcharlton.robogeddon.block.tileentity.inventory.HasInventory;
 import com.noahcharlton.robogeddon.block.tileentity.inventory.ItemBuffer;
 import com.noahcharlton.robogeddon.util.Direction;
+import com.noahcharlton.robogeddon.util.log.Log;
 import com.noahcharlton.robogeddon.world.Tile;
 import com.noahcharlton.robogeddon.world.item.Item;
 
@@ -205,7 +206,9 @@ public class ItemDuctTileEntity extends TileEntity implements HasInventory, Tile
 
         if((item = inventory.retrieveItem(true, to)) != null) {
             if(acceptItem(item, x, y)) {
-                inventory.retrieveItem(false, to);
+                if(inventory.retrieveItem(false, to) == null){
+                    Log.warn("WARNING! FAILED TO PULL ITEM AFTER SIMULATION: " + inventory.getClass().getSimpleName());
+                }
                 dirty = true;
             }
         }

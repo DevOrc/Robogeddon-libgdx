@@ -1,6 +1,7 @@
 package com.noahcharlton.robogeddon.block;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.HasID;
 import com.noahcharlton.robogeddon.util.Side;
@@ -16,6 +17,12 @@ public class BlockGroup implements HasID {
         this.blocks = blocks;
         this.id = id;
         Core.assets.registerTexture("blocks/groups/" + id).setOnLoad(i -> icon = i);
+
+        for(Block block : blocks){
+            if(Core.blocks.getOrNull(block.getTypeID()) == null){
+                throw new GdxRuntimeException("Block was not registered: " + block.getTypeID());
+            }
+        }
     }
 
 

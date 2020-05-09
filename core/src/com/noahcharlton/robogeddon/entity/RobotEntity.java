@@ -293,6 +293,7 @@ public class RobotEntity extends Entity implements HasCollision {
             var drawer = Core.client.getGameShapeDrawer();
             drawer.setColor(Color.YELLOW);
             drawer.line(entity.x, entity.y, position.x, position.y, 3);
+            drawer.filledCircle(entity.x, entity.y, 3);
             drawer.setColor(Color.RED);
             drawer.filledCircle(position.x, position.y, 4);
 
