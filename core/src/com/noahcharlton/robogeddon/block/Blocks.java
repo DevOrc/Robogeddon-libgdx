@@ -10,6 +10,8 @@ import com.noahcharlton.robogeddon.block.electricity.CoalGeneratorBlock;
 import com.noahcharlton.robogeddon.block.electricity.LampBlock;
 import com.noahcharlton.robogeddon.block.electricity.RelayBlock;
 import com.noahcharlton.robogeddon.block.electricity.SolarPanelBlock;
+import com.noahcharlton.robogeddon.block.gate.CombinerBlock;
+import com.noahcharlton.robogeddon.block.gate.CrossGateBlock;
 import com.noahcharlton.robogeddon.block.gate.FlowGateBlock;
 import com.noahcharlton.robogeddon.block.gate.SorterBlock;
 import com.noahcharlton.robogeddon.block.gate.SplitterBlock;
@@ -47,12 +49,14 @@ public class Blocks{
     public static final Block splitter = new SplitterBlock("splitter");
     public static final Block sorter = new SorterBlock("sorter");
     public static final Block flowGate = new FlowGateBlock("flow_gate");
+    public static final Block crossGate = new CrossGateBlock("cross_gate");
+    public static final Block combiner = new CombinerBlock("combiner");
 
     @Side(Side.BOTH)
     public static void preInit() {
         Core.blocks.registerAll(testBlock, turretBlock, blueBeacon, redBeacon, minerBlock, itemDuctNorth, itemDuctSouth,
                 itemDuctEast, itemDuctWest, inventoryPortal, unloaderBlock, wall, metalFormer, relayBlock, solarPanel,
-                lamp, battery, coalGenerator, circuitFactory, splitter, sorter, flowGate);
+                lamp, battery, coalGenerator, circuitFactory, splitter, sorter, flowGate, crossGate, combiner);
     }
 
     @Side(Side.CLIENT)
@@ -61,7 +65,7 @@ public class Blocks{
         BlockGroup misc = new BlockGroup("misc", blueBeacon, metalFormer, circuitFactory);
         BlockGroup transport = new BlockGroup("transport", itemDuctNorth, unloaderBlock, inventoryPortal);
         BlockGroup power = new BlockGroup("power", relayBlock, solarPanel, lamp, battery, coalGenerator);
-        BlockGroup gates = new BlockGroup("gates", splitter, sorter, flowGate);
+        BlockGroup gates = new BlockGroup("gates", splitter, sorter, flowGate, crossGate, combiner);
 
         Core.blockGroups.registerAll(defense, misc, transport, gates, power);
     }

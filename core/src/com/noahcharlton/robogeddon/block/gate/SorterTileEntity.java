@@ -67,7 +67,7 @@ public class SorterTileEntity extends TileEntity implements HasInventory, TileEn
     }
 
     @Override
-    public boolean acceptItem(Item item) {
+    public boolean acceptItem(Item item, Direction from) {
         ItemBuffer buffer = getBufferForItem(item);
 
         if(buffer.acceptItem(item)){

@@ -52,7 +52,7 @@ public class CrafterTileEntity extends TileEntity implements HasInventory {
     }
 
     @Override
-    public boolean acceptItem(Item item) {
+    public boolean acceptItem(Item item, Direction from) {
         for(ItemBuffer inputBuffer : inputBuffers){
             if(inputBuffer.acceptItem(item)){
                 dirty = true;

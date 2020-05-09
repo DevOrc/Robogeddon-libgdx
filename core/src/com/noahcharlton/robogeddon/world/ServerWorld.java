@@ -2,19 +2,23 @@ package com.noahcharlton.robogeddon.world;
 
 import com.badlogic.gdx.math.GridPoint2;
 import com.noahcharlton.robogeddon.Core;
-import com.noahcharlton.robogeddon.util.log.Log;
 import com.noahcharlton.robogeddon.Server;
 import com.noahcharlton.robogeddon.ServerProvider;
 import com.noahcharlton.robogeddon.block.Block;
 import com.noahcharlton.robogeddon.block.Multiblock;
 import com.noahcharlton.robogeddon.block.tileentity.TileEntity;
 import com.noahcharlton.robogeddon.block.tileentity.UpdateTileEntitiesMessage;
-import com.noahcharlton.robogeddon.entity.*;
+import com.noahcharlton.robogeddon.entity.DroneEntity;
+import com.noahcharlton.robogeddon.entity.Entity;
+import com.noahcharlton.robogeddon.entity.EntityRemovedMessage;
+import com.noahcharlton.robogeddon.entity.EntityType;
+import com.noahcharlton.robogeddon.entity.NewEntityMessage;
 import com.noahcharlton.robogeddon.message.Message;
 import com.noahcharlton.robogeddon.message.PauseGameMessage;
 import com.noahcharlton.robogeddon.util.Side;
-import com.noahcharlton.robogeddon.world.electricity.ServerPowerGraph;
+import com.noahcharlton.robogeddon.util.log.Log;
 import com.noahcharlton.robogeddon.world.electricity.PowerGraphUpdate;
+import com.noahcharlton.robogeddon.world.electricity.ServerPowerGraph;
 import com.noahcharlton.robogeddon.world.gen.WorldGenerator;
 import com.noahcharlton.robogeddon.world.io.SaveWorldMessage;
 import com.noahcharlton.robogeddon.world.io.WorldIO;
@@ -25,7 +29,13 @@ import com.noahcharlton.robogeddon.world.settings.SavedWorldSettings;
 import com.noahcharlton.robogeddon.world.settings.WorldSettings;
 import com.noahcharlton.robogeddon.world.team.Team;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Objects;
 
 @Side(Side.SERVER)
 public class ServerWorld extends World {

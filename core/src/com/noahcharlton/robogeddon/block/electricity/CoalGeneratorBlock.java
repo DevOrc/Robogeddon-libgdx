@@ -109,7 +109,7 @@ public class CoalGeneratorBlock extends Block implements HasTileEntity, BlockRen
         }
 
         @Override
-        public boolean acceptItem(Item item) {
+        public boolean acceptItem(Item item, Direction from) {
             if(items.acceptItem(item)){
                 dirty = true;
                 return true;

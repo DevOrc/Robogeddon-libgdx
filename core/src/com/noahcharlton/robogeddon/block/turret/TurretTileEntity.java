@@ -143,7 +143,7 @@ public class TurretTileEntity extends TileEntity implements HasInventory {
     }
 
     @Override
-    public boolean acceptItem(Item item) {
+    public boolean acceptItem(Item item, Direction from) {
         return ammo.acceptItem(item);
     }
 

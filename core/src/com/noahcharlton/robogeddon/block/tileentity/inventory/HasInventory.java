@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 public interface HasInventory {
 
     @Side(Side.SERVER)
-    boolean acceptItem(Item item);
+    boolean acceptItem(Item item, Direction from);
 
     @Side(Side.CLIENT)
     void setBuffers(ItemBuffer[] buffers);

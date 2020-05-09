@@ -56,7 +56,7 @@ public class UnloaderTileEntity extends TileEntity implements HasInventory, Tile
     }
 
     @Override
-    public boolean acceptItem(Item item) {
+    public boolean acceptItem(Item item, Direction from) {
         return false;
     }
 

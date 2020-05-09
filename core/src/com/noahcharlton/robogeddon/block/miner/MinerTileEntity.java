@@ -31,7 +31,7 @@ public class MinerTileEntity extends StorageTileEntity {
         if(time < TIME)
             time++;
 
-        if(time >= TIME && world.isServer() && acceptItem(item)){
+        if(time >= TIME && world.isServer() && acceptItem(item, null)){
             time = 0;
             dirty = true;
         }

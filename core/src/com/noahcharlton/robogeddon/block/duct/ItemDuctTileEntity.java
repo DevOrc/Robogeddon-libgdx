@@ -85,7 +85,7 @@ public class ItemDuctTileEntity extends TileEntity implements HasInventory, Tile
             var itemDuct = (HasInventory) tileEntity;
             var buffer = buffers[item];
 
-            if(itemDuct.acceptItem(buffer.currentItem())){
+            if(itemDuct.acceptItem(buffer.currentItem(), direction.flip())){
                 buffer.retrieveItem();
                 dirty = true;
             }
@@ -247,7 +247,7 @@ public class ItemDuctTileEntity extends TileEntity implements HasInventory, Tile
     }
 
     @Override
-    public boolean acceptItem(Item item) {
+    public boolean acceptItem(Item item, Direction to) {
         //The internal copy should be used instead
         throw new UnsupportedOperationException();
     }

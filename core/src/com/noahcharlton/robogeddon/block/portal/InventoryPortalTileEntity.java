@@ -15,7 +15,7 @@ public class InventoryPortalTileEntity extends TileEntity implements HasInventor
     }
 
     @Override
-    public boolean acceptItem(Item item) {
+    public boolean acceptItem(Item item, Direction from) {
         ((ServerWorld) world).getInventory().changeItem(item, 1);
         return true;
     }

@@ -80,7 +80,7 @@ public class SplitterTileEntity extends TileEntity implements HasInventory {
     }
 
     @Override
-    public boolean acceptItem(Item item) {
+    public boolean acceptItem(Item item, Direction from) {
         if(itemBuffer.acceptItem(item)) {
             return true;
         }
