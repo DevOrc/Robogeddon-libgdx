@@ -1,7 +1,10 @@
 package com.noahcharlton.robogeddon.message;
 
-import com.google.gson.*;
-import com.noahcharlton.robogeddon.block.tileentity.inventory.ItemBuffer;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import java.lang.reflect.Type;
 import java.util.Collections;
@@ -57,7 +60,7 @@ public class MessageSerializer {
         }
     }
 
-    public static ItemBuffer fromJson(String text, Type type) {
+    public static <T> T fromJson(String text, Type type) {
         return gson.fromJson(text, type);
     }
 }

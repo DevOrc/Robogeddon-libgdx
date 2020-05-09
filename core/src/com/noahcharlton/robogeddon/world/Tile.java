@@ -8,6 +8,7 @@ import com.noahcharlton.robogeddon.block.Multiblock;
 import com.noahcharlton.robogeddon.block.tileentity.TileEntity;
 import com.noahcharlton.robogeddon.block.tileentity.TileEntitySelectable;
 import com.noahcharlton.robogeddon.block.tileentity.electricity.HasElectricity;
+import com.noahcharlton.robogeddon.block.tileentity.fluid.HasFluid;
 import com.noahcharlton.robogeddon.block.tileentity.inventory.HasInventory;
 import com.noahcharlton.robogeddon.block.tileentity.inventory.HasTileEntity;
 import com.noahcharlton.robogeddon.util.Direction;
@@ -184,10 +185,14 @@ public class Tile implements Selectable, HasWorldPosition {
                 : new String[]{};
         var electricity = tileEntity instanceof HasElectricity ? ((HasElectricity) tileEntity).getElectricityDetails()
                 : new String[]{};
+        var fluids = tileEntity instanceof HasFluid ? ((HasFluid) tileEntity).getFluidDetails()
+                : new String[]{};
         var details = tileEntity instanceof TileEntitySelectable ? ((TileEntitySelectable) tileEntity).getDetails()
                 : new String[]{};
 
-        return Selectable.combineArrays(details, Selectable.combineArrays(inventory, electricity));
+        var details1 = Selectable.combineArrays(fluids, electricity);
+        var details2 = Selectable.combineArrays(inventory, details);
+        return Selectable.combineArrays(details1, details2);
     }
 
     @Override

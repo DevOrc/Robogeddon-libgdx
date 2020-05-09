@@ -1,5 +1,6 @@
 package com.noahcharlton.robogeddon.block.tileentity;
 
+import com.noahcharlton.robogeddon.block.tileentity.fluid.HasFluid;
 import com.noahcharlton.robogeddon.util.log.Log;
 import com.noahcharlton.robogeddon.block.tileentity.inventory.HasInventory;
 import com.noahcharlton.robogeddon.util.Side;
@@ -29,6 +30,10 @@ public class TileEntity {
         if(this instanceof HasInventory){
             HasInventory.save((HasInventory) this, xml);
         }
+
+        if(this instanceof HasFluid){
+            HasFluid.save((HasFluid) this, xml);
+        }
     }
 
     public void load(Element xml) {
@@ -36,6 +41,10 @@ public class TileEntity {
 
         if(this instanceof HasInventory){
             HasInventory.load((HasInventory) this, xml);
+        }
+
+        if(this instanceof HasFluid){
+            HasFluid.load((HasFluid) this, xml);
         }
 
         dirty = true;
@@ -67,6 +76,10 @@ public class TileEntity {
         System.arraycopy(array2, 0, result, array1.length, array2.length);
 
         return result;
+    }
+
+    public void markDirty() {
+        dirty = true;
     }
 
     @Side(Side.BOTH)

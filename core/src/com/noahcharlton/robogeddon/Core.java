@@ -4,6 +4,7 @@ import com.noahcharlton.robogeddon.asset.AssetManager;
 import com.noahcharlton.robogeddon.block.Block;
 import com.noahcharlton.robogeddon.block.BlockGroup;
 import com.noahcharlton.robogeddon.block.Blocks;
+import com.noahcharlton.robogeddon.block.tileentity.fluid.FluidBuffer;
 import com.noahcharlton.robogeddon.block.tileentity.inventory.ItemBuffer;
 import com.noahcharlton.robogeddon.entity.EntityType;
 import com.noahcharlton.robogeddon.message.InterfaceSerializer;
@@ -16,6 +17,8 @@ import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.util.log.Log;
 import com.noahcharlton.robogeddon.world.floor.Floor;
 import com.noahcharlton.robogeddon.world.floor.Floors;
+import com.noahcharlton.robogeddon.world.fluid.Fluid;
+import com.noahcharlton.robogeddon.world.fluid.Fluids;
 import com.noahcharlton.robogeddon.world.gen.Biome;
 import com.noahcharlton.robogeddon.world.gen.Biomes;
 import com.noahcharlton.robogeddon.world.io.WorldIOHandler;
@@ -34,6 +37,7 @@ public class Core {
     public static final Registry<Block> blocks = new Registry<>();
     public static final Registry<Floor> floors = new Registry<>();
     public static final Registry<Item> items = new Registry<>();
+    public static final Registry<Fluid> fluids = new Registry<>();
     public static final OrderedRegistry<Setting> settings = new OrderedRegistry<>();
 
     @Side(Side.CLIENT)
@@ -57,14 +61,16 @@ public class Core {
         Blocks.preInit();
         Floors.preInit();
         Items.preInit();
+        Fluids.preInit();
         WorldIOHandler.preInit();
-        Biomes.init();
+        Biomes.preInit();
         createMessageSerializers();
 
         entities.setFinalized(true);
         blocks.setFinalized(true);
         floors.setFinalized(true);
         items.setFinalized(true);
+        fluids.setFinalized(true);
         saveGameHandlers.setFinalized(true);
         settings.setFinalized(true);
         SettingsIO.load();
@@ -80,6 +86,8 @@ public class Core {
 
     private static void createMessageSerializers() {
         MessageSerializer.registerType(ItemBuffer.class, InterfaceSerializer.create());
+        MessageSerializer.registerType(FluidBuffer.class, InterfaceSerializer.create());
+        MessageSerializer.registerType(Fluid.class, new RegistrySerializer<>(Core.fluids));
         MessageSerializer.registerType(Item.class, new RegistrySerializer<>(Core.items));
     }
 

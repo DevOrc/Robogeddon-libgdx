@@ -1,5 +1,7 @@
 package com.noahcharlton.robogeddon.block.tileentity;
 
+import com.noahcharlton.robogeddon.block.tileentity.fluid.FluidBuffer;
+import com.noahcharlton.robogeddon.block.tileentity.fluid.HasFluid;
 import com.noahcharlton.robogeddon.block.tileentity.inventory.HasInventory;
 import com.noahcharlton.robogeddon.block.tileentity.inventory.ItemBuffer;
 import com.noahcharlton.robogeddon.message.Message;
@@ -15,6 +17,7 @@ public class UpdateTileEntitiesMessage implements Message {
         public final int tileY;
         public final float[] data;
         public final List<ItemBuffer> items;
+        public final List<FluidBuffer> fluids;
 
         public TileEntityUpdate(TileEntity entity) {
             this.tileX = entity.getRootTile().getX();
@@ -26,6 +29,13 @@ public class UpdateTileEntitiesMessage implements Message {
                 items = Arrays.stream(inventory.getBuffers()).map(ItemBuffer::copy).collect(Collectors.toList());
             }else{
                 items = null;
+            }
+
+            if(entity instanceof HasFluid){
+                var inventory = (HasFluid) entity;
+                fluids = Arrays.stream(inventory.getFluidBuffers()).map(FluidBuffer::copy).collect(Collectors.toList());
+            }else{
+                fluids = null;
             }
         }
     }

@@ -9,7 +9,7 @@ public class Biomes {
     private static final Biome generic = new GenericBiome("General", 0, 0);
     private static final Biome desert = new DesertBiome("Desert", -1, -.4);
 
-    public static void init() {
+    public static void preInit() {
         Core.biomes.register(generic);
         Core.biomes.register(desert);
     }

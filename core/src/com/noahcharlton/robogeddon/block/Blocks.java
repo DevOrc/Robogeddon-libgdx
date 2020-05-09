@@ -4,12 +4,14 @@ import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.block.beacon.BeaconBlock;
 import com.noahcharlton.robogeddon.block.crafting.CircuitFactory;
 import com.noahcharlton.robogeddon.block.crafting.MetalFormerBlock;
+import com.noahcharlton.robogeddon.block.duct.Fluiduct;
 import com.noahcharlton.robogeddon.block.duct.ItemDuct;
 import com.noahcharlton.robogeddon.block.electricity.BatteryBlock;
 import com.noahcharlton.robogeddon.block.electricity.CoalGeneratorBlock;
 import com.noahcharlton.robogeddon.block.electricity.LampBlock;
 import com.noahcharlton.robogeddon.block.electricity.RelayBlock;
 import com.noahcharlton.robogeddon.block.electricity.SolarPanelBlock;
+import com.noahcharlton.robogeddon.block.fluid.WaterCollector;
 import com.noahcharlton.robogeddon.block.gate.CombinerBlock;
 import com.noahcharlton.robogeddon.block.gate.CrossGateBlock;
 import com.noahcharlton.robogeddon.block.gate.FlowGateBlock;
@@ -51,19 +53,22 @@ public class Blocks{
     public static final Block flowGate = new FlowGateBlock("flow_gate");
     public static final Block crossGate = new CrossGateBlock("cross_gate");
     public static final Block combiner = new CombinerBlock("combiner");
+    public static final Block fluiduct = new Fluiduct("fluiduct");
+    public static final Block waterCollector = new WaterCollector("water_collector");
 
     @Side(Side.BOTH)
     public static void preInit() {
         Core.blocks.registerAll(testBlock, turretBlock, blueBeacon, redBeacon, minerBlock, itemDuctNorth, itemDuctSouth,
                 itemDuctEast, itemDuctWest, inventoryPortal, unloaderBlock, wall, metalFormer, relayBlock, solarPanel,
-                lamp, battery, coalGenerator, circuitFactory, splitter, sorter, flowGate, crossGate, combiner);
+                lamp, battery, coalGenerator, circuitFactory, splitter, sorter, flowGate, crossGate, combiner, fluiduct,
+                waterCollector);
     }
 
     @Side(Side.CLIENT)
     public static void init() {
         BlockGroup defense = new BlockGroup("defense", turretBlock, minerBlock, wall);
-        BlockGroup misc = new BlockGroup("misc", blueBeacon, metalFormer, circuitFactory);
-        BlockGroup transport = new BlockGroup("transport", itemDuctNorth, unloaderBlock, inventoryPortal);
+        BlockGroup misc = new BlockGroup("misc", blueBeacon, metalFormer, circuitFactory, waterCollector);
+        BlockGroup transport = new BlockGroup("transport", itemDuctNorth, unloaderBlock, inventoryPortal, fluiduct);
         BlockGroup power = new BlockGroup("power", relayBlock, solarPanel, lamp, battery, coalGenerator);
         BlockGroup gates = new BlockGroup("gates", splitter, sorter, flowGate, crossGate, combiner);
 
