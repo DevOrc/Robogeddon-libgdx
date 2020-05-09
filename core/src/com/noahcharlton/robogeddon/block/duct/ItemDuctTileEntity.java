@@ -408,4 +408,13 @@ public class ItemDuctTileEntity extends TileEntity implements HasInventory, Tile
     public float[] getItemYs() {
         return itemYs;
     }
+
+    public boolean isFull() {
+        for(ItemBuffer buffer : buffers){
+            if(!buffer.isFull())
+                return false;
+        }
+
+        return true;
+    }
 }

@@ -31,4 +31,8 @@ public class DefaultBlockRenderer implements BlockRenderer {
         render(batch, tile);
         batch.setColor(1f, 1f, 1f, 1f);
     }
+
+    public TextureRegion getTexture() {
+        return texture;
+    }
 }
