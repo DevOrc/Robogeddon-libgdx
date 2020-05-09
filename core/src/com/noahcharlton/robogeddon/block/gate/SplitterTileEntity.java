@@ -42,7 +42,7 @@ public class SplitterTileEntity extends TileEntity implements HasInventory {
     }
 
     private void gotoNextDirection() {
-        tick = 30;
+        tick = 20;
 
         switch(direction) {
             case NORTH:

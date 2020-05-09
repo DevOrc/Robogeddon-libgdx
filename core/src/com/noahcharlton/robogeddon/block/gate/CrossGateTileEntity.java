@@ -46,9 +46,9 @@ public class CrossGateTileEntity extends TileEntity implements HasInventory {
 
         if(buffer.acceptItem(item)){
             if(from.isNorthSouth()){
-                northSouthTime = 30;
+                northSouthTime = 20;
             }else{
-                eastWestTime = 30;
+                eastWestTime = 20;
             }
 
             return true;

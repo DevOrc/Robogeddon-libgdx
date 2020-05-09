@@ -60,7 +60,7 @@ public class TileEntity {
 
     }
 
-    public static float[] combineFloatArrays(float[] array1, float[] array2){
+    protected static float[] combineFloatArrays(float[] array1, float[] array2){
         var result = new float[array1.length + array2.length];
 
         System.arraycopy(array1, 0, result, 0, array1.length);
