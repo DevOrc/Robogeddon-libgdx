@@ -1,6 +1,8 @@
 package com.noahcharlton.robogeddon.command;
 
 import com.noahcharlton.robogeddon.Core;
+import com.noahcharlton.robogeddon.entity.Entity;
+import com.noahcharlton.robogeddon.entity.RobotEntity;
 import com.noahcharlton.robogeddon.message.ChatMessage;
 import com.noahcharlton.robogeddon.util.log.Log;
 import com.noahcharlton.robogeddon.world.ServerWorld;
@@ -15,6 +17,15 @@ public class Commands {
 
     public static void preInit(){
         register("give_items", Commands::giveItem);
+        register("kill", Commands::killAll);
+    }
+
+    private static void killAll(ServerWorld world, List<Argument> arguments) {
+        for(Entity entity : world.getEntities()){
+            if(!(entity instanceof RobotEntity)){
+                entity.setDead(true);
+            }
+        }
     }
 
     private static void giveItem(ServerWorld world, List<Argument> arguments) {
