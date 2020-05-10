@@ -13,6 +13,7 @@ import com.noahcharlton.robogeddon.entity.Entity;
 import com.noahcharlton.robogeddon.entity.EntityRemovedMessage;
 import com.noahcharlton.robogeddon.entity.EntityType;
 import com.noahcharlton.robogeddon.entity.NewEntityMessage;
+import com.noahcharlton.robogeddon.message.ChatMessage;
 import com.noahcharlton.robogeddon.message.Message;
 import com.noahcharlton.robogeddon.message.PauseGameMessage;
 import com.noahcharlton.robogeddon.util.Side;
@@ -177,11 +178,18 @@ public class ServerWorld extends World {
             WorldIO.save(this, ((SaveWorldMessage) message).getPath());
         } else if(message instanceof PauseGameMessage) {
             updatePausedState((PauseGameMessage) message);
-        } else {
+        } else if(message instanceof ChatMessage){
+            handleChat((ChatMessage) message);
+        }else {
             Log.warn("Unknown message type: " + message.getClass());
         }
 
         return false;
+    }
+
+    private void handleChat(ChatMessage message) {
+        Log.info("[CHAT]: " + message.getText());
+        sendMessageToClient(message);
     }
 
     private void updatePausedState(PauseGameMessage message) {

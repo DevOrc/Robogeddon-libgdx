@@ -178,11 +178,11 @@ public class RobotEntity extends Entity implements HasCollision {
 
     @Side(Side.CLIENT)
     private void sendInputValues() {
-        boolean w = ClientSettings.keyForward.isKeyPressed();
-        boolean a = ClientSettings.keyLeft.isKeyPressed();
-        boolean s = ClientSettings.keyReverse.isKeyPressed();
-        boolean d = ClientSettings.keyRight.isKeyPressed();
-        boolean space = ClientSettings.keyShoot.isKeyPressed();
+        boolean w = ClientSettings.keyForward.isKeyPressed() && !Core.client.hasKeyFocus();
+        boolean a = ClientSettings.keyLeft.isKeyPressed() && !Core.client.hasKeyFocus();
+        boolean s = ClientSettings.keyReverse.isKeyPressed() && !Core.client.hasKeyFocus();
+        boolean d = ClientSettings.keyRight.isKeyPressed() && !Core.client.hasKeyFocus();
+        boolean space = ClientSettings.keyShoot.isKeyPressed() && !Core.client.hasKeyFocus();
         boolean rightClicking = Gdx.input.isButtonPressed(Input.Buttons.RIGHT) && !Core.client.isMouseOnUI();
         Vector3 currMining = rightClicking ? trimMiningPosition(Core.client.mouseToWorld()) : null;
 

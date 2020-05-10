@@ -17,4 +17,6 @@ public interface Client {
     boolean isMouseOnUI();
 
     boolean isPauseMenuOpen();
+
+    boolean hasKeyFocus();
 }
