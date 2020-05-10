@@ -6,6 +6,8 @@ import com.noahcharlton.robogeddon.block.BlockGroup;
 import com.noahcharlton.robogeddon.block.Blocks;
 import com.noahcharlton.robogeddon.block.tileentity.fluid.FluidBuffer;
 import com.noahcharlton.robogeddon.block.tileentity.inventory.ItemBuffer;
+import com.noahcharlton.robogeddon.command.Command;
+import com.noahcharlton.robogeddon.command.Commands;
 import com.noahcharlton.robogeddon.entity.EntityType;
 import com.noahcharlton.robogeddon.message.InterfaceSerializer;
 import com.noahcharlton.robogeddon.message.MessageSerializer;
@@ -39,12 +41,14 @@ public class Core {
     public static final Registry<Item> items = new Registry<>();
     public static final Registry<Fluid> fluids = new Registry<>();
     public static final OrderedRegistry<Setting> settings = new OrderedRegistry<>();
+    public static final Registry<Biome> biomes = new Registry<>();
 
     @Side(Side.CLIENT)
     public static final Registry<BlockGroup> blockGroups = new Registry<>();
     @Side(Side.SERVER)
     public static final Registry<WorldIOHandler> saveGameHandlers = new Registry<>();
-    public static final Registry<Biome> biomes = new Registry<>();
+    @Side(Side.SERVER)
+    public static final Registry<Command> commands = new Registry<>();
 
     @Side(Side.CLIENT)
     public static AssetManager assets;
@@ -64,6 +68,7 @@ public class Core {
         Fluids.preInit();
         WorldIOHandler.preInit();
         Biomes.preInit();
+        Commands.preInit();
         createMessageSerializers();
 
         entities.setFinalized(true);
@@ -73,6 +78,7 @@ public class Core {
         fluids.setFinalized(true);
         saveGameHandlers.setFinalized(true);
         settings.setFinalized(true);
+        commands.setFinalized(true);
         SettingsIO.load();
         MessageSerializer.finalizeSerializer();
 

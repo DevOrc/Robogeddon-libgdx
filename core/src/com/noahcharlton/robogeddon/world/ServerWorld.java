@@ -8,6 +8,7 @@ import com.noahcharlton.robogeddon.block.Block;
 import com.noahcharlton.robogeddon.block.Multiblock;
 import com.noahcharlton.robogeddon.block.tileentity.TileEntity;
 import com.noahcharlton.robogeddon.block.tileentity.UpdateTileEntitiesMessage;
+import com.noahcharlton.robogeddon.command.Commands;
 import com.noahcharlton.robogeddon.entity.DroneEntity;
 import com.noahcharlton.robogeddon.entity.Entity;
 import com.noahcharlton.robogeddon.entity.EntityRemovedMessage;
@@ -188,8 +189,14 @@ public class ServerWorld extends World {
     }
 
     private void handleChat(ChatMessage message) {
-        Log.info("[CHAT]: " + message.getText());
-        sendMessageToClient(message);
+        var text = message.getText();
+
+        if(text.startsWith("/")){
+            Commands.handle(this, text);
+        }else{
+            Log.info("[CHAT]: " + message.getText());
+            sendMessageToClient(message);
+        }
     }
 
     private void updatePausedState(PauseGameMessage message) {
