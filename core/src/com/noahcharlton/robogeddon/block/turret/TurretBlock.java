@@ -1,5 +1,6 @@
 package com.noahcharlton.robogeddon.block.turret;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.noahcharlton.robogeddon.Core;
@@ -56,6 +57,15 @@ public class TurretBlock extends Block implements BlockRenderer, HasTileEntity {
 
         batch.draw(baseTexture, x, y);
         GraphicsUtil.drawRotated(batch, topTexture, x, y, degrees);
+    }
+
+    @Override
+    public void renderSelected(SpriteBatch batch, Tile tile) {
+        var shapeDrawer = Core.client.getGameShapeDrawer();
+        var x = tile.getPixelX() + (Tile.SIZE / 2f);
+        var y = tile.getPixelY() + (Tile.SIZE / 2f);
+        shapeDrawer.setColor(Color.WHITE);
+        shapeDrawer.circle(x, y, TurretTileEntity.RANGE);
     }
 
     @Override

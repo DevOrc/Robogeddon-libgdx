@@ -19,7 +19,7 @@ import com.noahcharlton.robogeddon.world.team.Team;
 
 public class TurretTileEntity extends TileEntity implements HasInventory {
 
-    private static float RANGE = 512;
+    static float RANGE = 512;
     private static int SHOOTER_TIME = 30;
     private static int SHOOT_TILE_RANGE = (int) (RANGE / Tile.SIZE);
 

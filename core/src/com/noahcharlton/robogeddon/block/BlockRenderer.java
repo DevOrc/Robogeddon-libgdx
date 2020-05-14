@@ -13,4 +13,5 @@ public interface BlockRenderer {
 
     default void renderLayer(SpriteBatch batch, Tile tile, int layer){}
 
+    default void renderSelected(SpriteBatch batch, Tile tile){}
 }
