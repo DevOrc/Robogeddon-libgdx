@@ -129,4 +129,8 @@ public class ItemDuct extends Block implements BlockRenderer, HasTileEntity {
     public TileEntity createTileEntity(Tile tile) {
         return new ItemDuctTileEntity(tile, direction);
     }
+
+    public Direction getDirection() {
+        return direction;
+    }
 }

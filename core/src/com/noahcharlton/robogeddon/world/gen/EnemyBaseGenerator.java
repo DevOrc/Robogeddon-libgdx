@@ -2,6 +2,9 @@ package com.noahcharlton.robogeddon.world.gen;
 
 import com.badlogic.gdx.math.GridPoint2;
 import com.noahcharlton.robogeddon.block.Block;
+import com.noahcharlton.robogeddon.block.Blocks;
+import com.noahcharlton.robogeddon.block.duct.ItemDuct;
+import com.noahcharlton.robogeddon.util.Direction;
 import com.noahcharlton.robogeddon.util.IntermediateDirection;
 import com.noahcharlton.robogeddon.world.Chunk;
 import com.noahcharlton.robogeddon.world.ServerWorld;
@@ -29,19 +32,40 @@ public class EnemyBaseGenerator {
             var instructionPos = getInstructionPos(instruction.x, instruction.y, rootPos, direction, instruction.block);
             var tile = world.getTileAt(instructionPos.x, instructionPos.y);
 
-            executeInstruction(world, instruction, tile);
+            if(instruction.floor != null)
+                tile.setFloor(instruction.floor, false);
+
+            if(instruction.upperFloor != null)
+                tile.setUpperFloor(instruction.upperFloor, false);
+
+            if(instruction.block != null){
+                if(instruction.block instanceof ItemDuct){
+                    buildItemDuct((ItemDuct) instruction.block, direction, tile);
+                }else{
+                    world.buildBlock(tile, instruction.block);
+                }
+            }
         }
     }
 
-    private void executeInstruction(ServerWorld world, BaseComponent.ComponentInstruction instruction, Tile tile) {
-        if(instruction.floor != null)
-            tile.setFloor(instruction.floor, false);
+    private void buildItemDuct(ItemDuct block, IntermediateDirection direction, Tile tile) {
+        if(flipX(direction)){
+            if(block.getDirection() == Direction.WEST){
+                block = (ItemDuct) Blocks.itemDuctEast;
+            }else if(block.getDirection() == Direction.EAST){
+                block = (ItemDuct) Blocks.itemDuctWest;
+            }
+        }
 
-        if(instruction.upperFloor != null)
-            tile.setUpperFloor(instruction.upperFloor, false);
+        if(flipY(direction)){
+            if(block.getDirection() == Direction.NORTH){
+                block = (ItemDuct) Blocks.itemDuctSouth;
+            }else if(block.getDirection() == Direction.SOUTH){
+                block = (ItemDuct) Blocks.itemDuctNorth;
+            }
+        }
 
-        if(instruction.block != null)
-            world.buildBlock(tile, instruction.block);
+        tile.setBlock(block, false);
     }
 
     private GridPoint2 getInstructionPos(int relX, int relY, GridPoint2 rootPos, IntermediateDirection direction,

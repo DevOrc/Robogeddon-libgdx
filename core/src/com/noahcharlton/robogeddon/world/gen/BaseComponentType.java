@@ -8,7 +8,7 @@ import java.util.List;
 
 public enum BaseComponentType {
 
-    POWER("solar_panel"), ARTILLERY("walls"), DRONES;
+    POWER("solar_panel", "modern"), ARTILLERY("walls"), DRONES;
 
     private final String[] componentNames;
     private final List<BaseComponent> components = new ArrayList<>();

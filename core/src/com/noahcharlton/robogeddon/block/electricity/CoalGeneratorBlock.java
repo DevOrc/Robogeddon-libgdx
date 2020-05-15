@@ -92,7 +92,7 @@ public class CoalGeneratorBlock extends Block implements HasTileEntity, BlockRen
                 startBurning();
             }
 
-            if(generating && burnTime == 0){
+            if(generating && burnTime <= 0){
                 dirty = true;
                 generating = false;
             }
