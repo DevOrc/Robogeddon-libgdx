@@ -337,7 +337,7 @@ public class ServerWorld extends World {
     }
 
     private void addNewPlayer(int connID) {
-        var player = addEntity(EntityType.robotEntity.create(this, Team.BLUE));
+        var player = addEntity(EntityType.robotEntity.create(this, playerTeam));
         var message = new AssignRobotMessage(player.getId());
 
         //Send a single message to the client
