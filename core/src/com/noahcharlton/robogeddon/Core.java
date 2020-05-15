@@ -21,6 +21,7 @@ import com.noahcharlton.robogeddon.world.floor.Floor;
 import com.noahcharlton.robogeddon.world.floor.Floors;
 import com.noahcharlton.robogeddon.world.fluid.Fluid;
 import com.noahcharlton.robogeddon.world.fluid.Fluids;
+import com.noahcharlton.robogeddon.world.gen.BaseComponentType;
 import com.noahcharlton.robogeddon.world.gen.Biome;
 import com.noahcharlton.robogeddon.world.gen.Biomes;
 import com.noahcharlton.robogeddon.world.io.WorldIOHandler;
@@ -60,6 +61,7 @@ public class Core {
     @Side(Side.BOTH)
     public static void preInit(){
         Log.debug("PreInit Start");
+        assets = new AssetManager();
 
         EntityType.preInit();
         Blocks.preInit();
@@ -69,6 +71,7 @@ public class Core {
         WorldIOHandler.preInit();
         Biomes.preInit();
         Commands.preInit();
+        BaseComponentType.preInit();
         createMessageSerializers();
 
         entities.setFinalized(true);
@@ -100,7 +103,6 @@ public class Core {
     @Side(Side.CLIENT)
     public static void init(){
         Log.debug("Init");
-        assets = new AssetManager();
 
         Blocks.init();
         MiscTextures.init();

@@ -4,12 +4,12 @@ import com.noahcharlton.robogeddon.block.Blocks;
 import com.noahcharlton.robogeddon.world.Chunk;
 import com.noahcharlton.robogeddon.world.ServerWorld;
 import com.noahcharlton.robogeddon.world.Tile;
-import com.noahcharlton.robogeddon.world.floor.Floors;
 
 import java.util.Random;
 
 public class WorldGenerator {
 
+    private final EnemyBaseGenerator baseGenerator;
     private final SimplexNoise2D noiseMap;
     private final SimplexNoise2D biomeMap;
     private final long seed;
@@ -17,64 +17,8 @@ public class WorldGenerator {
     public WorldGenerator(long seed) {
         this.seed = seed;
         this.noiseMap = new SimplexNoise2D(new Random(seed));
-        this.biomeMap = new SimplexNoise2D(new Random(2 * seed));
-    }
-
-    public void genChunksAround(ServerWorld world, Chunk chunk) {
-        chunk.getNeighborLocations().stream().filter(pt -> world.getChunkAt(pt.x, pt.y) == null).forEach(pt -> {
-            var createdChunk = world.createChunk(pt.x, pt.y, true);
-            createdChunk.setTeam(world.getEnemyTeam());
-            generateEnemyStructures(createdChunk);
-        });
-    }
-
-    private void generateEnemyStructures(Chunk chunk) {
-        for(int x = 4; x < Chunk.SIZE - 4; x++) {
-            for(int y = 4; y < Chunk.SIZE - 4; y++) {
-                Tile tile = chunk.getTile(x, y);
-
-                if(tile != null){
-                    double noise = getGenericNoise(tile);
-
-                    if(noise < -.25 && noise > -.251){
-                        spawnTurret(tile);
-
-                        x += 4;
-                        y += 4;
-                    }
-                }
-            }
-        }
-    }
-
-    private void spawnTurret(Tile tile) {
-        ServerWorld world = (ServerWorld) tile.getWorld();
-        int tileX = tile.getX();
-        int tileY = tile.getY();
-
-        for (int x = tileX - 2; x <= tileX + 2; x++){
-            for (int y = tileY - 2; y <= tileY + 2; y++){
-                var wallTile = world.getTileAt(x, y);
-
-                if(wallTile != null)
-                    wallTile.setBlock(Blocks.wall, false);
-            }
-        }
-        Tile metalFormerTile = world.getTileAt(tileX - 1, tileY - 1);
-        world.buildBlock(metalFormerTile, Blocks.metalFormer);
-        world.getTileAt(tileX, tileY + 1).setBlock(Blocks.itemDuctSouth, false);
-        world.getTileAt(tileX + 1, tileY - 1).setBlock(Blocks.itemDuctNorth, false);
-        world.getTileAt(tileX + 1, tileY).setBlock(Blocks.turretBlock, false);
-
-
-        setMiner(tileX - 1, tileY + 1, world);
-        setMiner(tileX + 1, tileY + 1, world);
-    }
-
-    private void setMiner(int tileX, int tileY, ServerWorld world) {
-        world.getTileAt(tileX, tileY).setFloor(Floors.rock, false);
-        world.getTileAt(tileX, tileY).setUpperFloor(Floors.ironOre, false);
-        world.getTileAt(tileX, tileY).setBlock(Blocks.minerBlock, false);
+        this.biomeMap = new SimplexNoise2D(new Random(seed * 2));
+        this.baseGenerator = new EnemyBaseGenerator(seed * 3);
     }
 
     public void createInitialWorld(ServerWorld world) {
@@ -84,7 +28,7 @@ public class WorldGenerator {
 
                 if(Math.abs(x) >= 3 || Math.abs(y) >= 3) {
                     chunk.setTeam(world.getEnemyTeam());
-                    generateEnemyStructures(chunk);
+                    baseGenerator.generate(chunk);;
                 } else {
                     chunk.setTeam(world.getPlayerTeam());
                 }
@@ -107,11 +51,24 @@ public class WorldGenerator {
         }
     }
 
+    public void genChunksAround(ServerWorld world, Chunk chunk) {
+        chunk.getNeighborLocations().stream().filter(pt -> world.getChunkAt(pt.x, pt.y) == null).forEach(pt -> {
+            var createdChunk = world.createChunk(pt.x, pt.y, true);
+            createdChunk.setTeam(world.getEnemyTeam());
+
+            baseGenerator.generate(chunk);
+        });
+    }
+
     private double getGenericNoise(Tile tile) {
         return noiseMap.noise(tile.getX() / 16f, tile.getY() / 16f);
     }
 
     public long getSeed() {
         return seed;
+    }
+
+    public EnemyBaseGenerator getBaseGenerator() {
+        return baseGenerator;
     }
 }

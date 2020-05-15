@@ -115,8 +115,19 @@ public class ServerLauncher {
         Log.info("Core Version: " + Core.VERSION + "-" + Core.VERSION_TYPE);
 
         Core.preInit();
+        loadAssets();
 
         Log.info("Running server!");
         new ServerLauncher();
+    }
+
+    private static void loadAssets() {
+        Log.info("Loading Assets: " + Core.assets.getAssetCount());
+
+        while(!Core.assets.isDone()){
+            Core.assets.update();
+        }
+
+        Log.info("Finished Loading Assets!");
     }
 }

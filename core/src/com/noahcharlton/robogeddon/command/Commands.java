@@ -4,8 +4,13 @@ import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.entity.Entity;
 import com.noahcharlton.robogeddon.entity.RobotEntity;
 import com.noahcharlton.robogeddon.message.ChatMessage;
+import com.noahcharlton.robogeddon.util.IntermediateDirection;
 import com.noahcharlton.robogeddon.util.log.Log;
+import com.noahcharlton.robogeddon.world.Chunk;
 import com.noahcharlton.robogeddon.world.ServerWorld;
+import com.noahcharlton.robogeddon.world.gen.BaseComponent;
+import com.noahcharlton.robogeddon.world.gen.BaseComponentType;
+import com.noahcharlton.robogeddon.world.gen.EnemyBaseGenerator;
 import com.noahcharlton.robogeddon.world.item.Item;
 
 import java.util.Arrays;
@@ -18,6 +23,41 @@ public class Commands {
     public static void preInit(){
         register("give_items", Commands::giveItem);
         register("kill", Commands::killAll);
+        register("spawn_base", Commands::spawnBase);
+        register("base_test", Commands::spawnTest);
+    }
+
+    private static void spawnTest(ServerWorld world, List<Argument> arguments) {
+        spawnBase(world, List.of(new Argument("POWER"), new Argument("solar_panel")));
+    }
+
+    private static void spawnBase(ServerWorld world, List<Argument> arguments) {
+        BaseComponentType type = arguments.get(0).asEnum(BaseComponentType.class);
+        String name = arguments.get(1).asString();
+        Chunk chunk = world.getChunkAt(-1, 0);
+        EnemyBaseGenerator generator = world.getGenerator().getBaseGenerator();
+
+        for(BaseComponent comp : type.getComponents()){
+            if(name.equals(comp.getName())){
+                Log.info("Spawning base: " + type + ":" + name);
+
+                applyComponent(chunk, comp, generator);
+                return;
+            }
+        }
+
+    }
+
+    private static void applyComponent(Chunk chunk, BaseComponent component, EnemyBaseGenerator generator) {
+        for(IntermediateDirection direction : IntermediateDirection.values()){
+            generator.applyComponent(direction, component, chunk);
+        }
+
+        for(int x = 0; x < Chunk.SIZE; x++){
+            for(int y = 0; y < Chunk.SIZE; y++){
+                chunk.getTile(x, y).markDirty();
+            }
+        }
     }
 
     private static void killAll(ServerWorld world, List<Argument> arguments) {
@@ -83,9 +123,15 @@ public class Commands {
         try{
             parse(world, text);
         }catch(CommandParseException e){
-            world.sendMessageToClient(new ChatMessage("[RED][[PARSE ERROR][WHITE]  " + e.getMessage()));
+            world.sendMessageToClient(new ChatMessage("[RED][[PARSE ERROR][WHITE]  " + getMessage(e)));
         }catch(RuntimeException e){
-            world.sendMessageToClient(new ChatMessage("[RED][[INTERNAL ERROR][WHITE]  " + e.getMessage()));
+            world.sendMessageToClient(new ChatMessage("[RED][[INTERNAL ERROR][WHITE]  " + getMessage(e)));
+
+            Log.error("Internal Error while executing command: " + text, e);
         }
+    }
+
+    public static String getMessage(Exception e) {
+        return e.getMessage() == null ? e.getClass().getSimpleName() : e.getMessage();
     }
 }

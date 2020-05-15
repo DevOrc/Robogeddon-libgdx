@@ -197,6 +197,10 @@ public class Chunk {
             world.sendMessageToClient(new ChunkTeamUpdateMessage(this));
     }
 
+    public World getWorld() {
+        return world;
+    }
+
     public Team getTeam() {
         return team;
     }

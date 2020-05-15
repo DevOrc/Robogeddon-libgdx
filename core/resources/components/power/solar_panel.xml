@@ -1,0 +1,42 @@
+<BaseComponent>
+    <Build x="0" y="0">
+        <Block>wall</Block>
+    </Build>
+    <Build x="1" y="0">
+        <Block>wall</Block>
+    </Build>
+    <Build x="2" y="0">
+        <Block>wall</Block>
+    </Build>
+    <Build x="0" y="1">
+        <Block>wall</Block>
+    </Build>
+    <Build x="0" y="2">
+        <Block>wall</Block>
+    </Build>
+    <Build x="1" y="1">
+        <Block>miner</Block>
+        <UpperFloor>coal</UpperFloor>
+    </Build>
+    <Build x="4" y="1">
+        <Block>coal_generator</Block>
+    </Build>
+    <Build x="1" y="4">
+        <Block>coal_generator</Block>
+    </Build>
+    <Build x="2" y="1">
+        <Block>item_duct_EAST</Block>
+    </Build>
+    <Build x="3" y="1">
+        <Block>item_duct_EAST</Block>
+    </Build>
+    <Build x="1" y="2">
+        <Block>item_duct_NORTH</Block>
+    </Build>
+    <Build x="1" y="3">
+        <Block>item_duct_NORTH</Block>
+    </Build>
+    <Build x="2" y="2">
+        <Block>metal_former</Block>
+    </Build>
+</BaseComponent>

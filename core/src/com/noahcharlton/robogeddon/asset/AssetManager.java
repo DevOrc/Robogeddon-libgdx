@@ -1,13 +1,11 @@
 package com.noahcharlton.robogeddon.asset;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.noahcharlton.robogeddon.util.Side;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 
-@Side(Side.CLIENT)
 public class AssetManager {
 
     private ArrayDeque<Asset> unloadedAssets = new ArrayDeque<>();
@@ -16,10 +14,14 @@ public class AssetManager {
     static TextureAtlas textures;
 
     public AssetManager(){
+
+    }
+
+    public void addAtlasAsset(){
         var atlas = new AtlasAsset();
         atlas.setOnLoad(a -> textures = a);
 
-        registerAsset(atlas);
+        registerAssetFirst(atlas);
     }
 
     public void reload() {
