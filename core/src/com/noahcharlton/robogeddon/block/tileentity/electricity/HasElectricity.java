@@ -10,6 +10,8 @@ import com.noahcharlton.robogeddon.world.electricity.ServerPowerGraph;
 
 public interface HasElectricity {
 
+    int RELAY_RADIUS = Chunk.SIZE / 2;
+
     default void updateElectricity(){
         TileEntity entity = getTileEntity(this);
 
@@ -22,10 +24,8 @@ public interface HasElectricity {
         Tile thisTile = entity.getRootTile();
         var graph = electricity.getTeamPowerGraph();
 
-        int chunkRadius = Chunk.SIZE / 2;
-
-        for(int x = thisTile.getX() - chunkRadius; x <= thisTile.getX() + chunkRadius; x++){
-            for(int y = thisTile.getY() - chunkRadius; y <= thisTile.getY() + chunkRadius; y++){
+        for(int x = thisTile.getX() - RELAY_RADIUS; x <= thisTile.getX() + RELAY_RADIUS; x++){
+            for(int y = thisTile.getY() - RELAY_RADIUS; y <= thisTile.getY() + RELAY_RADIUS; y++){
                 Tile relayTile = thisTile.getWorld().getTileAt(x, y);
 
                 if(relayTile != null && relayTile.getBlock() == Blocks.relayBlock){
