@@ -61,7 +61,7 @@ public class Commands {
     }
 
     private static void spawnTest(ServerWorld world, List<Argument> arguments) {
-        spawnBase(world, List.of(new Argument("POWER"), new Argument("solar_panel")));
+        spawnBase(world, List.of(new Argument("ARTILLERY"), new Argument("turrets_1")));
     }
 
     private static void spawnBase(ServerWorld world, List<Argument> arguments) {

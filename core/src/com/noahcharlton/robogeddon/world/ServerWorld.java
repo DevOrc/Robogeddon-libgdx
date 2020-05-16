@@ -63,7 +63,7 @@ public class ServerWorld extends World {
         if(settings instanceof SavedWorldSettings) {
             WorldIO.load(this, (SavedWorldSettings) settings);
         } else if(settings instanceof NewWorldSettings) {
-            generator = new WorldGenerator(((NewWorldSettings) settings).getSeed());
+            generator = ((NewWorldSettings) settings).createGenerator();
             generator.createInitialWorld(this);
         } else {
             throw new IllegalArgumentException("Unknown settings: " + settings);

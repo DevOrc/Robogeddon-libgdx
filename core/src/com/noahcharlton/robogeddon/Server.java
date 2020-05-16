@@ -30,10 +30,11 @@ public class Server {
                 if(nextFPSCheck <= System.currentTimeMillis()){
                     Log.info("Server FPS: " + (frames / 10));
                     frames = 0;
-                    nextFPSCheck = System.currentTimeMillis() + 10_000;
+                    nextFPSCheck = System.currentTimeMillis() + 10000;
                 }
 
                 world.update();
+                world.updateMessages();
                 runRunLaters();
             }
 

@@ -1,5 +1,7 @@
 package com.noahcharlton.robogeddon.world.settings;
 
+import com.noahcharlton.robogeddon.world.gen.WorldGenerator;
+
 import java.util.Random;
 
 public class NewWorldSettings implements WorldSettings {
@@ -12,6 +14,10 @@ public class NewWorldSettings implements WorldSettings {
 
     public NewWorldSettings() {
         this(new Random().nextLong());
+    }
+
+    public WorldGenerator createGenerator(){
+        return new WorldGenerator(seed);
     }
 
     public long getSeed() {

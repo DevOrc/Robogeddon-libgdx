@@ -8,7 +8,12 @@ import java.util.List;
 
 public enum BaseComponentType {
 
-    POWER("solar_panel", "modern"), ARTILLERY("walls"), DRONES;
+//    POWER("test"),
+//    ARTILLERY("test"),
+//    MISC("walls");
+    POWER("solar_panel", "modern"),
+    ARTILLERY("turrets_1"),
+    MISC("walls");
 
     private final String[] componentNames;
     private final List<BaseComponent> components = new ArrayList<>();
@@ -17,15 +22,15 @@ public enum BaseComponentType {
         this.componentNames = componentNames;
     }
 
-    public static void preInit(){
-        Arrays.stream(values()).forEach(BaseComponentType::load);
+    public static void preInit() {
+        Arrays.stream(values()).forEach(BaseComponentType::createAsset);
     }
 
-    private void load(){
+    private void createAsset() {
         Core.assets.registerAsset(new BaseComponentAsset(this));
     }
 
-    public String getID(){
+    public String getID() {
         return name().toLowerCase();
     }
 

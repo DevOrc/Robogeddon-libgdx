@@ -21,7 +21,47 @@ public class EnemyBaseGenerator {
     }
 
     void generate(Chunk chunk) {
+        // When main menu world is created, the assets haven't been loaded, so there are no bases to generate from
+        if(BaseComponentType.POWER.getComponents().size() == 0)
+            return;
 
+        Random random = getChunkNoise(chunk);
+
+        if(random.nextInt(5) == 0){
+            generate(chunk, random);
+        }
+    }
+
+    private void generate(Chunk chunk, Random random) {
+        BaseComponent[] components = new BaseComponent[4];
+
+        addComponent(random, components, BaseComponentType.POWER);
+        addComponent(random, components, BaseComponentType.ARTILLERY);
+        addComponent(random, components, BaseComponentType.ARTILLERY);
+        addComponent(random, components, BaseComponentType.MISC);
+
+        for(int i = 0; i < 4; i++){
+            applyComponent(IntermediateDirection.values()[i], components[i], chunk);
+        }
+    }
+
+    private void addComponent(Random random, BaseComponent[] components, BaseComponentType type) {
+        var typeCount = type.getComponents().size();
+        var value = type.getComponents().get(random.nextInt(typeCount));
+
+        for(var i = random.nextInt(4);; i = random.nextInt(4)){
+            if(components[i] == null){
+                components[i] = value;
+                return;
+            }
+        }
+    }
+
+    private Random getChunkNoise(Chunk chunk){
+        var tile = chunk.getTile(0, 0);
+        var seed = noise.noise(tile.getX(), tile.getY()) * 1_000_000_000;
+
+        return new Random((long) seed);
     }
 
     public void applyComponent(IntermediateDirection direction, BaseComponent component, Chunk chunk) {
