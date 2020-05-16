@@ -8,12 +8,9 @@ import java.util.List;
 
 public enum BaseComponentType {
 
-//    POWER("test"),
-//    ARTILLERY("test"),
-//    MISC("walls");
-    POWER("solar_panel", "modern"),
-    ARTILLERY("turrets_1"),
-    MISC("walls");
+    POWER("solar", "mix", "solar_2"),
+    ARTILLERY("turrets_1", "turrets_2"),
+    MISC("walls", "walls_2", "walls_3");
 
     private final String[] componentNames;
     private final List<BaseComponent> components = new ArrayList<>();

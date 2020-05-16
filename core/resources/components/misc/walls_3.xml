@@ -14,9 +14,6 @@
 	<Build x="1" y="15">
 		<Block>wall</Block>
 	</Build>
-	<Build x="2" y="11">
-		<Block>wall</Block>
-	</Build>
 	<Build x="2" y="12">
 		<Block>wall</Block>
 	</Build>
@@ -24,30 +21,6 @@
 		<Block>wall</Block>
 	</Build>
 	<Build x="2" y="14">
-		<Block>wall</Block>
-	</Build>
-	<Build x="3" y="3">
-		<Block>wall</Block>
-	</Build>
-	<Build x="3" y="4">
-		<Block>wall</Block>
-	</Build>
-	<Build x="3" y="5">
-		<Block>wall</Block>
-	</Build>
-	<Build x="3" y="6">
-		<Block>wall</Block>
-	</Build>
-	<Build x="3" y="7">
-		<Block>wall</Block>
-	</Build>
-	<Build x="3" y="8">
-		<Block>wall</Block>
-	</Build>
-	<Build x="3" y="9">
-		<Block>wall</Block>
-	</Build>
-	<Build x="3" y="10">
 		<Block>wall</Block>
 	</Build>
 	<Build x="3" y="11">
@@ -59,70 +32,67 @@
 	<Build x="3" y="13">
 		<Block>wall</Block>
 	</Build>
-	<Build x="4" y="3">
-		<Block>wall</Block>
-	</Build>
-	<Build x="4" y="4">
-		<Block>wall</Block>
-	</Build>
-	<Build x="4" y="5">
-		<Block>wall</Block>
-	</Build>
-	<Build x="4" y="6">
-		<Block>wall</Block>
-	</Build>
-	<Build x="4" y="7">
-		<Block>wall</Block>
-	</Build>
-	<Build x="4" y="8">
-		<Block>wall</Block>
-	</Build>
-	<Build x="4" y="9">
-		<Block>wall</Block>
-	</Build>
 	<Build x="4" y="10">
 		<Block>wall</Block>
 	</Build>
 	<Build x="4" y="11">
 		<Block>wall</Block>
 	</Build>
-	<Build x="5" y="3">
+	<Build x="4" y="12">
 		<Block>wall</Block>
 	</Build>
-	<Build x="5" y="4">
+	<Build x="5" y="9">
 		<Block>wall</Block>
 	</Build>
-	<Build x="6" y="3">
+	<Build x="5" y="10">
 		<Block>wall</Block>
 	</Build>
-	<Build x="6" y="4">
+	<Build x="5" y="11">
 		<Block>wall</Block>
 	</Build>
-	<Build x="7" y="3">
+	<Build x="6" y="8">
 		<Block>wall</Block>
 	</Build>
-	<Build x="7" y="4">
+	<Build x="6" y="9">
 		<Block>wall</Block>
 	</Build>
-	<Build x="8" y="3">
+	<Build x="6" y="10">
 		<Block>wall</Block>
 	</Build>
-	<Build x="8" y="4">
+	<Build x="7" y="7">
 		<Block>wall</Block>
 	</Build>
-	<Build x="9" y="3">
+	<Build x="7" y="8">
 		<Block>wall</Block>
 	</Build>
-	<Build x="9" y="4">
+	<Build x="7" y="9">
 		<Block>wall</Block>
 	</Build>
-	<Build x="10" y="3">
+	<Build x="8" y="6">
+		<Block>wall</Block>
+	</Build>
+	<Build x="8" y="7">
+		<Block>wall</Block>
+	</Build>
+	<Build x="8" y="8">
+		<Block>wall</Block>
+	</Build>
+	<Build x="9" y="5">
+		<Block>wall</Block>
+	</Build>
+	<Build x="9" y="6">
+		<Block>wall</Block>
+	</Build>
+	<Build x="9" y="7">
 		<Block>wall</Block>
 	</Build>
 	<Build x="10" y="4">
 		<Block>wall</Block>
 	</Build>
-	<Build x="11" y="2">
+	<Build x="10" y="5">
+		<Block>wall</Block>
+	</Build>
+	<Build x="10" y="6">
 		<Block>wall</Block>
 	</Build>
 	<Build x="11" y="3">
@@ -131,10 +101,16 @@
 	<Build x="11" y="4">
 		<Block>wall</Block>
 	</Build>
+	<Build x="11" y="5">
+		<Block>wall</Block>
+	</Build>
 	<Build x="12" y="2">
 		<Block>wall</Block>
 	</Build>
 	<Build x="12" y="3">
+		<Block>wall</Block>
+	</Build>
+	<Build x="12" y="4">
 		<Block>wall</Block>
 	</Build>
 	<Build x="13" y="1">
