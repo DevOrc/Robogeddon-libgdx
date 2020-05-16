@@ -27,6 +27,7 @@ public class TurretTileEntity extends TileEntity implements HasInventory {
     private HasWorldPosition target;
     private float angle;
     private int shooterTime;
+    private int targetTime = 60;
 
     public TurretTileEntity(Tile rootTile) {
         super(rootTile);
@@ -40,6 +41,7 @@ public class TurretTileEntity extends TileEntity implements HasInventory {
             findTarget();
             angle += .005;
             shooterTime = SHOOTER_TIME;
+            targetTime--;
             return;
         }else if(!isInRange(target) || world.isClient()){
             target = null;
@@ -51,6 +53,7 @@ public class TurretTileEntity extends TileEntity implements HasInventory {
         angle = vec.angleRad();
         dirty = true;
         shooterTime--;
+        targetTime = 0;
 
         if(shooterTime < 0 && ammo.getAmount() > 0){
             shooterTime = SHOOTER_TIME;
@@ -84,7 +87,7 @@ public class TurretTileEntity extends TileEntity implements HasInventory {
     private void findTarget() {
         var team = getRootTile().getChunk().getTeam();
 
-        if(world.isClient() || team == Team.NEUTRAL)
+        if(world.isClient() || team == Team.NEUTRAL || targetTime > 0)
             return;
 
         for(int x = getRootTile().getX() - SHOOT_TILE_RANGE; x < getRootTile().getX() + SHOOT_TILE_RANGE; x++){
@@ -119,6 +122,8 @@ public class TurretTileEntity extends TileEntity implements HasInventory {
                 }
             }
         }
+
+        targetTime = 60;
     }
 
     private boolean isInRange(HasWorldPosition target) {
