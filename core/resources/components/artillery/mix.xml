@@ -1,0 +1,493 @@
+<BaseComponent>
+	<Build x="0" y="6">
+		<Block>wall</Block>
+	</Build>
+	<Build x="0" y="7">
+		<Block>wall</Block>
+	</Build>
+	<Build x="0" y="9">
+		<Block>miner</Block>
+		<UpperFloor>iron</UpperFloor>
+	</Build>
+	<Build x="0" y="10">
+		<Block>miner</Block>
+		<UpperFloor>iron</UpperFloor>
+	</Build>
+	<Build x="0" y="14">
+		<Block>wall</Block>
+	</Build>
+	<Build x="0" y="15">
+		<Block>wall</Block>
+	</Build>
+	<Build x="1" y="1">
+		<Block>solar_panel</Block>
+	</Build>
+	<Build x="1" y="2">
+		<Block>solar_panel</Block>
+	</Build>
+	<Build x="1" y="3">
+		<Block>solar_panel</Block>
+	</Build>
+	<Build x="1" y="4">
+		<Block>solar_panel</Block>
+	</Build>
+	<Build x="1" y="6">
+		<Block>wall</Block>
+	</Build>
+	<Build x="1" y="7">
+		<Block>wall</Block>
+	</Build>
+	<Build x="1" y="9">
+		<Block>item_duct_EAST</Block>
+	</Build>
+	<Build x="1" y="10">
+		<Block>item_duct_EAST</Block>
+	</Build>
+	<Build x="1" y="12">
+		<Block>turret</Block>
+	</Build>
+	<Build x="1" y="14">
+		<Block>wall</Block>
+	</Build>
+	<Build x="1" y="15">
+		<Block>wall</Block>
+	</Build>
+	<Build x="2" y="1">
+		<Block>solar_panel</Block>
+	</Build>
+	<Build x="2" y="2">
+		<Block>lamp</Block>
+	</Build>
+	<Build x="2" y="3">
+		<Block>relay</Block>
+	</Build>
+	<Build x="2" y="4">
+		<Block>solar_panel</Block>
+	</Build>
+	<Build x="2" y="6">
+		<Block>wall</Block>
+	</Build>
+	<Build x="2" y="7">
+		<Block>wall</Block>
+	</Build>
+	<Build x="2" y="9">
+		<Block>metal_former</Block>
+	</Build>
+	<Build x="2" y="12">
+		<Block>item_duct_WEST</Block>
+	</Build>
+	<Build x="2" y="14">
+		<Block>wall</Block>
+	</Build>
+	<Build x="2" y="15">
+		<Block>wall</Block>
+	</Build>
+	<Build x="3" y="1">
+		<Block>solar_panel</Block>
+	</Build>
+	<Build x="3" y="2">
+		<Block>relay</Block>
+	</Build>
+	<Build x="3" y="3">
+		<Block>lamp</Block>
+	</Build>
+	<Build x="3" y="4">
+		<Block>solar_panel</Block>
+	</Build>
+	<Build x="3" y="6">
+		<Block>wall</Block>
+	</Build>
+	<Build x="3" y="7">
+		<Block>wall</Block>
+	</Build>
+	<Build x="3" y="11">
+		<Block>item_duct_NORTH</Block>
+	</Build>
+	<Build x="3" y="12">
+		<Block>splitter</Block>
+	</Build>
+	<Build x="3" y="14">
+		<Block>wall</Block>
+	</Build>
+	<Build x="3" y="15">
+		<Block>wall</Block>
+	</Build>
+	<Build x="4" y="1">
+		<Block>solar_panel</Block>
+	</Build>
+	<Build x="4" y="2">
+		<Block>solar_panel</Block>
+	</Build>
+	<Build x="4" y="3">
+		<Block>solar_panel</Block>
+	</Build>
+	<Build x="4" y="4">
+		<Block>solar_panel</Block>
+	</Build>
+	<Build x="4" y="6">
+		<Block>wall</Block>
+	</Build>
+	<Build x="4" y="7">
+		<Block>wall</Block>
+	</Build>
+	<Build x="4" y="9">
+		<Block>item_duct_WEST</Block>
+	</Build>
+	<Build x="4" y="10">
+		<Block>item_duct_WEST</Block>
+	</Build>
+	<Build x="4" y="12">
+		<Block>item_duct_EAST</Block>
+	</Build>
+	<Build x="4" y="14">
+		<Block>wall</Block>
+	</Build>
+	<Build x="4" y="15">
+		<Block>wall</Block>
+	</Build>
+	<Build x="5" y="6">
+		<Block>wall</Block>
+	</Build>
+	<Build x="5" y="7">
+		<Block>wall</Block>
+	</Build>
+	<Build x="5" y="9">
+		<Block>miner</Block>
+		<UpperFloor>iron</UpperFloor>
+	</Build>
+	<Build x="5" y="10">
+		<Block>miner</Block>
+		<UpperFloor>iron</UpperFloor>
+	</Build>
+	<Build x="5" y="12">
+		<Block>turret</Block>
+	</Build>
+	<Build x="5" y="14">
+		<Block>wall</Block>
+	</Build>
+	<Build x="5" y="15">
+		<Block>wall</Block>
+	</Build>
+	<Build x="6" y="0">
+		<Block>wall</Block>
+	</Build>
+	<Build x="6" y="1">
+		<Block>wall</Block>
+	</Build>
+	<Build x="6" y="2">
+		<Block>wall</Block>
+	</Build>
+	<Build x="6" y="3">
+		<Block>wall</Block>
+	</Build>
+	<Build x="6" y="4">
+		<Block>wall</Block>
+	</Build>
+	<Build x="6" y="5">
+		<Block>wall</Block>
+	</Build>
+	<Build x="6" y="6">
+		<Block>wall</Block>
+	</Build>
+	<Build x="6" y="7">
+		<Block>wall</Block>
+	</Build>
+	<Build x="6" y="14">
+		<Block>wall</Block>
+	</Build>
+	<Build x="6" y="15">
+		<Block>wall</Block>
+	</Build>
+	<Build x="7" y="0">
+		<Block>wall</Block>
+	</Build>
+	<Build x="7" y="1">
+		<Block>wall</Block>
+	</Build>
+	<Build x="7" y="2">
+		<Block>wall</Block>
+	</Build>
+	<Build x="7" y="3">
+		<Block>wall</Block>
+	</Build>
+	<Build x="7" y="4">
+		<Block>wall</Block>
+	</Build>
+	<Build x="7" y="5">
+		<Block>wall</Block>
+	</Build>
+	<Build x="7" y="6">
+		<Block>wall</Block>
+	</Build>
+	<Build x="7" y="7">
+		<Block>wall</Block>
+	</Build>
+	<Build x="7" y="8">
+		<Block>wall</Block>
+	</Build>
+	<Build x="7" y="14">
+		<Block>wall</Block>
+	</Build>
+	<Build x="7" y="15">
+		<Block>wall</Block>
+	</Build>
+	<Build x="8" y="7">
+		<Block>wall</Block>
+	</Build>
+	<Build x="8" y="8">
+		<Block>wall</Block>
+	</Build>
+	<Build x="8" y="9">
+		<Block>wall</Block>
+	</Build>
+	<Build x="8" y="14">
+		<Block>wall</Block>
+	</Build>
+	<Build x="8" y="15">
+		<Block>wall</Block>
+	</Build>
+	<Build x="9" y="1">
+		<Block>miner</Block>
+		<UpperFloor>iron</UpperFloor>
+	</Build>
+	<Build x="9" y="2">
+		<Block>item_duct_NORTH</Block>
+	</Build>
+	<Build x="9" y="3">
+		<Block>metal_former</Block>
+	</Build>
+	<Build x="9" y="5">
+		<Block>item_duct_SOUTH</Block>
+	</Build>
+	<Build x="9" y="6">
+		<Block>miner</Block>
+		<UpperFloor>iron</UpperFloor>
+	</Build>
+	<Build x="9" y="8">
+		<Block>wall</Block>
+	</Build>
+	<Build x="9" y="9">
+		<Block>wall</Block>
+	</Build>
+	<Build x="9" y="10">
+		<Block>wall</Block>
+	</Build>
+	<Build x="9" y="11">
+		<Block>battery</Block>
+	</Build>
+	<Build x="9" y="12">
+		<Block>battery</Block>
+	</Build>
+	<Build x="9" y="13">
+		<Block>battery</Block>
+	</Build>
+	<Build x="9" y="14">
+		<Block>wall</Block>
+	</Build>
+	<Build x="9" y="15">
+		<Block>wall</Block>
+	</Build>
+	<Build x="10" y="1">
+		<Block>miner</Block>
+		<UpperFloor>iron</UpperFloor>
+	</Build>
+	<Build x="10" y="2">
+		<Block>item_duct_NORTH</Block>
+	</Build>
+	<Build x="10" y="5">
+		<Block>item_duct_SOUTH</Block>
+	</Build>
+	<Build x="10" y="6">
+		<Block>miner</Block>
+		<UpperFloor>iron</UpperFloor>
+	</Build>
+	<Build x="10" y="9">
+		<Block>wall</Block>
+	</Build>
+	<Build x="10" y="10">
+		<Block>wall</Block>
+	</Build>
+	<Build x="10" y="11">
+		<Block>wall</Block>
+	</Build>
+	<Build x="10" y="12">
+		<Block>wall</Block>
+	</Build>
+	<Build x="10" y="13">
+		<Block>wall</Block>
+	</Build>
+	<Build x="10" y="14">
+		<Block>wall</Block>
+	</Build>
+	<Build x="10" y="15">
+		<Block>wall</Block>
+	</Build>
+	<Build x="11" y="3">
+		<Block>item_duct_EAST</Block>
+	</Build>
+	<Build x="11" y="9">
+		<Block>battery</Block>
+	</Build>
+	<Build x="11" y="10">
+		<Block>wall</Block>
+	</Build>
+	<Build x="11" y="11">
+		<Block>wall</Block>
+	</Build>
+	<Build x="11" y="12">
+		<Block>wall</Block>
+	</Build>
+	<Build x="11" y="13">
+		<Block>wall</Block>
+	</Build>
+	<Build x="11" y="14">
+		<Block>wall</Block>
+	</Build>
+	<Build x="11" y="15">
+		<Block>wall</Block>
+	</Build>
+	<Build x="12" y="1">
+		<Block>turret</Block>
+	</Build>
+	<Build x="12" y="2">
+		<Block>item_duct_SOUTH</Block>
+	</Build>
+	<Build x="12" y="3">
+		<Block>splitter</Block>
+	</Build>
+	<Build x="12" y="4">
+		<Block>item_duct_NORTH</Block>
+	</Build>
+	<Build x="12" y="5">
+		<Block>turret</Block>
+	</Build>
+	<Build x="12" y="9">
+		<Block>battery</Block>
+	</Build>
+	<Build x="12" y="10">
+		<Block>wall</Block>
+	</Build>
+	<Build x="12" y="11">
+		<Block>wall</Block>
+	</Build>
+	<Build x="12" y="12">
+		<Block>laser</Block>
+	</Build>
+	<Build x="12" y="14">
+		<Block>wall</Block>
+	</Build>
+	<Build x="12" y="15">
+		<Block>wall</Block>
+	</Build>
+	<Build x="13" y="9">
+		<Block>battery</Block>
+	</Build>
+	<Build x="13" y="10">
+		<Block>wall</Block>
+	</Build>
+	<Build x="13" y="11">
+		<Block>wall</Block>
+	</Build>
+	<Build x="13" y="14">
+		<Block>wall</Block>
+	</Build>
+	<Build x="13" y="15">
+		<Block>wall</Block>
+	</Build>
+	<Build x="14" y="0">
+		<Block>wall</Block>
+	</Build>
+	<Build x="14" y="1">
+		<Block>wall</Block>
+	</Build>
+	<Build x="14" y="2">
+		<Block>wall</Block>
+	</Build>
+	<Build x="14" y="3">
+		<Block>wall</Block>
+	</Build>
+	<Build x="14" y="4">
+		<Block>wall</Block>
+	</Build>
+	<Build x="14" y="5">
+		<Block>wall</Block>
+	</Build>
+	<Build x="14" y="6">
+		<Block>wall</Block>
+	</Build>
+	<Build x="14" y="7">
+		<Block>wall</Block>
+	</Build>
+	<Build x="14" y="8">
+		<Block>wall</Block>
+	</Build>
+	<Build x="14" y="9">
+		<Block>wall</Block>
+	</Build>
+	<Build x="14" y="10">
+		<Block>wall</Block>
+	</Build>
+	<Build x="14" y="11">
+		<Block>wall</Block>
+	</Build>
+	<Build x="14" y="12">
+		<Block>wall</Block>
+	</Build>
+	<Build x="14" y="13">
+		<Block>wall</Block>
+	</Build>
+	<Build x="14" y="14">
+		<Block>wall</Block>
+	</Build>
+	<Build x="14" y="15">
+		<Block>wall</Block>
+	</Build>
+	<Build x="15" y="0">
+		<Block>wall</Block>
+	</Build>
+	<Build x="15" y="1">
+		<Block>wall</Block>
+	</Build>
+	<Build x="15" y="2">
+		<Block>wall</Block>
+	</Build>
+	<Build x="15" y="3">
+		<Block>wall</Block>
+	</Build>
+	<Build x="15" y="4">
+		<Block>wall</Block>
+	</Build>
+	<Build x="15" y="5">
+		<Block>wall</Block>
+	</Build>
+	<Build x="15" y="6">
+		<Block>wall</Block>
+	</Build>
+	<Build x="15" y="7">
+		<Block>wall</Block>
+	</Build>
+	<Build x="15" y="8">
+		<Block>wall</Block>
+	</Build>
+	<Build x="15" y="9">
+		<Block>wall</Block>
+	</Build>
+	<Build x="15" y="10">
+		<Block>wall</Block>
+	</Build>
+	<Build x="15" y="11">
+		<Block>wall</Block>
+	</Build>
+	<Build x="15" y="12">
+		<Block>wall</Block>
+	</Build>
+	<Build x="15" y="13">
+		<Block>wall</Block>
+	</Build>
+	<Build x="15" y="14">
+		<Block>wall</Block>
+	</Build>
+	<Build x="15" y="15">
+		<Block>wall</Block>
+	</Build>
+</BaseComponent>

@@ -27,7 +27,7 @@ public class Entity implements HasWorldPosition {
     protected float velocity;
     protected float angularVelocity;
 
-    private int health;
+    private float health;
 
     private boolean isDead;
     private boolean dirty;
@@ -45,7 +45,7 @@ public class Entity implements HasWorldPosition {
     }
 
     @Side(Side.SERVER)
-    public void damage(int amount){
+    public void damage(float amount){
         if(world.isClient()){
             throw new UnsupportedOperationException("Entity cannot be damaged on the client.");
         }
@@ -195,7 +195,7 @@ public class Entity implements HasWorldPosition {
         this.health = health;
     }
 
-    public int getHealth() {
+    public float getHealth() {
         return health;
     }
 

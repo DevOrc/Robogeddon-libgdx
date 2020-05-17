@@ -54,11 +54,10 @@ public class RobotEntity extends Entity implements HasCollision {
     }
 
     @Override
-    public void damage(int amount) {
+    public void damage(float amount) {
         super.damage(amount);
 
-
-        if(getHealth() < 0){
+        if(getHealth() <= 0f){
             setHealth(getType().getHealth());
             setDead(false);
             setX(0);

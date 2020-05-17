@@ -2,6 +2,7 @@ package com.noahcharlton.robogeddon.world;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.GridPoint2;
 import com.noahcharlton.robogeddon.Core;
@@ -97,6 +98,7 @@ public class Chunk {
             for(int x = 0; x < SIZE; x++) {
                 for(int y = 0; y < SIZE; y++) {
                     getTile(x, y).renderBlock(batch);
+                    batch.setColor(Color.WHITE);
                 }
             }
         }else{
@@ -106,6 +108,7 @@ public class Chunk {
 
                     if(tile.hasBlock() && getTile(x, y).getBlock().getRenderer() != null){
                         getTile(x, y).getBlock().getRenderer().renderLayer(batch, tile, layer);
+                        batch.setColor(Color.WHITE);
                     }
 
                     if(layer == 2 && tile.getBlockHealth() < 1){

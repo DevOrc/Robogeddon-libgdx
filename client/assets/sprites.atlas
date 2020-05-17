@@ -6,623 +6,637 @@ filter: Nearest,Nearest
 repeat: none
 blocks/battery
   rotate: false
-  xy: 1, 21
+  xy: 1, 25
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/beacon_base
   rotate: false
-  xy: 99, 85
+  xy: 99, 89
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/beacon_top
   rotate: false
-  xy: 429, 217
+  xy: 495, 221
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/break/stage
   rotate: false
-  xy: 973, 183
+  xy: 167, 55
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 0
 blocks/break/stage
   rotate: false
-  xy: 973, 149
+  xy: 201, 55
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 1
 blocks/break/stage
   rotate: false
-  xy: 99, 51
+  xy: 235, 55
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 2
 blocks/break/stage
   rotate: false
-  xy: 133, 51
+  xy: 269, 55
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 3
 blocks/circuit_factory
   rotate: false
-  xy: 99, 185
+  xy: 99, 189
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 blocks/coal_generator_off
   rotate: false
-  xy: 99, 119
+  xy: 99, 123
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 blocks/coal_generator_on
   rotate: false
-  xy: 165, 185
+  xy: 165, 189
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 blocks/combiner
   rotate: false
-  xy: 167, 85
+  xy: 167, 89
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/cross_gate
   rotate: false
-  xy: 429, 149
+  xy: 495, 153
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/flow_gate
   rotate: false
-  xy: 497, 183
+  xy: 563, 187
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/fluiduct_center
   rotate: false
-  xy: 531, 217
+  xy: 597, 221
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/fluiduct_center_fluid
   rotate: false
-  xy: 235, 85
+  xy: 235, 89
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/fluiduct_east
   rotate: false
-  xy: 497, 149
+  xy: 563, 153
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/fluiduct_east_fluid
   rotate: false
-  xy: 531, 183
+  xy: 597, 187
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/fluiduct_north
   rotate: false
-  xy: 565, 217
+  xy: 631, 221
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/fluiduct_north_fluid
   rotate: false
-  xy: 269, 85
+  xy: 269, 89
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/fluiduct_south
   rotate: false
-  xy: 531, 149
+  xy: 597, 153
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/fluiduct_south_fluid
   rotate: false
-  xy: 565, 183
+  xy: 631, 187
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/fluiduct_west
   rotate: false
-  xy: 599, 217
+  xy: 665, 221
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/fluiduct_west_fluid
   rotate: false
-  xy: 303, 85
+  xy: 303, 89
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/groups/defense
   rotate: false
-  xy: 463, 183
+  xy: 529, 187
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/groups/gates
   rotate: false
-  xy: 565, 149
+  xy: 631, 153
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/groups/misc
   rotate: false
-  xy: 803, 183
+  xy: 869, 221
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/groups/power
   rotate: false
-  xy: 837, 183
+  xy: 903, 221
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/groups/transport
   rotate: false
-  xy: 167, 51
+  xy: 303, 55
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/inventory_portal_base
   rotate: false
-  xy: 1, 153
+  xy: 1, 157
   size: 96, 96
   orig: 96, 96
   offset: 0, 0
   index: -1
 blocks/inventory_portal_top
   rotate: false
-  xy: 1, 55
+  xy: 1, 59
   size: 96, 96
   orig: 96, 96
   offset: 0, 0
   index: -1
 blocks/item_duct
   rotate: false
-  xy: 599, 149
+  xy: 665, 153
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/item_duct_arrow
   rotate: false
-  xy: 633, 183
+  xy: 699, 187
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/item_duct_roof_bottom
   rotate: false
-  xy: 667, 217
+  xy: 733, 221
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/item_duct_roof_center
   rotate: false
-  xy: 371, 85
+  xy: 371, 89
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/item_duct_roof_left
   rotate: false
-  xy: 633, 149
+  xy: 699, 153
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/item_duct_roof_right
   rotate: false
-  xy: 667, 183
+  xy: 733, 187
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/item_duct_roof_top
   rotate: false
-  xy: 701, 217
+  xy: 767, 221
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/item_duct_wall_bottom
   rotate: false
-  xy: 667, 149
+  xy: 405, 89
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/item_duct_wall_center
   rotate: false
-  xy: 701, 183
+  xy: 733, 153
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/item_duct_wall_left
   rotate: false
-  xy: 735, 217
+  xy: 767, 187
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/item_duct_wall_right
   rotate: false
-  xy: 701, 149
+  xy: 801, 221
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/item_duct_wall_top
   rotate: false
-  xy: 735, 183
+  xy: 439, 89
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/lamp_off
   rotate: false
-  xy: 769, 217
+  xy: 767, 153
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/lamp_on
   rotate: false
-  xy: 735, 149
+  xy: 801, 187
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
+blocks/laser_base
+  rotate: false
+  xy: 231, 123
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+blocks/laser_top
+  rotate: false
+  xy: 297, 189
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 blocks/metal_former_base
   rotate: false
-  xy: 231, 119
+  xy: 297, 123
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 blocks/metal_former_tanks
   rotate: false
-  xy: 297, 185
+  xy: 363, 189
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 blocks/miner
   rotate: false
-  xy: 769, 183
+  xy: 835, 221
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 1
 blocks/miner
   rotate: false
-  xy: 803, 217
+  xy: 801, 153
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 2
 blocks/miner
   rotate: false
-  xy: 769, 149
+  xy: 835, 187
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 3
 blocks/oil
   rotate: false
-  xy: 837, 217
+  xy: 835, 153
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/relay
   rotate: false
-  xy: 871, 217
+  xy: 869, 153
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/solar_panel
   rotate: false
-  xy: 939, 183
+  xy: 971, 153
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/sorter
   rotate: false
-  xy: 973, 217
+  xy: 99, 55
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/splitter
   rotate: false
-  xy: 939, 149
+  xy: 133, 55
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/test_block
   rotate: false
-  xy: 363, 119
+  xy: 429, 123
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 blocks/turret_base
   rotate: false
-  xy: 201, 51
+  xy: 337, 55
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/turret_top
   rotate: false
-  xy: 235, 51
+  xy: 371, 55
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/unloader
   rotate: false
-  xy: 269, 51
+  xy: 405, 55
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/wall
   rotate: false
-  xy: 303, 51
+  xy: 439, 55
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 blocks/water_collector
   rotate: false
-  xy: 337, 51
+  xy: 495, 119
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 entities/bullet
   rotate: false
-  xy: 1, 1
+  xy: 1017, 247
   size: 6, 6
   orig: 6, 6
   offset: 0, 0
   index: -1
 entities/drone_off
   rotate: false
-  xy: 165, 119
+  xy: 165, 123
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 entities/drone_on
   rotate: false
-  xy: 231, 185
+  xy: 231, 189
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 entities/robot_off
   rotate: false
-  xy: 297, 119
+  xy: 363, 123
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 entities/robot_on
   rotate: false
-  xy: 363, 185
+  xy: 429, 189
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 floors/coal
   rotate: false
-  xy: 429, 183
+  xy: 495, 187
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 floors/dirt
   rotate: false
-  xy: 497, 217
+  xy: 563, 221
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 floors/dirt1
   rotate: false
-  xy: 201, 85
+  xy: 201, 89
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 floors/dirt2
   rotate: false
-  xy: 463, 149
+  xy: 529, 153
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 floors/grass
   rotate: false
-  xy: 599, 183
+  xy: 665, 187
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 floors/iron
   rotate: false
-  xy: 633, 217
+  xy: 699, 221
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 floors/rock
   rotate: false
-  xy: 837, 149
+  xy: 903, 187
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 floors/rockyDirt
   rotate: false
-  xy: 905, 217
+  xy: 903, 153
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 floors/rockySand
   rotate: false
-  xy: 871, 149
+  xy: 937, 187
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 floors/sand
   rotate: false
-  xy: 905, 183
+  xy: 971, 221
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 floors/sand2
   rotate: false
-  xy: 905, 149
+  xy: 971, 187
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 items/bullet_iron
   rotate: false
-  xy: 35, 21
+  xy: 35, 25
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 items/bullet_iron_tiny
   rotate: false
-  xy: 1, 9
+  xy: 1, 13
   size: 10, 10
   orig: 10, 10
   offset: 0, 0
   index: -1
 items/circuit
   rotate: false
-  xy: 133, 85
+  xy: 133, 89
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 items/circuit_tiny
   rotate: false
-  xy: 429, 137
+  xy: 1005, 243
   size: 10, 10
   orig: 10, 10
   offset: 0, 0
   index: -1
 items/coal
   rotate: false
-  xy: 463, 217
+  xy: 529, 221
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 items/coal_tiny
   rotate: false
-  xy: 405, 107
+  xy: 69, 47
   size: 10, 10
   orig: 10, 10
   offset: 0, 0
   index: -1
 items/iron
   rotate: false
-  xy: 337, 85
+  xy: 337, 89
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 items/iron_tiny
   rotate: false
-  xy: 1007, 239
+  xy: 529, 141
   size: 10, 10
   orig: 10, 10
   offset: 0, 0
   index: -1
 items/rock
   rotate: false
-  xy: 871, 183
+  xy: 937, 221
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 items/rock_tiny
   rotate: false
-  xy: 69, 43
+  xy: 473, 111
   size: 10, 10
   orig: 10, 10
   offset: 0, 0
   index: -1
 items/sand
   rotate: false
-  xy: 939, 217
+  xy: 937, 153
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 items/sand_tiny
   rotate: false
-  xy: 371, 73
+  xy: 1, 1
   size: 10, 10
   orig: 10, 10
   offset: 0, 0
   index: -1
 particle
   rotate: false
-  xy: 803, 149
+  xy: 869, 187
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

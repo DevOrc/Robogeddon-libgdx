@@ -10,9 +10,9 @@ public class EntityUpdateMessage implements Message {
     private final float angle;
     private final float velocity;
     private final float angularVelocity;
-    private final int health;
+    private final float health;
 
-    public EntityUpdateMessage(int id, float x, float y, float angle, float velocity, float angularVelocity, int health) {
+    public EntityUpdateMessage(int id, float x, float y, float angle, float velocity, float angularVelocity, float health) {
         this.id = id;
         this.x = x;
         this.y = y;
@@ -46,7 +46,7 @@ public class EntityUpdateMessage implements Message {
         return angularVelocity;
     }
 
-    public int getHealth() {
+    public float getHealth() {
         return health;
     }
 }
