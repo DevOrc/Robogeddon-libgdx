@@ -37,7 +37,8 @@ public class LaserTileEntity extends PoweredTileEntity {
             findTarget();
         }else if(createTargetVector(target).len2() > RANGE * RANGE
                 || getTeam() == Team.NEUTRAL
-                || target.getTeam() == getTeam()){
+                || target.getTeam() == getTeam()
+                || target.isDead()){
             target = null;
             dirty = true;
         }else{
@@ -54,6 +55,9 @@ public class LaserTileEntity extends PoweredTileEntity {
             return;
 
         for(Entity entity : world.getEntities()){
+            if(!entity.getType().isTargetable())
+                continue;
+
             if(createTargetVector(entity).len2() < RANGE * RANGE && entity.getTeam() != getTeam()){
                 target = entity;
                 dirty = true;
@@ -77,7 +81,7 @@ public class LaserTileEntity extends PoweredTileEntity {
 
             angle = vec.angle();
         }else{
-            angle += 1f;
+            angle += .25f;
         }
     }
 

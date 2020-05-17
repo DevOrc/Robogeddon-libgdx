@@ -22,6 +22,16 @@ public class EntityUpdateMessage implements Message {
         this.health = health;
     }
 
+    public EntityUpdateMessage(EntityUpdateMessage message) {
+        this.id = message.id;
+        this.x = message.x;
+        this.y = message.y;
+        this.angle = message.angle;
+        this.velocity = message.velocity;
+        this.angularVelocity = message.angularVelocity;
+        this.health = message.health;
+    }
+
     public int getId() {
         return id;
     }
