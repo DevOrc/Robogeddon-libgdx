@@ -1,39 +1,33 @@
 package com.noahcharlton.robogeddon.ui.ingame;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Align;
 import com.noahcharlton.robogeddon.message.ChatMessage;
-import com.noahcharlton.robogeddon.ui.UIAssets;
-import com.noahcharlton.robogeddon.ui.background.NinePatchBackground;
+import com.noahcharlton.robogeddon.ui.background.ColorBackground;
 import com.noahcharlton.robogeddon.ui.event.ClickEvent;
-import com.noahcharlton.robogeddon.ui.widget.Button;
 import com.noahcharlton.robogeddon.ui.widget.Label;
-import com.noahcharlton.robogeddon.ui.widget.PairLayout;
 import com.noahcharlton.robogeddon.ui.widget.Stack;
-import com.noahcharlton.robogeddon.ui.widget.TextButton;
 import com.noahcharlton.robogeddon.ui.widget.TextField;
 import com.noahcharlton.robogeddon.ui.widget.Widget;
 
 public class ChatWindow extends Stack {
 
     private final TextField input = new TextField();
-    private final TextButton send = new TextButton("Send");
     private final Label chat = new Label();
 
     public ChatWindow() {
         chat.setEnableMarkup(true);
         chat.align(Align.left);
-        chat.setMinSize(350, 350);
-        input.setOnEnter(() -> sendChat(null, null));
-        send.setOnClick(this::sendChat);
+        input.setBackground(new ColorBackground(new Color(1f, 1f, 1f, 0f)));
+        input.setOnEnter(this::sendChat);
+        input.setMaximumLength(64);
+        input.setPromptText("");
+        input.align(Align.left);
 
-        setMinHeight(350);
-        setVisible(false);
-        setBackground(new NinePatchBackground(UIAssets.dialog));
+        setBackground(new ColorBackground(new Color(0f, 0f, 0f, .25f)));
         add(chat.pad().all(10));
-        add(new PairLayout()
-                .setLeft(input.setMinWidth(350))
-                .setRight(send)
-                .pad().all(10));
+        add(input);
     }
 
     @Override
@@ -41,20 +35,40 @@ public class ChatWindow extends Stack {
         if(client.getWorld() != null){
             chat.setText(client.getWorld().getChat().toString());
         }
+
+        var alpha = getCurrentAlpha();
+
+        setBackground(new ColorBackground(new Color(0f, 0f, 0f, alpha / 4f)));
+        chat.setTextColor(new Color(1f, 1f, 1f, alpha));
+    }
+
+    public float getCurrentAlpha(){
+        if(client.getWorld() == null){
+            return 0f;
+        }
+
+        var lastTime = client.getWorld().getChat().getLastMessageTime();
+
+        if(isMouseOver() || hasInputFocus()){
+            client.getWorld().getChat().resetLastTime();
+            return 1f;
+        }else if(lastTime + 4000 > System.currentTimeMillis()){
+            return 1f;
+        }
+
+        return MathUtils.clamp(500 / (float) (System.currentTimeMillis() - lastTime - 4000) - .25f, 0f, 1f);
     }
 
     @Override
     protected void onClick(ClickEvent event) {
-        if(UIAssets.isEventOnDialogCloseButton(this, event)){
-            setVisible(false);
-        }
+
     }
 
     public void setInputText(String text){
         input.setText(text);
     }
 
-    private void sendChat(ClickEvent clickEvent, Button button) {
+    private void sendChat() {
         var message = input.getText();
 
         if(message.isBlank() || message.isEmpty())
@@ -67,6 +81,10 @@ public class ChatWindow extends Stack {
 
     public void focusInput() {
         client.getUi().setKeyFocus(input);
+    }
+
+    public boolean hasInputFocus(){
+        return client.getUi().getKeyFocus() == input;
     }
 
     @Override

@@ -9,6 +9,7 @@ public class Chat {
     private static final int MAX_SIZE = 20;
 
     private LinkedList<String> chats = new LinkedList<>();
+    private long lastMessageTime;
 
     public Chat() {
         addMessage("Welcome to chat!");
@@ -19,6 +20,8 @@ public class Chat {
     }
 
     public void addMessage(String message){
+        resetLastTime();
+
         chats.add(message);
 
         while(chats.size() > MAX_SIZE){
@@ -28,6 +31,14 @@ public class Chat {
 
     public String[] getText() {
         return chats.toArray(new String[0]);
+    }
+
+    public void resetLastTime() {
+        lastMessageTime = System.currentTimeMillis();
+    }
+
+    public long getLastMessageTime() {
+        return lastMessageTime;
     }
 
     public String toString(){
