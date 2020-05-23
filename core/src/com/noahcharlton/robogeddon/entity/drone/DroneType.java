@@ -47,7 +47,8 @@ public class DroneType<T extends AbstractDroneEntity> extends EntityType {
         float angle = (float) (entity.getAngle() * 180 / Math.PI) - 90;
         float x = entity.getX() - RADIUS;
         float y = entity.getY() - RADIUS;
-        TextureRegion texture = entity.getVelocity() < .25 ? offTexture : onTexture;
+        AbstractDroneEntity drone = (AbstractDroneEntity) entity;
+        TextureRegion texture = drone.isEngineOn() ? onTexture : offTexture;
 
         batch.setColor(0f ,0f, 0f, .2f);
         GraphicsUtil.drawRotated(batch, texture, x - 10, y - 10, angle);
@@ -55,7 +56,8 @@ public class DroneType<T extends AbstractDroneEntity> extends EntityType {
         GraphicsUtil.drawRotated(batch, texture, x, y, angle);
         renderHealthBar(batch, entity, RADIUS);
 
-        ((AbstractDroneEntity) entity).customRender(batch);
+        drone.renderEffect(batch);
+        drone.customRender(batch);
     }
 
     @Override

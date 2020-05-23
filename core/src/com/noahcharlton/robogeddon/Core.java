@@ -14,7 +14,7 @@ import com.noahcharlton.robogeddon.message.MessageSerializer;
 import com.noahcharlton.robogeddon.message.RegistrySerializer;
 import com.noahcharlton.robogeddon.settings.Setting;
 import com.noahcharlton.robogeddon.settings.SettingsIO;
-import com.noahcharlton.robogeddon.util.MiscTextures;
+import com.noahcharlton.robogeddon.util.MiscAssets;
 import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.util.log.Log;
 import com.noahcharlton.robogeddon.world.floor.Floor;
@@ -105,7 +105,7 @@ public class Core {
         Log.debug("Init");
 
         Blocks.init();
-        MiscTextures.init();
+        MiscAssets.init();
         blockGroups.setFinalized(true);
 
         entities.values().forEach(EntityType::initRenderer);

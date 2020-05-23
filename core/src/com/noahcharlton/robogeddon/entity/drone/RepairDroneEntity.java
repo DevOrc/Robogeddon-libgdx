@@ -37,9 +37,9 @@ public class RepairDroneEntity extends AbstractDroneEntity {
 
     @Override
     public void updateKinematics() {
-        if(healingTile == null){
-            velocity = .001f; //have velocity greater than zero so that renderer knows to draw flame
+        velocity = 0f;
 
+        if(healingTile == null){
             if(isOnCircle()){
                 movementTime += .005f;
 
@@ -57,6 +57,11 @@ public class RepairDroneEntity extends AbstractDroneEntity {
         }
 
         setDirty(true);
+    }
+
+    @Override
+    public boolean isEngineOn() {
+        return healingTile == null;
     }
 
     private boolean isOnCircle() {

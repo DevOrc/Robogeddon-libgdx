@@ -1,15 +1,19 @@
 package com.noahcharlton.robogeddon.util;
 
+import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.noahcharlton.robogeddon.Core;
 
-public class MiscTextures {
+public class MiscAssets {
 
     private static Array<TextureRegion> brokenBlock;
+    private static ParticleEffectPool engineFlame;
 
     public static void init(){
         Core.assets.registerTextureGroup("blocks/break/stage").setOnLoad(t -> brokenBlock = t);
+        Core.assets.registerParticleEffect("engine_flame").setOnLoad(particle -> engineFlame =
+                new ParticleEffectPool(particle,10, 10));
     }
 
     public static TextureRegion getBrokenBlock(float blockHealth){
@@ -24,5 +28,13 @@ public class MiscTextures {
         }else{
             return brokenBlock.get(3);
         }
+    }
+
+    public static ParticleEffectPool.PooledEffect obtainEngineFlame() {
+        return engineFlame.obtain();
+    }
+
+    public static ParticleEffectPool getEngineFlamePool() {
+        return engineFlame;
     }
 }
