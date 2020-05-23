@@ -32,8 +32,13 @@ public class Commands {
         register("spawn", Commands::spawnEntity);
         register("spawn_base", Commands::spawnBase);
         register("base_test", Commands::spawnTest);
+        register("damage_test", Commands::damageTest);
         register("base_comp_new", Commands::newBaseComp);
         register("base_comp_save", Commands::saveBaseComp);
+    }
+
+    private static void damageTest(ServerWorld world, List<Argument> arguments) {
+        world.getTileAt(0, 0).damage();
     }
 
     private static void spawnEntity(ServerWorld world, List<Argument> arguments) {

@@ -146,6 +146,12 @@ public class Tile implements Selectable, HasWorldPosition {
         dirty = true;
     }
 
+    @Side(Side.SERVER)
+    public void healDamage() {
+        blockHealth += .15 / block.getHardness();
+        dirty = true;
+    }
+
     @Side(Side.CLIENT)
     @Override
     public String getTitle() {
@@ -288,6 +294,14 @@ public class Tile implements Selectable, HasWorldPosition {
 
     public int getPixelY() {
         return pixelY;
+    }
+
+    public int getPixelXCenter() {
+        return pixelX + (Tile.SIZE / 2);
+    }
+
+    public int getPixelYCenter() {
+        return pixelY + (Tile.SIZE / 2);
     }
 
     public Floor getFloor() {

@@ -1,7 +1,12 @@
-package com.noahcharlton.robogeddon.entity;
+package com.noahcharlton.robogeddon.entity.drone;
 
 import com.badlogic.gdx.math.Vector2;
 import com.noahcharlton.robogeddon.Server;
+import com.noahcharlton.robogeddon.entity.BulletEntity;
+import com.noahcharlton.robogeddon.entity.CustomEntityMessage;
+import com.noahcharlton.robogeddon.entity.Entity;
+import com.noahcharlton.robogeddon.entity.EntityType;
+import com.noahcharlton.robogeddon.entity.RobotEntity;
 import com.noahcharlton.robogeddon.entity.collision.HasCollision;
 import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.util.log.Log;
@@ -9,7 +14,7 @@ import com.noahcharlton.robogeddon.world.ServerWorld;
 import com.noahcharlton.robogeddon.world.World;
 import com.noahcharlton.robogeddon.world.team.Team;
 
-public class DroneEntity extends Entity implements HasCollision {
+public class AttackDroneEntity extends AbstractDroneEntity implements HasCollision {
 
     private static final int RADIUS = DroneType.RADIUS;
     private static final int SHOOT_TIME = 30;
@@ -21,7 +26,7 @@ public class DroneEntity extends Entity implements HasCollision {
     private int shooterTime;
     private boolean onTarget;
 
-    public DroneEntity(EntityType type, World world, Team team) {
+    public AttackDroneEntity(EntityType type, World world, Team team) {
         super(type, world, team);
 
         y = -400;

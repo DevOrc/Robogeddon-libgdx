@@ -1,9 +1,11 @@
-package com.noahcharlton.robogeddon.entity;
+package com.noahcharlton.robogeddon.entity.drone;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.noahcharlton.robogeddon.Core;
+import com.noahcharlton.robogeddon.entity.Entity;
+import com.noahcharlton.robogeddon.entity.EntityType;
 import com.noahcharlton.robogeddon.util.GraphicsUtil;
 import com.noahcharlton.robogeddon.world.World;
 import com.noahcharlton.robogeddon.world.team.Team;
@@ -11,7 +13,7 @@ import com.noahcharlton.robogeddon.world.team.Team;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
-public class DroneType<T extends Entity> extends EntityType {
+public class DroneType<T extends AbstractDroneEntity> extends EntityType {
 
     static final int RADIUS = 32;
 
@@ -45,13 +47,15 @@ public class DroneType<T extends Entity> extends EntityType {
         float angle = (float) (entity.getAngle() * 180 / Math.PI) - 90;
         float x = entity.getX() - RADIUS;
         float y = entity.getY() - RADIUS;
-        TextureRegion texture = entity.velocity < .25 ? offTexture : onTexture;
+        TextureRegion texture = entity.getVelocity() < .25 ? offTexture : onTexture;
 
         batch.setColor(0f ,0f, 0f, .2f);
         GraphicsUtil.drawRotated(batch, texture, x - 10, y - 10, angle);
         batch.setColor(1f ,1f, 1f, 1f);
         GraphicsUtil.drawRotated(batch, texture, x, y, angle);
         renderHealthBar(batch, entity, RADIUS);
+
+        ((AbstractDroneEntity) entity).customRender(batch);
     }
 
     @Override

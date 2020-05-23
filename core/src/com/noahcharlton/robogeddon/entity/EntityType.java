@@ -4,6 +4,9 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.HasID;
+import com.noahcharlton.robogeddon.entity.drone.AttackDroneEntity;
+import com.noahcharlton.robogeddon.entity.drone.DroneType;
+import com.noahcharlton.robogeddon.entity.drone.RepairDroneEntity;
 import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.World;
 import com.noahcharlton.robogeddon.world.team.Team;
@@ -12,7 +15,7 @@ public abstract class EntityType implements HasID {
 
     public static final EntityType robotEntity = new RobotEntity.RobotEntityType();
     public static final EntityType bulletEntity = new BulletEntity.BulletEntityType();
-    public static final EntityType attackDroneEntity = new DroneType<>(DroneEntity.class, "attack", 15);
+    public static final EntityType attackDroneEntity = new DroneType<>(AttackDroneEntity.class, "attack", 15);
     public static final EntityType repairDroneEntity = new DroneType<>(RepairDroneEntity.class, "repair", 25);
 
     public abstract Entity create(World world, Team team);
