@@ -9,7 +9,7 @@ public class Argument {
     }
 
     public <E extends Enum<E>> E asEnum(Class<E> clazz){
-        return Enum.valueOf(clazz, text);
+        return Enum.valueOf(clazz, text.toUpperCase());
     }
 
     public int asInt(){

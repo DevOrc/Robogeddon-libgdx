@@ -75,6 +75,10 @@ public class ChatWindow extends Stack {
             return;
 
         input.setText("");
+
+        if(message.startsWith("/"))
+            client.getUi().setKeyFocus(null);
+
         if(client.getWorld() != null)
             client.getWorld().sendMessageToServer(new ChatMessage(message));
     }

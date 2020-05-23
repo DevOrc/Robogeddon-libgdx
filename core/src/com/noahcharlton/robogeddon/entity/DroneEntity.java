@@ -1,21 +1,17 @@
 package com.noahcharlton.robogeddon.entity;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.noahcharlton.robogeddon.Core;
-import com.noahcharlton.robogeddon.util.log.Log;
 import com.noahcharlton.robogeddon.Server;
 import com.noahcharlton.robogeddon.entity.collision.HasCollision;
-import com.noahcharlton.robogeddon.util.GraphicsUtil;
 import com.noahcharlton.robogeddon.util.Side;
+import com.noahcharlton.robogeddon.util.log.Log;
 import com.noahcharlton.robogeddon.world.ServerWorld;
 import com.noahcharlton.robogeddon.world.World;
 import com.noahcharlton.robogeddon.world.team.Team;
 
 public class DroneEntity extends Entity implements HasCollision {
 
-    private static final int RADIUS = DroneEntityType.RADIUS;
+    private static final int RADIUS = DroneType.RADIUS;
     private static final int SHOOT_TIME = 30;
     private static final int MAX_VEL = 4;
     private static final int SHOOT_RANGE = (int) Math.pow(500, 2);
@@ -25,8 +21,8 @@ public class DroneEntity extends Entity implements HasCollision {
     private int shooterTime;
     private boolean onTarget;
 
-    public DroneEntity(World world, Team team) {
-        super(EntityType.droneEntity, world, team);
+    public DroneEntity(EntityType type, World world, Team team) {
+        super(type, world, team);
 
         y = -400;
         angle = (float) (Math.PI / 2);
@@ -135,49 +131,6 @@ public class DroneEntity extends Entity implements HasCollision {
     @Override
     public float getRadius() {
         return RADIUS;
-    }
-
-    public static class DroneEntityType extends EntityType {
-
-        static final int RADIUS = 32;
-
-        private TextureRegion offTexture;
-        private TextureRegion onTexture;
-
-        @Override
-        public void initRenderer() {
-            Core.assets.registerTexture("entities/drone_off").setOnLoad(t -> offTexture = t);
-            Core.assets.registerTexture("entities/drone_on").setOnLoad(t -> onTexture = t);
-        }
-
-        @Override
-        public void render(SpriteBatch batch, Entity entity) {
-            float angle = (float) (entity.getAngle() * 180 / Math.PI) - 90;
-            float x = entity.getX() - RADIUS;
-            float y = entity.getY() - RADIUS;
-            TextureRegion texture = entity.velocity < .25 ? offTexture : onTexture;
-
-            batch.setColor(0f ,0f, 0f, .2f);
-            GraphicsUtil.drawRotated(batch, texture, x - 10, y - 10, angle);
-            batch.setColor(1f ,1f, 1f, 1f);
-            GraphicsUtil.drawRotated(batch, texture, x, y, angle);
-            renderHealthBar(batch, entity, RADIUS);
-        }
-
-        @Override
-        public Entity create(World world, Team team) {
-            return new DroneEntity(world, team);
-        }
-
-        @Override
-        public String getTypeID() {
-            return "drone";
-        }
-
-        @Override
-        public int getHealth() {
-            return 15;
-        }
     }
 
     static class TargetFoundMessage extends CustomEntityMessage{
