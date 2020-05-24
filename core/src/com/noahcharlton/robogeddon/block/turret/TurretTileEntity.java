@@ -8,6 +8,7 @@ import com.noahcharlton.robogeddon.block.tileentity.inventory.SingleItemBuffer;
 import com.noahcharlton.robogeddon.block.tileentity.TileEntity;
 import com.noahcharlton.robogeddon.entity.Entity;
 import com.noahcharlton.robogeddon.entity.EntityType;
+import com.noahcharlton.robogeddon.entity.collision.HasCollision;
 import com.noahcharlton.robogeddon.util.Direction;
 import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.HasWorldPosition;
@@ -102,7 +103,7 @@ public class TurretTileEntity extends TileEntity implements HasInventory {
         }
 
         for(Entity entity: world.getEntities()){
-            if(entity.getTeam() == team || !entity.getType().isTargetable())
+            if(entity.getTeam() == team || !entity.getType().isTargetable() || !(entity instanceof HasCollision))
                 continue;
 
             if(isInRange(entity)){
