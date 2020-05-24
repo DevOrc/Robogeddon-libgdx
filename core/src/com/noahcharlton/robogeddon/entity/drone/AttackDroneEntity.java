@@ -7,14 +7,13 @@ import com.noahcharlton.robogeddon.entity.CustomEntityMessage;
 import com.noahcharlton.robogeddon.entity.Entity;
 import com.noahcharlton.robogeddon.entity.EntityType;
 import com.noahcharlton.robogeddon.entity.RobotEntity;
-import com.noahcharlton.robogeddon.entity.collision.HasCollision;
 import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.util.log.Log;
 import com.noahcharlton.robogeddon.world.ServerWorld;
 import com.noahcharlton.robogeddon.world.World;
 import com.noahcharlton.robogeddon.world.team.Team;
 
-public class AttackDroneEntity extends AbstractDroneEntity implements HasCollision {
+public class AttackDroneEntity extends AbstractDroneEntity {
 
     private static final int RADIUS = DroneType.RADIUS;
     private static final int SHOOT_TIME = 30;
@@ -124,18 +123,13 @@ public class AttackDroneEntity extends AbstractDroneEntity implements HasCollisi
 
     @Override
     public void onCustomMessageReceived(CustomEntityMessage message) {
-        if(message instanceof TargetFoundMessage && world.isClient()){
+        if(message instanceof TargetFoundMessage && world.isClient()) {
             int targetID = ((TargetFoundMessage) message).targetID;
             target = world.getEntityByID(targetID);
             Log.debug("Drone Found Target: " + targetID);
-        }else{
+        } else {
             super.onCustomMessageReceived(message);
         }
-    }
-
-    @Override
-    public float getRadius() {
-        return RADIUS;
     }
 
     static class TargetFoundMessage extends CustomEntityMessage{

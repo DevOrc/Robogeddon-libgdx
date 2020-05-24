@@ -20,13 +20,15 @@ public class DroneType<T extends AbstractDroneEntity> extends EntityType {
     private final String droneType;
     private final Constructor<T> constructor;
     private final int health;
+    private final int formationTime;
 
     private TextureRegion offTexture;
     private TextureRegion onTexture;
 
-    public DroneType(Class<T> clazz, String type, int health) {
+    public DroneType(Class<T> clazz, String type, int health, int formationTime) {
         this.droneType = type;
         this.health = health;
+        this.formationTime = formationTime;
 
         try {
             this.constructor = clazz.getConstructor(EntityType.class, World.class, Team.class);
@@ -77,5 +79,9 @@ public class DroneType<T extends AbstractDroneEntity> extends EntityType {
     @Override
     public int getHealth() {
         return health;
+    }
+
+    public int getFormationTime() {
+        return formationTime;
     }
 }

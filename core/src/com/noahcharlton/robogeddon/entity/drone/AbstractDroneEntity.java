@@ -6,11 +6,12 @@ import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.noahcharlton.robogeddon.entity.Entity;
 import com.noahcharlton.robogeddon.entity.EntityType;
+import com.noahcharlton.robogeddon.entity.collision.HasCollision;
 import com.noahcharlton.robogeddon.util.MiscAssets;
 import com.noahcharlton.robogeddon.world.World;
 import com.noahcharlton.robogeddon.world.team.Team;
 
-public abstract class AbstractDroneEntity extends Entity {
+public abstract class AbstractDroneEntity extends Entity implements HasCollision {
 
     private ParticleEffectPool.PooledEffect effect;
 
@@ -54,4 +55,9 @@ public abstract class AbstractDroneEntity extends Entity {
     }
 
     public void customRender(SpriteBatch batch){}
+
+    @Override
+    public float getRadius() {
+        return DroneType.RADIUS;
+    }
 }

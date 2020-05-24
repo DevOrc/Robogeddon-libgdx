@@ -15,8 +15,8 @@ public abstract class EntityType implements HasID {
 
     public static final EntityType robotEntity = new RobotEntity.RobotEntityType();
     public static final EntityType bulletEntity = new BulletEntity.BulletEntityType();
-    public static final EntityType attackDroneEntity = new DroneType<>(AttackDroneEntity.class, "attack", 15);
-    public static final EntityType repairDroneEntity = new DroneType<>(RepairDroneEntity.class, "repair", 25);
+    public static final EntityType attackDroneEntity = new DroneType<>(AttackDroneEntity.class, "attack", 15, 5 * 60);
+    public static final EntityType repairDroneEntity = new DroneType<>(RepairDroneEntity.class, "repair", 25, 8 * 60);
 
     public abstract Entity create(World world, Team team);
 
