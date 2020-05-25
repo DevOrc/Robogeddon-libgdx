@@ -51,6 +51,7 @@ public class Entity implements HasWorldPosition {
         }
 
         health -= amount;
+        health = Math.min(health, type.getHealth());
         dirty = true;
     }
 

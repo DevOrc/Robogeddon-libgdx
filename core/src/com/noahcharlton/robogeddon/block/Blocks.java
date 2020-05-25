@@ -59,19 +59,20 @@ public class Blocks{
     public static final Block waterCollector = new WaterCollector("water_collector");
     public static final Block laserBlock = new LaserBlock("laser");
     public static final Block spawnPad = new SpawnPadBlock("spawn_pad");
+    public static final Block healPad = new HealPad("heal_pad");
 
     @Side(Side.BOTH)
     public static void preInit() {
         Core.blocks.registerAll(testBlock, turretBlock, blueBeacon, redBeacon, minerBlock, itemDuctNorth, itemDuctSouth,
                 itemDuctEast, itemDuctWest, inventoryPortal, unloaderBlock, wall, metalFormer, relayBlock, solarPanel,
                 lamp, battery, coalGenerator, circuitFactory, splitter, sorter, flowGate, crossGate, combiner, fluiduct,
-                waterCollector, laserBlock, spawnPad);
+                waterCollector, laserBlock, spawnPad, healPad);
     }
 
     @Side(Side.CLIENT)
     public static void init() {
         BlockGroup defense = new BlockGroup("defense", turretBlock, minerBlock, wall, laserBlock, spawnPad);
-        BlockGroup misc = new BlockGroup("misc", blueBeacon, metalFormer, circuitFactory, waterCollector);
+        BlockGroup misc = new BlockGroup("misc", blueBeacon, metalFormer, circuitFactory, waterCollector, healPad);
         BlockGroup transport = new BlockGroup("transport", itemDuctNorth, unloaderBlock, inventoryPortal, fluiduct);
         BlockGroup power = new BlockGroup("power", relayBlock, solarPanel, lamp, battery, coalGenerator);
         BlockGroup gates = new BlockGroup("gates", splitter, sorter, flowGate, crossGate, combiner);

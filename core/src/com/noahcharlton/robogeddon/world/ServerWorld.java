@@ -390,6 +390,10 @@ public class ServerWorld extends World {
         return playerTeam;
     }
 
+    public HashMap<Integer, Entity> getPlayers() {
+        return players;
+    }
+
     public WorldGenerator getGenerator() {
         return generator;
     }
