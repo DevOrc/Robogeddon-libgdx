@@ -8,7 +8,7 @@ import com.noahcharlton.robogeddon.block.tileentity.electricity.PoweredTileEntit
 import com.noahcharlton.robogeddon.entity.Entity;
 import com.noahcharlton.robogeddon.entity.EntityType;
 import com.noahcharlton.robogeddon.entity.drone.DroneType;
-import com.noahcharlton.robogeddon.message.MessageSerializer;
+import com.noahcharlton.robogeddon.entity.drone.RepairDroneEntity;
 import com.noahcharlton.robogeddon.util.FloatUtils;
 import com.noahcharlton.robogeddon.world.ServerWorld;
 import com.noahcharlton.robogeddon.world.Tile;
@@ -79,7 +79,6 @@ public class SpawnPadTileEntity extends PoweredTileEntity implements TileEntityS
     public void load(Element xml) {
         super.load(xml);
 
-        System.out.println(MessageSerializer.messageToString(new SpawnPadUpdateMessage(getRootTile(), currentType)));
         if(xml.hasChild("EntityType"))
             currentType = (DroneType) Core.entities.get(xml.get("EntityType"));
     }
@@ -118,16 +117,21 @@ public class SpawnPadTileEntity extends PoweredTileEntity implements TileEntityS
 
     private void spawnEntity() {
         Entity entity = currentType.create(world, Team.RED);
+        entity.setX(rootTile.getPixelXCenter());
+        entity.setY(rootTile.getPixelYCenter());
 
         ((ServerWorld) world).addEntity(entity);
         entities.add(entity);
+
+        if(entity instanceof RepairDroneEntity)
+            ((RepairDroneEntity) entity).setFocusedChunk(getRootTile().getChunk());
     }
 
     @Override
     public String[] getDetails() {
         return new String[]{
                 "Entity Count: " + entities.size(),
-                "Spawn Type: " + currentType.getTypeID()
+                "Drone Type: " + currentType.getDisplayName()
         };
     }
 

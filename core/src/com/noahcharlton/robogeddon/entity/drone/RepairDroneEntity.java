@@ -41,17 +41,20 @@ public class RepairDroneEntity extends AbstractDroneEntity {
     @Override
     public void updateKinematics() {
         velocity = 0f;
+        var focusTile = getFocusTile();
 
         if(healingTile == null) {
             if(isOnCircle()) {
                 movementTime += .003f;
 
-                x = (float) (Math.cos(movementTime) * SEARCH_RADIUS);
-                y = (float) (Math.sin(movementTime) * SEARCH_RADIUS);
+
+                x = (float) (Math.cos(movementTime) * SEARCH_RADIUS) + focusTile.getPixelXCenter();
+                y = (float) (Math.sin(movementTime) * SEARCH_RADIUS) + focusTile.getPixelYCenter();
                 angle = (float) ((movementTime % (Math.PI * 2)) + (Math.PI / 2f));
             } else {
-                angle = new Vector2((float) (Math.cos(movementTime) * SEARCH_RADIUS),
-                        (float) (Math.sin(movementTime) * SEARCH_RADIUS)).sub(x, y).angleRad();
+                angle = new Vector2((float) (Math.cos(movementTime) * SEARCH_RADIUS) + focusTile.getPixelXCenter(),
+                        (float) (Math.sin(movementTime) * SEARCH_RADIUS)  + focusTile.getPixelYCenter())
+                        .sub(x, y).angleRad();
                 x += Math.cos(angle) * 3.25f;
                 y += Math.sin(angle) * 3.25f;
             }
@@ -62,14 +65,22 @@ public class RepairDroneEntity extends AbstractDroneEntity {
         setDirty(true);
     }
 
+    public Tile getFocusTile() {
+        if(focusedChunk == null)
+            focusedChunk = world.getChunkAt(0, 0);
+
+        return focusedChunk.getTile(Chunk.SIZE / 2, Chunk.SIZE / 2);
+    }
+
     @Override
     public boolean isEngineOn() {
         return healingTile == null;
     }
 
     private boolean isOnCircle() {
-        var xDiff = x - (float) (Math.cos(movementTime) * SEARCH_RADIUS);
-        var yDiff = y - (float) (Math.sin(movementTime) * SEARCH_RADIUS);
+        var tile = getFocusTile();
+        var xDiff = x - ((float) (Math.cos(movementTime) * SEARCH_RADIUS) + tile.getPixelXCenter());
+        var yDiff = y - ((float) (Math.sin(movementTime) * SEARCH_RADIUS) + tile.getPixelYCenter());
         return Math.abs(xDiff) < 10 && Math.abs(yDiff) < 10;
     }
 
@@ -219,6 +230,7 @@ public class RepairDroneEntity extends AbstractDroneEntity {
 
         @Side(Side.CLIENT)
         Chunk getChunk(World world) {
+            System.out.println("Getting chunk: " + chunkX + " " + chunkY);
             return world.getChunkAt(chunkX, chunkY);
         }
     }

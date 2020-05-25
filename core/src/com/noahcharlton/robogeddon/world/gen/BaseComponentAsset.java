@@ -50,10 +50,11 @@ public class BaseComponentAsset extends Asset<Object> {
         Block block = Core.blocks.getOrNull(child.get("Block", null));
         Floor floor = Core.floors.getOrNull(child.get("Floor", null));
         Floor upperFloor = Core.floors.getOrNull(child.get("UpperFloor", null));
+        Element data = child.hasChild("TileEntityData") ? child.getChildByName("TileEntityData") : null;
         int x = child.getIntAttribute("x");
         int y = child.getIntAttribute("y");
 
-        component.addInstruction(x, y, block, floor, upperFloor);
+        component.addInstruction(x, y, block, floor, upperFloor, data);
     }
 
     public static void save(XmlWriter writer, ServerWorld world){

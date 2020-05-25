@@ -83,6 +83,10 @@ public class EnemyBaseGenerator {
                     buildItemDuct((ItemDuct) instruction.block, direction, tile);
                 }else{
                     world.buildBlock(tile, instruction.block);
+
+                    if(instruction.tileEntityData != null){
+                        tile.getTileEntity().load(instruction.tileEntityData);
+                    }
                 }
             }
         }
