@@ -37,8 +37,8 @@ public class EnemyBaseGenerator {
 
         addComponent(random, components, BaseComponentType.POWER);
         addComponent(random, components, BaseComponentType.ARTILLERY);
-        addComponent(random, components, BaseComponentType.ARTILLERY);
         addComponent(random, components, BaseComponentType.MISC);
+        addComponent(random, components, random.nextBoolean() ? BaseComponentType.DRONES : BaseComponentType.ARTILLERY);
 
         for(int i = 0; i < 4; i++){
             applyComponent(IntermediateDirection.values()[i], components[i], chunk);

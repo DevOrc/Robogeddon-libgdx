@@ -10,7 +10,7 @@ public enum BaseComponentType {
 
     POWER("solar", "mix", "solar_2"),
     ARTILLERY("turrets_1", "mix", "lasers_1", "turrets_2"),
-    DRONES("test"),
+    DRONES("1_attack", "1_repair", "2_attack", "2_repair"),
     MISC("walls", "walls_2", "walls_3");
 
     private final String[] componentNames;

@@ -79,8 +79,11 @@ public class SpawnPadTileEntity extends PoweredTileEntity implements TileEntityS
     public void load(Element xml) {
         super.load(xml);
 
-        if(xml.hasChild("EntityType"))
+        if(xml.hasChild("EntityType")){
             currentType = (DroneType) Core.entities.get(xml.get("EntityType"));
+
+            Server.runLater(() -> world.sendMessageToClient(new SpawnPadUpdateMessage(getRootTile(), currentType)));
+        }
     }
 
     @Override
