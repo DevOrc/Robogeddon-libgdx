@@ -11,18 +11,30 @@ import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.World;
 import com.noahcharlton.robogeddon.world.team.Team;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class EntityType implements HasID {
 
     public static final EntityType robotEntity = new RobotEntity.RobotEntityType();
     public static final EntityType bulletEntity = new BulletEntity.BulletEntityType();
-    public static final EntityType attackDroneEntity = new DroneType<>(AttackDroneEntity.class, "attack", 15, 5 * 60);
-    public static final EntityType repairDroneEntity = new DroneType<>(RepairDroneEntity.class, "repair", 25, 8 * 60);
+    public static final EntityType attackDroneEntity =
+            new DroneType<>(AttackDroneEntity.class, "attack", "Attack", 15, 5 * 60);
+    public static final EntityType repairDroneEntity =
+            new DroneType<>(RepairDroneEntity.class, "repair", "Repair", 25, 8 * 60);
+
+    private static final List<DroneType> drones = new ArrayList<>();
 
     public abstract Entity create(World world, Team team);
 
     @Side(Side.BOTH)
     public static void preInit(){
         Core.entities.registerAll(robotEntity, bulletEntity, attackDroneEntity, repairDroneEntity);
+
+        for(EntityType type : Core.entities.values()){
+            if(type instanceof DroneType)
+                drones.add((DroneType) type);
+        }
     }
 
     @Side(Side.CLIENT)
@@ -58,5 +70,9 @@ public abstract class EntityType implements HasID {
      */
     public boolean isTargetable(){
         return true;
+    }
+
+    public static List<DroneType> getDrones() {
+        return drones;
     }
 }

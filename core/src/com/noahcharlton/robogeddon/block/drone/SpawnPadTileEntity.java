@@ -1,27 +1,34 @@
 package com.noahcharlton.robogeddon.block.drone;
 
+import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.Server;
+import com.noahcharlton.robogeddon.block.tileentity.CustomTileEntityMessage;
 import com.noahcharlton.robogeddon.block.tileentity.TileEntitySelectable;
 import com.noahcharlton.robogeddon.block.tileentity.electricity.PoweredTileEntity;
 import com.noahcharlton.robogeddon.entity.Entity;
 import com.noahcharlton.robogeddon.entity.EntityType;
 import com.noahcharlton.robogeddon.entity.drone.DroneType;
+import com.noahcharlton.robogeddon.message.MessageSerializer;
 import com.noahcharlton.robogeddon.util.FloatUtils;
 import com.noahcharlton.robogeddon.world.ServerWorld;
 import com.noahcharlton.robogeddon.world.Tile;
+import com.noahcharlton.robogeddon.world.io.Element;
+import com.noahcharlton.robogeddon.world.io.XmlWriter;
 import com.noahcharlton.robogeddon.world.team.Team;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SpawnTileEntity extends PoweredTileEntity implements TileEntitySelectable {
+public class SpawnPadTileEntity extends PoweredTileEntity implements TileEntitySelectable {
+
+    public static final String subMenuID = "spawn_pad";
 
     private List<Entity> entities = new ArrayList<>();
     private int tick = 0;
 
     private DroneType currentType = (DroneType) EntityType.repairDroneEntity;
 
-    public SpawnTileEntity(Tile rootTile, float usageRate) {
+    public SpawnPadTileEntity(Tile rootTile, float usageRate) {
         super(rootTile, usageRate);
     }
 
@@ -62,6 +69,34 @@ public class SpawnTileEntity extends PoweredTileEntity implements TileEntitySele
     }
 
     @Override
+    public void save(XmlWriter xml) {
+        super.save(xml);
+
+        xml.element("EntityType", currentType.getTypeID());
+    }
+
+    @Override
+    public void load(Element xml) {
+        super.load(xml);
+
+        System.out.println(MessageSerializer.messageToString(new SpawnPadUpdateMessage(getRootTile(), currentType)));
+        if(xml.hasChild("EntityType"))
+            currentType = (DroneType) Core.entities.get(xml.get("EntityType"));
+    }
+
+    @Override
+    public void onCustomMessageReceived(CustomTileEntityMessage message) {
+        if(message instanceof SpawnPadUpdateMessage){
+            currentType = ((SpawnPadUpdateMessage) message).getTypeAsDrone();
+
+            if(world.isServer())
+                world.sendMessageToClient(message);
+        }else{
+            super.onCustomMessageReceived(message);
+        }
+    }
+
+    @Override
     public void receiveData(float[] data) {
         entities.clear();
 
@@ -94,5 +129,14 @@ public class SpawnTileEntity extends PoweredTileEntity implements TileEntitySele
                 "Entity Count: " + entities.size(),
                 "Spawn Type: " + currentType.getTypeID()
         };
+    }
+
+    @Override
+    public String getSubMenuID() {
+        return subMenuID;
+    }
+
+    public DroneType getCurrentType() {
+        return currentType;
     }
 }

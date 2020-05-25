@@ -19,14 +19,16 @@ public class DroneType<T extends AbstractDroneEntity> extends EntityType {
 
     private final String droneType;
     private final Constructor<T> constructor;
+    private final String displayName;
     private final int health;
     private final int formationTime;
 
     private TextureRegion offTexture;
     private TextureRegion onTexture;
 
-    public DroneType(Class<T> clazz, String type, int health, int formationTime) {
+    public DroneType(Class<T> clazz, String type, String displayName, int health, int formationTime) {
         this.droneType = type;
+        this.displayName = displayName;
         this.health = health;
         this.formationTime = formationTime;
 
@@ -83,5 +85,9 @@ public class DroneType<T extends AbstractDroneEntity> extends EntityType {
 
     public int getFormationTime() {
         return formationTime;
+    }
+
+    public String getDisplayName() {
+        return displayName;
     }
 }

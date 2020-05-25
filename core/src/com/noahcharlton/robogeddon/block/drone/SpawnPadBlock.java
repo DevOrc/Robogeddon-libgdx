@@ -28,6 +28,6 @@ public class SpawnPadBlock extends Block implements HasTileEntity {
 
     @Override
     public TileEntity createTileEntity(Tile tile) {
-        return new SpawnTileEntity(tile, 4f);
+        return new SpawnPadTileEntity(tile, 4f);
     }
 }
