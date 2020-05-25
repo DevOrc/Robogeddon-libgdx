@@ -132,10 +132,8 @@
 		<Block>spawn_pad</Block>
 		<TileEntityData>
 			<Data>
-				<Value>-1.0</Value>
-				<Value>-1.0</Value>
-				<Value>-1.0</Value>
-				<Value>-1.0</Value>
+				<!-- Start Deactivated-->
+				<Value>0</Value>
 			</Data>
 			<EntityType>attack_drone</EntityType>
 		</TileEntityData>
@@ -246,10 +244,8 @@
 		<Block>spawn_pad</Block>
 		<TileEntityData>
 			<Data>
-				<Value>-1.0</Value>
-				<Value>-1.0</Value>
-				<Value>-1.0</Value>
-				<Value>-1.0</Value>
+				<!-- Start Deactivated-->
+				<Value>0</Value>
 			</Data>
 			<EntityType>attack_drone</EntityType>
 		</TileEntityData>

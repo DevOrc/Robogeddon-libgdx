@@ -25,6 +25,7 @@ public class SpawnPadTileEntity extends PoweredTileEntity implements TileEntityS
 
     private List<Entity> entities = new ArrayList<>();
     private int tick = 0;
+    private boolean active = true;
 
     private DroneType currentType = (DroneType) EntityType.repairDroneEntity;
 
@@ -37,7 +38,7 @@ public class SpawnPadTileEntity extends PoweredTileEntity implements TileEntityS
         super.update();
         removeInvalidEntities();
 
-        if(world.isServer() && entities.size() < 5){
+        if(world.isServer() && entities.size() < 5 && active){
             usePower();
 
             if(hasPower()){
@@ -48,6 +49,29 @@ public class SpawnPadTileEntity extends PoweredTileEntity implements TileEntityS
                  spawnEntity();
                  tick = 0;
                  dirty = true;
+            }
+        }
+
+        if(world.isServer() && !active){
+           tick++;
+
+           if(tick > 140){
+               tick = 0;
+
+               checkShouldActivate();
+           }
+        }
+    }
+
+    private void checkShouldActivate() {
+        for(int x = rootTile.getX() - 8; x <= rootTile.getX() + 8; x++){
+            for(int y = rootTile.getY() - 8; y <= rootTile.getY() + 8; y++){
+                var tile = world.getTileAt(x, y);
+
+                if(tile != null && tile.getBlockHealth() < 1f){
+                    active = true;
+                    dirty = true;
+                }
             }
         }
     }
@@ -65,7 +89,22 @@ public class SpawnPadTileEntity extends PoweredTileEntity implements TileEntityS
 
     @Override
     public float[] getData() {
-        return FloatUtils.toArray(entities, Entity::getId);
+        var entityIds = FloatUtils.toArray(entities, Entity::getId);
+        var active = new float[]{this.active ? 1f : 0f};
+
+        return FloatUtils.combineFloatArrays(active, entityIds);
+    }
+
+    @Override
+    public void receiveData(float[] data) {
+        entities.clear();
+
+        active = data[0] == 1f;
+        for(int i = 1; i < data.length; i++){
+            entities.add(world.getEntityByID((int) data[i]));
+        }
+
+        dirty = true;
     }
 
     @Override
@@ -99,17 +138,6 @@ public class SpawnPadTileEntity extends PoweredTileEntity implements TileEntityS
     }
 
     @Override
-    public void receiveData(float[] data) {
-        entities.clear();
-
-        for(float id : data){
-            entities.add(world.getEntityByID((int) id));
-        }
-
-        dirty = true;
-    }
-
-    @Override
     protected void loadSaveData(float[] data) {
         //Do it after loading has taken place because entities might not have been loaded yet!
         Server.runLater(() -> {
@@ -132,10 +160,19 @@ public class SpawnPadTileEntity extends PoweredTileEntity implements TileEntityS
 
     @Override
     public String[] getDetails() {
-        return new String[]{
-                "Entity Count: " + entities.size(),
-                "Drone Type: " + currentType.getDisplayName()
-        };
+        if(active){
+            return new String[]{
+                    "Entity Count: " + entities.size(),
+                    "Drone Type: " + currentType.getDisplayName(),
+            };
+        }else{
+            return new String[]{
+                    "Entity Count: " + entities.size(),
+                    "Drone Type: " + currentType.getDisplayName(),
+                    "\nDeactivated!"
+            };
+        }
+
     }
 
     @Override

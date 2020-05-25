@@ -313,7 +313,7 @@ public class RobotEntity extends Entity implements HasCollision {
 
         @Override
         public int getHealth() {
-            return 50;
+            return Integer.MAX_VALUE;//50;
         }
     }
 

@@ -4,6 +4,7 @@ import com.noahcharlton.robogeddon.block.tileentity.electricity.ConsumerPowerBuf
 import com.noahcharlton.robogeddon.block.tileentity.electricity.HasElectricity;
 import com.noahcharlton.robogeddon.block.tileentity.electricity.PowerBuffer;
 import com.noahcharlton.robogeddon.block.tileentity.inventory.ItemBuffer;
+import com.noahcharlton.robogeddon.util.FloatUtils;
 import com.noahcharlton.robogeddon.world.Tile;
 import com.noahcharlton.robogeddon.world.electricity.PowerGraph;
 
@@ -40,7 +41,7 @@ public class PoweredCrafterTileEntity extends CrafterTileEntity implements HasEl
 
     @Override
     public float[] getData() {
-        return combineFloatArrays(super.getData(), new float[]{hasPower ? 1f: 0f});
+        return FloatUtils.combineFloatArrays(super.getData(), new float[]{hasPower ? 1f: 0f});
     }
 
     @Override
