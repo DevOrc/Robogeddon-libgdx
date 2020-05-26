@@ -57,6 +57,13 @@ public class AssetManager {
         return asset;
     }
 
+    public ShaderAsset registerShader(String path) {
+        var asset = new ShaderAsset(path);
+        registerAsset(asset);
+
+        return asset;
+    }
+
     public BitmapFontAsset registerBitmapFont(String name) {
         var asset = new BitmapFontAsset(name);
         registerAsset(asset);
