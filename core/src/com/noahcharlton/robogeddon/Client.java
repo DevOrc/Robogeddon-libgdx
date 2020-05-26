@@ -1,5 +1,6 @@
 package com.noahcharlton.robogeddon;
 
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Vector3;
 import com.noahcharlton.robogeddon.util.Side;
 import space.earlygrey.shapedrawer.ShapeDrawer;
@@ -19,4 +20,8 @@ public interface Client {
     boolean isPauseMenuOpen();
 
     boolean hasKeyFocus();
+
+    Camera getUICamera();
+
+    Camera getGameCamera();
 }

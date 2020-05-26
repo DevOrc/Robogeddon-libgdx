@@ -14,9 +14,11 @@ import com.noahcharlton.robogeddon.message.MessageSerializer;
 import com.noahcharlton.robogeddon.message.RegistrySerializer;
 import com.noahcharlton.robogeddon.settings.Setting;
 import com.noahcharlton.robogeddon.settings.SettingsIO;
+import com.noahcharlton.robogeddon.util.Disposables;
 import com.noahcharlton.robogeddon.util.MiscAssets;
 import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.util.log.Log;
+import com.noahcharlton.robogeddon.util.shader.Shaders;
 import com.noahcharlton.robogeddon.world.floor.Floor;
 import com.noahcharlton.robogeddon.world.floor.Floors;
 import com.noahcharlton.robogeddon.world.fluid.Fluid;
@@ -56,6 +58,8 @@ public class Core {
     /** Responsible for getting graphics details from the client for the core code */
     @Side(Side.CLIENT)
     public static Client client;
+    @Side(Side.CLIENT)
+    public static final Disposables disposables = new Disposables();
 
 
     @Side(Side.BOTH)
@@ -105,6 +109,7 @@ public class Core {
         Log.debug("Init");
 
         Blocks.init();
+        Shaders.init();
         MiscAssets.init();
         blockGroups.setFinalized(true);
 

@@ -5,9 +5,9 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.GridPoint2;
-import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.util.MiscAssets;
 import com.noahcharlton.robogeddon.util.Side;
+import com.noahcharlton.robogeddon.util.shader.BorderShader;
 import com.noahcharlton.robogeddon.world.floor.Floors;
 import com.noahcharlton.robogeddon.world.team.Team;
 
@@ -132,35 +132,32 @@ public class Chunk {
     }
 
     void renderTeam() {
-        var drawer = Core.client.getGameShapeDrawer();
         var x = getLocation().x * Chunk.SIZE * Tile.SIZE + 2;
         var y = getLocation().y * Chunk.SIZE * Tile.SIZE + 2;
-        var size = Chunk.SIZE * Tile.SIZE - 4;
+        var size = Chunk.SIZE * Tile.SIZE;
+        var thickness = 6;
 
         int chunkX = getLocation().x;
         int chunkY = getLocation().y;
-        drawer.setColor(team.getColor());
-        drawer.setDefaultLineWidth(4);
 
         if(shouldDrawBorder(chunkX, chunkY + 1)){
-            drawer.line(x, y + size, x + size, y + size);
+            BorderShader.render(x, y + size - thickness, size, thickness, team.getColor());
         }
         if(shouldDrawBorder(chunkX, chunkY - 1)){
-            drawer.line(x, y, x + size, y);
+            BorderShader.render(x, y, size, thickness, team.getColor());
         }
         if(shouldDrawBorder(chunkX + 1, chunkY)){
-            drawer.line(x + size, y, x + size, y + size);
+            BorderShader.render(x + size - thickness, y, thickness, size, team.getColor());
         }
         if(shouldDrawBorder(chunkX - 1, chunkY)){
-            drawer.line(x, y, x, y + size);
+            BorderShader.render(x, y, thickness, size, team.getColor());
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.F3)){
             var color = team.getColor().cpy();
             color.a = .4f;
 
-            drawer.setColor(color);
-            drawer.filledRectangle(x, y, size, size);
+            BorderShader.render(x + 4, y + 4, size - 8, size - 8, color);
         }
     }
 
