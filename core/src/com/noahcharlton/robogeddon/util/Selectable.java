@@ -1,5 +1,7 @@
 package com.noahcharlton.robogeddon.util;
 
+import com.noahcharlton.robogeddon.util.help.HelpInfo;
+
 @Side(Side.CLIENT)
 public interface Selectable {
 
@@ -22,6 +24,10 @@ public interface Selectable {
     }
 
     default String getSubMenuID(){
+        return null;
+    }
+
+    default HelpInfo getHelpInfo(){
         return null;
     }
 

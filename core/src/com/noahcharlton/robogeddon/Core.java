@@ -17,6 +17,7 @@ import com.noahcharlton.robogeddon.settings.SettingsIO;
 import com.noahcharlton.robogeddon.util.Disposables;
 import com.noahcharlton.robogeddon.util.MiscAssets;
 import com.noahcharlton.robogeddon.util.Side;
+import com.noahcharlton.robogeddon.util.help.HelpInfoLoader;
 import com.noahcharlton.robogeddon.util.log.Log;
 import com.noahcharlton.robogeddon.util.shader.Shaders;
 import com.noahcharlton.robogeddon.world.floor.Floor;
@@ -108,13 +109,14 @@ public class Core {
     public static void init(){
         Log.debug("Init");
 
+        HelpInfoLoader.init();
         Blocks.init();
         Shaders.init();
         MiscAssets.init();
         blockGroups.setFinalized(true);
 
         entities.values().forEach(EntityType::initRenderer);
-        blocks.values().forEach(Block::initRenderer);
+        blocks.values().forEach(Block::init);
         floors.values().forEach(Floor::init);
         items.values().forEach(Item::init);
         Log.debug("Init End");

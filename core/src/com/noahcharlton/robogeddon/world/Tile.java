@@ -14,6 +14,7 @@ import com.noahcharlton.robogeddon.block.tileentity.inventory.HasTileEntity;
 import com.noahcharlton.robogeddon.util.Direction;
 import com.noahcharlton.robogeddon.util.Selectable;
 import com.noahcharlton.robogeddon.util.Side;
+import com.noahcharlton.robogeddon.util.help.HelpInfo;
 import com.noahcharlton.robogeddon.util.log.Log;
 import com.noahcharlton.robogeddon.world.floor.Floor;
 
@@ -213,6 +214,14 @@ public class Tile implements Selectable, HasWorldPosition {
         var tileEntity = getTileEntity();
 
         return tileEntity instanceof TileEntitySelectable ? ((TileEntitySelectable) tileEntity).getSubMenuID() : null;
+    }
+
+    @Override
+    public HelpInfo getHelpInfo() {
+        if(block != null)
+            return block.getHelpInfo();
+
+        return null;
     }
 
     @Side(Side.CLIENT)

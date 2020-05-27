@@ -1,0 +1,14 @@
+<HelpInfo>
+    <BasicHelpPage id="solar_panel">
+        <Title>
+            Solar Panel
+        </Title>
+        <Desc>
+            This is line one: [NL][NL]
+
+            1. This is a list [NL]
+            2. This is another line [NL]
+            3. Wow this is great!
+        </Desc>
+    </BasicHelpPage>
+</HelpInfo>
