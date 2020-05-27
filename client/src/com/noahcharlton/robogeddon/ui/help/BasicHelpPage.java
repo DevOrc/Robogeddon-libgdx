@@ -13,7 +13,7 @@ public class BasicHelpPage extends HelpScene {
 
         var basicInfo = (HelpInfoLoader.BasicHelpInfo) info;
         var title = new Label(basicInfo.getHelpPageTitle()).setFont(UIAssets.largeFont);
-        var desc = new Label(basicInfo.getHelpPageText());
+        var desc = new Label(basicInfo.getHelpPageText()).setWrap(true).setMaxWidth(600);
 
         add(title.pad().top(40)).align(Align.top);
         add(desc);

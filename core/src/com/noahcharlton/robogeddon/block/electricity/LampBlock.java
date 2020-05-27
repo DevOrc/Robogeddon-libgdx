@@ -13,6 +13,8 @@ import com.noahcharlton.robogeddon.world.Tile;
 
 public class LampBlock extends Block implements BlockRenderer, HasTileEntity {
 
+    private static final float USAGE_RATE = .1f;
+
     private TextureRegion off;
     private TextureRegion on;
 
@@ -34,6 +36,13 @@ public class LampBlock extends Block implements BlockRenderer, HasTileEntity {
     }
 
     @Override
+    public String[] getDescriptionParameters() {
+        return new String[]{
+                String.valueOf(USAGE_RATE)
+        };
+    }
+
+    @Override
     public void render(SpriteBatch batch, Tile tile) {
         PoweredTileEntity tileEntity = (PoweredTileEntity) tile.getTileEntity();
         var texture = tileEntity.hasPower() ? on : off;
@@ -51,7 +60,7 @@ public class LampBlock extends Block implements BlockRenderer, HasTileEntity {
 
     @Override
     public TileEntity createTileEntity(Tile tile) {
-        return new LampTileEntity(tile, .1f);
+        return new LampTileEntity(tile, USAGE_RATE);
     }
 
     static class LampTileEntity extends PoweredTileEntity {

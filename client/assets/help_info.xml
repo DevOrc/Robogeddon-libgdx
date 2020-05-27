@@ -1,14 +1,36 @@
 <HelpInfo>
-    <BasicHelpPage id="solar_panel">
+    <BasicHelpPage id="test_page">
         <Title>
-            Solar Panel
+            Test Help Page
         </Title>
         <Desc>
-            This is line one: [NL][NL]
-
-            1. This is a list [NL]
-            2. This is another line [NL]
-            3. Wow this is great!
+            This is a description.
         </Desc>
     </BasicHelpPage>
+    <BlockHelpPage id="solar_panel">
+        <Desc>
+            Produces {0} unit of power per tick
+        </Desc>
+    </BlockHelpPage>
+    <BlockHelpPage id="lamp">
+        <Desc>
+            Turns on light when powered. Uses {0} power per tick
+        </Desc>
+    </BlockHelpPage>
+    <BlockHelpPage id="relay">
+        <Desc>
+            Used to connect powered machines to the team's power network. It can connect to any machine
+            within {0} blocks of the relay.
+        </Desc>
+    </BlockHelpPage>
+    <BlockHelpPage id="battery">
+        <Desc>
+            Stores {0} units of power.
+        </Desc>
+    </BlockHelpPage>
+    <BlockHelpPage id="coal_generator">
+        <Desc>
+            Burns a piece of coal for {0} seconds at rate of {1} power per tick.
+        </Desc>
+    </BlockHelpPage>
 </HelpInfo>

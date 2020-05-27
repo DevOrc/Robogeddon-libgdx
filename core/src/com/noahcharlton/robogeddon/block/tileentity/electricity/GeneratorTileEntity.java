@@ -6,13 +6,13 @@ import com.noahcharlton.robogeddon.world.electricity.PowerGraph;
 
 public class GeneratorTileEntity extends TileEntity implements HasElectricity, PowerBuffer {
 
-    private final int powerPerTick;
+    private final float powerPerTick;
 
     private Tile relayTile;
 
     protected boolean generating = true;
 
-    public GeneratorTileEntity(Tile rootTile, int powerPerTick) {
+    public GeneratorTileEntity(Tile rootTile, float powerPerTick) {
         super(rootTile);
 
         this.powerPerTick = powerPerTick;

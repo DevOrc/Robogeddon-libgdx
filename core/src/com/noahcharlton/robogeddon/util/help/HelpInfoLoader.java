@@ -21,8 +21,14 @@ public class HelpInfoLoader {
         FileHandle file = Gdx.files.internal("help_info.xml");
         Element reader = new XmlReader().parse(file.readString());
 
-        for(Element entry : reader.getChildrenByName("BasicHelpPage")){
-            var info = createHelpInfo(entry);
+        for(int i = 0; i < reader.getChildCount(); i++){
+            Element entry = reader.getChild(i);
+            HelpInfo info = null;
+
+            if(entry.getName().equals("BasicHelpPage"))
+                info = createBasicHelpInfo(entry);
+            else if(entry.getName().equals("BlockHelpPage"))
+                info = new BlockHelpInfo(entry);
 
             helpInfo.put(entry.getAttribute("id"), info);
         }
@@ -32,13 +38,15 @@ public class HelpInfoLoader {
         return helpInfo.get(id, null);
     }
 
-    private static HelpInfo createHelpInfo(Element element) {
+    private static HelpInfo createBasicHelpInfo(Element element) {
         String title = element.get("Title");
-        String desc = element.get("Desc");
-        desc = desc.replaceAll("\\s+", " ").replace("[NL]", "\n");
+        String desc = escapeDescriptionString(element.get("Desc"));;
 
-        System.out.println(title + ": \n" + desc);
         return new BasicHelpInfo(title, desc);
+    }
+
+    public static String escapeDescriptionString(String desc) {
+        return desc.replaceAll("\\s+", " ").replace("[NL]", "\n");
     }
 
     public static class BasicHelpInfo implements HelpInfo{

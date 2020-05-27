@@ -27,6 +27,13 @@ public class RelayBlock extends Block implements HasTileEntity {
     }
 
     @Override
+    public String[] getDescriptionParameters() {
+        return new String[]{
+                String.valueOf(HasElectricity.RELAY_RADIUS)
+        };
+    }
+
+    @Override
     public TileEntity createTileEntity(Tile tile) {
         return new RelayTileEntity(tile);
     }

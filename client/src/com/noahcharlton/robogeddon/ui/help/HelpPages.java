@@ -1,6 +1,7 @@
 package com.noahcharlton.robogeddon.ui.help;
 
 import com.badlogic.gdx.utils.ObjectMap;
+import com.noahcharlton.robogeddon.util.help.BlockHelpInfo;
 import com.noahcharlton.robogeddon.util.help.HelpInfo;
 import com.noahcharlton.robogeddon.util.help.HelpInfoLoader;
 
@@ -12,6 +13,7 @@ public class HelpPages {
 
     public static void init(){
         pages.put(HelpInfoLoader.BasicHelpInfo.guiID, BasicHelpPage.class);
+        pages.put(BlockHelpInfo.guiID, BlockHelpPage.class);
     }
 
     public static HelpScene createFrom(HelpInfo info){

@@ -4,6 +4,7 @@ import com.noahcharlton.robogeddon.block.Block;
 import com.noahcharlton.robogeddon.block.tileentity.TileEntity;
 import com.noahcharlton.robogeddon.block.tileentity.electricity.BatteryTileEntity;
 import com.noahcharlton.robogeddon.block.tileentity.inventory.HasTileEntity;
+import com.noahcharlton.robogeddon.util.FloatUtils;
 import com.noahcharlton.robogeddon.world.Tile;
 
 public class BatteryBlock extends Block implements HasTileEntity {
@@ -17,6 +18,13 @@ public class BatteryBlock extends Block implements HasTileEntity {
     @Override
     public String getDisplayName() {
         return "Battery";
+    }
+
+    @Override
+    public String[] getDescriptionParameters() {
+        return new String[]{
+                FloatUtils.asIntString(CAPACITY)
+        };
     }
 
     @Override

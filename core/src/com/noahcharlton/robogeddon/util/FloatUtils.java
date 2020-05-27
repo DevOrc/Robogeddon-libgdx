@@ -27,4 +27,8 @@ public class FloatUtils{
 
         return result;
     }
+
+    public static String asIntString(float productionRate) {
+        return Integer.toString((int) productionRate);
+    }
 }

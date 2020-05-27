@@ -12,11 +12,15 @@ import com.noahcharlton.robogeddon.block.tileentity.inventory.HasTileEntity;
 import com.noahcharlton.robogeddon.block.tileentity.inventory.ItemBuffer;
 import com.noahcharlton.robogeddon.block.tileentity.inventory.SingleItemBuffer;
 import com.noahcharlton.robogeddon.util.Direction;
+import com.noahcharlton.robogeddon.util.FloatUtils;
 import com.noahcharlton.robogeddon.world.Tile;
 import com.noahcharlton.robogeddon.world.item.Item;
 import com.noahcharlton.robogeddon.world.item.Items;
 
 public class CoalGeneratorBlock extends Block implements HasTileEntity, BlockRenderer {
+
+    private static final int BURN_TIME = 300;
+    private static final float POWER_RATE = 20f;
 
     private TextureRegion textureOn;
     private TextureRegion textureOff;
@@ -64,6 +68,14 @@ public class CoalGeneratorBlock extends Block implements HasTileEntity, BlockRen
     }
 
     @Override
+    public String[] getDescriptionParameters() {
+        return new String[]{
+                Integer.toString(BURN_TIME / 60),
+                FloatUtils.asIntString(POWER_RATE)
+        };
+    }
+
+    @Override
     public TileEntity createTileEntity(Tile tile) {
         return new CoalGeneratorTileEntity(tile);
     }
@@ -74,7 +86,7 @@ public class CoalGeneratorBlock extends Block implements HasTileEntity, BlockRen
         private int burnTime;
 
         public CoalGeneratorTileEntity(Tile rootTile) {
-            super(rootTile, 20);
+            super(rootTile, POWER_RATE);
 
             this.items = new SingleItemBuffer(Items.coal, 10);
         }
@@ -102,7 +114,7 @@ public class CoalGeneratorBlock extends Block implements HasTileEntity, BlockRen
             var coal = items.retrieveItem();
 
             if(coal != null){
-                burnTime = 300;
+                burnTime = BURN_TIME;
                 generating = true;
                 dirty = true;
             }

@@ -3,6 +3,7 @@ package com.noahcharlton.robogeddon.block;
 import com.noahcharlton.robogeddon.HasID;
 import com.noahcharlton.robogeddon.entity.Entity;
 import com.noahcharlton.robogeddon.util.Side;
+import com.noahcharlton.robogeddon.util.help.BlockHelpInfo;
 import com.noahcharlton.robogeddon.util.help.HelpInfo;
 import com.noahcharlton.robogeddon.util.help.HelpInfoLoader;
 import com.noahcharlton.robogeddon.world.Tile;
@@ -26,14 +27,28 @@ public abstract class Block implements HasID {
     }
 
     @Side(Side.CLIENT)
-    public void initRenderer(){
+    protected void initRenderer(){
         renderer = new DefaultBlockRenderer(this);
     }
 
     @Side(Side.CLIENT)
     public void init(){
         initRenderer();
+        createHelpInfo();
+    }
+
+    @Side(Side.CLIENT)
+    protected void createHelpInfo() {
         helpInfo = HelpInfoLoader.getEntry(id);
+
+        if(helpInfo == null){ //If there is no special help info, auto generate one
+            helpInfo = new BlockHelpInfo(this);
+        }
+    }
+
+    @Side(Side.CLIENT)
+    public String[] getDescriptionParameters(){
+        return new String[]{};
     }
 
     @Side(Side.SERVER)
