@@ -3,7 +3,10 @@ package com.noahcharlton.robogeddon.world;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
+import com.noahcharlton.robogeddon.Core;
+import com.noahcharlton.robogeddon.block.Block;
 import com.noahcharlton.robogeddon.util.log.Log;
 import com.noahcharlton.robogeddon.block.tileentity.CustomTileEntityMessage;
 import com.noahcharlton.robogeddon.entity.CustomEntityMessage;
@@ -29,6 +32,7 @@ public abstract class World {
     protected final Inventory inventory = new Inventory();
     protected final List<Entity> entities = new LinkedList<>();
     protected boolean paused;
+    protected final Array<Block> unlockedBlocks = new Array<>(Core.blocks.size());
 
     World(boolean isServer) {
         this.isServer = isServer;
@@ -191,5 +195,9 @@ public abstract class World {
 
     public List<Entity> getEntities() {
         return Collections.unmodifiableList(entities);
+    }
+
+    public Array<Block> getUnlockedBlocks() {
+        return unlockedBlocks;
     }
 }

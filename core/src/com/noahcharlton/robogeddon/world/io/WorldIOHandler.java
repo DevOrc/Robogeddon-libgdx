@@ -13,6 +13,7 @@ public interface WorldIOHandler extends HasID {
         Core.saveGameHandlers.register(new InventoryIOHandler());
         Core.saveGameHandlers.register(new EntityIOHandler());
         Core.saveGameHandlers.register(new SeedHandler());
+        Core.saveGameHandlers.register(new UnlockedBlockHandler());
     }
 
     void save(XmlWriter xml, ServerWorld world);

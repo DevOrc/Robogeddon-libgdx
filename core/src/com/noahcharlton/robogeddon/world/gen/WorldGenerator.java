@@ -36,6 +36,7 @@ public class WorldGenerator {
         }
 
         world.buildBlock(world.getTileAt(-1, -1), Blocks.inventoryPortal);
+        world.getUnlockedBlocks().add(Blocks.minerBlock, Blocks.itemDuctNorth);
 //        world.addEntity(EntityType.droneEntity.create(world, world.getEnemyTeam()));
     }
 

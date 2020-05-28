@@ -59,4 +59,8 @@ public class Registry<T extends HasID>  {
     public Collection<String> keys(){
         return items.keySet();
     }
+
+    public int size() {
+        return items.size();
+    }
 }

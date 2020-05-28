@@ -342,7 +342,14 @@ public class ServerWorld extends World {
         server.sendSingle(connID, new NewEntityMessage(player));
         players.put(connID, player);
 
+        unlockedBlocks.forEach(block -> server.sendSingle(connID, new UnlockedBlockMessage(block)));
         Server.runLater(() -> server.sendSingle(connID, message));
+    }
+
+    public void unlockBlock(Block block) {
+        unlockedBlocks.add(block);
+        sendMessageToClient(new UnlockedBlockMessage(block));
+        handleChat(new ChatMessage("Unlocked Block " + block.getDisplayName()));
     }
 
     @Override

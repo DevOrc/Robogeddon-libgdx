@@ -2,6 +2,7 @@ package com.noahcharlton.robogeddon.command;
 
 import com.badlogic.gdx.files.FileHandle;
 import com.noahcharlton.robogeddon.Core;
+import com.noahcharlton.robogeddon.block.Block;
 import com.noahcharlton.robogeddon.entity.Entity;
 import com.noahcharlton.robogeddon.entity.RobotEntity;
 import com.noahcharlton.robogeddon.message.ChatMessage;
@@ -30,6 +31,7 @@ public class Commands {
     public static void preInit() {
         register("give_items", Commands::giveItem);
         register("game0", Commands::gameState0);
+        register("debug", Commands::debug);
         register("kill", Commands::killAll);
         register("spawn", Commands::spawnEntity);
         register("spawn_base", Commands::spawnBase);
@@ -37,6 +39,16 @@ public class Commands {
         register("damage_test", Commands::damageTest);
         register("base_comp_new", Commands::newBaseComp);
         register("base_comp_save", Commands::saveBaseComp);
+    }
+
+    private static void debug(ServerWorld world, List<Argument> arguments) {
+        giveItem(world, arguments);
+
+        for(Block block : Core.blocks.values()){
+            if(!world.getUnlockedBlocks().contains(block, true)){
+                world.unlockBlock(block);
+            }
+        }
     }
 
     private static void gameState0(ServerWorld world, List<Argument> arguments) {
