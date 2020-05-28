@@ -12,7 +12,10 @@ import com.noahcharlton.robogeddon.util.Direction;
 import com.noahcharlton.robogeddon.util.help.HelpInfoLoader;
 import com.noahcharlton.robogeddon.world.Tile;
 import com.noahcharlton.robogeddon.world.item.Item;
+import com.noahcharlton.robogeddon.world.item.ItemStack;
+import com.noahcharlton.robogeddon.world.item.Items;
 
+import java.util.List;
 import java.util.function.Consumer;
 
 public class ItemDuct extends Block implements BlockRenderer, HasTileEntity {
@@ -58,6 +61,11 @@ public class ItemDuct extends Block implements BlockRenderer, HasTileEntity {
 
             textureRegistered = true;
         }
+    }
+
+    @Override
+    public List<ItemStack> getRequirements() {
+        return List.of(Items.iron.stack(1), Items.rock.stack(1));
     }
 
     @Override

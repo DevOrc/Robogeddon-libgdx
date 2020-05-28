@@ -130,6 +130,8 @@ public class RobotEntity extends Entity implements HasCollision {
             mineFloor((MineableFloor) tile.getUpperFloor());
         } else if(tile.getFloor() instanceof MineableFloor){
             mineFloor((MineableFloor) tile.getFloor());
+        }else{
+            System.out.println("test");
         }
     }
 
@@ -137,7 +139,7 @@ public class RobotEntity extends Entity implements HasCollision {
         Item item = floor.getOre();
         var serverWorld = (ServerWorld) world;
 
-        serverWorld.getInventory().changeItem(item, 10);
+        serverWorld.getInventory().changeItem(item, 3);
     }
 
     @Override

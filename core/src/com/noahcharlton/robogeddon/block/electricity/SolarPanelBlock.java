@@ -6,6 +6,10 @@ import com.noahcharlton.robogeddon.block.tileentity.electricity.GeneratorTileEnt
 import com.noahcharlton.robogeddon.block.tileentity.inventory.HasTileEntity;
 import com.noahcharlton.robogeddon.util.FloatUtils;
 import com.noahcharlton.robogeddon.world.Tile;
+import com.noahcharlton.robogeddon.world.item.ItemStack;
+import com.noahcharlton.robogeddon.world.item.Items;
+
+import java.util.List;
 
 public class SolarPanelBlock extends Block implements HasTileEntity {
 
@@ -13,6 +17,11 @@ public class SolarPanelBlock extends Block implements HasTileEntity {
 
     public SolarPanelBlock(String id) {
         super(id);
+    }
+
+    @Override
+    public List<ItemStack> getRequirements() {
+        return List.of(Items.iron.stack(5), Items.circuit.stack(1));
     }
 
     @Override

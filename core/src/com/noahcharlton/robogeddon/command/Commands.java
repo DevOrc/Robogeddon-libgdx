@@ -17,6 +17,7 @@ import com.noahcharlton.robogeddon.world.gen.BaseComponentType;
 import com.noahcharlton.robogeddon.world.gen.EnemyBaseGenerator;
 import com.noahcharlton.robogeddon.world.io.XmlWriter;
 import com.noahcharlton.robogeddon.world.item.Item;
+import com.noahcharlton.robogeddon.world.item.Items;
 import com.noahcharlton.robogeddon.world.team.Team;
 
 import java.util.Arrays;
@@ -28,6 +29,7 @@ public class Commands {
 
     public static void preInit() {
         register("give_items", Commands::giveItem);
+        register("game0", Commands::gameState0);
         register("kill", Commands::killAll);
         register("spawn", Commands::spawnEntity);
         register("spawn_base", Commands::spawnBase);
@@ -35,6 +37,11 @@ public class Commands {
         register("damage_test", Commands::damageTest);
         register("base_comp_new", Commands::newBaseComp);
         register("base_comp_save", Commands::saveBaseComp);
+    }
+
+    private static void gameState0(ServerWorld world, List<Argument> arguments) {
+        world.getInventory().setItem(Items.iron, 50);
+        world.getInventory().setItem(Items.rock, 25);
     }
 
     private static void damageTest(ServerWorld world, List<Argument> arguments) {

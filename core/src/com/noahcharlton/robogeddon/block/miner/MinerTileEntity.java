@@ -8,7 +8,7 @@ import com.noahcharlton.robogeddon.world.item.Item;
 
 public class MinerTileEntity extends StorageTileEntity {
 
-    static final int TIME = 120;
+    static final int TIME = 240;
 
     private final Item item;
 

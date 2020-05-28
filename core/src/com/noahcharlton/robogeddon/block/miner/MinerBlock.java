@@ -12,6 +12,11 @@ import com.noahcharlton.robogeddon.entity.Entity;
 import com.noahcharlton.robogeddon.util.FloatUtils;
 import com.noahcharlton.robogeddon.world.Tile;
 import com.noahcharlton.robogeddon.world.floor.MineableFloor;
+import com.noahcharlton.robogeddon.world.item.ItemStack;
+import com.noahcharlton.robogeddon.world.item.Items;
+
+import java.util.Collections;
+import java.util.List;
 
 public class MinerBlock extends Block implements HasTileEntity, BlockRenderer {
 
@@ -26,6 +31,16 @@ public class MinerBlock extends Block implements HasTileEntity, BlockRenderer {
         this.renderer = this;
 
         Core.assets.registerTextureGroup("blocks/miner").setOnLoad(t -> textures = t);
+    }
+
+    @Override
+    public float getHardness() {
+        return 1.25f;
+    }
+
+    @Override
+    public List<ItemStack> getRequirements() {
+        return Collections.singletonList(Items.iron.stack(15));
     }
 
     @Override
@@ -49,8 +64,12 @@ public class MinerBlock extends Block implements HasTileEntity, BlockRenderer {
 
     private void renderItem(SpriteBatch batch, Tile tile) {
         var tileEntity = (MinerTileEntity) tile.getTileEntity();
+        var percent = tileEntity.getTime() / MinerTileEntity.TIME;
 
-        float innerX = Math.min(tileEntity.getTime() / MinerTileEntity.TIME * 22, 20);
+        if(percent < .5f)
+            return;
+
+        float innerX = Math.min((percent - .5f) * 2f * 22f, 20);
         float x = tile.getPixelX() + innerX;
         float y = tile.getPixelY() + 10;
         batch.draw(tileEntity.getItem().getTinyTexture(), x, y);
