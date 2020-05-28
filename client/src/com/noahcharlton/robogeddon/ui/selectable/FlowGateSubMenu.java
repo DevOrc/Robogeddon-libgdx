@@ -1,11 +1,16 @@
 package com.noahcharlton.robogeddon.ui.selectable;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Align;
 import com.noahcharlton.robogeddon.block.Blocks;
 import com.noahcharlton.robogeddon.block.duct.ItemDuctTileEntity;
 import com.noahcharlton.robogeddon.block.gate.FlowGateBlock;
 import com.noahcharlton.robogeddon.block.gate.FlowGateSelectionMessage;
 import com.noahcharlton.robogeddon.block.gate.FlowGateTileEntity;
 import com.noahcharlton.robogeddon.block.tileentity.TileEntity;
+import com.noahcharlton.robogeddon.ui.Scale;
+import com.noahcharlton.robogeddon.ui.UIAssets;
 import com.noahcharlton.robogeddon.ui.event.ClickEvent;
 import com.noahcharlton.robogeddon.ui.widget.Button;
 import com.noahcharlton.robogeddon.ui.widget.TextButton;
@@ -33,6 +38,18 @@ public class FlowGateSubMenu extends SelectableSubMenu{
         south.setOnClick(this::onButtonClick);
         west.setOnClick(this::onButtonClick);
         add(north, east, south, west, icon);
+    }
+
+    @Override
+    public void draw(SpriteBatch batch) {
+        if(!north.isVisible() && !east.isVisible() && !south.isVisible() & !west.isVisible()){
+            var font = UIAssets.smallFont;
+            var text = "No valid inputs/outputs (item ducts) nearby";
+            font.setColor(Color.RED);
+            font.getData().setScale(Scale.scale);
+
+            font.draw(batch, text, getX() + 10, getY() + 65, getWidth() - 20, Align.center, true);
+        }
     }
 
     @Override
