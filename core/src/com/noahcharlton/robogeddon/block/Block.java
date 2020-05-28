@@ -26,6 +26,8 @@ public abstract class Block implements HasID {
         this.id = id;
     }
 
+    protected void preInit(){}
+
     @Side(Side.CLIENT)
     protected void initRenderer(){
         renderer = new DefaultBlockRenderer(this);
@@ -59,6 +61,13 @@ public abstract class Block implements HasID {
     }
 
     public List<ItemStack> getRequirements(){
+        return Collections.emptyList();
+    }
+
+    /**
+     * @returns blocks that need to be unlocked before this one
+     */
+    public List<Block> getRequiredBlocks(){
         return Collections.emptyList();
     }
 

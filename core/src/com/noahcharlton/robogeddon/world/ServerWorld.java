@@ -5,6 +5,7 @@ import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.Server;
 import com.noahcharlton.robogeddon.ServerProvider;
 import com.noahcharlton.robogeddon.block.Block;
+import com.noahcharlton.robogeddon.block.BlockGroup;
 import com.noahcharlton.robogeddon.block.Multiblock;
 import com.noahcharlton.robogeddon.block.tileentity.TileEntity;
 import com.noahcharlton.robogeddon.block.tileentity.UpdateTileEntitiesMessage;
@@ -102,6 +103,33 @@ public class ServerWorld extends World {
         updatePowerGraphs();
         createPlayerChunkBuffer();
         sendDirtyTiles();
+        updateUnlockedBlocks();
+    }
+
+    private void updateUnlockedBlocks() {
+        for(BlockGroup group : Core.blockGroups.values()){
+            for(Block block : group.getBlocks()){
+                if(!unlockedBlocks.contains(block, true) && canBeUnlocked(block)){
+                    unlockBlock(block);
+                }
+            }
+        }
+    }
+
+    private boolean canBeUnlocked(Block block) {
+        for(Block requiredBlock : block.getRequiredBlocks()){
+            if(!unlockedBlocks.contains(requiredBlock, true)){
+                return false;
+            }
+        }
+
+        for(ItemStack requirement : block.getRequirements()){
+            if(requirement.getAmount() > getInventoryForItem(requirement.getItem())){
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public void updatePowerGraphs() {

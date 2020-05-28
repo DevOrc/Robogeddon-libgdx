@@ -15,18 +15,32 @@ import com.noahcharlton.robogeddon.util.Direction;
 import com.noahcharlton.robogeddon.util.FloatUtils;
 import com.noahcharlton.robogeddon.world.Tile;
 import com.noahcharlton.robogeddon.world.item.Item;
+import com.noahcharlton.robogeddon.world.item.ItemStack;
 import com.noahcharlton.robogeddon.world.item.Items;
+
+import java.util.List;
 
 public class CoalGeneratorBlock extends Block implements HasTileEntity, BlockRenderer {
 
     private static final int BURN_TIME = 300;
     private static final float POWER_RATE = 20f;
 
+    private List<ItemStack> requiredItems;
+
     private TextureRegion textureOn;
     private TextureRegion textureOff;
 
     public CoalGeneratorBlock(String id) {
         super(id);
+    }
+
+    @Override
+    protected void preInit() {
+        requiredItems =  List.of(Items.iron.stack(75));
+    }
+
+    public List<ItemStack> getRequirements(){
+        return requiredItems;
     }
 
     @Override

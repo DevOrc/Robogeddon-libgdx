@@ -31,6 +31,7 @@ public class Commands {
     public static void preInit() {
         register("give_items", Commands::giveItem);
         register("game0", Commands::gameState0);
+        register("game1", Commands::gameState1);
         register("debug", Commands::debug);
         register("kill", Commands::killAll);
         register("spawn", Commands::spawnEntity);
@@ -39,6 +40,11 @@ public class Commands {
         register("damage_test", Commands::damageTest);
         register("base_comp_new", Commands::newBaseComp);
         register("base_comp_save", Commands::saveBaseComp);
+    }
+
+    private static void gameState1(ServerWorld world, List<Argument> arguments) {
+        world.getInventory().setItem(Items.iron, 100);
+        world.getInventory().setItem(Items.rock, 100);
     }
 
     private static void debug(ServerWorld world, List<Argument> arguments) {

@@ -1,6 +1,7 @@
 package com.noahcharlton.robogeddon.block.electricity;
 
 import com.noahcharlton.robogeddon.block.Block;
+import com.noahcharlton.robogeddon.block.Blocks;
 import com.noahcharlton.robogeddon.block.tileentity.TileEntity;
 import com.noahcharlton.robogeddon.block.tileentity.electricity.GeneratorTileEntity;
 import com.noahcharlton.robogeddon.block.tileentity.inventory.HasTileEntity;
@@ -15,13 +16,27 @@ public class SolarPanelBlock extends Block implements HasTileEntity {
 
     private static final float PRODUCTION_RATE = 1f;
 
+    private List<Block> requiredBlocks;
+    private List<ItemStack> requiredItems;
+
     public SolarPanelBlock(String id) {
         super(id);
     }
 
     @Override
+    protected void preInit() {
+        requiredBlocks = List.of(Blocks.relayBlock);
+        requiredItems =  List.of(Items.iron.stack(5), Items.circuit.stack(2));
+    }
+
+    @Override
     public List<ItemStack> getRequirements() {
-        return List.of(Items.iron.stack(5), Items.circuit.stack(1));
+        return requiredItems;
+    }
+
+    @Override
+    public List<Block> getRequiredBlocks() {
+        return requiredBlocks;
     }
 
     @Override

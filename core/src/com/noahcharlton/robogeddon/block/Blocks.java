@@ -68,6 +68,8 @@ public class Blocks{
                 itemDuctEast, itemDuctWest, inventoryPortal, unloaderBlock, wall, metalFormer, relayBlock, solarPanel,
                 lamp, battery, coalGenerator, circuitFactory, splitter, sorter, flowGate, crossGate, combiner, fluiduct,
                 waterCollector, laserBlock, spawnPad, healPad);
+
+        Core.blocks.values().forEach(Block::preInit);
     }
 
     @Side(Side.CLIENT)
