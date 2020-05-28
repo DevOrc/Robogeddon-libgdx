@@ -33,4 +33,137 @@
             Burns a piece of coal for {0} seconds at rate of {1} power per tick.
         </Desc>
     </BlockHelpPage>
+    <BlockHelpPage id="splitter">
+        <Desc>
+            Equally outputs items in all directions (the opposite of a combiner)
+        </Desc>
+    </BlockHelpPage>
+    <BlockHelpPage id="combiner">
+        <Desc>
+            Equally inputs items from all directions (the opposite of a splitter)
+        </Desc>
+    </BlockHelpPage>
+    <BlockHelpPage id="flow_gate">
+        <Desc>
+            Outputs items depending on whether the other output paths are full.
+            [NL][NL]
+            When a side is registered as 'normal', items will output in that direction at all times. If a side is set to
+            'overflow', then items will only output when the sides set to 'normal' are full.
+        </Desc>
+    </BlockHelpPage>
+    <BlockHelpPage id="cross_gate">
+        <Desc>
+            Outputs items across from where they entered
+        </Desc>
+    </BlockHelpPage>
+    <BlockHelpPage id="sorter">
+        <Desc>
+            Outputs selected items to the east/west, and unselected items to the north/south.
+        </Desc>
+    </BlockHelpPage>
+    <BlockHelpPage id="item_duct" block_id="item_duct_NORTH">
+        <Desc>
+            Gives, takes, and transports items
+        </Desc>
+    </BlockHelpPage>
+    <BlockHelpPage id="fluiduct">
+        <Desc>
+            Gives, takes, and transports fluids
+        </Desc>
+    </BlockHelpPage>
+    <BlockHelpPage id="unloader">
+        <Desc>
+            Removes selected items from an inventory portal
+        </Desc>
+    </BlockHelpPage>
+    <BlockHelpPage id="inventory_portal">
+        <Desc>
+            The interface between the real world and your inventory.
+            [NL][NL]
+            Items inputted into this block will be placed into your inventory. Items can be removed by using an
+            Unloader block.
+        </Desc>
+    </BlockHelpPage>
+    <BlockHelpPage id="beacon" block_id="beacon_BLUE">
+        <Desc>
+            When placed in an enemies territory, it will neutralize the chunk. When placed in neutral territory, it will
+            claim the chunk for your team.
+            [NL][NL]
+            Note: Only 1 allowed per chunk, per team.
+            [NL][NL]
+            Neutralize Time: {0} seconds [NL]
+            Claim Time: {1} seconds
+        </Desc>
+    </BlockHelpPage>
+    <BlockHelpPage id="metal_former">
+        <Desc>
+            Turns chunks of iron into bullets for turrets.
+            [NL]
+            [NL]
+            Craft Time: {0} seconds
+        </Desc>
+    </BlockHelpPage>
+    <BlockHelpPage id="circuit_factory">
+        <Desc>
+            Turns sand and iron into circuits for machines.
+            [NL]
+            [NL]
+            Craft Time: {0} seconds [NL]
+            Power Usage: {1} power per tick
+        </Desc>
+    </BlockHelpPage>
+    <BlockHelpPage id="water_collector">
+        <Desc>
+            Collects cold water from the natural environment
+            [NL]
+            [NL]
+            Water Production: {0} gallon / second
+        </Desc>
+    </BlockHelpPage>
+    <BlockHelpPage id="heal_pad">
+        <Desc>
+            Heals any entity from the same team within a {0} tile radius
+            [NL]
+            [NL]
+            Range: {0} tiles [NL]
+            Power Usage: {1} power per tick [NL]
+            Heal Rate: {2} health per tick [NL]
+        </Desc>
+    </BlockHelpPage>
+    <BlockHelpPage id="turret">
+        <Desc>
+            Shoots enemies and blocks from the enemy team. Requires bullets produced from a Metal Former.
+            [NL]
+            [NL]
+            Range: {0} tiles [NL]
+            Shooting Time: {1} seconds [NL]
+            Entity Damage: {2} per bullet
+        </Desc>
+    </BlockHelpPage>
+    <BlockHelpPage id="miner">
+        <Desc>
+            Mines ores and materials
+            [NL]
+            [NL]
+            Mining Time: {0} seconds
+        </Desc>
+    </BlockHelpPage>
+    <BlockHelpPage id="laser">
+        <Desc>
+            Shoots enemies in the air using a laser
+            [NL]
+            [NL]
+            Damage: {0} per second [NL]
+            Power Usage: {1} power per tick [NL]
+            Range: {2} tiles
+        </Desc>
+    </BlockHelpPage>
+    <BlockHelpPage id="spawn_pad">
+        <Desc>
+            Spawns drones of the selected type
+            [NL]
+            [NL]
+            Power Usage: {0} power per tick
+        </Desc>
+    </BlockHelpPage>
 </HelpInfo>

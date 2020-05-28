@@ -29,12 +29,13 @@ import com.noahcharlton.robogeddon.world.team.Team;
 
 public class Blocks{
 
-    private static final String itemDuctID = "item_duct";
+    public static final String itemDuctID = "item_duct";
+    public static final String beaconID = "beacon";
 
     public static final Block testBlock = new TestBlock("test_block");
     public static final Block turretBlock = new TurretBlock("turret");
-    public static final Block blueBeacon = new BeaconBlock("beacon", Team.BLUE);
-    public static final Block redBeacon = new BeaconBlock("beacon", Team.RED);
+    public static final Block blueBeacon = new BeaconBlock(beaconID, Team.BLUE);
+    public static final Block redBeacon = new BeaconBlock(beaconID, Team.RED);
     public static final Block minerBlock = new MinerBlock("miner");
     public static final Block itemDuctNorth = new ItemDuct(itemDuctID, Direction.NORTH);
     public static final Block itemDuctSouth = new ItemDuct(itemDuctID, Direction.SOUTH);

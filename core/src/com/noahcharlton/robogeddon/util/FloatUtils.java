@@ -31,4 +31,8 @@ public class FloatUtils{
     public static String asIntString(float productionRate) {
         return Integer.toString((int) productionRate);
     }
+
+    public static String asString(float value, int frontDigits, int backDigits) {
+        return String.format("%" + frontDigits + "."+ backDigits + "f", value);
+    }
 }

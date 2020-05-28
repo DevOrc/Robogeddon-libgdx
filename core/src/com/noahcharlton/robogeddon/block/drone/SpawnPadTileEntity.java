@@ -164,11 +164,13 @@ public class SpawnPadTileEntity extends PoweredTileEntity implements TileEntityS
             return new String[]{
                     "Entity Count: " + entities.size(),
                     "Drone Type: " + currentType.getDisplayName(),
+                    "Craft Time: " + FloatUtils.asIntString(currentType.getFormationTime() / 60f) + " seconds",
             };
         }else{
             return new String[]{
                     "Entity Count: " + entities.size(),
                     "Drone Type: " + currentType.getDisplayName(),
+                    "Craft Time: " + FloatUtils.asIntString(currentType.getFormationTime() / 60f) + " seconds",
                     "\nDeactivated!"
             };
         }

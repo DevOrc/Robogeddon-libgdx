@@ -8,6 +8,8 @@ import com.noahcharlton.robogeddon.block.Block;
 import com.noahcharlton.robogeddon.block.BlockRenderer;
 import com.noahcharlton.robogeddon.block.tileentity.inventory.HasTileEntity;
 import com.noahcharlton.robogeddon.block.tileentity.TileEntity;
+import com.noahcharlton.robogeddon.entity.BulletEntity;
+import com.noahcharlton.robogeddon.util.FloatUtils;
 import com.noahcharlton.robogeddon.util.GraphicsUtil;
 import com.noahcharlton.robogeddon.world.Tile;
 import com.noahcharlton.robogeddon.world.item.ItemStack;
@@ -33,6 +35,15 @@ public class TurretBlock extends Block implements BlockRenderer, HasTileEntity {
     @Override
     public String getDisplayName() {
         return "Turret";
+    }
+
+    @Override
+    public String[] getDescriptionParameters() {
+        return new String[]{
+                Integer.toString(TurretTileEntity.SHOOT_TILE_RANGE),
+                FloatUtils.asString(TurretTileEntity.SHOOTER_TIME / 60f, 1, 1),
+                FloatUtils.asIntString(BulletEntity.ENTITY_DAMAGE)
+        };
     }
 
     @Override

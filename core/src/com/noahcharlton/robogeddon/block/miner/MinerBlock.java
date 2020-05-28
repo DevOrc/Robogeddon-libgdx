@@ -9,6 +9,7 @@ import com.noahcharlton.robogeddon.block.BlockRenderer;
 import com.noahcharlton.robogeddon.block.tileentity.inventory.HasTileEntity;
 import com.noahcharlton.robogeddon.block.tileentity.TileEntity;
 import com.noahcharlton.robogeddon.entity.Entity;
+import com.noahcharlton.robogeddon.util.FloatUtils;
 import com.noahcharlton.robogeddon.world.Tile;
 import com.noahcharlton.robogeddon.world.floor.MineableFloor;
 
@@ -25,6 +26,13 @@ public class MinerBlock extends Block implements HasTileEntity, BlockRenderer {
         this.renderer = this;
 
         Core.assets.registerTextureGroup("blocks/miner").setOnLoad(t -> textures = t);
+    }
+
+    @Override
+    public String[] getDescriptionParameters() {
+        return new String[]{
+                FloatUtils.asIntString(MinerTileEntity.TIME / 60f)
+        };
     }
 
     @Override

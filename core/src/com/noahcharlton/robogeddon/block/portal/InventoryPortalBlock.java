@@ -33,6 +33,11 @@ public class InventoryPortalBlock extends Block implements BlockRenderer, HasTil
     }
 
     @Override
+    public float getHardness() {
+        return 4.0f;
+    }
+
+    @Override
     public int getWidth() {
         return 3;
     }

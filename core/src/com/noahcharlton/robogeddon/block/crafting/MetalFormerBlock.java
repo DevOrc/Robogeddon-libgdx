@@ -10,12 +10,13 @@ import com.noahcharlton.robogeddon.block.BlockRenderer;
 import com.noahcharlton.robogeddon.block.tileentity.inventory.HasTileEntity;
 import com.noahcharlton.robogeddon.block.tileentity.inventory.SingleItemBuffer;
 import com.noahcharlton.robogeddon.block.tileentity.TileEntity;
+import com.noahcharlton.robogeddon.util.FloatUtils;
 import com.noahcharlton.robogeddon.world.Tile;
 import com.noahcharlton.robogeddon.world.item.Items;
 
 public class MetalFormerBlock extends Block implements HasTileEntity, BlockRenderer {
 
-    private static final float CRAFT_TIME = 80;
+    private static final int CRAFT_TIME = 80;
 
     private TextureRegion baseTexture;
     private TextureRegion tankTexture;
@@ -27,6 +28,13 @@ public class MetalFormerBlock extends Block implements HasTileEntity, BlockRende
     @Override
     public String getDisplayName() {
         return "Metal Former";
+    }
+
+    @Override
+    public String[] getDescriptionParameters() {
+        return new String[]{
+                FloatUtils.asString(CRAFT_TIME / 60f, 1, 1)
+        };
     }
 
     @Override
@@ -51,7 +59,7 @@ public class MetalFormerBlock extends Block implements HasTileEntity, BlockRende
     public TileEntity createTileEntity(Tile tile) {
         return new CrafterTileEntity(
                 tile,
-                (int) CRAFT_TIME,
+                CRAFT_TIME,
                 new SingleItemBuffer(Items.ironBullet, 10),
                 new SingleItemBuffer(Items.iron, 10)
         );

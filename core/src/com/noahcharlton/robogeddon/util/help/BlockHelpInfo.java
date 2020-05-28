@@ -12,7 +12,12 @@ public class BlockHelpInfo implements HelpInfo{
     private final String desc;
 
     public BlockHelpInfo(Element entry) {
-        block = Core.blocks.get(entry.getAttribute("id"));
+        if(entry.hasAttribute("block_id")){
+            block = Core.blocks.getOrNull(entry.getAttribute("block_id"));;
+        }else{
+            block = Core.blocks.getOrNull(entry.getAttribute("id"));
+        }
+
         var desc = HelpInfoLoader.escapeDescriptionString(entry.get("Desc"));
         var parameters = block.getDescriptionParameters();
 

@@ -6,14 +6,24 @@ import com.noahcharlton.robogeddon.block.tileentity.fluid.FluidBuffer;
 import com.noahcharlton.robogeddon.block.tileentity.fluid.HasFluid;
 import com.noahcharlton.robogeddon.block.tileentity.fluid.SingleFluidBuffer;
 import com.noahcharlton.robogeddon.block.tileentity.inventory.HasTileEntity;
+import com.noahcharlton.robogeddon.util.FloatUtils;
 import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.Tile;
 import com.noahcharlton.robogeddon.world.fluid.Fluids;
 
 public class WaterCollector extends Block implements HasTileEntity {
 
+    private static final float WATER_PER_SECOND = 1f;
+
     public WaterCollector(String id) {
         super(id);
+    }
+
+    @Override
+    public String[] getDescriptionParameters() {
+        return new String[]{
+                FloatUtils.asIntString(WATER_PER_SECOND)
+        };
     }
 
     @Override
@@ -28,7 +38,7 @@ public class WaterCollector extends Block implements HasTileEntity {
 
     static class WaterCollectorBlock extends TileEntity implements HasFluid {
 
-        private FluidBuffer fluidBuffer = new SingleFluidBuffer(Fluids.warmWater, 25f);
+        private FluidBuffer fluidBuffer = new SingleFluidBuffer(Fluids.coldWater, 25f);
 
         @Side(Side.SERVER)
         private int waterTick;
@@ -44,7 +54,7 @@ public class WaterCollector extends Block implements HasTileEntity {
 
                 if(waterTick > 60){
                     waterTick = 0;
-                    fluidBuffer.acceptFluid(1f);
+                    fluidBuffer.acceptFluid(WATER_PER_SECOND);
                     dirty = true;
                 }
 

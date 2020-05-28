@@ -4,15 +4,27 @@ import com.noahcharlton.robogeddon.block.tileentity.TileEntity;
 import com.noahcharlton.robogeddon.block.tileentity.electricity.PoweredTileEntity;
 import com.noahcharlton.robogeddon.block.tileentity.inventory.HasTileEntity;
 import com.noahcharlton.robogeddon.entity.Entity;
+import com.noahcharlton.robogeddon.util.FloatUtils;
 import com.noahcharlton.robogeddon.world.ServerWorld;
 import com.noahcharlton.robogeddon.world.Tile;
 
 public class HealPad extends Block implements HasTileEntity {
 
     private static final float usageRate = 10f;
+    private static final float healRate = .1f;
+    private static final float range = Tile.SIZE * 12;
 
     public HealPad(String id) {
         super(id);
+    }
+
+    @Override
+    public String[] getDescriptionParameters() {
+        return new String[]{
+                FloatUtils.asIntString(range / Tile.SIZE),
+                FloatUtils.asIntString(usageRate),
+                FloatUtils.asString(healRate, 1, 1)
+        };
     }
 
     @Override
@@ -49,7 +61,7 @@ public class HealPad extends Block implements HasTileEntity {
                 usePower();
 
                 if(hasPower()){
-                    target.damage(-.1f);
+                    target.damage(-healRate);
                 }
 
                 if(target.getHealth() >= target.getType().getHealth()){

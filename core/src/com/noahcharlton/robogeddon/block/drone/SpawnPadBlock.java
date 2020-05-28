@@ -3,12 +3,22 @@ package com.noahcharlton.robogeddon.block.drone;
 import com.noahcharlton.robogeddon.block.Block;
 import com.noahcharlton.robogeddon.block.tileentity.TileEntity;
 import com.noahcharlton.robogeddon.block.tileentity.inventory.HasTileEntity;
+import com.noahcharlton.robogeddon.util.FloatUtils;
 import com.noahcharlton.robogeddon.world.Tile;
 
 public class SpawnPadBlock extends Block implements HasTileEntity {
 
+    private static final float POWER_USAGE = 4f;
+
     public SpawnPadBlock(String id) {
         super(id);
+    }
+
+    @Override
+    public String[] getDescriptionParameters() {
+        return new String[]{
+                FloatUtils.asIntString(POWER_USAGE)
+        };
     }
 
     @Override
@@ -28,6 +38,6 @@ public class SpawnPadBlock extends Block implements HasTileEntity {
 
     @Override
     public TileEntity createTileEntity(Tile tile) {
-        return new SpawnPadTileEntity(tile, 4f);
+        return new SpawnPadTileEntity(tile, POWER_USAGE);
     }
 }

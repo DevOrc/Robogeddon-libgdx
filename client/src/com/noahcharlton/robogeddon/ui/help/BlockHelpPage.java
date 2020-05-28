@@ -28,7 +28,6 @@ public class BlockHelpPage extends HelpScene {
 
         builder.append("Hardness: ").append(block.getHardness()).append("\n");
         builder.append("Size: ").append(block.getWidth()).append("x").append(block.getHeight()).append("\n");
-        builder.append("Block ID: ").append(block.getTypeID()).append("\n");
 
         if(!block.getRequirements().isEmpty()){
             builder.append("\n\nRequirements: \n");

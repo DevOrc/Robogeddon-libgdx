@@ -47,6 +47,10 @@ public class EnemyBaseGenerator {
 
     private void addComponent(Random random, BaseComponent[] components, BaseComponentType type) {
         var typeCount = type.getComponents().size();
+
+        if(typeCount <= 0) //If the components aren't loaded in yet
+            return;
+
         var value = type.getComponents().get(random.nextInt(typeCount));
 
         for(var i = random.nextInt(4);; i = random.nextInt(4)){

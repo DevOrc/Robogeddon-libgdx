@@ -5,9 +5,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.block.Block;
 import com.noahcharlton.robogeddon.block.BlockRenderer;
-import com.noahcharlton.robogeddon.block.tileentity.inventory.HasTileEntity;
+import com.noahcharlton.robogeddon.block.Blocks;
 import com.noahcharlton.robogeddon.block.tileentity.TileEntity;
+import com.noahcharlton.robogeddon.block.tileentity.inventory.HasTileEntity;
 import com.noahcharlton.robogeddon.util.Direction;
+import com.noahcharlton.robogeddon.util.help.HelpInfoLoader;
 import com.noahcharlton.robogeddon.world.Tile;
 import com.noahcharlton.robogeddon.world.item.Item;
 
@@ -56,6 +58,11 @@ public class ItemDuct extends Block implements BlockRenderer, HasTileEntity {
 
             textureRegistered = true;
         }
+    }
+
+    @Override
+    protected void createHelpInfo() {
+        helpInfo = HelpInfoLoader.getEntry(Blocks.itemDuctID);
     }
 
     private static void registerSide(String name, Consumer<TextureRegion> wall, Consumer<TextureRegion> roof){

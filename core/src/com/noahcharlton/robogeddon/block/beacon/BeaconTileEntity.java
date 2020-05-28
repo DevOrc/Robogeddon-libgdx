@@ -9,8 +9,8 @@ import com.noahcharlton.robogeddon.world.team.Team;
 
 public class BeaconTileEntity extends TileEntity implements TileEntitySelectable {
 
-    private static final int CLAIM_TIME = 1800;
-    private static final int NEUTRALIZE_TIME = 300;
+    static final int CLAIM_TIME = 1800;
+    static final int NEUTRALIZE_TIME = 300;
 
     private final Team team;
     private int time;

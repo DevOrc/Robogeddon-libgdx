@@ -9,8 +9,9 @@ import com.noahcharlton.robogeddon.world.team.Team;
 
 public class LaserTileEntity extends PoweredTileEntity {
 
-    private static final float POWER_USE = 50f;
-    private static final float RANGE = 1024f;
+    static final float POWER_USE = 30f;
+    static final float DAMAGE = .2f;
+    static final float RANGE = 1024f;
 
     private Entity target;
 
@@ -45,7 +46,7 @@ public class LaserTileEntity extends PoweredTileEntity {
             usePower();
 
             if(hasPower()){
-                target.damage(.5f);
+                target.damage(DAMAGE);
             }
         }
     }

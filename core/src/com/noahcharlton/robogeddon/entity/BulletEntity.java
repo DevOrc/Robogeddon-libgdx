@@ -16,6 +16,7 @@ public class BulletEntity extends Entity {
 
     private static final float RADIUS = BulletEntityType.RADIUS;
     private static final float VELOCITY = 20;
+    public static final float ENTITY_DAMAGE = 3f;
 
     @Side(Side.SERVER)
     private boolean ignoreBlocks;
@@ -58,7 +59,7 @@ public class BulletEntity extends Entity {
             if(entity instanceof HasCollision && entity.getTeam() != team){
                 if(collided(entity)){
                     this.setDead(true);
-                    entity.damage(3);
+                    entity.damage(ENTITY_DAMAGE);
                     return;
                 }
             }

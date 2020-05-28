@@ -3,6 +3,8 @@ package com.noahcharlton.robogeddon.block.beacon;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.noahcharlton.robogeddon.Core;
+import com.noahcharlton.robogeddon.block.Blocks;
+import com.noahcharlton.robogeddon.util.help.HelpInfoLoader;
 import com.noahcharlton.robogeddon.util.log.Log;
 import com.noahcharlton.robogeddon.block.Block;
 import com.noahcharlton.robogeddon.block.BlockRenderer;
@@ -29,6 +31,19 @@ public class BeaconBlock extends Block implements BlockRenderer, HasTileEntity {
     @Override
     public String getDisplayName() {
         return "Team Beacon";
+    }
+
+    @Override
+    public String[] getDescriptionParameters() {
+        return new String[]{
+                Integer.toString(BeaconTileEntity.NEUTRALIZE_TIME / 60),
+                Integer.toString(BeaconTileEntity.CLAIM_TIME / 60)
+        };
+    }
+
+    @Override
+    protected void createHelpInfo() {
+        helpInfo = HelpInfoLoader.getEntry(Blocks.beaconID);
     }
 
     @Override

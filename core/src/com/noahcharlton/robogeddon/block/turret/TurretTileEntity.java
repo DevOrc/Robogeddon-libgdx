@@ -21,8 +21,8 @@ import com.noahcharlton.robogeddon.world.team.Team;
 public class TurretTileEntity extends TileEntity implements HasInventory {
 
     static float RANGE = 512;
-    private static int SHOOTER_TIME = 30;
-    private static int SHOOT_TILE_RANGE = (int) (RANGE / Tile.SIZE);
+    static int SHOOTER_TIME = 30;
+    static int SHOOT_TILE_RANGE = (int) (RANGE / Tile.SIZE);
 
     private ItemBuffer ammo;
     private HasWorldPosition target;
@@ -38,13 +38,13 @@ public class TurretTileEntity extends TileEntity implements HasInventory {
 
     @Override
     public void update() {
-        if(target == null || isDead(target)){
+        if(target == null || isDead(target)) {
             findTarget();
             angle += .005;
             shooterTime = SHOOTER_TIME;
             targetTime--;
             return;
-        }else if(!isInRange(target) || world.isClient()){
+        } else if(!isInRange(target) || world.isClient()) {
             target = null;
             return;
         }
@@ -56,7 +56,7 @@ public class TurretTileEntity extends TileEntity implements HasInventory {
         shooterTime--;
         targetTime = 0;
 
-        if(shooterTime < 0 && ammo.getAmount() > 0){
+        if(shooterTime < 0 && ammo.getAmount() > 0) {
             shooterTime = SHOOTER_TIME;
             ammo.retrieveItem();
             shoot();
@@ -64,9 +64,9 @@ public class TurretTileEntity extends TileEntity implements HasInventory {
     }
 
     private boolean isDead(HasWorldPosition target) {
-        if(target instanceof Entity){
+        if(target instanceof Entity) {
             return ((Entity) target).isDead();
-        }else if(target instanceof Tile){
+        } else if(target instanceof Tile) {
             return !((Tile) target).hasBlock();
         }
 
@@ -91,33 +91,33 @@ public class TurretTileEntity extends TileEntity implements HasInventory {
         if(world.isClient() || team == Team.NEUTRAL || targetTime > 0)
             return;
 
-        for(int x = getRootTile().getX() - SHOOT_TILE_RANGE; x < getRootTile().getX() + SHOOT_TILE_RANGE; x++){
-            for(int y = getRootTile().getY()- SHOOT_TILE_RANGE; y < getRootTile().getY() + SHOOT_TILE_RANGE; y++){
+        for(int x = getRootTile().getX() - SHOOT_TILE_RANGE; x < getRootTile().getX() + SHOOT_TILE_RANGE; x++) {
+            for(int y = getRootTile().getY() - SHOOT_TILE_RANGE; y < getRootTile().getY() + SHOOT_TILE_RANGE; y++) {
                 var tile = world.getTileAt(x, y);
 
-                if(tile != null && tile.getBlock() instanceof BeaconBlock){
+                if(tile != null && tile.getBlock() instanceof BeaconBlock) {
                     target = tile;
                     return;
                 }
             }
         }
 
-        for(Entity entity: world.getEntities()){
+        for(Entity entity : world.getEntities()) {
             if(entity.getTeam() == team || !entity.getType().isTargetable() || !(entity instanceof HasCollision))
                 continue;
 
-            if(isInRange(entity)){
+            if(isInRange(entity)) {
                 target = entity;
                 return;
             }
         }
 
-        for(int x = getRootTile().getX() - SHOOT_TILE_RANGE; x < getRootTile().getX() + SHOOT_TILE_RANGE; x++){
-            for(int y = getRootTile().getY()- SHOOT_TILE_RANGE; y < getRootTile().getY() + SHOOT_TILE_RANGE; y++){
+        for(int x = getRootTile().getX() - SHOOT_TILE_RANGE; x < getRootTile().getX() + SHOOT_TILE_RANGE; x++) {
+            for(int y = getRootTile().getY() - SHOOT_TILE_RANGE; y < getRootTile().getY() + SHOOT_TILE_RANGE; y++) {
                 var tile = world.getTileAt(x, y);
 
                 if(tile != null && tile.hasBlock()
-                        && tile.getChunk().getTeam() != this.getRootTile().getChunk().getTeam()){
+                        && tile.getChunk().getTeam() != this.getRootTile().getChunk().getTeam()) {
                     target = tile;
                     return;
                 }
@@ -129,7 +129,7 @@ public class TurretTileEntity extends TileEntity implements HasInventory {
 
     private boolean isInRange(HasWorldPosition target) {
         return new Vector2(target.getWorldXPos(), target.getWorldYPos())
-                        .sub(rootTile.getPixelX(), rootTile.getPixelY()).len2() < RANGE * RANGE;
+                .sub(rootTile.getPixelX(), rootTile.getPixelY()).len2() < RANGE * RANGE;
     }
 
     @Side(Side.SERVER)

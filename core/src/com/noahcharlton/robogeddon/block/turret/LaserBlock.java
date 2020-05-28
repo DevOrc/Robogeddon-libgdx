@@ -9,6 +9,7 @@ import com.noahcharlton.robogeddon.block.BlockRenderer;
 import com.noahcharlton.robogeddon.block.tileentity.TileEntity;
 import com.noahcharlton.robogeddon.block.tileentity.inventory.HasTileEntity;
 import com.noahcharlton.robogeddon.entity.Entity;
+import com.noahcharlton.robogeddon.util.FloatUtils;
 import com.noahcharlton.robogeddon.util.GraphicsUtil;
 import com.noahcharlton.robogeddon.world.Tile;
 
@@ -27,6 +28,15 @@ public class LaserBlock extends Block implements BlockRenderer, HasTileEntity {
 
         Core.assets.registerTexture("blocks/laser_base").setOnLoad(t -> baseTexture = t);
         Core.assets.registerTexture("blocks/laser_top").setOnLoad(t -> topTexture = t);
+    }
+
+    @Override
+    public String[] getDescriptionParameters() {
+        return new String[]{
+                FloatUtils.asIntString(LaserTileEntity.DAMAGE * 60),
+                FloatUtils.asIntString(LaserTileEntity.POWER_USE),
+                FloatUtils.asIntString(LaserTileEntity.RANGE / Tile.SIZE)
+        };
     }
 
     @Override

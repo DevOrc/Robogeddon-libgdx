@@ -16,6 +16,8 @@ public final class Multiblock extends Block{
         this.block = block;
         this.rootX = rootX;
         this.rootY = rootY;
+
+        this.helpInfo = block.getHelpInfo();
     }
 
     public Block getBlock() {
