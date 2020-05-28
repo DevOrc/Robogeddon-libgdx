@@ -21,6 +21,8 @@ public abstract class Block implements HasID {
     protected BlockRenderer renderer;
     @Side(Side.CLIENT)
     protected HelpInfo helpInfo;
+    @Side(Side.CLIENT)
+    protected String simpleDesc = "";
 
     protected List<Block> requiredBlocks = Collections.emptyList();
     protected List<ItemStack> requirements = Collections.emptyList();
@@ -45,6 +47,10 @@ public abstract class Block implements HasID {
     @Side(Side.CLIENT)
     protected void createHelpInfo() {
         helpInfo = HelpInfoLoader.getEntry(id);
+
+        if(helpInfo instanceof BlockHelpInfo){
+            simpleDesc = ((BlockHelpInfo) helpInfo).getSimpleDesc();
+        }
 
         if(helpInfo == null){ //If there is no special help info, auto generate one
             helpInfo = new BlockHelpInfo(this);
@@ -97,6 +103,10 @@ public abstract class Block implements HasID {
 
     public HelpInfo getHelpInfo() {
         return helpInfo;
+    }
+
+    public String getSimpleDesc() {
+        return simpleDesc;
     }
 
     public String getTypeID() {

@@ -10,6 +10,7 @@ public class BlockHelpInfo implements HelpInfo{
 
     private final Block block;
     private final String desc;
+    private final String simpleDesc;
 
     public BlockHelpInfo(Element entry) {
         if(entry.hasAttribute("block_id")){
@@ -19,18 +20,25 @@ public class BlockHelpInfo implements HelpInfo{
         }
 
         var desc = HelpInfoLoader.escapeDescriptionString(entry.get("Desc"));
+        var simpleDesc = HelpInfoLoader.escapeDescriptionString(entry.get("SimpleDesc", ""));
+
+        this.simpleDesc = replaceDescriptionParameters(simpleDesc);
+        this.desc = replaceDescriptionParameters(desc);
+    }
+
+    private String replaceDescriptionParameters(String desc) {
         var parameters = block.getDescriptionParameters();
 
         for(int i = 0; i < parameters.length; i++) {
             desc = desc.replace("{" + i + "}", parameters[i]);
         }
-
-        this.desc = desc;
+        return desc;
     }
 
     public BlockHelpInfo(Block block) {
         this.block = block;
         this.desc = "";
+        this.simpleDesc = "";
     }
 
     public Block getBlock() {
@@ -39,6 +47,10 @@ public class BlockHelpInfo implements HelpInfo{
 
     public String getDesc() {
         return desc;
+    }
+
+    public String getSimpleDesc() {
+        return simpleDesc;
     }
 
     @Override

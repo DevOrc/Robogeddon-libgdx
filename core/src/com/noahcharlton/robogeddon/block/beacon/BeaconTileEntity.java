@@ -53,11 +53,6 @@ public class BeaconTileEntity extends TileEntity implements TileEntitySelectable
     }
 
     @Override
-    public String getDesc() {
-        return "Team: " + team.getDisplayName();
-    }
-
-    @Override
     protected float[] getSaveData() {
         return new float[]{time};
     }

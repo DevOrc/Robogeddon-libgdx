@@ -204,9 +204,7 @@ public class Tile implements Selectable, HasWorldPosition {
 
     @Override
     public String getDesc() {
-        var tileEntity = getTileEntity();
-
-        return tileEntity instanceof TileEntitySelectable ? ((TileEntitySelectable) tileEntity).getDesc() : "";
+        return hasBlock() ? block.getSimpleDesc() : "";
     }
 
     @Override

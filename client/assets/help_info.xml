@@ -8,42 +8,66 @@
         </Desc>
     </BasicHelpPage>
     <BlockHelpPage id="solar_panel">
+        <SimpleDesc>
+            Produces power using the sun
+        </SimpleDesc>
         <Desc>
             Produces {0} unit of power per tick
         </Desc>
     </BlockHelpPage>
     <BlockHelpPage id="lamp">
+        <SimpleDesc>
+            Turns on when powered
+        </SimpleDesc>
         <Desc>
-            Turns on light when powered. Uses {0} power per tick
+            Turns on when powered. Uses {0} power per tick
         </Desc>
     </BlockHelpPage>
     <BlockHelpPage id="relay">
+        <SimpleDesc>
+            Used to connect powered machines
+        </SimpleDesc>
         <Desc>
             Used to connect powered machines to the team's power network. It can connect to any machine
             within {0} blocks of the relay.
         </Desc>
     </BlockHelpPage>
     <BlockHelpPage id="battery">
+        <SimpleDesc>
+            Stores power
+        </SimpleDesc>
         <Desc>
             Stores {0} units of power.
         </Desc>
     </BlockHelpPage>
     <BlockHelpPage id="coal_generator">
+        <SimpleDesc>
+            Burns coal for power
+        </SimpleDesc>
         <Desc>
             Burns a piece of coal for {0} seconds at rate of {1} power per tick.
         </Desc>
     </BlockHelpPage>
     <BlockHelpPage id="splitter">
+        <SimpleDesc>
+            Equally outputs items in all directions
+        </SimpleDesc>
         <Desc>
             Equally outputs items in all directions (the opposite of a combiner)
         </Desc>
     </BlockHelpPage>
     <BlockHelpPage id="combiner">
+        <SimpleDesc>
+            Equally inputs items from all directions
+        </SimpleDesc>
         <Desc>
             Equally inputs items from all directions (the opposite of a splitter)
         </Desc>
     </BlockHelpPage>
     <BlockHelpPage id="flow_gate">
+        <SimpleDesc>
+            A Complex Item Gate
+        </SimpleDesc>
         <Desc>
             Outputs items depending on whether the other output paths are full.
             [NL][NL]
@@ -52,11 +76,17 @@
         </Desc>
     </BlockHelpPage>
     <BlockHelpPage id="cross_gate">
+        <SimpleDesc>
+            Outputs items across from where they entered
+        </SimpleDesc>
         <Desc>
             Outputs items across from where they entered
         </Desc>
     </BlockHelpPage>
     <BlockHelpPage id="sorter">
+        <SimpleDesc>
+            Sorts items
+        </SimpleDesc>
         <Desc>
             Outputs selected items to the east/west, and unselected items to the north/south.
         </Desc>
@@ -67,16 +97,25 @@
         </Desc>
     </BlockHelpPage>
     <BlockHelpPage id="fluiduct">
+        <SimpleDesc>
+            Transports Fluids
+        </SimpleDesc>
         <Desc>
             Gives, takes, and transports fluids
         </Desc>
     </BlockHelpPage>
     <BlockHelpPage id="unloader">
+        <SimpleDesc>
+            Removes items from an inventory portal
+        </SimpleDesc>
         <Desc>
             Removes selected items from an inventory portal
         </Desc>
     </BlockHelpPage>
     <BlockHelpPage id="inventory_portal">
+        <SimpleDesc>
+            Interface between the world and the inventory
+        </SimpleDesc>
         <Desc>
             The interface between the real world and your inventory.
             [NL][NL]
@@ -85,6 +124,9 @@
         </Desc>
     </BlockHelpPage>
     <BlockHelpPage id="beacon" block_id="beacon_BLUE">
+        <SimpleDesc>
+            Claims enemy chunks
+        </SimpleDesc>
         <Desc>
             When placed in an enemies territory, it will neutralize the chunk. When placed in neutral territory, it will
             claim the chunk for your team.
@@ -96,6 +138,9 @@
         </Desc>
     </BlockHelpPage>
     <BlockHelpPage id="metal_former">
+        <SimpleDesc>
+            Turns iron into bullets
+        </SimpleDesc>
         <Desc>
             Turns chunks of iron into bullets for turrets.
             [NL]
@@ -104,6 +149,9 @@
         </Desc>
     </BlockHelpPage>
     <BlockHelpPage id="circuit_factory">
+        <SimpleDesc>
+            Crafts circuits from sand and iron
+        </SimpleDesc>
         <Desc>
             Turns sand and iron into circuits for machines.
             [NL]
@@ -113,6 +161,9 @@
         </Desc>
     </BlockHelpPage>
     <BlockHelpPage id="water_collector">
+        <SimpleDesc>
+            Collects cold water from the air
+        </SimpleDesc>
         <Desc>
             Collects cold water from the natural environment
             [NL]
@@ -121,6 +172,9 @@
         </Desc>
     </BlockHelpPage>
     <BlockHelpPage id="heal_pad">
+        <SimpleDesc>
+            Heals nearby entities
+        </SimpleDesc>
         <Desc>
             Heals any entity from the same team within a {0} tile radius
             [NL]
@@ -131,6 +185,9 @@
         </Desc>
     </BlockHelpPage>
     <BlockHelpPage id="turret">
+        <SimpleDesc>
+            Shoots enemies and blocks
+        </SimpleDesc>
         <Desc>
             Shoots enemies and blocks from the enemy team. Requires bullets produced from a Metal Former.
             [NL]
@@ -141,6 +198,9 @@
         </Desc>
     </BlockHelpPage>
     <BlockHelpPage id="miner">
+        <SimpleDesc>
+            Mines ores and materials
+        </SimpleDesc>
         <Desc>
             Mines ores and materials
             [NL]
@@ -149,6 +209,9 @@
         </Desc>
     </BlockHelpPage>
     <BlockHelpPage id="laser">
+        <SimpleDesc>
+            Shoots enemies in the air
+        </SimpleDesc>
         <Desc>
             Shoots enemies in the air using a laser
             [NL]
@@ -159,6 +222,9 @@
         </Desc>
     </BlockHelpPage>
     <BlockHelpPage id="spawn_pad">
+        <SimpleDesc>
+            Spawns new drones
+        </SimpleDesc>
         <Desc>
             Spawns drones of the selected type
             [NL]

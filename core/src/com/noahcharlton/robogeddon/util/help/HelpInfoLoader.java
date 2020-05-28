@@ -46,6 +46,9 @@ public class HelpInfoLoader {
     }
 
     public static String escapeDescriptionString(String desc) {
+        if(desc == null)
+            return null;
+
         return desc.replaceAll("\\s+", " ").replace("[NL]", "\n");
     }
 
