@@ -10,6 +10,9 @@ import com.noahcharlton.robogeddon.util.FloatUtils;
 import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.world.Tile;
 import com.noahcharlton.robogeddon.world.fluid.Fluids;
+import com.noahcharlton.robogeddon.world.item.Items;
+
+import java.util.List;
 
 public class WaterCollector extends Block implements HasTileEntity {
 
@@ -17,6 +20,11 @@ public class WaterCollector extends Block implements HasTileEntity {
 
     public WaterCollector(String id) {
         super(id);
+    }
+
+    @Override
+    protected void preInit() {
+        requirements = List.of(Items.iron.stack(35), Items.circuit.stack(1));
     }
 
     @Override

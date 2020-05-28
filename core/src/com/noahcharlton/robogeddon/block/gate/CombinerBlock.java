@@ -4,7 +4,6 @@ import com.noahcharlton.robogeddon.block.Block;
 import com.noahcharlton.robogeddon.block.tileentity.TileEntity;
 import com.noahcharlton.robogeddon.block.tileentity.inventory.HasTileEntity;
 import com.noahcharlton.robogeddon.world.Tile;
-import com.noahcharlton.robogeddon.world.item.ItemStack;
 import com.noahcharlton.robogeddon.world.item.Items;
 
 import java.util.List;
@@ -16,8 +15,8 @@ public class CombinerBlock extends Block implements HasTileEntity {
     }
 
     @Override
-    public List<ItemStack> getRequirements() {
-        return List.of(Items.iron.stack(5), Items.circuit.stack(1));
+    protected void preInit() {
+        requirements = List.of(Items.iron.stack(5), Items.circuit.stack(1));
     }
 
     @Override

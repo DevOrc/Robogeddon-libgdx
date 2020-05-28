@@ -22,6 +22,9 @@ public abstract class Block implements HasID {
     @Side(Side.CLIENT)
     protected HelpInfo helpInfo;
 
+    protected List<Block> requiredBlocks = Collections.emptyList();
+    protected List<ItemStack> requirements = Collections.emptyList();
+
     public Block(String id) {
         this.id = id;
     }
@@ -60,15 +63,12 @@ public abstract class Block implements HasID {
         return chunkTeam == placer.getTeam() || chunkTeam == Team.NEUTRAL;
     }
 
-    public List<ItemStack> getRequirements(){
-        return Collections.emptyList();
+    public final List<ItemStack> getRequirements(){
+        return requirements;
     }
 
-    /**
-     * @returns blocks that need to be unlocked before this one
-     */
-    public List<Block> getRequiredBlocks(){
-        return Collections.emptyList();
+    public final List<Block> getRequiredBlocks(){
+        return requiredBlocks;
     }
 
     public String getDisplayName(){

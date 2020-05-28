@@ -6,17 +6,15 @@ import com.badlogic.gdx.utils.Array;
 import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.block.Block;
 import com.noahcharlton.robogeddon.block.BlockRenderer;
-import com.noahcharlton.robogeddon.block.tileentity.inventory.HasTileEntity;
 import com.noahcharlton.robogeddon.block.tileentity.TileEntity;
+import com.noahcharlton.robogeddon.block.tileentity.inventory.HasTileEntity;
 import com.noahcharlton.robogeddon.entity.Entity;
 import com.noahcharlton.robogeddon.util.FloatUtils;
 import com.noahcharlton.robogeddon.world.Tile;
 import com.noahcharlton.robogeddon.world.floor.MineableFloor;
-import com.noahcharlton.robogeddon.world.item.ItemStack;
 import com.noahcharlton.robogeddon.world.item.Items;
 
 import java.util.Collections;
-import java.util.List;
 
 public class MinerBlock extends Block implements HasTileEntity, BlockRenderer {
 
@@ -39,8 +37,8 @@ public class MinerBlock extends Block implements HasTileEntity, BlockRenderer {
     }
 
     @Override
-    public List<ItemStack> getRequirements() {
-        return Collections.singletonList(Items.iron.stack(15));
+    protected void preInit() {
+        requirements = Collections.singletonList(Items.iron.stack(15));
     }
 
     @Override

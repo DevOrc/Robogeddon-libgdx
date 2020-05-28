@@ -7,6 +7,9 @@ import com.noahcharlton.robogeddon.entity.Entity;
 import com.noahcharlton.robogeddon.util.FloatUtils;
 import com.noahcharlton.robogeddon.world.ServerWorld;
 import com.noahcharlton.robogeddon.world.Tile;
+import com.noahcharlton.robogeddon.world.item.Items;
+
+import java.util.List;
 
 public class HealPad extends Block implements HasTileEntity {
 
@@ -16,6 +19,12 @@ public class HealPad extends Block implements HasTileEntity {
 
     public HealPad(String id) {
         super(id);
+    }
+
+    @Override
+    protected void preInit() {
+        requiredBlocks = List.of(Blocks.relayBlock);
+        requirements = List.of(Items.iron.stack(100), Items.circuit.stack(5));
     }
 
     @Override

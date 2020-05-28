@@ -7,7 +7,6 @@ import com.noahcharlton.robogeddon.block.tileentity.electricity.GeneratorTileEnt
 import com.noahcharlton.robogeddon.block.tileentity.inventory.HasTileEntity;
 import com.noahcharlton.robogeddon.util.FloatUtils;
 import com.noahcharlton.robogeddon.world.Tile;
-import com.noahcharlton.robogeddon.world.item.ItemStack;
 import com.noahcharlton.robogeddon.world.item.Items;
 
 import java.util.List;
@@ -16,9 +15,6 @@ public class SolarPanelBlock extends Block implements HasTileEntity {
 
     private static final float PRODUCTION_RATE = 1f;
 
-    private List<Block> requiredBlocks;
-    private List<ItemStack> requiredItems;
-
     public SolarPanelBlock(String id) {
         super(id);
     }
@@ -26,17 +22,7 @@ public class SolarPanelBlock extends Block implements HasTileEntity {
     @Override
     protected void preInit() {
         requiredBlocks = List.of(Blocks.relayBlock);
-        requiredItems =  List.of(Items.iron.stack(5), Items.circuit.stack(2));
-    }
-
-    @Override
-    public List<ItemStack> getRequirements() {
-        return requiredItems;
-    }
-
-    @Override
-    public List<Block> getRequiredBlocks() {
-        return requiredBlocks;
+        requirements =  List.of(Items.iron.stack(5), Items.circuit.stack(2));
     }
 
     @Override

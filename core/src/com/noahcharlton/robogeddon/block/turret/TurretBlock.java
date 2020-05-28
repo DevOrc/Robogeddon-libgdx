@@ -6,16 +6,14 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.block.Block;
 import com.noahcharlton.robogeddon.block.BlockRenderer;
-import com.noahcharlton.robogeddon.block.tileentity.inventory.HasTileEntity;
 import com.noahcharlton.robogeddon.block.tileentity.TileEntity;
+import com.noahcharlton.robogeddon.block.tileentity.inventory.HasTileEntity;
 import com.noahcharlton.robogeddon.entity.BulletEntity;
 import com.noahcharlton.robogeddon.util.FloatUtils;
 import com.noahcharlton.robogeddon.util.GraphicsUtil;
 import com.noahcharlton.robogeddon.world.Tile;
-import com.noahcharlton.robogeddon.world.item.ItemStack;
 import com.noahcharlton.robogeddon.world.item.Items;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class TurretBlock extends Block implements BlockRenderer, HasTileEntity {
@@ -28,8 +26,8 @@ public class TurretBlock extends Block implements BlockRenderer, HasTileEntity {
     }
 
     @Override
-    public List<ItemStack> getRequirements() {
-        return Arrays.asList(Items.rock.stack(25), Items.iron.stack(5));
+    protected void preInit() {
+        requirements = List.of(Items.rock.stack(25), Items.iron.stack(45));
     }
 
     @Override

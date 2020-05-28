@@ -7,12 +7,15 @@ import com.badlogic.gdx.math.MathUtils;
 import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.block.Block;
 import com.noahcharlton.robogeddon.block.BlockRenderer;
+import com.noahcharlton.robogeddon.block.Blocks;
+import com.noahcharlton.robogeddon.block.tileentity.TileEntity;
 import com.noahcharlton.robogeddon.block.tileentity.inventory.HasTileEntity;
 import com.noahcharlton.robogeddon.block.tileentity.inventory.SingleItemBuffer;
-import com.noahcharlton.robogeddon.block.tileentity.TileEntity;
 import com.noahcharlton.robogeddon.util.FloatUtils;
 import com.noahcharlton.robogeddon.world.Tile;
 import com.noahcharlton.robogeddon.world.item.Items;
+
+import java.util.List;
 
 public class MetalFormerBlock extends Block implements HasTileEntity, BlockRenderer {
 
@@ -26,8 +29,14 @@ public class MetalFormerBlock extends Block implements HasTileEntity, BlockRende
     }
 
     @Override
+    protected void preInit() {
+        requiredBlocks = List.of(Blocks.turretBlock);
+        requirements = List.of(Items.iron.stack(40));
+    }
+
+    @Override
     public String getDisplayName() {
-        return "Metal Former";
+        return "Bullet Factory";
     }
 
     @Override

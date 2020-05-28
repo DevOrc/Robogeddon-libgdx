@@ -11,7 +11,6 @@ import com.noahcharlton.robogeddon.block.tileentity.TileEntity;
 import com.noahcharlton.robogeddon.block.tileentity.electricity.PoweredTileEntity;
 import com.noahcharlton.robogeddon.block.tileentity.inventory.HasTileEntity;
 import com.noahcharlton.robogeddon.world.Tile;
-import com.noahcharlton.robogeddon.world.item.ItemStack;
 import com.noahcharlton.robogeddon.world.item.Items;
 
 import java.util.List;
@@ -19,9 +18,6 @@ import java.util.List;
 public class LampBlock extends Block implements BlockRenderer, HasTileEntity {
 
     private static final float USAGE_RATE = .1f;
-
-    private List<Block> requiredBlocks;
-    private List<ItemStack> requiredItems;
 
     private TextureRegion off;
     private TextureRegion on;
@@ -33,17 +29,7 @@ public class LampBlock extends Block implements BlockRenderer, HasTileEntity {
     @Override
     protected void preInit() {
         requiredBlocks = List.of(Blocks.relayBlock);
-        requiredItems =  List.of(Items.iron.stack(10));
-    }
-
-    @Override
-    public List<Block> getRequiredBlocks() {
-        return requiredBlocks;
-    }
-
-    @Override
-    public List<ItemStack> getRequirements() {
-        return requiredItems;
+        requirements =  List.of(Items.iron.stack(10));
     }
 
     @Override

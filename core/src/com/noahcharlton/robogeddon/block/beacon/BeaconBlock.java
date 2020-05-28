@@ -13,7 +13,10 @@ import com.noahcharlton.robogeddon.block.tileentity.TileEntity;
 import com.noahcharlton.robogeddon.entity.Entity;
 import com.noahcharlton.robogeddon.world.Chunk;
 import com.noahcharlton.robogeddon.world.Tile;
+import com.noahcharlton.robogeddon.world.item.Items;
 import com.noahcharlton.robogeddon.world.team.Team;
+
+import java.util.List;
 
 public class BeaconBlock extends Block implements BlockRenderer, HasTileEntity {
 
@@ -26,6 +29,11 @@ public class BeaconBlock extends Block implements BlockRenderer, HasTileEntity {
     public BeaconBlock(String idBase, Team team) {
         super(idBase + "_" + team.name());
         this.team = team;
+    }
+
+    @Override
+    protected void preInit() {
+        requirements = List.of(Items.iron.stack(20), Items.circuit.stack(1));
     }
 
     @Override

@@ -7,11 +7,14 @@ import com.badlogic.gdx.math.MathUtils;
 import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.block.Block;
 import com.noahcharlton.robogeddon.block.BlockRenderer;
+import com.noahcharlton.robogeddon.block.Blocks;
 import com.noahcharlton.robogeddon.block.tileentity.TileEntity;
 import com.noahcharlton.robogeddon.block.tileentity.fluid.FluidBuffer;
 import com.noahcharlton.robogeddon.block.tileentity.inventory.HasTileEntity;
 import com.noahcharlton.robogeddon.world.Tile;
+import com.noahcharlton.robogeddon.world.item.Items;
 
+import java.util.List;
 import java.util.function.Consumer;
 
 public class Fluiduct extends Block implements BlockRenderer, HasTileEntity {
@@ -28,9 +31,14 @@ public class Fluiduct extends Block implements BlockRenderer, HasTileEntity {
     private static TextureRegion southFluidTexture;
     private static TextureRegion westFluidTexture;
 
-
     public Fluiduct(String id) {
         super(id);
+    }
+
+    @Override
+    protected void preInit() {
+        requiredBlocks = List.of(Blocks.waterCollector);
+        requirements = List.of(Items.iron.stack(5));
     }
 
     @Override

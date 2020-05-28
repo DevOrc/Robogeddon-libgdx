@@ -1,12 +1,15 @@
 package com.noahcharlton.robogeddon.block.crafting;
 
 import com.noahcharlton.robogeddon.block.Block;
+import com.noahcharlton.robogeddon.block.Blocks;
 import com.noahcharlton.robogeddon.block.tileentity.TileEntity;
 import com.noahcharlton.robogeddon.block.tileentity.inventory.HasTileEntity;
 import com.noahcharlton.robogeddon.block.tileentity.inventory.SingleItemBuffer;
 import com.noahcharlton.robogeddon.util.FloatUtils;
 import com.noahcharlton.robogeddon.world.Tile;
 import com.noahcharlton.robogeddon.world.item.Items;
+
+import java.util.List;
 
 public class CircuitFactory extends Block implements HasTileEntity {
 
@@ -15,6 +18,12 @@ public class CircuitFactory extends Block implements HasTileEntity {
 
     public CircuitFactory(String id) {
         super(id);
+    }
+
+    @Override
+    protected void preInit() {
+        requiredBlocks = List.of(Blocks.relayBlock);
+        requirements = List.of(Items.iron.stack(100));
     }
 
     @Override

@@ -10,15 +10,11 @@ import com.noahcharlton.robogeddon.block.tileentity.TileEntity;
 import com.noahcharlton.robogeddon.block.tileentity.electricity.HasElectricity;
 import com.noahcharlton.robogeddon.block.tileentity.inventory.HasTileEntity;
 import com.noahcharlton.robogeddon.world.Tile;
-import com.noahcharlton.robogeddon.world.item.ItemStack;
 import com.noahcharlton.robogeddon.world.item.Items;
 
 import java.util.List;
 
 public class RelayBlock extends Block implements HasTileEntity {
-
-    private List<Block> requiredBlocks;
-    private List<ItemStack> requiredItems;
 
     public RelayBlock(String id) {
         super(id);
@@ -27,17 +23,7 @@ public class RelayBlock extends Block implements HasTileEntity {
     @Override
     protected void preInit() {
         requiredBlocks = List.of(Blocks.coalGenerator);
-        requiredItems =  List.of(Items.iron.stack(10));
-    }
-
-    @Override
-    public List<ItemStack> getRequirements() {
-        return requiredItems;
-    }
-
-    @Override
-    public List<Block> getRequiredBlocks() {
-        return requiredBlocks;
+        requirements =  List.of(Items.iron.stack(10));
     }
 
     @Override
