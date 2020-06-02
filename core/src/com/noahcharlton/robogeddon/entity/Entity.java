@@ -103,8 +103,8 @@ public class Entity implements HasWorldPosition {
         return world.tileFromPixel(x, y) != null;
     }
 
-    protected Vector2 createVectorBetween(Entity other){
-        return new Vector2(other.x, other.y).sub(x, y);
+    protected Vector2 createVectorBetween(HasWorldPosition other){
+        return new Vector2(other.getWorldXPos(), other.getWorldYPos()).sub(x, y);
     }
 
     public Tile getTile(){
@@ -212,5 +212,10 @@ public class Entity implements HasWorldPosition {
     @Override
     public float getWorldYPos() {
         return y;
+    }
+
+    @Override
+    public boolean isWorldPositionValid() {
+        return !isDead;
     }
 }

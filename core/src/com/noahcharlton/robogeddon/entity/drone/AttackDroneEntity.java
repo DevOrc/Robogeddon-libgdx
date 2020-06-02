@@ -6,10 +6,12 @@ import com.noahcharlton.robogeddon.entity.BulletEntity;
 import com.noahcharlton.robogeddon.entity.CustomEntityMessage;
 import com.noahcharlton.robogeddon.entity.Entity;
 import com.noahcharlton.robogeddon.entity.EntityType;
-import com.noahcharlton.robogeddon.entity.RobotEntity;
 import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.util.log.Log;
+import com.noahcharlton.robogeddon.world.Chunk;
+import com.noahcharlton.robogeddon.world.HasWorldPosition;
 import com.noahcharlton.robogeddon.world.ServerWorld;
+import com.noahcharlton.robogeddon.world.Tile;
 import com.noahcharlton.robogeddon.world.World;
 import com.noahcharlton.robogeddon.world.team.Team;
 
@@ -20,25 +22,29 @@ public class AttackDroneEntity extends AbstractDroneEntity {
     private static final int MAX_VEL = 4;
     private static final int SHOOT_RANGE = (int) Math.pow(500, 2);
 
-    private Entity target;
+    private HasWorldPosition target;
 
-    private int shooterTime;
+    private int time;
     private boolean onTarget;
 
     public AttackDroneEntity(EntityType type, World world, Team team) {
         super(type, world, team);
 
-        y = -400;
+        y = -150;
         angle = (float) (Math.PI / 2);
     }
 
     @Override
     protected void update() {
-        if(target == null || target.isDead()){
+        if(target == null || !target.isWorldPositionValid()) {
             velocity = 0;
             angularVelocity = 0;
+            time--;
 
-            findTarget();
+            if(time < 0){
+                findTarget();
+                time = 30;
+            }
             return;
         }
 
@@ -49,13 +55,14 @@ public class AttackDroneEntity extends AbstractDroneEntity {
     }
 
     private void updateShooter() {
-        if(world.isClient() || !onTarget || target == null || target.isDead())
+        if(world.isClient() || !onTarget || target == null){
             return;
+        }
 
-        if(shooterTime > 0){
-            shooterTime--;
-        }else if(this.createVectorBetween(target).len2() < SHOOT_RANGE){
-            shooterTime = SHOOT_TIME;
+        if(time > 0) {
+            time--;
+        } else if(this.createVectorBetween(target).len2() < SHOOT_RANGE) {
+            time = SHOOT_TIME;
             shoot();
         }
     }
@@ -68,16 +75,15 @@ public class AttackDroneEntity extends AbstractDroneEntity {
         bullet.setX((float) (getX() + (RADIUS * Math.cos(angle))));
         bullet.setY((float) (getY() + (RADIUS * Math.sin(angle))));
         bullet.setAngle(angle);
-        bullet.setIgnoreBlocks(true);
 
         Server.runLater(() -> world.addEntity(bullet));
     }
 
     private void updateVelocity(Vector2 vecBetween) {
         var distance = 200 * 200;
-        if(vecBetween.len2() > distance){
+        if(vecBetween.len2() > distance) {
             velocity = Math.min(velocity + .1f, MAX_VEL);
-        }else{
+        } else {
             velocity *= .9;
         }
     }
@@ -85,61 +91,102 @@ public class AttackDroneEntity extends AbstractDroneEntity {
     private void updateAngle(Vector2 vecBetween) {
         var angle = getAngle() - vecBetween.angleRad();
 
-        while(angle < 0){
+        while(angle < 0) {
             angle += Math.PI * 2;
         }
-        while(angle > Math.PI * 2){
+        while(angle > Math.PI * 2) {
             angle -= Math.PI * 2;
         }
 
-        if(angle < .1 || angle > Math.PI * 2 - .1){
+        if(angle < .1 || angle > Math.PI * 2 - .1) {
             angularVelocity = 0;
             onTarget = true;
             return;
         }
         onTarget = false;
 
-        if(angle > Math.PI){
+        if(angle > Math.PI) {
             angularVelocity = 0.04f;
-        }else{
+        } else {
             angularVelocity = -.04f;
         }
     }
 
     @Side(Side.SERVER)
     private void findTarget() {
-        if(world.isClient())
+        if(world.isClient() || this.getTeam() == Team.NEUTRAL)
             return;
 
-        for(Entity entity : world.getEntities()){
-            if(entity instanceof RobotEntity){
+        float currentTargetDistanceSqr = SHOOT_RANGE;
+        HasWorldPosition target = null;
+
+        for(Entity entity : world.getEntities()) {
+            float distanceSquared = createVectorBetween(entity).len2();
+            if(entity.getTeam() != this.getTeam() && distanceSquared < currentTargetDistanceSqr) {
+
                 target = entity;
-                world.sendMessageToClient(new TargetFoundMessage(getId(), target.getId()));
-                Log.debug("Drone Found Target: " + entity.getId());
-                return;
+                currentTargetDistanceSqr = distanceSquared;
             }
+        }
+
+        if(target == null){
+            for(int x = getTile().getX() - Chunk.SIZE / 4; x <= getTile().getX() + Chunk.SIZE / 4; x++) {
+                for(int y = getTile().getY() - Chunk.SIZE / 4; y <= getTile().getY() + Chunk.SIZE / 4; y++) {
+                    var tile = world.getTileAt(x, y);
+                    var distanceSquared = createVectorBetween(tile).len2();
+
+                    if(distanceSquared < currentTargetDistanceSqr
+                            && tile.getChunk().getTeam() != this.getTeam()
+                            && tile.hasBlock()){
+                        target = tile;
+                        currentTargetDistanceSqr = distanceSquared;
+                        System.out.println("Shotting at tile");
+                    }
+                }
+            }
+        }
+
+        if(target != null){
+            this.target = target;
+            world.sendMessageToClient(new TargetFoundMessage(getId(), target));
         }
     }
 
     @Override
     public void onCustomMessageReceived(CustomEntityMessage message) {
         if(message instanceof TargetFoundMessage && world.isClient()) {
-            int targetID = ((TargetFoundMessage) message).targetID;
-            target = world.getEntityByID(targetID);
-            Log.debug("Drone Found Target: " + targetID);
+            target = ((TargetFoundMessage) message).getTarget(world);
+            Log.debug("Drone Found Target: " + target.toString());
         } else {
             super.onCustomMessageReceived(message);
         }
     }
 
-    static class TargetFoundMessage extends CustomEntityMessage{
+    static class TargetFoundMessage extends CustomEntityMessage {
 
-        public final int targetID;
+        public final int v1;
+        public final int v2;
 
-        public TargetFoundMessage(int droneID, int targetID) {
+        public TargetFoundMessage(int droneID, HasWorldPosition target) {
             super(droneID);
 
-            this.targetID = targetID;
+            if(target instanceof Tile){
+                var tile = (Tile) target;
+                v1 = tile.getX();
+                v2 = tile.getY();
+            }else if(target instanceof Entity){
+                v1 = ((Entity) target).getId();
+                v2 = Integer.MIN_VALUE;
+            }else{
+                throw new IllegalArgumentException("Invalid target type: " + target.getClass().getName());
+            }
+        }
+
+        public HasWorldPosition getTarget(World world) {
+            if(v2 == Integer.MIN_VALUE)
+                return world.getEntityByID(v1);
+
+            return world.getTileAt(v1, v2);
         }
     }
 }

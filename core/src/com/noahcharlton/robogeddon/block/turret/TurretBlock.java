@@ -27,7 +27,7 @@ public class TurretBlock extends Block implements BlockRenderer, HasTileEntity {
 
     @Override
     protected void preInit() {
-        requirements = List.of(Items.rock.stack(25), Items.iron.stack(45));
+        requirements = List.of(Items.iron.stack(45));
     }
 
     @Override

@@ -366,4 +366,9 @@ public class Tile implements Selectable, HasWorldPosition {
     public float getWorldYPos() {
         return pixelY + (Tile.SIZE / 2f);
     }
+
+    @Override
+    public boolean isWorldPositionValid() {
+        return this.hasBlock();
+    }
 }
