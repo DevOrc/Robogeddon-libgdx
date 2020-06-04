@@ -52,7 +52,7 @@ public class Commands {
 
         for(Block block : Core.blocks.values()){
             if(!world.getUnlockedBlocks().contains(block, true)){
-                world.unlockBlock(block);
+                world.unlockBlock(block, false);
             }
         }
     }

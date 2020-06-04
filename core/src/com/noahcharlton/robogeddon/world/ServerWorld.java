@@ -102,8 +102,11 @@ public class ServerWorld extends World {
             return;
         super.update();
 
-        if(tutorialHandler != null)
+        if(tutorialHandler != null){
             tutorialHandler.update();
+        }else{
+            updateUnlockedBlocks();
+        }
 
         if(inventory.isDirty()) {
             inventory.clean();
@@ -113,7 +116,6 @@ public class ServerWorld extends World {
         updatePowerGraphs();
         createPlayerChunkBuffer();
         sendDirtyTiles();
-        updateUnlockedBlocks();
     }
 
     private void updateUnlockedBlocks() {
@@ -385,9 +387,15 @@ public class ServerWorld extends World {
     }
 
     public void unlockBlock(Block block) {
+        unlockBlock(block, true);
+    }
+
+    public void unlockBlock(Block block, boolean announce) {
         unlockedBlocks.add(block);
         sendMessageToClient(new UnlockedBlockMessage(block));
-        handleChat(new ChatMessage("Unlocked Block " + block.getDisplayName()));
+
+        if(announce)
+            handleChat(new ChatMessage("Unlocked Block " + block.getDisplayName()));
     }
 
     @Override

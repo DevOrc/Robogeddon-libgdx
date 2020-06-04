@@ -8,7 +8,7 @@ import com.noahcharlton.robogeddon.world.ServerWorld;
 public class TutorialWorldGenerator extends WorldGenerator {
 
     public TutorialWorldGenerator() {
-        super(0);
+        super(Long.parseLong("-6218232092291161956"));
     }
 
     @Override
