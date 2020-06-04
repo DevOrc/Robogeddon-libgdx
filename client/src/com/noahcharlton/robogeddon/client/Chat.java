@@ -11,10 +11,6 @@ public class Chat {
     private LinkedList<String> chats = new LinkedList<>();
     private long lastMessageTime;
 
-    public Chat() {
-        addMessage("Welcome to chat!");
-    }
-
     public void handleMessage(ChatMessage message) {
         addMessage(message.getText());
     }
