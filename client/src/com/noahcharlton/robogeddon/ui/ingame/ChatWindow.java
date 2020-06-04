@@ -36,6 +36,9 @@ public class ChatWindow extends Stack {
             chat.setText(client.getWorld().getChat().toString());
         }
 
+        if(hasInputFocus() && client.getWorld().isTutorial())
+            client.getUi().setKeyFocus(null);
+
         var alpha = getCurrentAlpha();
 
         setBackground(new ColorBackground(new Color(0f, 0f, 0f, alpha / 4f)));
@@ -45,6 +48,8 @@ public class ChatWindow extends Stack {
     public float getCurrentAlpha(){
         if(client.getWorld() == null){
             return 0f;
+        }else if(client.getWorld().isTutorial()){
+            return 1f;
         }
 
         var lastTime = client.getWorld().getChat().getLastMessageTime();

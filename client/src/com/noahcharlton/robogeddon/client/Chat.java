@@ -1,6 +1,7 @@
 package com.noahcharlton.robogeddon.client;
 
 import com.noahcharlton.robogeddon.message.ChatMessage;
+import com.noahcharlton.robogeddon.message.ClearChatMessage;
 
 import java.util.LinkedList;
 
@@ -12,7 +13,11 @@ public class Chat {
     private long lastMessageTime;
 
     public void handleMessage(ChatMessage message) {
-        addMessage(message.getText());
+        if(message instanceof ClearChatMessage){
+            chats.clear();
+        }else{
+            addMessage(message.getText());
+        }
     }
 
     public void addMessage(String message){

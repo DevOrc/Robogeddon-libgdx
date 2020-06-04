@@ -21,6 +21,7 @@ import com.noahcharlton.robogeddon.util.Side;
 import com.noahcharlton.robogeddon.util.log.Log;
 import com.noahcharlton.robogeddon.world.electricity.PowerGraphUpdate;
 import com.noahcharlton.robogeddon.world.electricity.ServerPowerGraph;
+import com.noahcharlton.robogeddon.world.gen.TutorialWorldGenerator;
 import com.noahcharlton.robogeddon.world.gen.WorldGenerator;
 import com.noahcharlton.robogeddon.world.io.SaveWorldMessage;
 import com.noahcharlton.robogeddon.world.io.WorldIO;
@@ -28,6 +29,7 @@ import com.noahcharlton.robogeddon.world.item.Inventory;
 import com.noahcharlton.robogeddon.world.item.ItemStack;
 import com.noahcharlton.robogeddon.world.settings.NewWorldSettings;
 import com.noahcharlton.robogeddon.world.settings.SavedWorldSettings;
+import com.noahcharlton.robogeddon.world.settings.TutorialWorldSettings;
 import com.noahcharlton.robogeddon.world.settings.WorldSettings;
 import com.noahcharlton.robogeddon.world.team.Team;
 
@@ -49,6 +51,7 @@ public class ServerWorld extends World {
     private final Team playerTeam = Team.BLUE;
     private final Team enemyTeam = Team.RED;
 
+    private TutorialHandler tutorialHandler;
     private WorldGenerator generator;
     private int lastEntityID = 0;
 
@@ -65,7 +68,11 @@ public class ServerWorld extends World {
         } else if(settings instanceof NewWorldSettings) {
             generator = ((NewWorldSettings) settings).createGenerator();
             generator.createInitialWorld(this);
-        } else {
+        } else if(settings instanceof TutorialWorldSettings){
+            generator = new TutorialWorldGenerator();
+            generator.createInitialWorld(this);
+            tutorialHandler = new TutorialHandler(this);
+        }else {
             throw new IllegalArgumentException("Unknown settings: " + settings);
         }
 
@@ -94,6 +101,9 @@ public class ServerWorld extends World {
         if(paused)
             return;
         super.update();
+
+        if(tutorialHandler != null)
+            tutorialHandler.update();
 
         if(inventory.isDirty()) {
             inventory.clean();

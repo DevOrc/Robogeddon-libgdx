@@ -1,5 +1,6 @@
 package com.noahcharlton.robogeddon.ui.ingame;
 
+import com.badlogic.gdx.graphics.Color;
 import com.noahcharlton.robogeddon.entity.Entity;
 import com.noahcharlton.robogeddon.ui.UIAssets;
 import com.noahcharlton.robogeddon.ui.background.NinePatchBackground;
@@ -33,6 +34,8 @@ public class TeamBanner extends Padding {
 
             label.setText("Team: " + player.getTeam().getDisplayName());
             background.setColor(player.getTeam().getColor());
+        }else{
+            background.setColor(Color.CLEAR);
         }
     }
 }

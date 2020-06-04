@@ -147,9 +147,13 @@ public class AttackDroneEntity extends AbstractDroneEntity {
         }
 
         if(target != null){
-            this.target = target;
-            world.sendMessageToClient(new TargetFoundMessage(getId(), target));
+            useTarget(target);
         }
+    }
+
+    public void useTarget(HasWorldPosition target) {
+        this.target = target;
+        world.sendMessageToClient(new TargetFoundMessage(getId(), target));
     }
 
     @Override
