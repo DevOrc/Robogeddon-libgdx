@@ -1,5 +1,9 @@
 package com.noahcharlton.robogeddon.block;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Vector2;
+import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.block.tileentity.TileEntity;
 import com.noahcharlton.robogeddon.block.tileentity.electricity.PoweredTileEntity;
 import com.noahcharlton.robogeddon.block.tileentity.inventory.HasTileEntity;
@@ -22,6 +26,13 @@ public class HealPad extends Block implements HasTileEntity {
     }
 
     @Override
+    protected void initRenderer() {
+        super.initRenderer();
+
+        ((DefaultBlockRenderer) renderer).setRenderSelected(this::renderSelected);
+    }
+
+    @Override
     protected void preInit() {
         requiredBlocks = List.of(Blocks.relayBlock);
         requirements = List.of(Items.iron.stack(100), Items.circuit.stack(5));
@@ -39,6 +50,14 @@ public class HealPad extends Block implements HasTileEntity {
     @Override
     public String getDisplayName() {
         return "Heal Pad";
+    }
+
+    private void renderSelected(Batch batch, Tile tile) {
+        var sr = Core.client.getGameShapeDrawer();
+        sr.setColor(Color.WHITE);
+        sr.setDefaultLineWidth(4);
+
+        sr.circle(tile.getPixelXCenter(), tile.getPixelYCenter(), range);
     }
 
     @Override
@@ -73,7 +92,7 @@ public class HealPad extends Block implements HasTileEntity {
                     target.damage(-healRate);
                 }
 
-                if(target.getHealth() >= target.getType().getHealth()){
+                if(target.getHealth() >= target.getType().getHealth() || !isInRange(target)){
                     target = null;
                 }
             }
@@ -83,11 +102,21 @@ public class HealPad extends Block implements HasTileEntity {
             var serverWorld = (ServerWorld) world;
 
             for(Entity player : serverWorld.getPlayers().values()){
-                if(player.getHealth() < player.getType().getHealth()){
+                boolean needsHealth = player.getHealth() < player.getType().getHealth();
+                boolean inRange = isInRange(player);
+
+                if(needsHealth && inRange){
                     target = player;
                     return;
                 }
             }
+        }
+
+        private boolean isInRange(Entity target) {
+            Vector2 pos = new Vector2(target.getX(), target.getY())
+                    .sub(rootTile.getPixelXCenter(), rootTile.getPixelYCenter());
+
+            return pos.len2() < (HealPad.range * HealPad.range);
         }
     }
 }
