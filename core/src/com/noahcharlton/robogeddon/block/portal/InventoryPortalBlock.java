@@ -5,10 +5,13 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.block.Block;
 import com.noahcharlton.robogeddon.block.BlockRenderer;
+import com.noahcharlton.robogeddon.block.Blocks;
 import com.noahcharlton.robogeddon.block.tileentity.TileEntity;
 import com.noahcharlton.robogeddon.block.tileentity.inventory.HasTileEntity;
 import com.noahcharlton.robogeddon.util.GraphicsUtil;
 import com.noahcharlton.robogeddon.world.Tile;
+
+import java.util.List;
 
 public class InventoryPortalBlock extends Block implements BlockRenderer, HasTileEntity {
 
@@ -25,6 +28,12 @@ public class InventoryPortalBlock extends Block implements BlockRenderer, HasTil
 
         Core.assets.registerTexture("blocks/inventory_portal_base").setOnLoad(t -> baseTexture = t);
         Core.assets.registerTexture("blocks/inventory_portal_top").setOnLoad(t -> topTexture = t);
+    }
+
+    @Override
+    protected void preInit() {
+        //Hack to make sure inventory portal is never unlocked
+        requiredBlocks = List.of(Blocks.inventoryPortal);
     }
 
     @Override
