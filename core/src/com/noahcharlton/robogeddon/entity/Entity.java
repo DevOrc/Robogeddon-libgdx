@@ -1,8 +1,8 @@
 package com.noahcharlton.robogeddon.entity;
 
 import com.badlogic.gdx.math.Vector2;
-import com.noahcharlton.robogeddon.util.log.Log;
 import com.noahcharlton.robogeddon.util.Side;
+import com.noahcharlton.robogeddon.util.log.Log;
 import com.noahcharlton.robogeddon.world.HasWorldPosition;
 import com.noahcharlton.robogeddon.world.Tile;
 import com.noahcharlton.robogeddon.world.World;
@@ -79,8 +79,18 @@ public class Entity implements HasWorldPosition {
     public void onUpdateMessage(EntityUpdateMessage message) {
         health = message.getHealth();
 
-        x = message.getX();
-        y = message.getY();
+        var xDiff = message.getX() - x;
+        var yDiff = message.getY() - y;
+
+        if((Math.abs(xDiff) > 5 && Math.abs(xDiff) < 10 ) || (Math.abs(yDiff) > 5  && Math.abs(yDiff) < 10)){
+            x += xDiff / 2f;
+            y += yDiff / 2f;
+        }else{
+            x = message.getX();
+            y = message.getY();
+        }
+
+
         angle = message.getAngle();
         velocity = message.getVelocity();
         angularVelocity = message.getAngularVelocity();
