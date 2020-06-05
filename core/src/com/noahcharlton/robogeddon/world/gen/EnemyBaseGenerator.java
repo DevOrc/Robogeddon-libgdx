@@ -6,6 +6,7 @@ import com.noahcharlton.robogeddon.block.Blocks;
 import com.noahcharlton.robogeddon.block.duct.ItemDuct;
 import com.noahcharlton.robogeddon.util.Direction;
 import com.noahcharlton.robogeddon.util.IntermediateDirection;
+import com.noahcharlton.robogeddon.util.log.Log;
 import com.noahcharlton.robogeddon.world.Chunk;
 import com.noahcharlton.robogeddon.world.ServerWorld;
 import com.noahcharlton.robogeddon.world.Tile;
@@ -71,6 +72,11 @@ public class EnemyBaseGenerator {
     public void applyComponent(IntermediateDirection direction, BaseComponent component, Chunk chunk) {
         ServerWorld world = (ServerWorld) chunk.getWorld();
         var rootPos = getRootPosition(chunk);
+
+        if(component == null){
+            Log.warn("Null base component while generating??");
+            return;
+        }
 
         for(var instruction : component.getInstructions()){
             var instructionPos = getInstructionPos(instruction.x, instruction.y, rootPos, direction, instruction.block);
