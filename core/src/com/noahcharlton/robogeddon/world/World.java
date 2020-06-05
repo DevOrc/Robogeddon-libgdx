@@ -34,6 +34,11 @@ public abstract class World {
     protected boolean paused;
     protected final Array<Block> unlockedBlocks = new Array<>(Core.blocks.size());
 
+    /**
+     * Used to reduce allocations in getTileAt / getChunkAt
+     */
+    private final GridPoint2 tempGridpoint = new GridPoint2();
+
     World(boolean isServer) {
         this.isServer = isServer;
     }
@@ -59,15 +64,17 @@ public abstract class World {
     }
 
     public Chunk getChunkAt(int chunkX, int chunkY){
-        return chunks.get(new GridPoint2(chunkX, chunkY));
+        tempGridpoint.x = chunkX;
+        tempGridpoint.y = chunkY;
+
+        return chunks.get(tempGridpoint);
     }
 
     public Chunk getChunkFromTile(int tileX, int tileY){
-        var chunkX = Math.floorDiv(tileX, Chunk.SIZE);
-        var chunkY = Math.floorDiv(tileY, Chunk.SIZE);
-        var chunkLocation = new GridPoint2(chunkX, chunkY);
+        tempGridpoint.x = Math.floorDiv(tileX, Chunk.SIZE);
+        tempGridpoint.y = Math.floorDiv(tileY, Chunk.SIZE);
 
-        return chunks.get(chunkLocation);
+        return chunks.get(tempGridpoint);
     }
 
     public Entity getEntityByID(int id){
