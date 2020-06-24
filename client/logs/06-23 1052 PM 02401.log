@@ -1,0 +1,7 @@
+main(INFO): Logger initialized!
+main(INFO): Client Launcher started!
+main(INFO): Core Version: 0.3.0-alpha
+main(INFO): Args: []
+main(DEBUG): PreInit Start
+main(DEBUG): Loading settings...
+main(DEBUG): PreInit End

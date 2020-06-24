@@ -1,0 +1,16 @@
+<Settings>
+	<WindowWidth>900</WindowWidth>
+	<Move_Forward>51</Move_Forward>
+	<Open_Chat>48</Open_Chat>
+	<WindowHeight>700</WindowHeight>
+	<Run_Command>76</Run_Command>
+	<VSync>false</VSync>
+	<Pause_Game>131</Pause_Game>
+	<Fullscreen>false</Fullscreen>
+	<Move_Left>29</Move_Left>
+	<Move_Right>32</Move_Right>
+	<Shoot>62</Shoot>
+	<Rotate_Block>45</Rotate_Block>
+	<TutorialPlayed>false</TutorialPlayed>
+	<Move_Back>47</Move_Back>
+</Settings>

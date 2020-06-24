@@ -1,5 +1,7 @@
 package com.noahcharlton.robogeddon.server;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.backends.headless.HeadlessFiles;
 import com.noahcharlton.robogeddon.Core;
 import com.noahcharlton.robogeddon.message.Message;
 import com.noahcharlton.robogeddon.message.MessageSerializer;
@@ -123,6 +125,7 @@ public class ServerLauncher {
 
     private static void loadAssets() {
         Log.info("Loading Assets: " + Core.assets.getAssetCount());
+        Gdx.files = new HeadlessFiles();
 
         while(!Core.assets.isDone()){
             Core.assets.update();

@@ -9,7 +9,7 @@ sourceSets.main.java.srcDirs = [ "src/" ]
 sourceSets.main.resources.srcDirs = ["/assets"]
 
 project.ext.mainClassName = "com.noahcharlton.robogeddon.client.ClientLauncher"
-project.ext.assetsDir = new File("/assets")
+project.ext.assetsDir = new File("$projectDir/assets")
 
 application{
     mainClassName = "com.noahcharlton.robogeddon.client.ClientLauncher"

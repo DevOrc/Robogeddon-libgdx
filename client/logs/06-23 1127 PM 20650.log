@@ -1,0 +1,11 @@
+main(INFO): Logger initialized!
+main(INFO): Client Launcher started!
+main(INFO): Core Version: 0.3.0-alpha
+main(INFO): Args: []
+main(DEBUG): PreInit Start
+main(WARN): No settings file found. Saving default settings!
+main(DEBUG): Saving settings!
+main(DEBUG): PreInit End
+LWJGL Application(ERROR): Game threw exception! Exiting app...
+AWT-EventQueue-0(DEBUG): Showing error dialog!
+AWT-EventQueue-0(DEBUG): Error dialog closed! Shutting down JVM
