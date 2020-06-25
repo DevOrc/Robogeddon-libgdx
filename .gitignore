@@ -3,6 +3,7 @@ game_data/**
 client/assets/game_data/**
 logs/**
 client/logs/**
+*.log
 
 
 ## Java
