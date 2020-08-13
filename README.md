@@ -1,5 +1,9 @@
 # Robogeddon
-A Capture the Flag Game focused on resource automation
+A secure the area game focused on resource automation
+
+### Note: This is not being actively developed. There is a new (WIP) version written in Rust. 
+### New Repo: [devorc/robogeddon](https://github.com/DevOrc/robogeddon) 
+
 
 ### Running the game
 To run the client:
